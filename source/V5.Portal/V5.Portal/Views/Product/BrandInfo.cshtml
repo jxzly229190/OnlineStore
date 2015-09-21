@@ -1,0 +1,95 @@
+﻿@using MongoDB.Linq
+@using V5.Library
+@using V5.Portal.Controllers
+@{
+    ViewBag.Title = "Brand";
+}
+@{
+    var product = new ProductController();
+    var home = new HomeController();
+    var brand = new V5.Service.Product.ProductBrandService().QueryById(Model.BrandID);
+}
+@model V5.DataContract.Product.Brand_Information
+@Styles.Render("~/Content/BrandInfo.css")
+@Styles.Render("~/Content/search.style.css")
+<div class="content w1200 fix">
+    <div class="conCrumb">
+        您当前的位置： <a href="@V5.Portal.Common.ConstantParams.IndexUrl">首页</a>&nbsp;&gt;&nbsp;<a href="/Home/Search?Brand="@Html.Raw(brand.BrandNameSpell) >@Html.Raw(brand.BrandName)</a>
+    </div>
+    <div class="colLeft">
+        <!--同类推荐 s-->
+        <div class="mt10 fl" id="sidebar">
+            <div id="similar_goods_div">
+                <div class="tj_box">
+                    <dl class="ofh">
+                        <dd>@Html.Raw(brand.BrandName)热销排行榜</dd>
+                    </dl>
+                    <div class="ml_sandow">
+                    </div>
+                    @Html.Raw(home.GetHtml("<ul class=\"tj_box_1\">" +
+                                           "   <div><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title=\"$ProductName$\"><img alt=\"$ProductName$\" class=\"lazyload\" src=\"$ThumbnailPath$\") height=\"140\" width=\"140\"></a></div>" +
+                                           "   <dt><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title=\"$ProductName$\">$ProductName$</a></dt>" +
+                                           "   <dt><strong class=\"c_red\">¥$GoujiuPrice$</strong></dt>" +
+                                           "</ul>", 15, ProductType.Rand))
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--左侧-->
+    <!--右侧-->
+    <div class="colRight">
+        <div class="aboutBrand">
+            <div class="pp_logo">
+                <img src="@Model.Logo" id="brandLogo" width="162" height="72" />
+            </div>
+            <div class="pp_txt">
+                <div class="pp_txt_content">
+                    @Html.Raw(brand.BrandName)
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="mb10 mt10" style="border: 1px solid #EAEAEA; padding: 10px;">
+            @Html.Raw(Model.Introduce)
+        </div>
+        <div class="pp_title">
+            <span class="fl">商品列表</span> <a href="/Home/Search?Brand="@Html.Raw(brand.BrandNameSpell) target="_blank" class="fr">
+                查看更多</a>
+        </div>
+        <div class="list_line">
+            @Html.Raw(product.GetHtml(" <ul class=\"goods_list\"> <li class=\"goods_pic\"><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title='$Name$'><img class=\"lazyload\" src=\"$ThumbnailPath$\" alt='$Name$' /></a></li> <li class=\"goods_name\"><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title='$Name$'>$Name$<span class=\"red\"></span></a></li>  <li class=\"goods_price\">¥$GoujiuPrice$<span class=\"goods_pinglun\"><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\">已有$CommentNumber$人评论</a></li></ul>", 8, ProductType.Rand, Model.BrandID.ToString(), Model.ProductID))
+            <div id="clear">
+            </div>
+        </div>
+        <div class="p10 mt10 pl_box details2">
+            <a id="Comment" name="Comment"></a>
+            <ul class=" bb1s db h35 ofh fix">
+                <li class=" db fl">@Html.Raw(brand.BrandName)相关产品评论</li>
+                <li class="db fr"></li>
+            </ul>
+            <div id="s1">
+                <div id="divComment">
+                    <!--暂无评论-->
+                    <dl class="hide">
+                        <div class="pl_user_say">
+                            <div style="padding-top: 15px; text-align: center;">
+                                暂无评论.</div>
+                        </div>
+                    </dl>
+                    <!--暂无评论-->
+                    <div id="tc">
+                        <dl>
+                            <div class="pl_user_say">
+                                @Html.Raw(product.SimliarProductComments(ViewBag.brandId))
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧-->
+    <div class="clear">
+    </div>
+</div>

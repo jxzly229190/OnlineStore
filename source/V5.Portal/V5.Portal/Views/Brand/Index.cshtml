@@ -1,0 +1,59 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@Styles.Render("~/Content/g.tbcdn.cn.css")
+@Styles.Render("~/Content/product.brand.css")
+@{
+    var brand = new BrandController();
+    var home = new HomeController();
+    var html = brand.GetHtml("<div class=\"product\" data=\"$ProductID$\">" +
+        "<div class=\"product-iWrap\">" +
+        "<div class=\"productImg-wrap\">" +
+        "<a target=\"_blank\" class=\"productImg\" href=\"/product/item-id-$ProductID$.htm\" >" +
+        "<img class=\"lazy\" data-original=\"$ThumbnailPath2$\" alt=\"$ProductName$\" /></a></div>" +
+        "<p class=\"productTitle\"><a title=\"$ProductName$\" target=\"_blank\" href=\"/product/item-id-$ProductID$.htm\" >$ProductName$</a><label title=\"$Advertisement$\" id=\"A_$ProductID$\">$Advertisement$</label></p>" +
+        "<p class=\"productPrice\"><em title=\"$GoujiuPrice$\" id=\"G_$ProductID$\"><b>￥</b>$GoujiuPrice$</em></p>" +
+        "<p class=\"productPromotions\"></p>" +
+        "<p style=\"clear:both;\"></p>" +
+        "<p class=\"productStatus\"><span>近期销量 <em id=\"S_$ProductID$\">$Sold$笔</em></span><span class=\"end\">评价数 <a target=\"_blank\" href=\"###\" id=\"C_$ProductID$\">$CommentNumber$</a></span></p>" +
+        "</div></div>", 30, ProductType.Rand, ViewBag.nv);
+}
+<div id="content">
+    <div class="main bts-39">
+      <!-- 产品属性 -->
+      @Html.Raw(brand.GetProductBrandSuggestTip(ViewBag.nv))
+            
+      <!-- 过滤条件 -->
+      @Html.Raw(brand.GetProductFilter(ViewBag.nv))
+      <div style="clear:both;"></div>
+
+      <!-- 商品列表 -->
+      <div id="J_ItemList" class="view grid-34 bts-30 clearfix" >
+        @Html.Raw(html)
+      </div>
+      <div style="clear:both;"></div>
+
+      <!-- 分页 -->
+      <div class="ui-page">
+       <div class="ui-page-wrap">
+         <b class="ui-page-num">
+            @Html.Raw(brand.GetPageNavHtml(ViewBag.nv))
+         </b>
+       </div>
+      </div>
+      
+      <!-- 热卖单品 -->
+      <div id="J_Recommend">
+        <div class="recommend">
+          <h3 class="recommend-hd">热卖单品：</h3>
+          <div class="recommend-con clearfix recommend-con-7">
+            @Html.Raw(home.GetHtml("<div class=\"product\">" +
+            "<a class=\"productImg\" target=\"_blank\" href=\"/product/item-id-$ProductID$.htm\"><img class=\"lazy\" data-original=$ThumbnailPath$ alt=\"$ProductName$\" /></a>" +
+            "<p class=\"productPrice ui-price\">￥$GoujiuPrice$</p>" +
+            "<p class=\"productTitle\"><a target=\"_blank\"  href=\"/product/item-id-$ProductID$.htm\">$ProductName$$Advertisement$</a></p>" +
+            "</div>", 7, ProductType.Rand))
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/product.brand.js")

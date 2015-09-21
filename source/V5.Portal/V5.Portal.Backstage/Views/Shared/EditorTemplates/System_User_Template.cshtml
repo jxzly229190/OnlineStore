@@ -1,0 +1,36 @@
+﻿@model V5.Portal.Backstage.Models.System.UserModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    指定员工：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.EmployeeID).OptionLabel(" 请选择 ").DataSource(ds => ds.Read("QueryEmployeeSelectListItems", "System")).DataTextField("Name").DataValueField("ID"))
+</div>
+<div class="editor-label">
+    指定角色：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.RoleID).OptionLabel(" 请选择 ").DataSource(ds => ds.Read("QueryRoleSelectListItems", "System")).DataTextField("Name").DataValueField("ID"))
+</div>
+<div class="editor-label">
+    用户名：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.LoginName)
+    @Html.ValidationMessageFor(model => model.LoginName)
+</div>
+<div class="editor-label">
+    密码：
+</div>
+<div class="editor-field">
+    @Html.PasswordFor(model => model.LoginPassword, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.LoginPassword)
+</div>
+<div class="editor-label">
+    用户姓名：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>

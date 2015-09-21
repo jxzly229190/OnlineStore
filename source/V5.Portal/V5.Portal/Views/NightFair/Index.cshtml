@@ -1,0 +1,152 @@
+﻿@using V5.Library
+@using V5.Portal.Controllers
+@{
+    var home = new HomeController();
+}
+@Styles.Render("~/Content/nightfair.css")
+    <div class="container" style = "@home.GetAdvertiseHtml("background: url($ImagePath$) center top $BackgroundColor$ no-repeat;", "id=1229")">
+        <div class="container-inner">
+            <!-- 今夜明星 -->
+            <dl class="yeshi-star">
+                <dt>今夜明星</dt>
+                <dd>
+					<ul>
+					    <li>
+					        @Html.Raw(home.GetAdvertiseHtml(
+					            "<div class=\"yeshi-star1\"><a href=\"$URL$\" class=\"star-pro1\">" +
+					            "<img src=\"$ImagePath$\"width=\"270\" height=\"338\"/></a><dl class=\"yeshi-star1-top\"><dd class=\"yeshi-start1-adv\">$Description$</dd>" +
+					            "<dd class=\"yeshi-start1-name\">$Name$</dd></dl><dl class=\"yeshi-star1-bottom\">" +
+					            "<dd class=\"yeshi-start1-price\">￥<em>$GoujiuPrice$</em></dd><dd><em>夜市特惠价</em></dd><dd><i>原价：¥$MarketPrice$</i></dd>" +
+                                "<dd class=\"yeshi-start1-view\"><a href=\"$URL$\"></a></dd></dl></div>", "pid=1236", 2, AdvertiseSource.Product, "2"))
+					    </li>
+					    <li>
+					        @Html.Raw(home.GetAdvertiseHtml(
+					            "<div class=\"yeshi-star2\" ><a href=\"$URL$\" class=\"star-pro2\" >" +
+					            "<img src=\"$ImagePath$\"width=\"288\" height=\"268\"/></a><div class=\"yeshi-start2-name\">$Name$</div>" +
+                                "<div class=\"yeshi-start2-adv\">$Description$</div><a href=\"$URL$\"><div class=\"yeshi-start2-button\"><dd class=\"yeshi-start2-gjprice\">" +
+					            "<label>$GoujiuPrice$</label></dd><dd class=\"yeshi-start2-price\"><i>原价:￥$MarketPrice$</i></dd>" +
+					            "<dd><em>夜市价:￥</em></dd></div></a><div class=\"yeshi-start2-tip\"></div></div>", "pid=1237", 3, AdvertiseSource.Product, "2"))
+					    </li>
+					</ul>
+				</dd>
+            </dl>
+
+            <!-- 白酒热卖推荐 -->
+            <dl class="yeshi-remai">
+                <dt>白酒热卖推荐</dt>
+                <dd class="yeshi-remai-right" style = "@home.GetAdvertiseHtml("background: url($ImagePath$) $BackgroundColor$ 10px bottom no-repeat;", "id=1238")">
+                    <ul style='float:left;'>
+						 @Html.Raw(home.GetAdvertiseHtml("<li class=\"yeshi-remai-top li1\"><div class=\"yeshi-remai-product\">" +
+                                  "<a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\" width=\"220\" height=\"210\"/></a><p class=\"product-desc\"><a href=\"$URL$\">$Name$</a>" +
+                                  "<em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span><i>原价：¥$MarketPrice$</i>" + 
+                                  "<a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>",
+                                  "<li class=\"li1\"><div class=\"yeshi-remai-product\"><a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\"width=\"220\" height=\"210\"/></a>" +
+                                  "<p class=\"product-desc\"><a href=\"$URL$\">$Name$</a><em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span>" +
+                                  "<i>原价：¥$MarketPrice$</i><a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>", "pid=1239", 6, AdvertiseSource.Product,"2"))
+                    </ul>
+					<div style='clear:both;'></div>
+                </dd>
+            </dl>
+			
+			<!-- 红酒热卖推荐 -->
+            <dl class="yeshi-remai">
+                <dt>红酒热卖推荐</dt>
+                <dd class="yeshi-remai-left" style = "@home.GetAdvertiseHtml("background: url($ImagePath$) $BackgroundColor$ 685px bottom no-repeat;", "id=1240")">
+                    <ul style='float:left;'>
+						 @Html.Raw(home.GetAdvertiseHtml("<li class=\"yeshi-remai-top li2\"><div class=\"yeshi-remai-product\">" +
+                                  "<a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\" width=\"220\" height=\"210\"/></a><p class=\"product-desc\"><a href=\"$URL$\">$Name$</a>" +
+                                  "<em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span><i>原价：¥$MarketPrice$</i>" + 
+                                  "<a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>",
+                                  "<li class=\"li2\"><div class=\"yeshi-remai-product\"><a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\"width=\"220\" height=\"210\"/></a>" +
+                                  "<p class=\"product-desc\"><a href=\"$URL$\">$Name$</a><em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span>" +
+                                  "<i>原价：¥$MarketPrice$</i><a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>", "pid=1241", 6, AdvertiseSource.Product,"2"))
+                    </ul>
+					<div style='clear:both;'></div>
+                </dd>
+            </dl>
+			
+			 <!-- 洋酒热卖推荐 -->
+            <dl class="yeshi-remai">
+                <dt>洋酒热卖推荐</dt>
+                <dd class="yeshi-remai-right" style = "@home.GetAdvertiseHtml("background: url($ImagePath$) $BackgroundColor$ 10px bottom no-repeat;", "id=1242")">
+                   <ul style='float:left;'>
+						 @Html.Raw(home.GetAdvertiseHtml("<li class=\"yeshi-remai-top li1\"><div class=\"yeshi-remai-product\">" +
+                                  "<a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\"width=\"220\" height=\"210\"/></a><p class=\"product-desc\"><a href=\"$URL$\">$Name$</a>" +
+                                  "<em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span><i>原价：¥$MarketPrice$</i>" + 
+                                  "<a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>",
+                                  "<li class=\"li1\"><div class=\"yeshi-remai-product\"><a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\"width=\"220\" height=\"210\"/></a>" +
+                                  "<p class=\"product-desc\"><a href=\"$URL$\">$Name$</a><em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span>" +
+                                  "<i>原价：¥$MarketPrice$</i><a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>", "pid=1243", 6, AdvertiseSource.Product,"2"))
+                    </ul>
+					<div style='clear:both;'></div>
+                </dd>
+            </dl>
+			
+			<!-- 黄酒热卖推荐 -->
+            <dl class="yeshi-remai">
+                <dt>黄酒热卖推荐</dt>
+                <dd class="yeshi-remai-left" style = "@home.GetAdvertiseHtml("background: url($ImagePath$) $BackgroundColor$ 685px bottom no-repeat;", "id=1244")">
+                   <ul style='float:right;'>
+						 @Html.Raw(home.GetAdvertiseHtml("<li class=\"yeshi-remai-top li2\"><div class=\"yeshi-remai-product\">" +
+                                  "<a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\"width=\"220\" height=\"210\"/></a><p class=\"product-desc\"><a href=\"$URL$\">$Name$</a>" +
+                                  "<em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span><i>原价：¥$MarketPrice$</i>" + 
+                                  "<a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>",
+                                  "<li class =\"li2\"><div class=\"yeshi-remai-product\"><a href=\"$URL$\" class=\"product-img\"><img src=\"$ImagePath$\"width=\"220\" height=\"210\"/></a>" +
+                                  "<p class=\"product-desc\"><a href=\"$URL$\">$Name$</a><em>特价优惠，限时抢购！</em></p><div class=\"product-buy\"><span>¥<em>$GoujiuPrice$</em></span>" +
+                                  "<i>原价：¥$MarketPrice$</i><a href=\"$URL$\" class=\"product-buy-botton\"></a></div></div></li>", "pid=1245", 6, AdvertiseSource.Product,"2"))
+                    </ul>
+					<div style='clear:both;'></div>
+                </dd>
+            </dl>
+        </div>        
+    </div>
+
+	<div class="act">
+		<!-- 以下优惠活动正在进行-->
+		<dl>
+			<dt></dt>
+		    <dd class="act-link">
+		        <ul>
+		            @Html.Raw(home.GetAdvertiseHtml("<li class=\"first\"><a href=\"$URL$\"><img src=\"$ImagePath$\"></a></li>","<li><a href=\"$URL$\"><img src=\"$ImagePath$\"></a></li>","pid=1235",4,1,AdvertiseSource.Custom))
+                    @*
+		            <li class="first"><a href="#"><img src="/Images/380x250.jpg"/></a></li>
+		            <li ><a href="#"><img src="/Images/泸州老窖.jpg"/></a></li>
+		            <li ><a href="#"><img src="/Images/红酒.jpg"/></a></li>
+		            <li ><a href="#"><img src="/Images/洋酒.jpg"/></a></li>*@
+		        </ul>
+		    </dd>
+		    <div style="clear:both;"></div>
+		</dl>
+		
+		<!-- 搜索其他分类-->
+	    <dl>
+	        <dd>
+	            <table>	
+	                <tr>	
+	                    <td class="brandcolr1 brandsize1"><a href="/baijiu-jiannanchun.htm">剑南春</a></td>
+	                    <td rowspan ="2" class="brandcolr2 brandsize1"><a href="/putaojiu-faguo-lafeixilie.htm">拉菲</a></td>
+	                    <td rowspan ="2" colspan="2" class="brandcolr3 brandsize3"><a href="http://www.gjw.com/yangjiu-bailandi-REMY%20MARTIN.htm">人头马</a></td>
+	                    <td class="brandcolr2 brandsize1"><a href="http://www.gjw.com/all.htm?sort=4">新品</a></td>
+	                    <td class="brandcolr1 brandsize1"><a href="http://www.gjw.com/Home/Tuan">大团购</a></td>	
+	                </tr>
+	                <tr>
+	                    <td rowspan="2" class="brandcolr3 brandsize2"><a href="/baijiu-wuliangye.htm">五粮液</a></td>
+	                    <td class="brandcolr1 brandsize1"><a href="/Home/Search?w=%u5C0F%u9152%u7248">小酒版</a></td>
+	                    <td class="brandcolr3 brandsize1"><a href="http://www.gjw.com/huangjiu.htm">黄酒区</a></td>
+	                </tr>
+	                <tr>
+	                    <td colspan="2" rowspan="2" class="brandcolr1 brandsize3"><a href="/baijiu-maotai.htm">茅台</a></td>
+	                    <td rowspan="2" class="brandcolr2 brandsize2"><a href="/yangjiu-bailandi-xuannishi.htm">轩尼诗</a></td>
+	                    <td colspan="2" rowspan="2" class="brandcolr3 brandsize3"><a href="http://www.gjw.com/yangjiu.htm">洋酒区</a></td>
+	                </tr>
+	                <tr>
+	                    <td class="brandcolr2 brandsize1"><a href="/putaojiu-aodaliya-benfu.htm">奔富</a></td>
+	                </tr>							
+	            </table>
+	        </dd>
+	    </dl>
+	</div>
+	
+	<div class="backhome">
+		<a class="backhomea" href="http://www.gjw.com/" >回到首页</a>
+	</div>    

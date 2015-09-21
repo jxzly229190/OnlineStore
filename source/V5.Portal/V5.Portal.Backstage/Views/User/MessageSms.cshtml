@@ -1,0 +1,41 @@
+﻿@using V5.Portal.Backstage.Models.User
+@using V5.Portal.Backstage.Utils
+@Scripts.Render("~/Scripts/User/Sms.js")
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<UserMessageSmsModel>()
+    .Name("SmsGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.Name).Title("名称").Width(150);
+        columns.Bound(u => u.Content).Title("内容").Width(200);
+        columns.Bound(u => u.StatusName).Title("状态").Width(60);
+        columns.Bound(u => u.CreateTime).Title("创建时间").Format("{0:yyyy-MM-dd HH:mm:ss}").Width(150);
+        columns.Command(command =>
+            {
+                command.Edit().Text("修改").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyMessageSms", "User", "POST"));
+                command.Custom("删除").Click("deleteSms").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveMessageSms", "User", "POST"));
+            }).Width(140).Title("操作").Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("添加短信").HtmlAttributes(permissionObj.GetDisplayAttribute("AddLevel", "User", "POST", false)))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("User_Message_Sms_Template"))
+    .Pageable()
+    .Scrollable()
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Create(update => update.Action("AddMessageSms", "User"))
+        .Read(read => read.Action("QueryMessageSms", "User"))
+        .Update(update => update.Action("ModifyMessageSms", "User"))
+        .Destroy(update => update.Action("EditingInline_Destroy", "User"))
+    )
+)
+<style type="text/css">
+    .k-edit-label, .k-edit-form-container .editor-label {width: 15%;}
+    .k-edit-field, .k-edit-form-container .editor-field {width: 70%;}
+</style>

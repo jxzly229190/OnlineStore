@@ -1,0 +1,466 @@
+﻿@using MongoDB.Linq
+@using V5.Library
+@using V5.Portal.Controllers
+@{
+    ViewBag.Title = "Brand";
+}
+@{
+    var product = new ProductController();
+    var home = new HomeController();
+}
+@model V5.DataContract.Product.Brand_Information
+<link href="../../Content/search.style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .w1000
+    {
+        width: 1000px;
+    }
+    .pl_box_title
+    {
+        background: url(../Content/images/Detail_bg.gif) no-repeat -298px -279px;
+        height: 28px;
+        width: 77px;
+    }
+    .mt10
+    {
+        margin-top: 10px;
+    }
+    .p10
+    {
+        padding: 10px;
+    }
+    .pl_box
+    {
+        border: 1px solid #DADADA;
+    }
+    .pl_user_say
+    {
+        line-height: 24px;
+        padding: 15px 0;
+    }
+    .pl_box li
+    {
+        display: block;
+    }
+    .h35
+    {
+        height: 35px;
+    }
+    .ofh
+    {
+        overflow: hidden;
+    }
+    .db
+    {
+        display: block;
+    }
+    .bb1s
+    {
+        border-bottom: 1px solid #DADADA;
+    }
+    ol, ul
+    {
+        list-style: none;
+    }
+    .fr
+    {
+        float: right;
+    }
+    .db
+    {
+        display: block;
+    }
+    .s_10
+    {
+        background-position: 0 -373px;
+    }
+    .star
+    {
+        background-image: url(../Content/images/Detail_bg.gif);
+        height: 16px;
+        margin-right: 5px;
+        margin-top: 6px;
+        width: 75px;
+    }
+    .colRight
+    {
+        color: #666;
+    }
+    .pl_user_say
+    {
+        line-height: 24px;
+    }
+    .pb10
+    {
+        padding-bottom: 10px;
+    }
+    .pt10
+    {
+        padding-top: 10px;
+    }
+    
+    .bb1d
+    {
+        border-bottom: 1px dotted #EAEAEA;
+    }
+    .fix
+    {
+        color: black;
+    }
+    dl
+    {
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+    }
+    #goodsInfo, #sidebar
+    {
+        width: 195px;
+    }
+    .tj_box
+    {
+        border: 1px solid #DADADA;
+        padding-bottom: 15px;
+    }
+    .ml_sandow
+    {
+        background: none repeat 0 0 #F4F4F4;
+        border-top: 1px solid #DADADA;
+        font-size: 1px;
+        height: 2px;
+    }
+    .tj_box_1
+    {
+        line-height: 18px;
+        margin: 15px auto;
+        width: 160px;
+    }
+    .tj_box dd
+    {
+        background: url(../image/Detail_bg.gif) no-repeat 0 -287px;
+        font-family: '微软雅黑';
+        font-size: 15px;
+        font-weight: bold;
+        height: 20px;
+        margin-left: 15px;
+        margin-top: 5px;
+        width: 62px;
+    }
+    .pl_face
+    {
+        width: 45px;
+        height: 45px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+    }
+    .pl_user_say_r strong
+    {
+        color: #cf0404;
+        font-weight: bold;
+    }
+    .pl_star_2
+    {
+        display: block;
+        float: right;
+        width: 100px;
+    }
+    .pp_title
+    {
+        width: 100%;
+        height: 32px;
+        background-color: #F8F8F8;
+        border: 1px solid #EAEAEA;
+        margin: 10px 0;
+    }
+    .pp_title span
+    {
+        line-height: 32px;
+        text-indent: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #666;
+    }
+    .pp_title a
+    {
+        margin-top: 8px;
+        margin-right: 10px;
+    }
+</style>
+<div class="content w1000 fix">
+    <div class="conCrumb">
+        <div>
+            您当前的位置：@Html.ActionLink("首页", "Index", "Home")<a>>茅台</a>
+        </div>
+    </div>
+    <div class="colLeft">
+        <!--同类推荐 s-->
+        <div class="mt10 fl" id="sidebar">
+            <div id="similar_goods_div">
+                <div class="tj_box">
+                    <dl class="ofh">
+                        <dd>
+                            同类推荐</dd>
+                    </dl>
+                    <div class="ml_sandow">
+                    </div>
+                    @* @Html.Raw(home.GetHtml("<ul class=\"tj_box_1\">" +
+                                           "   <div><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title=\"$Name$\"><img alt=\"$Name$\" class=\"lazyload\" src=\"$ThumbnailPath$\") height=\"140\" width=\"140\"></a></div>" +
+                                           "   <dt><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title=\"$Name$\">$Name$</a></dt>" +
+                                           "   <dt><strong class=\"c_red\">¥$GoujiuPrice$</strong></dt>" +
+                                           "</ul>", 12, ProductType.Rand))*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--左侧-->
+    <!--右侧-->
+    <div class="colRight">
+        <div class="aboutBrand">
+            <div class="pp_logo">
+                <img src="@Model.Logo" id="brandLogo" width="162" height="72" />
+            </div>
+            <div class="pp_txt">
+                <div class="pp_txt_content">
+                    @Model.Title
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="mb10 mt10" style="border: 1px solid #EAEAEA; padding: 10px;">
+            @Model.Introduce
+        </div>
+        <div class="pp_title">
+            <span class="fl">商品列表</span> <a href="http://www.gjw.com/baijiu-maotai" id="hrfmore"
+                target="_blank" class="fr">查看更多</a>
+        </div>
+        <div class="list_line">
+            @product.GetHtml(" <ul class=\"goods_list\"> <li class=\"goods_pic\"><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title='$Name$'><img class=\"lazyload\" src=\"$ThumbnailPath$\" alt='$Name$' /></a></li> <li class=\"goods_name\"><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\" title='$Name$'>$Name$<span class=\"red\"></span></a></li>  <li class=\"goods_price\">¥$GoujiuPrice$</li> <li class=\"goods_pinglun\"><span><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\">已有33人评论</a></span></li> </ul>", 10, ProductType.Rand, Model.BrandID.ToString(), Model.ProductID)
+            <div id="clear">
+            </div>
+        </div>
+        <div class="p10 mt10 pl_box details2">
+            <a id="Comment" name="Comment"></a>
+            <ul class=" bb1s db h35 ofh fix">
+                <li class=" pl_box_title db fl"></li>
+                <li class="db fr"></li>
+            </ul>
+            <div id="s1">
+                <div id="divComment">
+                    <!--暂无评论-->
+                    <dl class="hide">
+                        <div class="pl_user_say">
+                            <div style="padding-top: 15px; text-align: center;">
+                                暂无评论.</div>
+                        </div>
+                    </dl>
+                    <!--暂无评论-->
+                    <div id="tc">
+                        <dl>
+                            <div class="pl_user_say">
+                                @product.SimliarProductComments(Model.ProductID)
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='../Content/images/wine.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>2014兰lj</strong></dd>
+                                            <dd>
+                                                <span>2014-2-26 13:28:56</span></dd>
+                                        </li>
+                                        <li>很满意</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='../Content/images/wine.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>袁铁锤</strong></dd>
+                                            <dd>
+                                                <span>2014-2-26 10:26:51</span></dd>
+                                        </li>
+                                        <li>买2瓶酒怎么不陪一个原厂包装袋，显得太小家子气了</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='../Content/images/wine.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>rjiao</strong></dd>
+                                            <dd>
+                                                <span>2014-2-26 9:12:11</span></dd>
+                                        </li>
+                                        <li>真的感谢购酒网提供这么物美价廉的酒!</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='/image/face/1.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>rjiao</strong></dd>
+                                            <dd>
+                                                <span>2014-2-26 9:11:14</span></dd>
+                                        </li>
+                                        <li>真的感谢购酒网！</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='/Content/images/wine.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>rjiao</strong></dd>
+                                            <dd>
+                                                <span>2014-2-26 9:10:41</span></dd>
+                                        </li>
+                                        <li>好酒不贵！</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='/image/face/1.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>xuanyong123</strong></dd>
+                                            <dd>
+                                                <span>2014-2-25 22:04:09</span></dd>
+                                        </li>
+                                        <li>整箱包装不错，</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='/image/face/23.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>sd333</strong></dd>
+                                            <dd>
+                                                <span>2014-2-25 20:57:44</span></dd>
+                                        </li>
+                                        <li>不错，基本满意！</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="bb1d pb10 pt10">
+                                    <ul class="pl_face fl">
+                                        <img src='/image/face/23.jpg' width="45" height="45" />
+                                    </ul>
+                                    <ul class="pl_user_say_r fl">
+                                        <li>
+                                            <dd>
+                                                <strong>sd333</strong></dd>
+                                            <dd>
+                                                <span>2014-2-25 20:56:40</span></dd>
+                                        </li>
+                                        <li>不错，满意</li>
+                                    </ul>
+                                    <ul class="pl_star_2">
+                                        <li>
+                                            <dd class="s_10 star db fl">
+                                            </dd>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧-->
+    <div class="clear">
+    </div>
+</div>

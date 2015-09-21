@@ -1,0 +1,1910 @@
+/***************************************************************************/
+/*** 1.cps_CommissionRate >> Cps_CommissionRatio ***/
+
+--删除数据表中的老数据
+truncate table Cps_CommissionRatio
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('Cps_CommissionRatio') and name='ExtField') begin
+	alter table [Cps_CommissionRatio] add [ExtField] nvarchar(32);
+end
+
+Go
+
+--关闭自增
+set identity_insert Cps_CommissionRatio on
+
+--导入数据
+insert into goujiuwang_v5.dbo.Cps_CommissionRatio(ID,[CpsID],[ProductCategoryID],[CommissionRatio],[CreateTime],[ExtField],[IsDelete])
+SELECT [ID]
+		,[cps_UserID] as [CpsID]
+		,[pro_SeriesID] as [ProductCategoryID]
+		,[CommissionRate] as [CommissionRatio]
+		,[CreateTime] as [CreateTime]
+		,[ExtField] as [ExtField]
+		,(Case [State] when 255 then 255 else 0 end) as [IsDelete]
+	FROM goujiuwang_v4.[dbo].[cps_CommissionRate]		   
+		   
+		 
+--开启自增
+set identity_insert Cps_CommissionRatio off
+
+/***************************************************************************/
+/*** 2.cps_LinkRecord >> cps_LinkRecord ***/
+
+--删除数据表中的老数据
+truncate table cps_LinkRecord
+
+Go
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('cps_LinkRecord') and name='ExtField') begin
+	alter table [cps_LinkRecord] add [ExtField] nvarchar(50);
+end
+
+if exists(select * from syscolumns where id=object_id('cps_LinkRecord') and name='URL') begin
+	alter table [cps_LinkRecord] alter column [URL] nvarchar(1024);
+end
+
+
+if exists(select * from syscolumns where id=object_id('cps_LinkRecord') and name='TargetURL') begin
+	alter table [cps_LinkRecord] alter column [TargetURL] nvarchar(4000);
+end
+
+Go
+
+--关闭自增
+set identity_insert cps_LinkRecord on
+
+Go
+
+--导入数据
+insert into goujiuwang_v5.dbo.cps_LinkRecord(ID,[CpsID],[URL],[TargetURL],[CreateTime],[ExtField],[IsDelete])
+SELECT [ID]
+		,[cps_UserId] as [CpsID]
+		,[Url] as [URL]
+		,[PushUrl] as [TargetURL]
+		,[CreateTime] as [CreateTime]
+		,[ExtField] as [ExtField]
+		,[State]  as [IsDelete]  
+	FROM goujiuwang_v4.[dbo].[cps_LinkRecord]	
+	
+Go	   
+		 
+--开启自增
+set identity_insert cps_LinkRecord off
+
+Go
+
+
+/***************************************************************************/
+/*** 3.Cps_OrderPushRecord >> Cps_OrderPushRecord ***********************************/
+
+--删除数据表中的老数据
+truncate table Cps_OrderPushRecord
+
+Go
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('Cps_OrderPushRecord') and name='ExtField') begin
+	alter table [Cps_OrderPushRecord] add [ExtField] nvarchar(50);
+end
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('Cps_OrderPushRecord') and name='OrderCode') begin
+	alter table [Cps_OrderPushRecord] add OrderCode varchar(64);
+end
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('Cps_OrderPushRecord') and name='OrderID') begin
+	alter table [Cps_OrderPushRecord] add [OrderID] int;
+end
+
+Go
+
+--关闭自增
+set identity_insert Cps_OrderPushRecord on
+
+Go
+
+--导入数据
+insert into goujiuwang_v5.dbo.cps_OrderPushRecord(ID,[OrderCode],[OrderID],[CpsID],[PushURL],[AcceptParameter],[IsDelete],[CreateTime],[ExtField])
+SELECT [ID]
+		,[odr_OrderNumber] as OrderCode
+		,0 as [OrderID]
+		,[cps_UserID] as [CpsID]
+		,len([PushUrl]) as [PushURL]
+		,[AcceptParms] as [AcceptParameter]
+		,[State] as [IsDelete]
+		,[CreateTime] as [CreateTime]
+		,[ExtField]
+	FROM goujiuwang_v4.[dbo].[cps_OrderPushRecord]
+	
+Go
+		 
+--开启自增
+set identity_insert Cps_OrderPushRecord off
+
+Go
+
+/***************************************************************************/
+/*** 4.Usr_Level >> User_Level ***********************************/
+
+--删除数据表中的老数据
+truncate table User_Level
+
+Go
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('User_Level') and name='OfferPercent') begin
+	alter table [User_Level] add OfferPercent float(53);
+end
+
+--修改数据表：
+if not exists(select * from syscolumns where id=object_id('User_Level') and name='ExtField') begin
+	alter table [User_Level] add ExtField varchar(64);
+end
+
+Go
+
+--关闭自增
+set identity_insert User_Level on
+
+Go
+
+--导入数据
+insert into goujiuwang_v5.dbo.User_Level(ID,[Name],[Level],[Money],[OfferPercent],[IsDelete],[CreateTime],[ExtField])
+SELECT [ID]
+		,[LevelName] as [Name]
+		,[Level] as [Level]
+		,[Amount] as [Money]
+		,[OfferPercent]
+		,[State] as [IsDelete]
+		,[CreateTime] as [CreateTime]
+		,[ExtField] as [ExtField]
+	FROM goujiuwang_v4.[dbo].[usr_Level]
+
+Go
+
+--开启自增
+set identity_insert User_Level off
+
+Go
+
+/***************************************************************************/
+/*** 5.usr_User >> User (此代码有问题)****************************************************/
+
+--删除数据表中的老数据
+truncate table [User]
+
+Go
+
+--修改数据表：
+if exists(select * from syscolumns where id=object_id('User') and name='Head') begin
+	alter table [User] alter column Head nvarchar(1024);
+end
+
+Go
+
+
+--关闭自增
+set identity_insert [User] on
+
+--导入数据
+insert into goujiuwang_v5.dbo.[User](ID,[CpsID],[UserLevelID],[Head],[Email],[EmailValidate],[Mobile],[MobileValidate],[LoginName],[NickName],[LoginPassword],[Name],[Age],[Gender],[Integral],[CountyID],[Address],[QQ],[MSN],[IsDelete],[Status],[CreateTime],[LastLoginTime],[OpenID])
+SELECT [ID]
+		,[cps_UserID] as [CpsID]
+		,[usr_UserLevelID] as [UserLevelID]
+		,[FacePic] as [Head]
+		,[Mail] as [Email]
+		,[MailVali] as [EmailValidate]
+		,[Mob] as [Mobile]
+		,[MobVali] as [MobileValidate]
+		,isnull([LoginName],'Null') as [LoginName]
+		,[NickName] as [NickName]
+		,[LoginPass] as [LoginPassword]
+		,[Name] as [Name]
+		,0 as [Age]
+		,(case when [Sex] = N'男' then 1 else 0 end) as [Gender]
+		,0 as [Integral]
+		,[rgn_CountyID] as [CountyID]
+		,[Addr] as [Address]
+		,[QQ] as [QQ]
+		,[MSN] as [MSN]
+		,(case when ([State]= 255) then 255 else 0 end) as [IsDelete]
+		,(case when ([State]= 255) then 0 else [State] end) as [Status]
+		,[CreateTime] as [CreateTime]
+		,[LastLoginTime] as [LastLoginTime]
+		,[ExtField] [OpenID]
+	FROM goujiuwang_v4.[dbo].[usr_User]
+		 
+--开启自增
+set identity_insert [User] off
+
+
+/***************************************************************************/
+/*** 6.Usr_FindMailPassword >> v4_Usr_FindMailPassword ***********************************/
+
+--删除数据表中的老数据
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'v4_Usr_FindMailPassword') AND type in (N'U'))
+BEGIN
+DROP TABLE [v4_Usr_FindMailPassword]
+END
+
+CREATE TABLE [dbo].[v4_Usr_FindMailPassword] (
+	[ID] int NOT NULL IDENTITY PRIMARY KEY, 
+	[usr_UserID] int NOT NULL, 
+	[VirificationCode] varchar(100) NOT NULL, 
+	[Mail] varchar(100), 
+	[State] int NOT NULL DEFAULT ((0)), 
+	[CreateTime] datetime NOT NULL DEFAULT (getdate()), 
+	[FailTime] datetime DEFAULT (getdate()), 
+	[ExtField] nvarchar(50)
+)
+
+
+truncate table v4_Usr_FindMailPassword
+
+--关闭自增
+set identity_insert v4_Usr_FindMailPassword on
+
+
+--导入数据
+insert into goujiuwang_v5.dbo.v4_Usr_FindMailPassword(ID,[usr_UserID],[VirificationCode],[Mail],[State],[CreateTime],[FailTime],[ExtField])
+SELECT [ID]
+		,[usr_UserID]
+		,[VirificationCode]
+		,[Mail]
+		,[State]
+		,[CreateTime]
+		,[FailTime]
+		,[ExtField]
+	FROM goujiuwang_v4.[dbo].[usr_FindMailPassword]
+		 
+--开启自增
+set identity_insert v4_Usr_FindMailPassword off
+
+/***************************************************************************/
+/*** 7.usr_UserReceiveAddr >> User_RecieveAddress***************************/
+--修改数据表
+if not exists(select * from syscolumns where id=object_id('User_RecieveAddress') and name='ExtField') begin
+	alter table [User_RecieveAddress] add [ExtField] nvarchar(50) null;
+end
+
+if exists(select * from syscolumns where id=object_id('User_RecieveAddress') and name='Consignee') begin
+	alter table [User_RecieveAddress] alter column [Consignee] nvarchar(50) null;
+end
+Go
+
+--删除数据表中的老数据
+truncate table User_RecieveAddress
+
+Go
+
+--关闭自增
+set identity_insert User_RecieveAddress On
+
+Go
+
+--导入数据
+insert into goujiuwang_v5.dbo.User_RecieveAddress(
+		[ID]
+      ,UserID
+      ,[CountyID]
+      ,[Consignee]
+      ,[Address]
+      ,[ZipCode]
+      ,[Tel]
+      ,[Mobile]
+	  ,[Email]
+	  ,[isdefault]
+      ,[IsDelete]
+      ,[CreateTime]
+      ,[ExtField]
+)
+SELECT [ID]
+      ,[usr_UserID] as UserID
+      ,[rgn_CountyID] as [CountyID]
+      ,[Consignee] as [Consignee]
+      ,[Addr] as [Address]
+      ,[Zipcode] as [ZipCode]
+      ,[Tel] as [Tel]
+      ,isnull([Mob],'') as [Mobile]
+	  ,'' as [Email]
+	  ,0 as isdefault
+      ,[State] as [IsDelete]
+      ,isnull([CreateTime],getdate()) as [CreateTime]
+      ,[ExtField] as [ExtField]
+	FROM goujiuwang_v4.[dbo].[usr_UserReceiveAddr]
+		 
+Go
+
+--开启自增
+set identity_insert User_RecieveAddress off
+
+Go
+
+/***************************************************************************/
+/*** 7.usr_User >> User_CollectRecord***************************************/
+
+--删除数据表中的老数据
+truncate table [User_CollectRecord]
+
+--关闭自增
+set identity_insert [User_CollectRecord] on
+
+--导入数据
+insert into goujiuwang_v5.dbo.[User_CollectRecord]([ID],[UserID],[ProductID],[IsDelete],[CreateTime])
+SELECT [ID]
+		,[usr_UserID] AS [UserID]
+		,[pro_ProductID] AS [ProductID]
+		,[State] AS [IsDelete]
+		,[CreateTime] AS [CreateTime]
+	FROM goujiuwang_v4.[dbo].[usr_ProductCollection]
+		 
+--开启自增
+set identity_insert [User_CollectRecord] off
+
+
+
+/***************************************************************************/
+/*** 8.amt_Account >> User_Account***************************************/
+
+--删除数据表中的老数据
+truncate table [User_Account]
+
+--导入数据,
+insert into goujiuwang_v5.dbo.[User_Account]([UserID],[Balance],[Status],[IsDelete],[CreateTime])
+SELECT [usr_UserID] as [UserID]
+		,sum([Money]) [Balance] 
+		,(case when max([State])=255 then 2 else 1 end) [Status]
+		,(case when max([State])=255 then 255 else 0 end) [IsDelete]
+		,min([CreateTime]) as [CreateTime]
+	FROM goujiuwang_v4.[dbo].[amt_Account]
+where [State]=0
+group by usr_userID
+union all
+Select 
+ ID as UserID,
+	   0 as [Balance],
+	   (case when [State]=255 then 2 else 1 end) as [Status],
+	   (case when [State]=255 then 255 else 0 end) as [IsDelete],
+	   [CreateTime] as [CreateTime]
+	  from goujiuwang_v4.[dbo].[usr_User] where ID not in (select [usr_UserID] from goujiuwang_v4.[dbo].[amt_Account] where [State]=0)
+
+
+	  
+/***************************************************************************/
+/*** 9.amt_Account >> User_Account_Details***************************************/
+
+--删除数据表中的老数据
+truncate table [User_Account_Details]
+
+--导入数据,
+insert into goujiuwang_v5.dbo.[User_Account_Details]([UserID],[UserAccountID],[Money],[OperateType],[Description],[IsDelete],[CreateTime])
+SELECT [usr_UserID] as [UserID]
+		,0 as [UserAccountID] 
+		,[Money] as [Money]
+		,(case when [TypeID]=0 then 1 when [TypeID]=1 then 2 end) as [OperateType]
+		,[Remark] as [Description]
+		,[State] as [IsDelete]
+		,[CreateTime]
+	FROM goujiuwang_v4.[dbo].[amt_Account]
+	
+--设置虚拟账户对应的编码
+Update User_Account_Details set UserAccountID = User_Account.ID 
+From User_Account where User_Account_Details.UserID = User_Account.UserID
+
+-----------------------------------------------------------------------
+--用户V5系统缺少的用户相关表
+
+--usr_Subscibe
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_usr_Subscibe]') AND type in (N'U'))
+	DROP TABLE [dbo].[v4_usr_Subscibe]
+GO
+	
+SELECT *
+INTO [v4_usr_Subscibe]
+FROM goujiuwang_v4.[dbo].[usr_Subscibe]
+
+--usr_UserSignRecord
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_usr_UserSignRecord]') AND type in (N'U'))
+	DROP TABLE [dbo].[v4_usr_UserSignRecord]
+GO
+	
+SELECT *
+INTO [v4_usr_UserSignRecord]
+FROM goujiuwang_v4.[dbo].[usr_UserSignRecord]
+
+
+/********************************************************************************/
+/**					订单部分数据导入							*************/
+/********************************************************************************/
+
+/***************************************************************************/
+/*** 10.odr_Order >> Order *************************************************/
+
+--删除数据表中的老数据
+
+--修改数据表：
+go
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_TransferTime') begin
+	alter table [Order] add [v4_TransferTime] nvarchar(40) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_cps_User') begin
+	alter table [Order] add [v4_cps_User] varchar(32) null; 
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_CookieFile') begin
+	alter table [Order] add [v4_CookieFile] varchar(80) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_ClientIP') begin
+	alter table [Order] add [v4_ClientIP] varchar(32) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_ClientBrowser') begin
+	alter table [Order] add [v4_ClientBrowser] nvarchar(256) null; 
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_Warn') begin
+	alter table [Order] add [v4_Warn] tinyint null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_UpdateInventoryNo') begin
+	alter table [Order] add [v4_UpdateInventoryNo] bit default(0);
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_ApiType') begin
+	alter table [Order] add [v4_ApiType] int null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='v4_ApiOrderNo') begin
+	alter table [Order] add [v4_ApiOrderNo] varchar(50) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order') and name='ExtField') begin
+	alter table [Order] add [ExtField] nvarchar(50) null;
+end
+
+go
+
+truncate table [Order]
+
+--关闭自增
+set identity_insert [Order] on
+
+--导入数据
+insert into goujiuwang_v5.dbo.[Order](ID,[PaymentMethodID],[OrderCode],[OrderNumber],[TotalMoney],[TotalIntegral],[UserID],[RecieveAddressID],[IsRequireInvoice],[remark],[DeliveryCost],[CpsID],[PaymentStatus],[isDelete],[Status],[CreateTime],[v4_TransferTime],[v4_cps_User],[v4_CookieFile],[v4_ClientIP],[v4_ClientBrowser],[v4_Warn],[v4_UpdateInventoryNo],[v4_ApiType],[v4_ApiOrderNo],[Description])
+SELECT [ID] as ID                        
+		,ISNULL([PayOnlyOnline],0) as PaymentMethodID
+		,[Number] as OrderCode	
+		,case len([Number])
+			when 13 then odr_Order.Number
+			else '201'+cast((cast(odr_Order.Number as bigint) - (case right(datepart(s,odr_Order.CreateTime),1)
+					when 0 then 3
+					else  right(datepart(s,odr_Order.CreateTime),1)
+				end)*11111111) as varchar(15))
+				end as OrderNumber
+		,[SumMoney] as TotalMoney
+		,isnull([SumScore],1) as TotalIntegral
+		,[usr_UserID] as UserID
+		,[usr_UserReceiveAddrID] as RecieveAddressID
+		,Case when len(isnull([InvoiceContent],''))>0 then 0 else 1 end as IsRequireInvoice
+		,[Intro] as remark
+		,[Freight] as DeliveryCost
+		,[cps_UserID] as CpsID
+		,[PayState] as PaymentStatus
+		,Case when [State] <> 255 then 0 else 255 end as isDelete 
+		,Case when [State] = 255 then 8 when (([odr_PayWayChildID]>2) and PayState=0) then 100 else [State] end as [Status]
+		--订单状态（100：待付款，0：待确认，1：已确认，2：已发货，3：已签收，4：ERP 作废，5：已损失，6：已取消，8：官网作废）
+		--0未处理 1已审核 2已发货 3已收货 4已退货 5已损失 6未审核 7未通过 8已作废 9已开票 10发票待开 11已开随付单 12货已配齐 13已包装 14部分退货 15部分换货 16已验货
+		,[CreateTime] as CreateTime
+		,[TransferTime] as [TransferTime]
+		,[cps_user] as [v4_cps_User]
+		,[CookieFile] as [v4_CookieFile]
+		,[ClientIP] as [v4_ClientIP]
+		,[ClientBrowser] as [v4_ClientBrowser]
+		,[Warn] as [v4_Warn]
+		,[UpdateInventoryNo] as [v4_UpdateInventoryNo]
+		,[ApiType] as [v4_ApiType]
+		,[ApiOrderNo] as [v4_ApiOrderNo]
+		,[ExtField] as Description
+	FROM goujiuwang_v4.[dbo].[odr_Order]
+		 
+--开启自增
+set identity_insert [Order] off
+
+
+/***************************************************************************/
+/*** 11.lgs_Tracking >> Order_Delivery_Tracking ************************************************/
+
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_Order_Delivery_Tracking_1_IsDelete]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Order_Delivery_Tracking] DROP CONSTRAINT [DF_Order_Delivery_Tracking_1_IsDelete]
+END
+
+GO
+
+/****** Object:  Table [dbo].[Order_Delivery_Tracking]    Script Date: 02/20/2014 15:49:33 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Order_Delivery_Tracking]') AND type in (N'U'))
+DROP TABLE [dbo].[Order_Delivery_Tracking]
+GO
+
+
+/****** Object:  Table [dbo].[Order_Delivery_Tracking]    Script Date: 02/20/2014 15:49:33 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Order_Delivery_Tracking](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderID] [int] NOT NULL,
+	[Express] [nvarchar](64) NULL,
+	[MailNo] [nvarchar](64) NOT NULL,
+	[Status] [nvarchar](32) NULL,
+	[StatusTime] [datetime] NOT NULL,
+	[Remark] [nvarchar](max) NULL,
+	[Steps] [nvarchar](max) NOT NULL,
+	[GJWStatus] [int] NOT NULL,
+	[ExtField] [nvarchar](max) NULL,
+	[IsDelete] [int] NOT NULL,
+	[CreateTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_Order_Delivery_Tracking_1] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'订单编码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Order_Delivery_Tracking', @level2type=N'COLUMN',@level2name=N'OrderID'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'快递公司' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Order_Delivery_Tracking', @level2type=N'COLUMN',@level2name=N'Express'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'快递单号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Order_Delivery_Tracking', @level2type=N'COLUMN',@level2name=N'MailNo'
+GO
+
+ALTER TABLE [dbo].[Order_Delivery_Tracking] ADD  CONSTRAINT [DF_Order_Delivery_Tracking_1_IsDelete]  DEFAULT ((0)) FOR [IsDelete]
+GO
+
+--删除数据表中的老数据
+go
+
+truncate table [Order_Delivery_Tracking]
+
+--关闭自增
+set identity_insert [Order_Delivery_Tracking] on
+
+--导入数据
+insert into goujiuwang_v5.dbo.[Order_Delivery_Tracking]([ID]
+		,OrderID
+		,Express
+		,MailNo
+		,Status
+		,StatusTime
+		,Remark
+		,Steps
+		,GJWStatus
+		,CreateTime
+		,[ExtField])
+SELECT [ID]
+		,[odr_OrderID] as OrderID
+		,null as Express
+		,[MailNo] as MailNo
+		,[Status] as Status
+		,[StatusTime] as StatusTime
+		,[Remark] as Remark
+		,isnull([Steps],'') as Steps
+		,[State] as GJWStatus
+		,[CreateTime] as CreateTime
+		,null as [ExtField]
+	FROM goujiuwang_v4.[dbo].[lgs_Tracking]
+		 
+--开启自增
+set identity_insert [Order_Delivery_Tracking] off
+
+
+/**********************************************************************************/
+/*** 12.Odr_Order >> Order_Invoice ************************************************/
+
+GO
+
+-->> Order_Invoice 备注：需要修改代码以适应旧数据
+--修改Order_invoice，增加数据列
+
+if not exists(select * from syscolumns where id=object_id('Order_Invoice') and name='InvoiceContent') begin
+	alter table Order_Invoice add [InvoiceContent] nvarchar(32);
+end
+
+go
+
+Insert into Order_Invoice(OrderID,
+		InvoiceTypeID
+		,InvoiceTitle
+		,[InvoiceContentID] --老数据无法找到发票内容ID
+		,InvoiceContent --老数据示例：种类：食品；金额：929
+		,[InvoiceCost]          --老数据在InvoiceContent中
+		,[CreateTime]
+		,[IsDelete])
+SELECT o.[ID] as OrderID
+		,0 as InvoiceTypeID
+		,isnull([InvoiceTitle],'') as InvoiceTitle
+		,0 as [InvoiceContentID] --老数据无法找到发票内容ID
+		,[InvoiceContent] as InvoiceContent --老数据示例：种类：食品；金额：929
+		,0 as [InvoiceCost]          --老数据在InvoiceContent中
+		,[CreateTime]
+		,0 [IsDelete]
+	FROM goujiuwang_v4.[dbo].[odr_Order] o
+	
+
+
+
+/**********************************************************************************/
+/*** 13.-->>创建Order_Change表以对应 V4 数据表：odr_OrderChange                ****/
+
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_odr_OrderChange]') AND type in (N'U'))
+DROP TABLE [dbo].[v4_odr_OrderChange]
+GO
+
+CREATE TABLE [dbo].[v4_odr_OrderChange] (
+	[ID] int NOT NULL IDENTITY PRIMARY KEY, 
+	[odr_OrderID] int NOT NULL, 
+	[Content] nvarchar(100) NOT NULL, 
+	[adm_AdminID] int NOT NULL, 
+	[State] tinyint DEFAULT ((0)), 
+	[CreateTime] datetime DEFAULT (getdate())
+)
+GO
+
+--删除老数据
+truncate table v4_odr_OrderChange
+
+--关闭自增
+set identity_insert [v4_odr_OrderChange] on
+
+Insert into v4_odr_OrderChange([ID]
+		,[odr_OrderID]
+		,[Content]
+		,[adm_AdminID]
+		,[State]
+		,[CreateTime])
+SELECT [ID]
+		,[odr_OrderID]
+		,[Content]
+		,[adm_AdminID]
+		,[State]
+		,[CreateTime]
+FROM goujiuwang_v4.[dbo].[odr_OrderChange]	
+	
+--开启自增
+set identity_insert [v4_odr_OrderChange] off
+
+
+
+/**********************************************************************************/
+/*** 14.odr_OrderCircuit >>Order_Status_Tracking   ****/
+
+GO
+if not exists(select * from syscolumns where id=object_id('Order_Status_Tracking') and name='ExtField') begin
+	alter table [Order_Status_Tracking] add [ExtField] nvarchar(128) null;
+end
+
+Go
+
+if exists(select * from syscolumns where id=object_id('Order_Status_Tracking') and name='Remark') begin
+	Alter Table Order_Status_Tracking ALTER column Remark nVARCHAR(2000)
+end
+GO
+
+--删除老数据
+truncate table Order_Status_Tracking
+
+--关闭自增
+set identity_insert [Order_Status_Tracking] on
+
+Insert into Order_Status_Tracking(ID
+		,OrderID
+		,[Status]
+		,Remark
+		,EmployeeID
+		,UserID		
+		,isDelete 
+		,CreateTime
+		,[ExtField] )
+SELECT [ID] as ID
+		,[odr_OrderID] as OrderID
+		,[TransferState] as [Status]
+		,[intro] as Remark
+		,[adm_AdminID] as EmployeeID
+		,0 as UserID		
+		,[State] as isDelete 
+		,[CreateTime] as CreateTime
+		,[ExtField] 
+FROM goujiuwang_v4.[dbo].[odr_OrderCircuit]	
+	
+--开启自增
+set identity_insert [Order_Status_Tracking] off
+
+
+/**********************************************************************************/
+/*** 15.-->>创建v4_odr_OrderDiscount表以对应 V4 数据表：odr_OrderDiscount      ****/
+
+
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_odr_OrderDiscount]') AND type in (N'U'))
+DROP TABLE [dbo].[v4_odr_OrderDiscount]
+GO
+
+-->>v4_odr_OrderDiscount 备注：新增的表，用于替换
+CREATE TABLE [dbo].[v4_odr_OrderDiscount] (
+	[ID] int NOT NULL IDENTITY PRIMARY KEY, 
+	[odr_OrderID] int NOT NULL, 
+	[Intro] nvarchar(50), 
+	[Money] float(53) NOT NULL, 
+	[DType] tinyint NOT NULL, 
+	[State] int NOT NULL DEFAULT ((0)), 
+	[CreateTime] datetime NOT NULL DEFAULT (getdate()), 
+	[ExtField] nvarchar(128)
+)
+GO
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'订单折扣记录（v4_odr_OrderDiscount）',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'v4_odr_OrderDiscount';
+
+GO
+
+--删除老数据
+truncate table v4_odr_OrderDiscount
+
+--关闭自增
+set identity_insert [v4_odr_OrderDiscount] on
+
+Insert into v4_odr_OrderDiscount([ID]
+		,[odr_OrderID]
+		,[Intro]
+		,[Money]					
+		,[DType]                    
+		,[State]               
+		,[CreateTime] 
+		,[ExtField])
+SELECT  [ID]
+		,[odr_OrderID]
+		,[Intro]
+		,[Money]					
+		,[DType]                    
+		,[State]             
+		,[CreateTime] 
+		,[ExtField]
+FROM goujiuwang_v4.[dbo].[odr_OrderDiscount]	
+	
+--开启自增
+set identity_insert [v4_odr_OrderDiscount] off
+
+
+
+/**********************************************************************************/
+/*** 15.odr_OrderProduct >> Order_Product   ****/	/**todo：待处理：【odr_OrderProductGift】**/
+
+GO
+
+
+-- 添加字段：
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='PromotionID') begin
+	alter table [Order_Product] add [PromotionID] nvarchar(200) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='PromotionType') begin
+	alter table [Order_Product] add [PromotionType] nvarchar(200) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='PromotionResult') begin
+	alter table [Order_Product] add [PromotionResult] nvarchar(200) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='MarketPrice') begin
+	alter table [Order_Product] add [MarketPrice] float default(0);
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='ProductName') begin
+	alter table [Order_Product] add [ProductName] nvarchar(128) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='Integral') begin
+	alter table [Order_Product] add [Integral] int null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='RebateRate') begin
+	alter table [Order_Product] add [RebateRate] float(50) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='Commission') begin
+	alter table [Order_Product] add [Commission] float(50) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='Remark') begin
+	alter table [Order_Product] add [Remark] nvarchar(1024) null;
+end
+
+if not exists(select * from syscolumns where id=object_id('Order_Product') and name='ExtField') begin
+	alter table [Order_Product] add [ExtField] nvarchar(1024) null;
+end
+
+GO
+
+--删除老数据
+truncate table Order_Product
+
+--关闭自增
+set identity_insert [Order_Product] on
+
+Go
+
+Insert into Order_Product([ID]
+		,[OrderID]
+		,[ProductID]
+		,[MarketPrice]
+		,[Quantity]
+		,[CreateTime]
+		,[IsDelete]
+		,[PromotionID] 
+		,[PromotionType]
+		,[PromotionResult]
+		,[ProductName]
+		,[TransactPrice]
+		,[Integral]
+		,[RebateRate]
+		,[Commission]
+		,[Remark]
+		,[ExtField] )
+SELECT [ID]
+		,[odr_OrderID] as [OrderID]
+		,[pro_ProductID] as [ProductID]
+		,[UserPrice] as [MarketPrice]
+		,[Quantity] as [Quantity]
+		,[CreateTime] as [CreateTime]
+		,[State] as [IsDelete]
+		,[PromotionID] 
+		,[PromotionType]
+		,[PromotionResult]
+		,[ProductName]
+		,[Price] as [TransactPrice]
+		,[Score] as [Integral]
+		,[RebateRate]
+		,[Commission]
+		,[Intro] as [Remark]
+		,[ExtField]
+FROM goujiuwang_v4.[dbo].[odr_OrderProduct]	
+
+Go
+
+--开启自增
+set identity_insert [Order_Product] off
+
+Go
+
+--赠品数据
+Insert into Order_Product(OrderID
+		,ProductID
+		,ProductName
+		,Quantity
+		,PromotionID
+		,PromotionType
+		,[IsDelete]
+		,[CreateTime]
+		,[TransactPrice]
+		,[PromotionResult]
+		,[MarketPrice]
+		,[Integral]
+		,[RebateRate]
+		,[Commission]
+		,[Remark]
+		,[ExtField] )
+SELECT [odr_OrderID] as OrderID
+		,[pro_ProductID] as ProductID
+		,'【赠品】'+[GiftName] as ProductName
+		,[Quantity] as Quantity
+		,[pmt_FullGiftID] as PromotionID
+		,11 as PromotionType
+		,[State] as [IsDelete]
+		,[CreateTime] as [CreateTime]
+		,0 as [TransactPrice]
+		,1 as [PromotionResult]
+		,0 as [MarketPrice]
+		,0 as [Integral]
+		,0 as  [RebateRate]
+		,0 as [Commission]
+		,null as [Remark]
+		,null as [ExtField]
+	FROM goujiuwang_v4.[dbo].[odr_OrderProductFullGift]
+
+Go
+
+	
+/**********************************************************************************/
+/*** 16.odr_OrderProduct,odr_OrderProductFullGift >> Order_Product_Promote   ****/	/**todo：待处理：【odr_OrderProductGift】**/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Order_Product_Promote]') AND type in (N'U'))
+	DROP TABLE [dbo].[Order_Product_Promote]
+GO
+
+CREATE TABLE [dbo].[Order_Product_Promote] (
+	[ID] int NOT NULL IDENTITY PRIMARY KEY, 
+	[OrderID] int NOT NULL, 
+	[OrderProductID] int NOT NULL, 
+	[PromoteType] int NOT NULL, 
+	[PromoteResult] int NOT NULL, 
+	[PromoteID] int NOT NULL, 
+	[Remark] nvarchar(256), 
+	[ExtField] nvarchar(512), 
+	[CreateTime] datetime NOT NULL DEFAULT (getdate())
+)
+GO
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'订单商品编码',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Order_Product_Promote',@level2type=N'Column',@level2name=N'OrderProductID';
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'活动类型（限时抢购：1，团购：2，等级价格：3，满额促销：11，满件促销：12）',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Order_Product_Promote',@level2type=N'Column',@level2name=N'PromoteType';
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'促销编码',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Order_Product_Promote',@level2type=N'Column',@level2name=N'PromoteID';
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'备注说明',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Order_Product_Promote',@level2type=N'Column',@level2name=N'Remark';
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'扩展字段',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Order_Product_Promote',@level2type=N'Column',@level2name=N'ExtField';
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'创建时间',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Order_Product_Promote',@level2type=N'Column',@level2name=N'CreateTime';
+GO
+
+--删除老数据
+truncate table order_product_promote
+
+declare @id int, @orderId int,@promotionID varchar(50),@PromotionType varchar(50),@PromotionResult varchar(50),@createdate datetime
+declare cu_adcolumn cursor for 
+select distinct op.Id, op.orderId, op.promotionID,op.PromotionType,op.PromotionResult,createtime
+from order_product op Where PromotionId is not null and PromotionId<>'0'
+open cu_adcolumn;
+fetch next from cu_adcolumn into  @id, @orderId, @promotionID,@PromotionType,@PromotionResult,@createdate
+
+while(@@fetch_status=0)
+begin
+insert into order_product_promote([OrderID] , 
+	[OrderProductID], 
+	[PromoteType], 
+	[PromoteID],
+	[PromoteResult],
+	[Remark],
+	[ExtField],
+	[CreateTime])
+--活动类型（限时抢购：1，团购：2，等级价格：3，满额促销：11，满件促销：12）
+select distinct a.orderId,a.id,
+case b.ptype when 'TeamBuy' then 2 when 'None' then 0 when 'OrderReduction' then 11 when 'LevelPrice' then 3 when 'PanicBuy' then 1 when 'Suit' then 12 when 'ProductSuit' then 12
+when 'OrderGift' then 12 when 'Vouchers' then 12 when 'QuotaReduction' then 11 when 'FullGift' then 12 else 0 end as ptype
+,a.pid,c.pres,'V4 老数据',null,@createdate
+From
+(Select ROW_NUMBER() OVER (order by @id)as sortid, @id id,@orderId orderID,short_str pid from split(@promotionID,','))a left join 
+(Select ROW_NUMBER() OVER (order by @id)as sortid, @id id,@orderId orderID,short_str ptype from split(@PromotionType,','))b on a.sortid = b.sortid 
+left join (Select ROW_NUMBER() OVER (order by @id)as sortid, @id id,@orderId orderID,short_str pres from split(@PromotionResult,','))c on a.sortid =b.sortid
+
+fetch next from cu_adcolumn into @id, @orderId, @promotionID,@PromotionType,@PromotionResult,@createdate
+end
+
+close cu_adcolumn;
+deallocate cu_adcolumn;
+
+
+  /************************************************************************/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_odr_OrderReturn]') AND type in (N'U'))
+	DROP TABLE [dbo].[v4_odr_OrderReturn]
+GO
+  
+--  --退货表
+--CREATE TABLE [dbo].[v4_odr_OrderReturn] (
+--	[ID] int NOT NULL IDENTITY PRIMARY KEY, 
+--	[OrderID] int NOT NULL, 
+--	[Reason] int DEFAULT ((0)), 
+--	[Remark] nvarchar(500), 
+--	[ReturnType] tinyint NOT NULL DEFAULT ((0)), 
+--	[TotalPrice] float(53) DEFAULT ((0.00)), 
+--	[SourceStatus] int NOT NULL DEFAULT ((0)), 
+--	[CreateTime] datetime NOT NULL DEFAULT (getdate()), 
+--	[EndTime] datetime, 
+--	[ExtField] nvarchar(50)
+--)
+--GO
+
+SELECT *
+INTO [v4_odr_OrderReturn]
+FROM goujiuwang_v4.[dbo].[odr_OrderReturn]
+
+----------------------------------------------------------
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_odr_OrderReturnAudit]') AND type in (N'U'))
+	DROP TABLE [dbo].[v4_odr_OrderReturnAudit]
+GO
+	
+SELECT *
+INTO [v4_odr_OrderReturnAudit]
+FROM goujiuwang_v4.[dbo].[odr_OrderReturnAudit]
+
+Go
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[v4_odr_OrderReturnProduct]') AND type in (N'U'))
+	DROP TABLE [dbo].[v4_odr_OrderReturnProduct]
+GO
+
+SELECT *
+INTO [v4_odr_OrderReturnProduct]
+FROM goujiuwang_v4.[dbo].[odr_OrderReturnProduct]
+
+Go
+
+-->>Config_ToPayCounty
+--创建表，便于设置到付区域
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Config_ToPayCounty]') AND type in (N'U'))
+	DROP TABLE [dbo].[Config_ToPayCounty]
+GO
+
+CREATE TABLE [dbo].[Config_ToPayCounty] (
+	[ID] int NOT NULL IDENTITY PRIMARY KEY , 
+	[PaymentTypeID] int NOT NULL, 
+	[CountyID] int NOT NULL DEFAULT (0), 
+	[isDelete] tinyint NOT NULL DEFAULT (0), 
+	[CreateTime] datetime NOT NULL DEFAULT (getdate()), 
+	[ExtField] nvarchar(50)
+)
+GO
+EXEC sp_addextendedproperty @name=N'MS_Description',@value=N'到付支持地区（odr_PayWayCounty）',@level0type=N'Schema',@level0name=N'dbo',@level1type=N'Table',@level1name=N'Config_ToPayCounty';
+GO
+
+set identity_insert [Config_ToPayCounty] on
+
+Go
+
+Insert into [Config_ToPayCounty]([ID]
+		,[PaymentTypeID]
+		,[CountyID]
+		,isDelete
+		,[CreateTime]
+		,[ExtField])
+SELECT [ID]
+		,[odr_PayWayChildID] as [PaymentTypeID]
+		,[rgn_CountyID] as [CountyID]
+		,[State] as isDelete
+		,[CreateTime]
+		,[ExtField]
+	FROM goujiuwang_v4.[dbo].[odr_PayWayCounty]
+
+Go
+
+set identity_insert [Config_ToPayCounty] off
+
+Go
+
+/*************************************************
+--导入订单表数据脚本
+未导入V4数据表：
+	序号	数据表名						未导入原因
+	1.		odr_OrderAdjust  				没有数据，怀疑从未使用
+	3.		odr_OrderProductGift			没有在V4中找到对应的Master表
+	4.		odr_OrderReplace				没有数据，怀疑从未使用；此功能为ERP系统处理，一期不涉及
+	5.		odr_OrderReplaceAudit			没有数据，怀疑从未使用；此功能为ERP系统处理，一期不涉及
+	6.		odr_OrderReplaceProduct	·		没有数据，怀疑从未使用；此功能为ERP系统处理，一期不涉及
+	
+	
+***********************************************/	
+
+
+/*****************************************************/
+if not exists(select * from syscolumns where id=object_id('Product_Category') and name='ExtField') begin
+	alter table [Product_Category] add [ExtField] nvarchar(1024) null;
+end
+
+Go
+
+Truncate table Product_Category
+
+Go 
+
+set identity_insert [Product_Category] on
+
+Insert Into Product_Category([ID]
+		,[ParentID]
+		,[Layer]
+		,[Sorting]
+		,[CategoryName]
+		,[CategoryNameSpell]
+		,[CategoryNameEnglish]
+		,[SEOKeywords]
+		,[SEODescription]
+		,[IsDisplay]
+		,IsGJW
+		,[IsDelete]
+		,[CreateTime]
+		,[ExtField])
+SELECT  [ID]as[ID]
+		,[ParentID]as[ParentID]
+		,[LevelIndex]as[Layer]
+		,[SortNo]as[Sorting]
+		,[TypeName]as[CategoryName]
+		,[PinYin]as[CategoryNameSpell]
+		,[English]as[CategoryNameEnglish]
+		,[Keywords]as[SEOKeywords]
+		,[Description]as[SEODescription]
+		,[IsShow]as[IsDisplay]
+, 0  as IsGJW
+		,[State]as[IsDelete]
+		,[CreateTime]as[CreateTime]
+		,[ExtField]
+	FROM goujiuwang_v4.[dbo].[pro_Series]
+	where ParentID = 0
+	
+Go
+	
+set identity_insert [Product_Category] off
+
+
+/*****************************************************/
+
+if not exists(select * from syscolumns where id=object_id('Product_Brand') and name='ExtField') begin
+	alter table [Product_Brand] add [ExtField] nvarchar(1024) null;
+end
+
+Go
+
+Truncate table Product_Brand
+
+Go 
+
+set identity_insert [Product_Brand] on
+
+-- 商品品牌
+	Insert into Product_Brand([ID]
+		,[ParentID]
+		,[ProductCategoryID]
+		,[Layer]
+		,[Sorting]
+		,[BrandName]
+		,[BrandNameSpell]
+		,[BrandNameEnglish]
+		,[SEOKeywords]
+		,[SEODescription]
+		,[IsDisplay]
+		,[IsDelete]
+		,[CreateTime]
+		,[ExtField])
+	SELECT [ID]as[ID]
+		,case when [ParentID] in (select [ID] from goujiuwang_v4.[dbo].[pro_Series] where ParentID=0) then 0 
+		      else [ParentID] end as [ParentID]
+		,[ParentID] as [ProductCategoryID]
+		,[LevelIndex]as[Layer]
+		,[SortNo]as[Sorting]
+		,[TypeName]as [BrandName]
+		,[PinYin]as[BrandNameSpell]
+		,[English]as[BrandNameEnglish]
+		,[Keywords]as[SEOKeywords]
+		,[Description]as[SEODescription]
+		,[IsShow]as[IsDisplay]
+		,[State]as[IsDelete]
+		,[CreateTime]as[CreateTime]
+		,[ExtField]
+	FROM goujiuwang_v4.[dbo].[pro_Series]
+	where ParentID<>0
+	
+	--插入数据后更新
+	-- 商品的父品牌 [ParentID]
+	--update [Product_Brand] set [ParentID] =0 where [ParentID] in(select [ID] from [Product_Category] where ParentID=1)
+	--商品子品牌 [ProductCategoryID] (1,2,3,4,5,6,7,8,9,10,386,387,784)
+		-- v4
+		--	Select* FROM [pro_Series] where ParentID =1 -- 父品牌
+		--	or ParentID in (select ID from [pro_Series] where ParentID =1) --子品牌
+	-- v5
+	/*
+	update [Product_Brand] set ProductCategoryID =@ID where ID in(
+	Select ID FROM [Product_Brand] where ProductCategoryID in (1,2,3,4,5,6,7,8,9,10,386,387,784) -- 父品牌
+	or ProductCategoryID in (select ID from [Product_Brand] where ProductCategoryID =@ID) --子品牌)
+
+	
+	declare @ID =1 --(1,2,3,4,5,6,7,8,9,10,386,387,784)
+	Select * FROM [Product_Brand] where ProductCategoryID = @ID -- 父品牌
+	or ProductCategoryID in (select ID from [Product_Brand] where ProductCategoryID =@ID) --子品牌
+	*/
+
+declare @id int
+declare cu_adcolumn cursor for 
+select distinct ID from Product_Category
+open cu_adcolumn;
+fetch next from cu_adcolumn into  @id
+
+while(@@fetch_status=0)
+begin
+	update [Product_Brand] set ProductCategoryID =@id where ID in(
+	Select ID FROM [Product_Brand] where ProductCategoryID=@id 
+	or ProductCategoryID in (select ID from [Product_Brand] where ProductCategoryID =@id))
+
+fetch next from cu_adcolumn into @id
+end
+
+close cu_adcolumn;
+deallocate cu_adcolumn;
+
+set identity_insert [Product_Brand] off
+
+
+
+/*****************************************************************************/
+truncate table [product] --3553
+
+Go
+
+set identity_insert [Product] On
+Go
+
+Insert Into [Product](
+	[ID]
+		,[Name]
+		,[Advertisement]
+		,[SEOTitle]
+		,[SEOKeywords]
+		,[SEODescription]
+		,[ParentCategoryID] -- 父类别
+		,[ProductCategoryID] -- 子类别
+		,[ParentBrandID] -- 父品牌
+		,[ProductBrandID] -- 子品牌
+		/*,[pro_ProductAttrID_Weight]
+		,[pro_ProductAttrID_Unit]
+		,[pro_ProductAttrID_Factory]
+		,[pro_ProductAttrID_Grape]
+		,[pro_ProductAttrID_NetQuantity]
+		,[pro_ProductAttrID_Chroma]
+		,[pro_ProductAttrID_Type]
+		,[pro_ProductAttrID_Container]
+		,[pro_ProductAttrID_Volume]
+		,[pro_ProductAttrID_Package]
+		,[pro_ProductAttrID_Year]
+		,[pro_ProductAttrID_Time]
+		,[pro_ProductAttrID_norms]
+		,[pro_ProductAttrID_Region]
+		,[pro_ProductAttrID_Price]
+		,[pro_CollectTypeID]*/
+		--,[IsShowCollect] -- 是否收藏频道显示
+		--,[IsMicroProduct] -- 是否微博商品
+		,[InventoryNumber] --虚拟库存
+		--,[SaleQuantity]
+		--,[SaleQuantity1]
+		--,[SaleQuantity30]
+		--,[Material] --原料
+		,[Barcode] -- 条形码
+		--,[GoodsID]
+		,[GoujiuPrice] --购酒网价格
+		,[MarketPrice] -- 市场价
+		--,[IsBill] 是否啤酒
+		,[Integral] -- 赠送积分
+		,[Introduce] -- 详细描述
+		,[PageView] --浏览量
+		--,[DescriptionScore] --描述相符评分 
+		,[Sorting] --排序号
+		--,[Pic] --默认图片
+		--,[IsSpecialSupply]--特供酒
+		--,[collection] --收藏酒
+		--,[Tag] --标签
+		,[SoldOfReality] --实际销量
+		,[SoldOfVirtual] --虚拟销量
+		--,[StrXML] --保存展示falsh细节图片脚本XML
+		,[Status] -- 状态
+		,[IsDelete] --删除标识
+		,[CreateTime] -- 创建时间
+		,[CommentNumber] --评论数
+		--,[ExtField]  --扩展字段
+		,[PromoteEndTime]
+)
+SELECT  [ID]
+		,[ProductName] as [Name]
+		,[Explain]as[Advertisement]
+		,''as[SEOTitle]
+		,[Keywords]as[SEOKeywords]
+		,[Description]as[SEODescription]
+		,0 as [ParentCategoryID] -- 父类别
+		,isnull((select ParentID from goujiuwang_v4.[dbo].[pro_Series] where ID =[pro_SeriesID_Area]),0) as [ProductCategoryID] -- 子类别
+		,isnull([pro_SeriesID_Area],0) as[ParentBrandID] -- 父品牌
+		,[pro_SeriesID_AreaChild] as [ProductBrandID] -- 子品牌
+		/*,[pro_ProductAttrID_Weight]
+		,[pro_ProductAttrID_Unit]
+		,[pro_ProductAttrID_Factory]
+		,[pro_ProductAttrID_Grape]
+		,[pro_ProductAttrID_NetQuantity]
+		,[pro_ProductAttrID_Chroma]
+		,[pro_ProductAttrID_Type]
+		,[pro_ProductAttrID_Container]
+		,[pro_ProductAttrID_Volume]
+		,[pro_ProductAttrID_Package]
+		,[pro_ProductAttrID_Year]
+		,[pro_ProductAttrID_Time]
+		,[pro_ProductAttrID_norms]
+		,[pro_ProductAttrID_Region]
+		,[pro_ProductAttrID_Price]
+		,[pro_CollectTypeID]*/
+		--,[IsShowCollect] -- 是否收藏频道显示
+		--,[IsMicroProduct] -- 是否微博商品
+		,isnull([InventoryNo],0) as[InventoryNumber] --虚拟库存
+		--,[SaleQuantity]
+		--,[SaleQuantity1]
+		--,[SaleQuantity30]
+		--,[Material] --原料
+		,[Mark]as[Barcode] -- 条形码
+		--,[GoodsID]
+		,[Price]as[GoujiuPrice] --购酒网价格
+		,[MarketPrice]as[MarketPrice] -- 市场价
+		--,[IsBill] 是否啤酒
+		,[Score]as[Integral] -- 赠送积分
+		,[Intro]AS[Introduce] -- 详细描述
+		,[ClickNo]as[PageView] --浏览量
+		--,[DescriptionScore] --描述相符评分 
+		,[SortNo]as[Sorting] --排序号
+		--,[Pic] --默认图片
+		--,[IsSpecialSupply]--特供酒
+		--,[collection] --收藏酒
+		--,[Tag] --标签
+		,isnull([SaleQuantityCount],0) as [SoldOfReality] --实际销量
+		,isnull([SaleQuantityCount],0)+100 as [SoldOfVirtual] --虚拟销量
+		--,[StrXML] --保存展示falsh细节图片脚本XML
+		,[State]as[Status] -- 状态
+		,case when [State]=255 then 255 else 0 end [IsDelete] --删除标识
+		,[CreateTime]as[CreateTime] -- 创建时间
+		,[SumComment]as[CommentNumber] --评论数
+		--,[ExtField]  --扩展字段
+		,''as[PromoteEndTime]
+	FROM goujiuwang_v4.[dbo].[pro_Product]
+	
+	Go
+	
+	set identity_insert [Product] off
+	
+	Go
+	
+	/***********************************************************/
+	---商品图片 
+	
+	--删除老数据
+	Truncate table [Picture]
+	
+	Go 
+	
+	set identity_insert [Picture] on
+	
+	Go
+	
+	Insert into [Picture] (
+		[ID]
+		--,[pro_ProductID]
+		,[Path]
+		--,[SortNo]
+		,[Status]
+		,[IsDelete]
+		,[CreateTime]
+		--,[ExtField]
+		,[ParentCategoryID]
+		, [ProductCategoryID]
+		,[ParentBrandID]
+		,[ProductBrandID]
+		,[Name]
+		, [ThumbnailPath]
+		,[FileName]
+		, [Type]
+		,[Size]
+		,[Height]
+		,[Width]
+		,[UploadTime]
+	)
+		SELECT [ID]as[ID]
+		--,[pro_ProductID]
+		,[Pic]as[Path]
+		--,[SortNo]
+		,0 as [Status]
+		,[State]as[IsDelete]
+		,[CreateTime]as[CreateTime]
+		--,[ExtField]
+		,-1 as[ParentCategoryID]
+		, -1 as [ProductCategoryID]
+		,-1as[ParentBrandID]
+		,-1 as[ProductBrandID]
+		, '' as [Name]
+		, '' as [ThumbnailPath]
+		,'' as [FileName]
+		, '' as [Type]
+		,0 as [Size]
+		,0 as [Height]
+		,0 as [Width]
+		,[CreateTime] as [UploadTime]
+	FROM goujiuwang_v4.[dbo].[pro_ProductPic]
+	
+	Go 
+	
+	set identity_insert [Picture] off
+	
+	Go 
+	
+	
+
+	/*********************************************************************/
+	-- 商品图片表
+	
+	Truncate table [Product_picture]
+	
+	Go
+	
+	Insert Into [Product_picture](
+		 [PictureID]
+		,[ProductID]
+		,[IsDelete]
+		,[IsMaster]
+	)
+	SELECT [ID]as [PictureID]
+		,[pro_ProductID]as[ProductID]
+		--,[Pic]
+		--,[SortNo]
+		,[State]as[IsDelete]
+		--,[CreateTime]
+		,0 as [IsMaster]
+		--,[ExtField]
+	FROM goujiuwang_v4.[dbo].[pro_ProductPic]
+	
+	Go
+	
+	--导入商品主图
+	--添加辅助字段，用于核对商品ID
+	if not exists(select * from syscolumns where id=object_id('Picture') and name='ExtField') begin
+		alter table [Picture] add [ExtField] nvarchar(1024) null;
+	end
+
+	Go
+	
+	Insert into [Picture] (
+		[Path]
+		--,[SortNo]
+		,[Status]
+		,[IsDelete]
+		,[CreateTime]
+		--,[ExtField]
+		,[ParentCategoryID]
+		,[ProductCategoryID]
+		,[ParentBrandID]
+		,[ProductBrandID]
+		,[Name]
+		,[ThumbnailPath]
+		,[FileName]
+		, [Type]
+		,[Size]
+		,[Height]
+		,[Width]
+		,[UploadTime]
+		,ExtField
+	)
+	Select		
+      [Pic] as [path]
+	  ,0 as [Status]
+	  ,case [State] when 255 then 255 else 0 end as [IsDelete]	  
+      ,[CreateTime]
+		,-1 as[ParentCategoryID]
+		, -1 as [ProductCategoryID]
+		,-1as[ParentBrandID]
+		,-1 as[ProductBrandID]
+		, '' as [Name]
+		, '' as [ThumbnailPath]
+		,'' as [FileName]
+		, '' as [Type]
+		,0 as [Size]
+		,0 as [Height]
+		,0 as [Width]
+		,[CreateTime] as [UploadTime]
+		,ID as ExtField
+	  from goujiuwang_v4.[dbo].[pro_Product]
+	  
+	  --设置商品主图
+	  Insert Into [Product_picture](
+		 [PictureID]
+		,[ProductID]
+		,[IsDelete]
+		,[IsMaster]
+	)
+	SELECT [ID] as [PictureID]
+		,Cast(ExtField as int) as [ProductID]
+		,0 as [IsDelete]
+		,1 as [IsMaster]
+	FROM [Picture]
+	Where ExtField is not null
+
+
+if exists(select * from syscolumns where id=object_id('Picture') and name='ExtField') begin
+		alter table [Picture] drop column [ExtField];
+	end
+
+	  
+	 
+--商品属性导入
+if exists(select * from syscolumns where id=object_id('[Product_Attribute]') and name='AttributeCode') begin
+	alter table [goujiuwang_v5].[dbo].[Product_Attribute] drop column [AttributeCode];
+end
+
+alter table [goujiuwang_v5].[dbo].[Product_Attribute] add [AttributeCode] nvarchar(50);
+
+Go
+
+if not exists(select * from syscolumns where id=object_id('Product') and name='Attributes') begin
+	alter table product add [Attributes] nvarchar(2048) null;
+end
+
+go
+
+Truncate table [goujiuwang_v5].[dbo].Product_Attribute
+Truncate table [goujiuwang_v5].[dbo].Product_AttributeValue
+Update [goujiuwang_v5].[dbo].Product set attributes = ''
+	  
+Insert into [goujiuwang_v5].[dbo].Product_Attribute([ProductCategoryID],[AttributeName],[Sorting],[CreateTime],[IsDelete],[AttributeCode])
+
+Select PS.ParentID as ProductCategoryID, '重量',0,getDate(),0,'Weight'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Weight is not null and pro_ProductAttrID_Weight <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID as ProductCategoryID, '单位',0,getDate(),0,'Unit'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Unit is not null and pro_ProductAttrID_Unit <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID as ProductCategoryID, '产地',0,getDate(),0,'Factory'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Factory is not null and pro_ProductAttrID_Factory <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+
+Union 
+Select PS.ParentID as ProductCategoryID, '葡萄酒种',0,getDate(),0,'Grape'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Grape is not null and pro_ProductAttrID_Grape <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID  as ProductCategoryID, '净含量',0,getDate(),0,'NetQuantity'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_NetQuantity is not null and pro_ProductAttrID_NetQuantity <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+
+Union 
+Select PS.ParentID  as ProductCategoryID, '酒精度',0,getDate(),0,'Chroma'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Chroma is not null and pro_ProductAttrID_Chroma <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID  as ProductCategoryID, '类型',0,getDate(),0,'Type'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Type is not null and pro_ProductAttrID_Type <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID  as ProductCategoryID, '容器',0,getDate(),0,'Container'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Container is not null and pro_ProductAttrID_Container <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID  as ProductCategoryID, '容积',0,getDate(),0,'Volume'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Volume is not null and pro_ProductAttrID_Volume <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID  as ProductCategoryID, '包装',0,getDate(),0,'Package'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Package is not null and pro_ProductAttrID_Package <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID as ProductCategoryID, '年份',0,getDate(),0,'Year'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Year is not null and pro_ProductAttrID_Year <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID as ProductCategoryID, '规格',0,getDate(),0,'norms'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_norms is not null and pro_ProductAttrID_norms <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID as ProductCategoryID, '产出/产国',0,getDate(),0,'Region'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Region is not null and pro_ProductAttrID_Region <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+Union 
+Select PS.ParentID as ProductCategoryID, '价格区间',0,getDate(),0,'Price'
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS On PS.ID = PP.[pro_SeriesID_Area]
+Where pro_ProductAttrID_Price is not null and pro_ProductAttrID_Price <> 0 and PS.ParentID is not null
+Group by PS.ParentID
+
+--导入属性值
+
+Insert Into [goujiuwang_v5].[dbo].Product_AttributeValue([AttributeID]
+      ,[AttributeValue]
+      ,[Sorting]
+      ,[CreateTime]
+      ,[IsDelete])
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Weight'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Weight
+Where pro_ProductAttrID_Unit is not null and pro_ProductAttrID_Weight<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Weight
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Unit'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Unit
+Where pro_ProductAttrID_Unit is not null and pro_ProductAttrID_Unit<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Unit
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Factory'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Factory
+Where pro_ProductAttrID_Factory is not null and pro_ProductAttrID_Factory<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Factory
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Grape'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Grape
+Where pro_ProductAttrID_Grape is not null and pro_ProductAttrID_Grape<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Grape
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'NetQuantity'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_NetQuantity
+Where pro_ProductAttrID_NetQuantity is not null and pro_ProductAttrID_NetQuantity<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_NetQuantity
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Chroma'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Chroma
+Where pro_ProductAttrID_Chroma is not null and pro_ProductAttrID_Chroma<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Chroma
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Type'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Type
+Where pro_ProductAttrID_Type is not null and pro_ProductAttrID_Type<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Type
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Container'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Container
+Where pro_ProductAttrID_Container is not null and pro_ProductAttrID_Container<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Container
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Volume'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Volume
+Where pro_ProductAttrID_Volume is not null and pro_ProductAttrID_Volume<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Volume
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Package'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Package
+Where pro_ProductAttrID_Package is not null and pro_ProductAttrID_Package<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Package
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Year'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Year
+Where pro_ProductAttrID_Year is not null and pro_ProductAttrID_Year<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Year
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'norms'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_norms
+Where pro_ProductAttrID_norms is not null and pro_ProductAttrID_norms<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_norms
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Region'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Region
+Where pro_ProductAttrID_Region is not null and pro_ProductAttrID_Region<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Region
+
+Union
+
+Select PA.ID, min(PPA.AttrName) AttrName,0 sorting,getdate() createtime,0 isDelete
+From [goujiuwang_v4].[dbo].pro_product PP Left Join [goujiuwang_v4].[dbo].pro_Series PS
+On PP.pro_SeriesID_Area = PS.ID 
+Join goujiuwang_v5.dbo.Product_Attribute PA ON PA.ProductCategoryID = PS.ParentID and PA.AttributeCode = 'Price'
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PPA.ID = PP.pro_ProductAttrID_Price
+Where pro_ProductAttrID_Price is not null and pro_ProductAttrID_Price<>0 and PS.ParentId is not null
+Group by PA.ID,PP.pro_ProductAttrID_Price
+
+--商品属性赋予
+
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Weight'',Value:'''+PPA.AttrName+'''},' as val,p.ID from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Weight = PPA.ID
+Where PP.pro_ProductAttrID_Weight <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Unit'',Value:'''+PPA.AttrName+'''},' as val,p.ID from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Unit = PPA.ID
+Where PP.pro_ProductAttrID_Unit <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Factory'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Factory = PPA.ID
+Where PP.pro_ProductAttrID_Factory <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Grape'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Grape = PPA.ID
+Where PP.pro_ProductAttrID_Grape <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''NetQuantity'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_NetQuantity = PPA.ID
+Where PP.pro_ProductAttrID_NetQuantity <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Chroma'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Chroma = PPA.ID
+Where PP.pro_ProductAttrID_Chroma <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Type'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Type = PPA.ID
+Where PP.pro_ProductAttrID_Type <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Container'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Container = PPA.ID
+Where PP.pro_ProductAttrID_Container <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Volume'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Volume = PPA.ID
+Where PP.pro_ProductAttrID_Volume <>0) A
+Where Product.ID = A.ID
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Package'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Package = PPA.ID
+Where PP.pro_ProductAttrID_Package <>0)A
+Where A.ID = Product.ID
+
+
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Year'',Value:'''+PPA.AttrName+'''},' as val,p.ID from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Year = PPA.ID
+Where PP.pro_ProductAttrID_Year <>0) A
+Where A.ID = Product.ID
+
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''norms'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_norms = PPA.ID
+Where PP.pro_ProductAttrID_norms <>0) A
+Where A.ID = Product.ID
+
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Time'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Time = PPA.ID
+Where PP.pro_ProductAttrID_Time <>0) A
+Where A.ID = Product.ID
+
+
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Region'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Region = PPA.ID
+Where PP.pro_ProductAttrID_Region <>0) A
+Where A.ID = Product.ID
+
+Go
+Update goujiuwang_v5.dbo.Product Set Product.attributes = A.val
+From(
+Select ISNULL(p.attributes,'')+ '{Code:''Price'',Value:'''+PPA.AttrName+'''},' as val,p.ID  from goujiuwang_v5.dbo.Product p Left Join [goujiuwang_v4].[dbo].pro_product PP
+On P.ID = PP.ID
+Left Join [goujiuwang_v4].[dbo].pro_ProductAttr PPA On PP.pro_ProductAttrID_Price = PPA.ID
+Where PP.pro_ProductAttrID_Price <>0) A 
+Where A.ID = Product.ID
+
+
+
+
+
+
+	  

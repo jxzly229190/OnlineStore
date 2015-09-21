@@ -1,0 +1,86 @@
+﻿@Html.ValidationSummary(true)
+@model V5.Portal.Backstage.Models.Promote.PromoteLimitedDiscountModel
+
+@Html.HiddenFor(model => model.ID)
+@Html.HiddenFor(model=>model.GoujiuPrice)
+
+<div class="editor-label">
+    限时抢购促销名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+
+<div class="editor-label">
+    商品名称：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model=>model.ProductName,new{@readonly="readonly" ,@class="k-textbox"})
+</div>
+
+<div class="editor-label">
+    折扣：
+</div>
+<div class="editor-field">
+    @Html.Kendo().NumericTextBoxFor(model => model.Discount).Min(0).Max(10)@*.HtmlAttributes(new { @onblur = "CountLimitedPrice(this)" })*@
+</div>
+
+<div class="editor-label">
+    折后价：
+</div>
+<div class="editor-field">
+    @Html.Kendo().NumericTextBoxFor(model => model.DiscountPrice).HtmlAttributes(new { @onblur = "CountLimitedDiscount(this)" })
+</div>
+
+<div class="editor-label">
+    每人限购数：
+</div>
+<div class="editor-field">
+    @Html.Kendo().IntegerTextBoxFor(model=>model.LimitedBuyQuantity).Min(0)
+</div>
+
+<div class="editor-label">
+    促销商品总数：
+</div>
+<div class="editor-field">
+    @Html.Kendo().IntegerTextBoxFor(model => model.TotalQuantity).Min(0)
+</div>
+
+<div class="editor-label">
+    仅在线支付：
+</div>
+<div class="editor-field">
+    @Html.CheckBoxFor(model => model.IsOnlinePayment)
+</div>
+@*<div class="editor-label">
+    仅新会员：
+</div>
+<div class="editor-field">
+    @Html.CheckBoxFor(model => model.IsNewUser)
+</div>
+<div class="editor-label">
+    仅手机验证：
+</div>
+<div class="editor-field">
+    @Html.CheckBoxFor(model => model.IsMobileValidate)
+</div>*@
+<div class="editor-label">
+    能否使用优惠券：
+</div>
+<div class="editor-field">
+    @Html.CheckBoxFor(model => model.IsUseCoupon)
+</div>
+<div class="editor-label">
+    活动开始时间：
+</div>
+<div class="editor-field">
+    @Html.Kendo().DateTimePickerFor(model=>model.StartTime)
+</div>
+
+<div class="editor-label">
+    活动结束时间：
+</div>
+<div class="editor-field">
+    @Html.Kendo().DateTimePickerFor(model=>model.EndTime)
+</div>

@@ -1,0 +1,87 @@
+﻿@using System.Activities.Expressions
+@model List<V5.Portal.Models.UserReceiveAddressModel>
+@{
+    Layout = null;
+}
+
+<dl class="user-info" id="user_info">
+    <b class="tit">收货人信息<a href="javascript:;" id="alterUserAddress">[更改]</a></b>
+    <dl class="info">
+        @{
+            if (Model != null && Model.Count >0)
+            {
+                var address = this.Model.FirstOrDefault(m => m.IsDefault) ?? this.Model[0];
+
+                <dd id="defaultShipInfo">
+                    <p>
+                        <input type="hidden" id="receivedID" name="receivedID" value="@Html.Raw(address.ID)" />
+                        <span id="received_name">@address.Consignee</span>&nbsp;&nbsp;&nbsp;
+                        <span id="received_tel">@(address.Mobile??address.Tel)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br/>
+                        <span id="received_county">@address.CountyName("-")</span> &nbsp;&nbsp;&nbsp;
+                        <span id="received_addr">@address.Address</span>
+                    </p>
+                </dd>
+            }
+        }
+    </dl>
+</dl>
+
+<div class="alert-user-info hidden" id="modifyShip">
+    <b class="tit">收货人信息<a href="javascript:;" class="shipModify">[保存更改]</a></b>
+    <div class="selpath" >
+        @{
+            if (Model != null)
+            {
+                foreach (var address in Model)
+                {
+                    <p class="defaultPath  @Html.Raw(address.IsDefault?"selected":"")" id="@Html.Raw("addreess_"+address.ID)">
+                        <em class="remove address-remove" index="@Html.Raw(address.ID)" style="cursor: pointer">删除</em>
+                        <em class="edit address-edit" index="@Html.Raw(address.ID)" style="cursor: pointer">编辑</em>
+                        <em class="defualt address-default" index="@Html.Raw(address.ID)" style="color:#666;cursor: pointer">默认收货人</em>
+                        <input type="radio" autocomplete="off" id="@Html.Raw("ship_"+address.ID)" @Html.Raw(address.IsDefault?"checked=''":"") index="@Html.Raw(address.ID)" class="radio" name="shipId" id="shipId8131007712" value="@Html.Raw(address.ID)" inremotearea="false" ispos="1">
+                        <input type="hidden" province="@Html.Raw(address.ProvinceID)" city="@Html.Raw(address.CityID)" county="@Html.Raw(address.CountyID)" name="ship_info" id="@Html.Raw("shipinfo_"+address.ID)" consignee="@Html.Raw(address.Consignee)" address="@Html.Raw(address.Address)" zipcode="@Html.Raw(address.PostCode)" mobile="@Html.Raw(address.Mobile ?? address.Tel)" countyid="@Html.Raw(address.CountyID)" defaultaddrstate="@Html.Raw(address.IsDefault ? 1 : 0)">
+                        <label style="cursor:pointer" for="@Html.Raw("ship_"+address.ID)">@Html.Raw(address.Consignee + "," + address.CountyName("") + address.Address + "," + address.Mobile??address.Tel)</label>
+                    </p>
+                }
+            }
+        }
+        
+    <p id="add_ship_show" style="cursor: pointer" ><input type="radio" name="shipId" class="radio" id="addShip" onclick=""> 使用新收货人信息</p>
+    </div>
+    <!--收货地址满十个出现提示 start-->
+    <p class="tips_w red" style="display: none;"><strong>温馨提示：</strong>收货地址薄已满，暂时无法使用新地址。请先删除不用的地址或直接编辑现有地址。</p>
+    <!--收货地址满十个出现提示end-->
+    <div class="alert-user-input hidden" id="alert-user-input">
+        <p><b><em class="red">*</em>收货人姓名：</b>
+            <input type="text" id="txtConsignee" name="userinfo" value="" />请填写中文姓名</p>
+        <p class="error"></p>
+        <p><b><em class="red">*</em>省份：</b>
+            <select name="province" id="province" >
+                <option value="0" selected="selected">请选择</option>
+            </select>
+            <select name="city" id="city">
+                <option value="请选择" selected="selected">请选择</option>
+            </select> 
+            <select name="county" id="county" >
+                <option value="请选择" selected="selected">请选择</option>
+            </select> 
+            <em id="normalCounty" style="color: #000;">
+                <span id="shipinfo_hdfk_msg">注：标"*"的为支持货到付款的地区。</span>
+            </em>  
+        </p>
+        <p class="input-path"><b><em class="red">*</em>地址：</b><span><label style="color: rgb(51, 51, 51);" id="show_addressName"></label> 
+        <textarea rows="" cols="" id="txtAddress" maxlength="60" style="color: rgb(221, 221, 221);" name="streeinfo" onfocus="if(this.value=='请直接填写街道等详细地址，省/市/区不用填写'){this.value='';this.style.color='#000';};">请直接填写街道等详细地址，省/市/区不用填写</textarea></span></p>
+        <p class="error" style="display: none;"></p>
+        <p><b><em class="red">*</em>邮政编码：</b><input type="text" class="order_checktext1" maxlength="10" onblur="postcodeinfo_cont()" name="postcode" id="postcode" value=""><em class="red bmcol" style="display:none">建议邮编：<b id="zipcode" class="red" style="display:inline"></b><a href="###" onclick="if($('#zipcode').html() != null &amp;&amp; $('#zipcode').html() != ''){$('#postcode').val($('#zipcode').html());}" class="entermail">使用此邮编</a></em> </p>
+        <p class="error" style="display: none;">请输入邮政编码</p>
+        <p><b><em class="red">*</em>手机号码：</b><input type="text" class="phone1 order_checktext1" style="color: rgb(221, 221, 221);" onblur="if(this.value==''){this.value='11位手机号码';this.style.color='#ddd'};mobileinfo_cont();" onfocus="if(this.value=='11位手机号码'){this.value='';this.style.color='#000'}" value="11位手机号码" id="mobileinfo" name="mobileinfo">
+            或固定电话<input type="text" style="color: rgb(221, 221, 221);" class="phone3 order_checktext1" onblur="if(this.value==''){this.value='区号+电话号码';this.style.color='#ddd'};telinfo_cont();" onfocus="if(this.value=='区号+电话号码'){this.value='';this.style.color='#000'}" value="区号+电话号码" id="telinfo" name="telinfo">用于接收订单短信或送货前确认</p>
+        <p class="error"></p>
+        @*<p><b>电子邮箱：</b><input type="text" class="order_checktext1" onblur="eMail_cont()" id="eMailinfo" name="eMailinfo" value=""> 用于接收订单状态提醒邮件 </p>*@
+        <p class="error"></p>
+        <p><b></b><input type="checkbox" class="default" ischeck="false" id="isDefaultAddr">设置为默认收货人</p>
+        
+    </div>
+    <p class="btn"><a class="enter shipModify" id="saveReceiveInfo" href="javascript:;">保存收货人信息</a></p>
+</div>

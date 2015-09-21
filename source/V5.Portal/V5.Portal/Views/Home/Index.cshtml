@@ -1,0 +1,606 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@{ 
+    var home = new HomeController();
+    ViewBag.Title = Utils.GetAppSettings("SEOTitleIndex");
+    ViewBag.Keywords = Utils.GetAppSettings("SEOKeywordsIndex");
+    ViewBag.Description = Utils.GetAppSettings("SEODescriptionIndex");    
+}
+@Styles.Render("~/Content/index.css")
+<script>
+    //首页标识
+    window.website_default = true;
+</script>
+<!------- S 图片banner -------->
+<div class="banner_bg">
+    <div class="banner-img">
+        <ul class="banner-box" id="banner-box">
+            @Html.Raw(home.GetAdvertiseHtml("<li url=\"$URL$\" style=\"background-color: $BackgroundColor$; background-image:url($ImagePath$) ; opacity: 0;\"></li>", "pid=46", 8, AdvertiseSource.Custom))
+        </ul>
+        <div class="banner-btn-box">
+            <div class="banner-btn" id="banner-btn">
+            </div>
+        </div>
+        <!-------三个广告图片 s-------->
+        <div class="star" id="star">
+            <b id="pre"></b><i id="next"></i>
+            <div id="imglist" style="position: absolute;">
+                @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img src=\"$ImagePath$\" class='imgs' alt=\"$Name$\" /></a>", "pid=45", 9, AdvertiseSource.Custom))
+            </div>
+        </div>
+        <!-------三个广告图片 e-------->
+    </div>
+</div>
+<!------- E 图片banner -------->
+<!------- S 活动专题 、公告-------->
+<div class="huodong ">
+    <!-- 活动专题 -->
+    <div class="hd_scroll">
+        <div class="adv">
+            <ul>
+                @Html.Raw(home.GetAdvertiseHtml("<li><a href=\"$URL$\" title=\"$Advertisement$\" target=\"_blank\"><img src=\"$ImagePath$\" alt=\"$Name$\" /></a></li>", "pid=17", 8, AdvertiseSource.Custom))
+            </ul>
+        </div>
+        <a class="abtn aleft" href="#left">左移</a><a class="abtn aright" href="#right">右移</a>
+    </div>
+    <!-- 公告与促销信息 -->
+    <div class="ant fr" id="gonggao">
+        <ul class="ant_title">
+            <li class="cur">最新公告</li>
+            <li>促销信息</li>
+        </ul>
+        <div class="ant_content">
+            <ul>
+                @Html.Raw(home.GetArticleList(4, "type=2"))
+            </ul>
+        </div>
+        <div class="ant_content none">
+            <ul>
+                @Html.Raw(home.GetArticleList(4, "type=3"))
+            </ul>
+        </div>
+    </div>
+</div>
+<!------- E 活动专题 、公告-------->
+<!------- S 猜您喜欢 、团购-------->
+<div class="w1200">
+    <!-- 新品上市、本月热销 -->
+    <div class="limitbuy" id="newpro">
+        <ul class="limit_tab">
+            <li class="limit_tab_cur">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=18"))</li>
+            <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=19"))</li>
+            <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=1025"))</li>
+            <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=1026"))</li>
+        </ul>
+        <!---新品上市内容--->
+        <div class="content_box">
+            <div class="limit_content">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li style='background-image:url($ImagePath$)' url='$URL$' class=\"product\" data='$ProductID$'><p><a title=\"$Name$\" target=\"_blank\">$Name$</a></p><p class=\"font_gray\" >已有<span id=\"C_$ProductID$\">$CommentNumber$</span>人评论</p><p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p><p class=\"font_line\">&#65509;<span id=\"M_$ProductID$\">$MarketPrice$</span></p></li>", "pid=18", 8, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+        <!---本月热销内容--->
+        <div class="content_box none">
+            <div class="limit_content">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li style='background-image:url($ImagePath$)' url='$URL$' class=\"product\" data='$ProductID$'><p><a title=\"$Name$\" target=\"_blank\">$Name$</a></p><p class=\"font_gray\" >已有<span id=\"C_$ProductID$\">$CommentNumber$</span>人评论</p><p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p><p class=\"font_line\">&#65509;<span id=\"M_$ProductID$\">$MarketPrice$</span></p></li>", "pid=19", 8, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+        <!---本月热销内容--->
+        <div class="content_box none">
+            <div class="limit_content">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li style='background-image:url($ImagePath$)' url='$URL$' class=\"product\" data='$ProductID$'><p><a title=\"$Name$\" target=\"_blank\">$Name$</a></p><p class=\"font_gray\" >已有<span id=\"C_$ProductID$\">$CommentNumber$</span>人评论</p><p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p><p class=\"font_line\">&#65509;<span id=\"M_$ProductID$\">$MarketPrice$</span></p></li>", "pid=1025", 8, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+        <!---本月热销内容--->
+        <div class="content_box none">
+            <div class="limit_content">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li style='background-image:url($ImagePath$)' url='$URL$' class=\"product\" data='$ProductID$'><p><a title=\"$Name$\" target=\"_blank\">$Name$</a></p><p class=\"font_gray\" >已有<span id=\"C_$ProductID$\">$CommentNumber$</span>人评论</p><p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p><p class=\"font_line\">&#65509;<span id=\"M_$ProductID$\">$MarketPrice$</span></p></li>", "pid=1026", 8, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 团购 -->
+    <div class="groupbuy">
+        <div class="group_title">
+            <span>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=20"))</span>
+            <ul class="slidbox_cent">
+                <li class="cur"><a class="png" href="javascript:;"></a></li>
+                <li><a class="png" href="javascript:;"></a></li>
+                <li><a class="png" href="javascript:;"></a></li>
+            </ul>
+        </div>
+        <div class="group_content">
+            @Html.Raw(home.GetAdvertiseHtml("<ul style=\"display:none\" class=\"product\" data='$ProductID$'>" +
+                "    <li class=\"group_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></li>" +
+                "    <li class=\"group_txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Description$</a></li>" +
+                "    <li class=\"group_btn\">" +
+                "	    <span class=\"group_price\"><span>&#65509;</span><span id=\"G_$ProductID$\">$GoujiuPrice$</span></span>" +
+                "       <span class=\"group_tg\"><a href=\"$URL$\">立即参团</a></span>" +
+                "    </li>" +
+                "</ul>", "pid=20", 3, AdvertiseSource.Custom))
+        </div>
+    </div>
+</div>
+<!------- E 猜您喜欢 、团购-------->
+<!------- S 品牌活动-------->
+<div class="brand w1200" id="pinpai">
+    <div class="brand_title">
+        <span class=" font_title">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=21"))</span>
+        <a id="brand_change" class="change"><i class="ulike_change_ico">&nbsp;</i>换一批</a>
+    </div>
+    <div class="brand_content">
+        <ul id="brand_content_inner">
+            @Html.Raw(home.GetAdvertiseHtml("<li><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></li>", "pid=21", 6, AdvertiseSource.Rand))
+        </ul>
+    </div>
+</div>
+<!------- E 品牌活动-------->
+<!-------S 三版块-------->
+<div class="three_bk w1200">
+    @Html.Raw(home.GetAdvertiseHtml("<span><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>", "pid=15", 3, AdvertiseSource.Custom))
+</div>
+<!-------S 白酒版块-------->
+<div class="baijiu">
+    <div class="baijiu_up">
+        <div class="baijiu_up_l">
+            <h2 class="h2">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=9"))</h2>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=834"))
+        </div>
+        <div class="baijiu_up_m" id="baijiu">
+            <div class="baijiu_tab">
+                <ul>
+                    <li class="cur">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=24"))</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=25"))</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=26"))</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=27"))</li>
+                </ul>
+            </div>
+            <div class="baijiu_content">
+                @Html.Raw(home.GetAdvertiseHtml("<ul>" +
+                        "<li class=\"li_b product\" data=\"$ProductID$\">" +
+                        "    <p class=\"product-img-b\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</li>",
+                        "<li class=\"li_s product\" data=\"$ProductID$\">" +
+                        "    <span class=\"li_s_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$ </a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "    </span>" +
+                        "</li>" +
+                        "</ul>", "pid=421", "pid=422", 4, AdvertiseSource.Custom))
+            </div>
+            <div class="baijiu_content none">
+                @Html.Raw(home.GetAdvertiseHtml("<ul>" +
+                        "<li class=\"li_b product\" data=\"$ProductID$\">" +
+                        "    <p class=\"product-img-b\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</li>",
+                        "<li class=\"li_s product\" data=\"$ProductID$\">" +
+                        "    <span class=\"li_s_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "    </span>" +
+                        "</li>" +
+                        "</ul>", "pid=424", "pid=425", 4, AdvertiseSource.Custom))
+            </div>
+            <div class="baijiu_content none">
+                @Html.Raw(home.GetAdvertiseHtml("<ul>" +
+                        "<li class=\"li_b product\" data=\"$ProductID$\">" +
+                        "    <p class=\"product-img-b\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</li>",
+                        "<li class=\"li_s product\" data=\"$ProductID$\">" +
+                        "    <span class=\"li_s_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$ </a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "    </span>" +
+                        "</li>" +
+                        "</ul>", "pid=426", "pid=427", 4, AdvertiseSource.Custom))
+            </div>
+            <div class="baijiu_content none">
+                @Html.Raw(home.GetAdvertiseHtml("<ul>" +
+                        "<li class=\"li_b product\" data=\"$ProductID$\">" +
+                        "    <p class=\"product-img-b\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</li>",
+                        "<li class=\"li_s product\" data=\"$ProductID$\">" +
+                        "    <span class=\"li_s_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$ </a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "    </span>" +
+                        "</li>" +
+                        "</ul>", "pid=428", "pid=430", 4, AdvertiseSource.Custom))
+            </div>
+        </div>
+        <div class="baijiu_brand">
+            <ul>
+                @Html.Raw(home.GetAdvertiseHtml("<li>" +
+                    "<a href=\"$URL$\" target=\"_blank\">" +
+                    "    <div class=\"toll_img\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></div>" +
+                    "    <div class=\"toll_info\">$Name$</div>" +
+                    "</a>" +
+                    "</li>", "pid=29", 8, AdvertiseSource.Custom))
+            </ul>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></p>", "id=91"))
+        </div>
+    </div>
+    <div class="baijiu_down">
+        <div class="baijiu_down_l">@Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=90"))</div>
+        <div class="baijiu_down_r" id="paihang">
+            <div class="rank_hd">
+                <div class="rank_hd_tit">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=28"))</div>
+                <ul class="rank_hd_tab">
+                    <li class="cur">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=78"))</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=80"))</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=81"))</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=82"))</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=83"))</li>
+                </ul>
+            </div>
+            <div class="rank_cont">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\" >" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=78", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\" >" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=80", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\" >" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=81", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\" >" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=82", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\" >" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\" >&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=83", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 白酒版块-------->
+<!-------S 红酒版块-------->
+<div class="baijiu f2">
+    <div class="baijiu_up">
+        <div class="baijiu_up_l">
+            <h2 class="h2">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=10"))</h2>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=1181"))
+        </div>
+        <div class="baijiu_up_m">
+            <div class="baijiu_tab">
+            </div>
+            <div class="baijiu_content">
+                @Html.Raw(home.GetAdvertiseHtml("<ul>" +
+                        "<li class=\"li_b product\" data=\"$ProductID$\">" +
+                        "    <p class=\"product-img-b\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</li>",
+                        "<li class=\"li_s product\" data=\"$ProductID$\">" +
+                        "    <span class=\"li_s_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "    </span>" +
+                        "</li>" +
+                        "</ul>", "pid=431", "pid=432", 4, AdvertiseSource.Custom))
+            </div>
+        </div>
+        <div class="baijiu_brand">
+            <ul>
+                @Html.Raw(home.GetAdvertiseHtml("<li>" +
+                    "<a href=\"$URL$\" target=\"_blank\">" +
+                    "    <div class=\"toll_img\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></div>" +
+                    "    <div class=\"toll_info\">$Name$</div>" +
+                    "</a>" +
+                    "</li>", "pid=33", 8, AdvertiseSource.Custom))
+            </ul>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=1182"))
+        </div>
+    </div>
+    <div class="baijiu_down">
+        <div class="baijiu_down_l">@Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=1183"))</div>
+        <div class="baijiu_down_r">
+            <div class="rank_hd">
+                <div class="rank_hd_tit">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=32"))</div>
+            </div>
+            <div class="rank_cont">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\">" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=32", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 红酒版块-------->
+<!-------S 洋酒版块-------->
+<div class="baijiu f3">
+    <div class="baijiu_up">
+        <div class="baijiu_up_l">
+            <h2 class="h2">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=11"))</h2>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=1184"))
+        </div>
+        <div class="baijiu_up_m">
+            <div class="baijiu_tab">
+            </div>
+            <div class="baijiu_content">
+                @Html.Raw(home.GetAdvertiseHtml("<ul>" +
+                        "<li class=\"li_b product\" data=\"$ProductID$\">" +
+                        "    <p class=\"product-img-b\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</li>",
+                        "<li class=\"li_s product\" data=\"$ProductID$\">" +
+                        "    <span class=\"li_s_img\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$ </a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "    </span>" +
+                        "</li>" +
+                        "</ul>", "pid=433", "pid=434", 8, AdvertiseSource.Custom))
+            </div>
+        </div>
+        <div class="baijiu_brand">
+            <ul>
+                @Html.Raw(home.GetAdvertiseHtml("<li>" +
+                    "<a href=\"$URL$\" target=\"_blank\">" +
+                    "    <div class=\"toll_img\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></div>" +
+                    "    <div class=\"toll_info\">$Name$</div>" +
+                    "</a>" +
+                    "</li>", "pid=157", 8, AdvertiseSource.Custom))
+            </ul>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=1185"))
+        </div>
+    </div>
+    <div class="baijiu_down">
+        <div class="baijiu_down_l">@Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=1186"))</div>
+        <div class="baijiu_down_r">
+            <div class="rank_hd">
+                <div class="rank_hd_tit">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=37"))</div>
+            </div>
+            <div class="rank_cont">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<i class=\"rank_cont_rank_order\"></i>" +
+                        "<div class=\"rank_goods\" >" +
+                        "	<div class=\"rank_goods_img\">" +
+                        "    	<a target=\"_blank\" href=\"$URL$\" title=\"\"><img src=\"$ImagePath$\" alt=\"\"></a>" +
+                        "    </div>" +
+                        "    <div class=\"rank_goods_info\">" +
+                        "        <p class=\"font_y\" style=\"display:block\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</a></p>" +
+                        "        <p class=\"btline3\"><a target=\"_blank\" href=\"$URL$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</li>", "pid=37", 5, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 洋酒版块-------->
+<!-------S 啤酒、保健酒-------->
+<div class="f4 w1200">
+    <div class="pijiu">
+        <div class="pijiu_left">
+            <h2 class="h2">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=12"))</h2>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=1180"))
+        </div>
+        <div class="pijiu_right" id="pijiu">
+            <div class="pijiu_right_tab">
+                <ul>
+                    <li class="cur">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=40"))</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=41"))</li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<span class=\"f4-img\"><a target=\"_blank\" href=\"$URL$\" title=\"\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "<span class=\"f4-txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</span>" +
+                        "</li>", "pid=40", 4, AdvertiseSource.Custom))
+                </ul>
+            </div>
+            <div class="pijiu_right_cont none">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<span class=\"f4-img\"><a target=\"_blank\" href=\"$URL$\" title=\"\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "<span class=\"f4-txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</span>" +
+                        "</li>", "pid=41", 4, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="pijiu baojianjiu">
+        <div class="pijiu_left">
+            <h2 class="h2">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=13"))</h2>
+            @Html.Raw(home.GetAdvertiseHtml("<p><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></p>", "id=1179"))
+        </div>
+        <div class="pijiu_right" id="baojianjiu">
+            <div class="pijiu_right_tab">
+                <ul>
+                    <li class="cur">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=43"))</li>
+                    <li>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=44"))</li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\" data=\"$ProductID$\">" +
+                        "<span class=\"f4-img\"><a target=\"_blank\" href=\"$URL$\" title=\"\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "<span class=\"f4-txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</span>" +
+                        "</li>", "pid=43", 4, AdvertiseSource.Custom))
+                </ul>
+            </div>
+            <div class="pijiu_right_cont none">
+                <ul>
+                    @Html.Raw(home.GetAdvertiseHtml("<li class=\"product\' data=\"$ProductID$\">" +
+                        "<span class=\"f4-img\"><a target=\"_blank\" href=\"$URL$\" title=\"\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a></span>" +
+                        "<span class=\"f4-txt\">" +
+                        "	 <p class=\"btline3\"><a href=\"$URL$\" title=\"$Name$\" target=\"_blank\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">&#65509;<span id=\"G_$ProductID$\">$GoujiuPrice$</span></p>" +
+                        "    <p class=\"font_y\">已售<span id=\"S_$ProductID$\">$Sold$</span>件</p>" +
+                        "</span>" +
+                        "</li>", "pid=44", 4, AdvertiseSource.Custom))
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 啤酒、保健酒-------->
+<div class="tonglan_ad w1200">
+    @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=16"))
+</div>
+<!-------S 大师推荐-------->
+<div class="dashi w1200">
+    <h3 class="font_title">@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=22"))</h3>
+    <div class="dashi_cont">
+        <div class="dashi_img1">
+            <span class="dashi_photo">@Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=59", 1, AdvertiseSource.Custom))</span>
+            <span class="dashi_txt">
+                @Html.Raw(home.GetAdvertiseHtml("$Description$", "id=59", 1, AdvertiseSource.Custom))
+            </span>
+        </div>
+        <div class="dashi_img2">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=101", 1, AdvertiseSource.Custom))
+        </div>
+        <div class="dashi_img3">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=102", 1, AdvertiseSource.Custom))
+        </div>
+        <div class="dashi_img4">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=1196", 1, AdvertiseSource.Custom))
+        </div>
+        <div class="dashi_img5">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=104", 1, AdvertiseSource.Custom))
+        </div>
+        <div class="dashi_img6">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=105", 1, AdvertiseSource.Custom))
+        </div>
+        <div class="dashi_img7">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" title=\"$Name$\" target=\"_blank\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "id=106", 1, AdvertiseSource.Custom))
+        </div>
+    </div>
+</div>
+<!-------E 大师推荐-------->
+@Scripts.Render("~/Scripts/index.js")
+@Scripts.Render("~/Scripts/Xslider.js")

@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "消息精灵";
+}
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .uc_order_search{ position:absolute; right:0; top:0; font-size:12px;}
+    .uc_order_search .search_text
+    {
+        width: 186px!important;
+        height: 18px!important;
+        border: 0;
+        border-radius: 3px;
+        padding: 3px 2px 4px 25px;
+        color: #606566;
+        font-size: 12px;
+        background-color: #efefef;
+        display: inline-block;
+        background-image: url(images/i-sdcabe518d0.png);
+        background-repeat: no-repeat;
+        background-position: 0 -625px;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+    }
+    .uc_order_search .search_text:hover
+    {
+        color:#fff;
+        background-color:#ff5f3e;
+        background-position: 0 -654px;
+    }
+    .uc_order .msg{ padding-left:12px; cursor:default;}
+</style>
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_order">
+            <dt class="uc_order_top">消息精灵
+                <div class="uc_order_search">
+                    <input type="text" class="search_text animation" />
+                </div>
+            </dt>
+            <dd>
+                <table>
+                    <thead>
+                        <tr>               
+                            <td>消息正文</td>
+                            <td>发送时间</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><label class="msg">过年大放假，小伙伴们快来抢，过期不候，真的很便宜啊，茅台买一送一</label></td>
+                            <td><div class="date">2014-1-12 12:56:45</div></td>
+                            <td><a href="###" class="button">查看评价</a><a href="###" class="button">删除</a></td>
+                        </tr>
+                        <tr>
+                            <td><label class="msg">过年大放假，小伙伴们快来抢，过期不候，真的很便宜啊，茅台买一送一</label></td>
+                            <td><div class="date">2014-1-12 12:56:45</div></td>
+                            <td><a href="###" class="button">查看评价</a><a href="###" class="button">删除</a></td>
+                        </tr>
+                        <tr>
+                            <td><label class="msg">过年大放假，小伙伴们快来抢，过期不候，真的很便宜啊，茅台买一送一</label></td>
+                            <td><div class="date">2014-1-12 12:56:45</div></td>
+                            <td><a href="###" class="button">查看评价</a><a href="###" class="button">删除</a></td>
+                        </tr>
+                        <tr>
+                            <td><label class="msg">过年大放假，小伙伴们快来抢，过期不候，真的很便宜啊，茅台买一送一</label></td>
+                            <td><div class="date">2014-1-12 12:56:45</div></td>
+                            <td><a href="###" class="button">查看评价</a><a href="###" class="button">删除</a></td>
+                        </tr>
+                        <tr>
+                            <td><label class="msg">过年大放假，小伙伴们快来抢，过期不候，真的很便宜啊，茅台买一送一</label></td>
+                            <td><div class="date">2014-1-12 12:56:45</div></td>
+                            <td><a href="###" class="button">查看评价</a><a href="###" class="button">删除</a></td>
+                        </tr>
+                        <tr>
+                            <td><label class="msg">过年大放假，小伙伴们快来抢，过期不候，真的很便宜啊，茅台买一送一</label></td>
+                            <td><div class="date">2014-1-12 12:56:45</div></td>
+                            <td><a href="###" class="button">查看评价</a><a href="###" class="button">删除</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div style="position:relative;height:56px;">
+                                    <div class="uc_page">
+                                        <a href="###" class="prev">&lt;</a>
+                                        <a href="###">1</a>
+                                        <a href="###">2</a>
+                                        <a href="###" class="curr">3</a>
+                                        <a href="###">4</a>
+                                        <a href="###">5</a>
+                                        <a href="###" class="more">...</a>
+                                        <a href="###">28</a>
+                                        <a href="###">29</a>
+                                        <a href="###">30</a>
+                                        <a href="###" class="next">&gt;</a>
+                                    </div>    
+                                </div>                            
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </dd>
+        </dl>
+        @Html.Action("GuessLike","Home")
+        </div>
+    <div class="clear"></div>
+</div>
+</div>

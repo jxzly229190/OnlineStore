@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+@Styles.Render("~/Content/base.css")
+@Styles.Render("~/Content/register.css")
+<!--[if lt IE 9]>
+<style>
+.register .msg{filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#3363370b,endColorstr=#3363370b);}
+</style>
+<![endif]-->
+@Scripts.Render("~/Scripts/jquery-1.6.7.min.js")
+<script type="text/javascript">
+    $(function () {
+        var fvalue = $("#uname").val() || "";
+        if (fvalue == "") {
+            $("#info").show();
+        } else {
+            $("#info").hide();
+        }
+
+        $(".txt").each(function () {
+            $(this).focus(function () {
+                $(this).addClass("cur");
+
+                var label = $(this).attr("label") || "";
+                if (label == "") return;
+
+                var info = $("#" + label).attr("info") || "";
+                if (info == "") return;
+
+                $("#" + label).text(info).css("display", "inline-block");
+            }).blur(function () {
+                $(this).removeClass("cur");
+
+                var label = $(this).attr("label") || "";
+                if (label == "") return;
+
+                $("#" + label).hide();
+            });
+
+            if ($(this).attr("id") == "uname") {
+                $(this).focus(function () {
+                    $("#info").hide();
+                }).blur(function () {
+                    var fvalue = $("#uname").val() || "";
+                    if (fvalue == "") {
+                        $("#info").show();
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div class="container">
+    <div class="logo"></div>
+    <div class="legend shadow"><em>注册新用户</em>您提供的所有信息，绝不会被公开火用作其他用途，请放心填写。<label>已有购酒网账号?</label></div>
+    <div class="main shadow">
+        <div class="register">            
+            <ul>
+               <li class="uname"><label>*账户名称:</label><label id="info">邮箱/用户名/手机号</label><input type="text" class="txt" id="uname" value="" label="uname_msg"/><label class="msg" id="uname_msg" info="请输入邮箱/用户名/手机号" error="用户名长度必须在6-20位之间" ></label></li>
+               <li class="upwd"><label>*设置密码:</label><input type="password" class="txt" id="upwd" label="upwd_msg"/><label class="msg" id="upwd_msg" info="长度必须在6-20之间" error="用户名长度必须在6-20位之间" ></label></li>
+               <li class="upwd"><label>*确认密码:</label><input type="password" class="txt" id="upwd2" label="upwd2_msg"/><label class="msg" id="upwd2_msg" info="长度必须在6-20之间" error="用户名长度必须在6-20位之间" ></label></li>               
+               <li class="validate"><label>*验证码:</label><input type="text" class="txt"/><img src="images/validate_image.jpg" /><span>看不清?<a href="###">换一张</a></span></li>
+               <li class="protocol"><input type="checkbox" /><span>已阅读并同意<a href="###">《购酒网用户注册协议》</a></span></li>
+               <li class="button"><input type="button" /></li>
+            </ul>
+        </div>
+    </div>
+    <div class="foot">
+        <div>
+            <a href="###" title="关于我们">关于我们</a>|<a href="###" title="联系我们">联系我们</a>|<a href="###" title="人才招聘">人才招聘</a>|<a href="###" title="隐私声明">隐私声明</a>|<a href="###" title="帮助中心">帮助中心</a>|<a href="###" title="友情链接">友情链接</a>
+        </div>
+        <div>Copyright&copy;2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</div>
+    </div>
+</div>

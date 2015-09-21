@@ -1,0 +1,23 @@
+﻿.process{margin:0 auto;padding:25px 0 80px; max-width:720px;}
+.process .node,.process .proce{float:left;position:relative;height:13px;background-image:url('Image/bg_state.jpg');background-repeat:no-repeat;}
+.process .node{width:13px;}
+.process .proce{width:150px;border:solid #fff;border-width:0 5px;}
+.process .tx1{height:36px;margin-bottom:16px;}
+.process .tx3{color:#999;line-height:15px;}
+.node.wait{background-position:-150px -40px;}
+.node.ready{background-position:-150px 0px;}
+.node.singular{background-position:-150px -60px;}
+.proce.wait{background-position:0 -40px;}
+.proce.doing{background-position:0 -20px;color:#360;}
+.proce.ready{background-position:0 0;}
+.process .wait .tx2{color:#999;}
+.process ul{position:absolute;margin-top:-38px;text-align:center;}
+.process .proce ul{z-index:5;width:150px;}
+.process .node ul{z-index:1;width:318px;margin-left:-152px;}
+*html .process{overflow:hidden;}
+*html .process .node{background-position-x:-150px;}
+*html .process .proce{background-position-x:0;}
+*html .process .wait{background-position-y:-40px;}
+*html .process .doing{background-position-y:-20px;}
+*html .process .ready{background-position-y:0;}
+*html .process .singular{background-position-y:-60px;}

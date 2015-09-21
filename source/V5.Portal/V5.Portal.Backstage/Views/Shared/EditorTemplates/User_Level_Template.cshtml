@@ -1,0 +1,20 @@
+﻿@Html.ValidationSummary(true)
+@model V5.Portal.Backstage.Models.User.UserLevelModel
+
+@Html.HiddenFor(model => model.ID)
+
+<div class="editor-label">
+    会员等级名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+
+<div class="editor-label">
+    需要满足的金额：
+</div>
+<div class="editor-field">
+    @Html.Kendo().NumericTextBoxFor(model=>model.Money).Min(0)
+    @Html.ValidationMessageFor(model => model.Money)
+</div>

@@ -1,0 +1,36 @@
+﻿@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.System
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<UserModel>()
+    .Name("userGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.Name).Title("用户姓名");
+        columns.Bound(u => u.LoginName).Title("用户名");
+        columns.Bound(u => u.CreateTime).Title("创建时间").Format("{0: yyyy-MM-dd hh:mm:ss}");
+        columns.Command(command => {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("System.ModifyUser.Post"));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("System.RemoveUser.Post"));
+        }).Width(300).Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("添加用户").HtmlAttributes(permissionObj.GetDisplayAttribute("System.AddUser.Post", false)))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("System_User_Template").Window(edit => edit.Title("编辑")))
+    .Pageable()
+    .Scrollable()
+    .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+    .Events(e => e.Edit("onUserEdit"))
+    .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(d => d.ID))
+    .Create(update => update.Action("AddUser", "System"))
+    .Destroy(update => update.Action("RemoveUser", "System"))
+    .Update(update => update.Action("ModifyUser", "System"))
+    .Read(read => read.Action("QueryUser", "System"))
+    )
+)

@@ -1,0 +1,139 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@model IEnumerable<PictureModel>
+@Styles.Render("~/Content/Products/ProductAdd.css?t=2")
+@Scripts.Render("~/Scripts/Backstage/Product/Backstage.Product.Add.js")
+<div class="k-overlay" style="display: none; z-index: 10002; opacity: 0.5;"></div>
+
+<!-- 类型选择 -->
+<div id="selectCategoryAndBrandDiv">
+    <div class="category-list">
+        <div class="item" id="productParentCategory"></div>
+        <div class="item" id="productSubCategory" style="display: none"></div>
+        <div class="item" id="productParentBrand" style="display: none"></div>
+        <div class="item" id="productSubBrand" style="display: none"></div>
+    </div>
+    <input type="hidden" id="parentCategoryID" name="parentCategoryID" value="" />
+    <input type="hidden" id="productCategoryID" name="productCategoryID" value="" />
+    <input type="hidden" id="parentBrandID" name="parentBrandID" value="" />
+    <input type="hidden" id="productBrandID" name="productBrandID" value="" />
+    <input type="hidden" id="parentCategoryName" name="parentCategoryName" value=""/>
+    <input type="hidden" id="subCategoryName" name="subCategoryName" value=""/>
+    <input type="hidden" id="parentBrandName" name="parentBrandName" value=""/>
+    <input type="hidden" id="subBrandName" name="subBrandName" value=""/>
+    <input type="submit" onclick="ProductCategory.ValidateIsSelectCategoryAndBrand()" value="下一步，填写详细信息" class="k-button" />
+</div>
+
+<div class="product_main" style="display:none;">
+    <!-- 基础属性 -->
+    <table>
+        <caption>基础属性</caption>
+        <tbody>
+            <tr>
+                <td class="pname">商品名称：</td><td><input type="text" class="k-textbox" id="ProductName" name="ProductName" /></td>
+                <td class="pname">广告词：</td><td><input type="text" class="k-textbox" id="Advertisement" name="Advertisement" /></td>
+            </tr>
+            <tr>
+                <td class="pname">条形码：</td><td><input type="text" class="k-textbox" id="Barcode" name="Barcode" /></td>
+                <td class="pname">官网价格：</td><td>@(Html.Kendo().NumericTextBox().Name("GoujiuPrice").Min(0))</td>
+            </tr>
+            <tr>
+                <td class="pname">库存数量：</td><td>@(Html.Kendo().IntegerTextBox().Name("InventoryNumber").Min(0))</td>
+                <td class="pname">市场价格：</td><td>@(Html.Kendo().NumericTextBox().Name("MarketPrice").Min(0))</td>
+            </tr>
+            <tr>
+                <td class="pname">赠送积分：</td><td>@(Html.Kendo().IntegerTextBox().Name("Integral").Min(0))</td>
+                <td class="pname">虚拟销量：</td><td>@(Html.Kendo().IntegerTextBox().Name("SoldOfVirtual").Min(0))</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 关联属性 -->
+    <table id="product_attr">
+        <caption>关联属性</caption>
+    </table>
+    
+    <!-- 搜索引擎优化（SEO） -->
+    <table>
+        <caption>搜索引擎优化（SEO）</caption>
+        <tbody>
+            <tr>
+                <td class="pname">SEO 标题：</td><td><input type="text" class="k-textbox" id="SEOTitle" /></td>
+                <td class="pname">SEO 描述：</td><td><input type="text" class="k-textbox" id="SEODescription" /></td>
+            </tr>
+            <tr>
+                <td class="pname">SEO 关键字：</td><td><input type="text" class="k-textbox" id="SEOKeywords" /></td>
+                <td class="pname"></td><td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 商品图片 -->
+    <table>
+        <caption>商品图片</caption>
+        <tbody>
+            <tr>
+                <td colspan="4">
+                    <div id="productImgsDiv"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><input type="button" id="selectPictureBtn" onclick="selectProductPictureBtnClick()" class="k-button" value="选取图片"/></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- 商品描述 -->
+    <table>
+        <caption>商品描述</caption>
+        <tbody>
+            <tr>
+                <td colspan="4">
+                    <div id="productDescriptionDiv" style="width: 100%;">
+                        <script type="text/javascript">
+                            CKEDITOR.replace('Introduce');
+                        </script>
+                        @Html.TextArea("Introduce", new { @style = "height: 300px;" })
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <!-- 按钮 -->
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <input type="button" class="k-button" value="保存并下架" onclick="product.Add(1)"/>
+                    <input type="button" class="k-button" value="开始销售" onclick="product.Add(2)"/>
+                    <input type="button" class="k-button" value="预览"/>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div style="display: none">
+    @(Html.Kendo().Window()
+          .Name("pictureSelectorWindow")
+                  .Title("添加商品 > 选取图片")
+          .Width(1290)
+          .Height(590)
+          .Content(@<text>
+                        <div id="pictureSelectorWindowDiv" style="margin-top: -10px;"></div>
+                    </text>)
+          .Resizable()
+          .Draggable()
+          .Events(e => e.Close("closeCustomWindow"))
+          .Actions(actions => actions.Pin().Minimize().Maximize().Close()))
+</div>
+
+<script type="text/x-kendo-tmpl" id="imageListViewTemplate">
+    <div class="product" title="Hiddle#:ID#"">
+        <img src='@Url.Content("#:Path#")' onclick="FillImg(this)" name="#:ID#" />
+    </div>
+</script>
+
+<script>
+    // 获取第一级别商品类别信息
+    $(function () {
+        ProductCategory.Init();
+    });
+</script>

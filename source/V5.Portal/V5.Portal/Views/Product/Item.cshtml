@@ -1,0 +1,330 @@
+﻿@{ 
+    var home = new HomeController();
+    var product = new ProductController();
+}
+@using V5.Portal.Controllers;
+@using V5.Library;
+@model V5.Portal.Models.ProductModel
+@Styles.Render("~/Content/goods/goods.css")
+@Scripts.Render("~/Scripts/goods/goods.js")
+@Scripts.Render("~/Scripts/product.comment.js")
+@Scripts.Render("~/Scripts/product.consult.js")
+@Scripts.Render("~/Scripts/product.info.js")
+@Scripts.Render("~/Scripts/goods/productAttribute.js")
+@Scripts.Render("~/Scripts/product.js")
+<div id="body">
+    <div class="content fix">
+        <!--当前位置 s-->
+        <div class="conCrumb">
+            @Html.Raw(home.GetProductLevel(Model.ProductCategoryID, Model.ParentBrandID, Model.Name))
+        </div>
+        <!--当前位置 e-->
+        <!--商品详情 begin-->
+        <div class="goodsDetail fix">
+            <!--左侧 begin-->
+            <div class="colLeft">
+                <!--放大镜 begin-->
+                @Html.Raw(home.GetHtml_ProductPicture(Utils.ToString(ViewBag.ID)))
+                <!--放大镜 end-->
+            </div>
+            <!--左侧 end-->
+            <!--右侧 begin-->
+            <div class="colRight">
+                <div class="number_r fl">
+                    <div class="title bb1s pb5">
+                        <h1>
+                            @Html.DisplayFor(m => m.Name)
+                            @Html.HiddenFor(m => m.ID, new { @id = "proId" })
+                        </h1>
+                        <div style="color: red">@Html.DisplayFor(m => m.Advertisement)</div>
+                        <div id="pro_promote">
+                        </div>
+                    </div>
+                    <ul class="nub">
+                        <li class="mt10">
+                            <dd class="w265 db fl">
+                                <span class="c09">商品品牌：</span> <span id="pro_brand">@Html.Raw(home.GetBrandLink(Model.ProductCategoryID, Model.ParentBrandID))</span>
+                            </dd>
+                            <dd class=" w265 db fl">
+                                <span class="c09" style="display: none;">商品编号：</span><span id="goods_id" style="display: none;"></span></dd>
+                            <div class="clear">
+                            </div>
+                        </li>
+                        <li><span class="c09">市&nbsp;&nbsp;场&nbsp;&nbsp;价：</span><span class=" Price_t ">¥<span
+                            id="mark_price"></span></span></li>
+                        <li><span class="c09 fl">购&nbsp;&nbsp;酒&nbsp;&nbsp;价：</span><span class="Price fl mr5"><span
+                            style="font-size: 18px;">¥ </span><span id="spPrice"></span></span>
+                            <div class="fl ml10">
+                            </div>
+                        </li>
+                        <li id="promote_info"></li>
+                        <div class="clear">
+                        </div>
+                        <li class="ofh bts pt5">
+                            <dt class="db fl"><span class="c09">好评指数：</span></dt>
+                            <dd id="commet_start" class="">
+                            </dd>
+                            <dt class=" db fl"><em class="fwb" id="commet_score"></em>分 ( <a class="blue" id="AllComment"
+                                href="#Comment" onclick="javascript:CommentLoad();">已有<em id="comment_sum">0</em>人评分</a>)</dt>
+                            <div class="clear">
+                            </div>
+                        </li>
+                        <li class="">
+                            <dt class="db fl"><span class="c09">消费保障：</span></dt>
+                            <dt class="db fl xfbz x_zp "></dt>
+                            <dd class="db fl">
+                                真品保障</dd>
+                            <dt class="db fl xfbz x_30 "></dt>
+                            <dd class="db fl">
+                                创新退换货</dd>
+                            <dt class="db fl xfbz x_hd "></dt>
+                            <dd class="db fl">
+                                货到付款</dd>
+                            <dt class="db fl xfbz x_12 "></dt>
+                            <dd class="db fl">
+                                7×12小时客服</dd>
+                        </li>
+                        <div class="clear">
+                        </div>
+                        <li class="mb10 fix">
+                            <dt class="db fl"><span class="c09">库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存：</span><span
+                                id="inventory_no"></span></dt>
+                            <dd id="storeinfo" style="display: none">
+                                <div class="at">
+                                    <div class="at_btn" id="spnProvince">
+                                        <label id="lbPP">上海(现货)</label></div>                                    
+                                </div>
+                            </dd>
+                        </li>
+                    </ul>
+                    <div id="paykey_new">
+                        <div class="numb db">
+                            <dt class="db fl"><span class="c09">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：</span></dt>
+                            <dt class="db fl w265"><span class="num_up fl" id="buynum_up"></span>
+                                <input class="num_input fl" id="txtQuantity" value="1" maxlength="4" type="text">
+                                <span class="num_dw fl" id="buynum_down"></span>
+                                <div class="clear">
+                                </div>
+                            </dt>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="goods_but">
+                            <div id="cart_btn">
+                                <a class="buy_btn" onclick="javascript:productinfo.addCat();"></a>
+                            </div>
+                            <a class="fav_btn" onclick="javascript:productinfo.addCollect();"></a>
+                            <div id="divSuccess" class="hide clt_msg">
+                                <span class="sc_1">收藏成功</span>
+                            </div>
+                            <div id="divCollect" class="hide clt_msg">
+                                <span class="c01">您已收藏过</span>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Pref">
+                        <ul>
+                            <li><span class="c01">支付方式：</span>货到付款 | 在线支付</li>
+                            <li><span class="c01">运费说明：单笔订单满100元免运费（香港、澳门、台湾、钓鱼岛地区和拆分订单除外）</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="divProductInfo">
+                </div>
+            </div>
+            <!--右侧 end-->
+        </div>
+        <!--商品详情 end-->
+        <!--买了此商品的用户还买了-->
+        <div id="bought_goods_div" class="shop_other">
+            <div class="ml_box mt10">
+                <dl class="ofh">
+                    <dd>
+                        买了此商品的用户还买了</dd></dl>
+                <div class="ml_sandow">
+                </div>
+                <div class="p15">
+                    @Html.Raw(home.GetHtml("<ul class=\"ml_box_1\">" +
+                                                         "   <div><a href=\"/product/item-id-$ProductID$.htm\" target=\"_blank\" title=\"\"><img alt=\"\" class=\"lazy\" data-original=\"$ThumbnailPath$\") height=\"140\" width=\"140\"></a></div>" +
+                                       "   <dt><a href=\"/product/item-id-$ProductID$.htm\" target=\"_blank\" title=\"$ProductName$\">$ProductName$</a></dt>" +
+                                       "   <dt><strong class=\"c_red\">¥$GoujiuPrice$</strong></dt>" +
+                                       "</ul>", 6, ProductType.Rand))
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--买了此商品的用户还买了 end-->
+        <!--左侧 s-->
+        <div class="colLeft">
+            <!--同类推荐 s-->
+            <div class="mt10 fl" id="sidebar">
+                <div id="similar_goods_div">
+                    <div class="tj_box">
+                        <dl class="ofh">
+                            <dd>
+                                同类推荐</dd>
+                        </dl>
+                        <div class="ml_sandow">
+                        </div>
+                        @Html.Raw(home.GetHtml("<ul class=\"tj_box_1\">" +
+                                               "   <div><a href=\"/product/item-id-$ProductID$.htm\" target=\"_blank\" title=\"$ProductName$\"><img alt=\"$ProductName$\" class=\"lazy\" data-original=\"$ThumbnailPath$\") height=\"140\" width=\"140\"></a></div>" +
+                                               "   <dt><a href=\"/product/item-id-$ProductID$.htm\" target=\"_blank\" title=\"$ProductName$\">$ProductName$</a></dt>" +
+                                               "   <dt><strong class=\"c_red\">¥$GoujiuPrice$</strong></dt>" +
+                                               "</ul>", 12, ProductType.Rand))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--左侧 e-->
+        <!--右侧 s-->
+        <div class="colRight">
+            <div class="mt10 fl" id="main_l">
+                <div id="scrip_lin" style="width: 790px; background: none repeat scroll 0% 0% rgb(255, 255, 255);
+                    position: static; top: 973px;">
+                    <div class="scrip_lin">
+                        <div class="scrip_bar">
+                            <ul>
+                                <li style="background-position: 0 -205px;" class="scrip_1">商品详情</li>
+                                <li class="scrip_2">买家评价(<span id="commentCount"></span>)</li>
+                                <li class="scrip_3">商品咨询(<span id="consultCount"></span>)</li>
+                                <li class="scrip_4">质量保障</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bb1s">
+                    </div>
+                </div>
+                <!--商品详情 s-->
+                <div class="details1">
+                    <div class=" mt10 cs_box fix">
+                        <div class="detl_iclist clear-fix" id="product_attr">
+                          @Html.Raw(product.QueryAttribute(Model))
+                        </div>                        
+                    </div>
+                    <div class=" mt15">
+                        <div class="gs_box">
+                            <img alt="" style="margin: 10px 0px; display:block;" class="lazy" data-original=@Url.Content("~/images/goods/title_0.jpg")>
+                            @Html.Raw(Model.Introduce)
+                        </div>
+                    </div>
+                </div>
+                <!--商品详情 e-->
+                <!--质量保障 s-->
+                <div class="zl_box mt10 details6">
+                    <dl class="ofh">
+                        <dd>
+                            质量保障</dd></dl>
+                    <div class="ml_sandow">
+                    </div>
+                    <div class="p10">
+                        <img data-original=@Url.Content("~/images/goods/sv.jpg") class="lazy"></div>
+                </div>
+                <!--质量保障 e-->
+                <!--看了此商品的用户还看了-->
+                <dl id="see_goods_div">
+                    <div class="kl_box mt10  details5  ">
+                        <dl class="ofh">
+                            <dd>
+                                看了此商品的用户还看了</dd></dl>
+                        <div class="ml_sandow">
+                        </div>
+                        <div class=" w718 p15">
+                            @Html.Raw(home.GetHtml("<div class=\"kl_box_1 \">" +
+                                                                     "   <div><a href=\"/product/item-id-$ProductID$.htm\" target=\"_blank\" title=\"$ProductName$\"><img alt=\"$ProductName$\" class=\"lazy\" data-original=\"$ThumbnailPath$\" height=\"130\" width=\"125\"></a></div>" +
+                                                   "   <dt><a href=\"/product/item-id-$ProductID$.htm\" target=\"_blank\" title=\"$ProductName$\">$ProductName$</a></dt>" +
+                                                   "   <dt><strong class=\"c_red\">¥$GoujiuPrice$</strong></dt>" +
+                                                   "</div>", 10, ProductType.Rand))
+                            <div class="clear bb1s h10 mb10">
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                </dl>
+                <!--看了此商品的用户还看了END-->
+                <!--买家评论-->
+                <div class="p10 mt10 pl_box details2">
+                    <a name="Comment" id="Comment"></a>
+                    <ul class=" bb1s db h35 ofh fix">
+                        <li class=" pl_box_title db" style="float: left;"></li>
+                        <li class="db fr"><a class="pl_btn fr" onclick="javascript:comment.CommentShow();">写评论</a>
+                        </li>
+                    </ul>
+                    <div id="s1">
+                        <div style="display: none" id="add_pro_com">
+                            <a name="add_com" id="add_com"></a>
+                            <!--回复评论-->
+                            <dl class="pl_pingfen">
+                                <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 评分 </dt>
+                                <dd>
+                                    <ul class="fix">
+                                        <li>
+                                            <input type="radio" name="Score" class="fl" value="1" />
+                                            <span class="s_2 star db fl"></span></li>
+                                        <li>
+                                            <input type="radio" name="Score" class="fl" value="2" />
+                                            <span class="s_4 star db fl"></span></li>
+                                        <li>
+                                            <input type="radio" name="Score" class="fl" value="3" />
+                                            <span class="s_6 star db fl"></span></li>
+                                        <li>
+                                            <input type="radio" name="Score" class="fl" value="4" />
+                                            <span class="s_8 star db fl"></span></li>
+                                        <li>
+                                            <input type="radio" name="Score" class="fl" checked="checked" value="5" />
+                                            <span class="s_10 star db fl"></span></li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                            <dl class="pl_con">
+                                <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 内容 </dt>
+                                <dd>
+                                    <textarea name="txtContent" proID="@ViewBag.ID" class="txtCon" id="txtContent" rows="3" cols="50" style="resize: none"></textarea>
+                                </dd>
+                            </dl>
+                            <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:comment.SubmitComment();" />
+                            <!--回复评论-->
+                        </div>
+                        <div id="divComment">
+                        </div>
+                    </div>
+                </div>
+                <!--买家评论-->
+                <!--商品咨询-->
+                <div class="mt10 p10 sp_box w718 details3">
+                    <a id="Consult" name="Consult"></a>
+                    <ul class=" bb1s db h35">
+                        <li class=" sp_box_title"></li>
+                    </ul>
+                    <div id="divConsult">
+                    </div>
+                    <div class="qa_tishi">
+                        <ul>
+                            <li class="sp_box_alt"><span class="fl">没有您需要的答案？您可以提问，客服将在1个工作日内回复您。</span> <a class="sp_btn"
+                                onclick="javascript:consult.ConsultShow();">提交问题</a>
+                                <div class="clear">
+                                </div>
+                            </li>
+                            <li class="mt10 sp_box_alt">订单查询、物流配送、退换货、商品损坏等售后问题，您可以拨打7x12小时客服电话：400-722-1919 。</li>
+                        </ul>
+                    </div>
+                    <div id="add_pro_con" style="display: none">
+                        <dl class="pl_con bt1s">
+                            <dt class="fs14 fwb mb15"><span class="red">*</span> 咨询内容 </dt>
+                            <dd>
+                                <textarea name="txtContent" proID="@ViewBag.ID" id="txtConsult" class="txtCon"></textarea>
+                            </dd>
+                        </dl>
+                        <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:consult.SubmitConsult();" />
+                        <!--咨询内容-->
+                    </div>
+                </div>
+            </div>
+            <!--商品咨询-->
+        </div>
+        <!--右侧 s-->
+    </div>
+</div>

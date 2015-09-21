@@ -1,0 +1,5 @@
+F:\GJW_V5\source\GY_ERP_API\bin\Debug\GY_ERP_API.exe
+F:\GJW_V5\source\GY_ERP_API\bin\Debug\GY_ERP_API.pdb
+F:\GJW_V5\source\GY_ERP_API\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\GY_ERP_API\obj\x86\Debug\GY_ERP_API.exe
+F:\GJW_V5\source\GY_ERP_API\obj\x86\Debug\GY_ERP_API.pdb

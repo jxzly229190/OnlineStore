@@ -1,0 +1,342 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Models.Promote
+@using V5.Portal.Backstage.Models.User
+@Scripts.Render("~/Scripts/Promote/Counpon.js")
+@(Html.Kendo().TabStrip()
+    .Name("tabStrip")
+    .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+    .Items(items =>
+        {
+            items.Add().Selected(true).Text("现金券").Content(@<text>
+                                                                名称：<input id="SearchCashName" class="k-textbox" type="text"/>
+                                                                状态：@Html.Kendo().DropDownList().Name("SearchCashStatus").BindTo(new List<SelectListItem>() { new SelectListItem() { Text = "全部", Value = "0" }, new SelectListItem() { Text = "正常", Value = "1" }, new SelectListItem() { Text = "作废", Value = "2" }, new SelectListItem() { Text = "过期", Value = "3" } }).HtmlAttributes(new { style = "width:55px" })
+                                                                <input type="button" class="k-button" value="查 询" onclick="SearchCash()"/>
+                                                                @(Html.Kendo().Grid<CouponCashModel>().Name("CouponCashGrid").Columns(columns =>
+                                                                      {
+                                                                          columns.Bound(v => v.Name).Title("优惠券名称").Width(150);
+                                                                          columns.Bound(v => v.FaceValue).Title("面值").Width(50);
+                                                                          columns.Bound(v => v.InitialNumber).Title("初始数量").Width(60);
+                                                                          columns.Bound(v => v.Remain).Title("剩余数量").Width(60);
+                                                                          columns.Bound(v => v.Bind).Title("绑定数量").Width(60);
+                                                                          columns.Bound(v => v.Cost).Title("消费数量").Width(60);
+                                                                          columns.Bound(v => v.StartTime).Title("生效日期").Width(120).Format("{0:yyyy-MM-dd HH:mm:ss}");
+                                                                          columns.Bound(v => v.EndTime).Title("作废日期").Width(120).Format("{0:yyyy-MM-dd HH:mm:ss}");
+                                                                          columns.Command(command => command.Custom("查看").Click("ShowCounponCashDetails")).Title("操作").Width(80);
+                                                                      }).ToolBar(toolbar => toolbar.Template("<a class='k-button' onclick='AddCouponCash()'>添加现金券</a>")).Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Promote_Coupon_Cash_Template").Window(edit => edit.Title("编辑"))).Scrollable().Pageable().ClientDetailTemplateId("SubTemplate1").Events(e => e.Edit("onEdit")).Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row)).HtmlAttributes(new { style = "height:480px;" }).DataSource(dataSource => dataSource.Ajax().PageSize(10).Events(events => events.Error("error_handler")).Model(model => model.Id(c => c.ID)).Read(read => read.Action("QueryCouponCash", "Promote").Data("SearchCashData"))))
+                                                            </text>);
+        items.Add().Text("满减券").LoadContentFrom("DecreaseList", "Promote");
+        
+        items.Add().Text("赠券").Content(@<text><div id="adCounponBinding" style="height: 580px;">
+            <div>
+                @Html.RadioButton("rb_user", 0, true, new { ID = "rb_alluser", onclick = "alluser()" })所有会员
+                @Html.RadioButton("rb_user", 1, false, new { ID = "rb_userlevel", onclick = "userlevel()" })会员等级
+                @Html.RadioButton("rb_user", 2, false, new { ID = "rb_usersingle", onclick = "usersingle()" })指定会员
+            </div>
+            <div id="chooseuser">
+                @Html.CheckBox("ck_alluser")所有会员
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td style="width: 30%; text-align: right">
+                            优惠券类型：
+                        </td>
+                        <td style="width: 70%">
+                            <input type="radio" id="rb_CouponCash" name="rb_CouponType" value="1" checked="checked" onclick="ChooseCouponDecrease()"/>满减券
+                            <input type="radio" id="rb_CouponDecrease" name="rb_CouponType" value="0" onclick="ChooseCouponCash()"/>现金券
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; text-align: right">
+                            选择优惠券：
+                        </td>
+                        <td style="width: 70%">
+                            <div id="counponDecreaseList">
+                                @(Html.Kendo().DropDownList().Name("CounponDecrease")
+                                .DataSource(ds => ds.Read("QueryCounponDecreaseListItems", "Promote"))
+                                .DataTextField("Text").DataValueField("Value"))
+                            </div>
+                            <div id="counponCashList" style="display: none">
+                                @(Html.Kendo().DropDownList().Name("CounponCash")
+                                .DataSource(ds => ds.Read("QueryCounponCashListItems", "Promote"))
+                                .DataTextField("Text").DataValueField("Value"))
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; text-align: right">
+                            赠送数量：
+                        </td>
+                        <td style="width: 70%">
+                            @(Html.Kendo().IntegerTextBox().Name("sendCount").Min(0))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; text-align: right">
+                            赠送原因：
+                        </td>
+                        <td style="width: 70%">
+                            <input type="text" id="txtcause" class="k-textbox" />
+                        </td>
+                    </tr>
+                </table>
+                <input type="button" class="k-button" value="设置完成" onclick="GiveCoupon()" />
+            </div>
+        </div></text>);
+    })
+)
+
+<script id="SubTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<CouponCashBindingModel>().Name("couponCashGird_#=ID#")
+          .Columns(columns =>
+          {
+              columns.Bound(c => c.Number).Width(70).Title("卡号");
+              columns.Bound(c => c.Password).Width(110).Title("密码");
+              columns.Bound(c => c.BindingTime).Width(100).Format("{0:yyyy/MM/dd HH:mm:ss}").Title("绑定日期");
+              columns.Bound(c => c.UseTime).Width(100).Format("{0:yyyy/MM/dd HH:mm:ss}").Title("消费时间");
+              columns.Bound(c => c.OrderID).Width(100).Title("订单号");
+              columns.Bound(c => c.StatusName).Width(50).Title("状态");
+          })
+          .Scrollable()
+          .Pageable()
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Pomote_Coupon_Cash_Binding_Template"))
+          .HtmlAttributes(new { style = "height:220px;" })
+          .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            .Events(events => events.Error("error_handler"))
+            .Model(model => model.Id(c => c.ID))
+            .Read(read => read.Action("QueryCouponCashBinding", "Promote", new { couponCashID = "#=ID#" }))
+            ).ToClientTemplate()
+          )
+</script>
+
+@*添加券使用范围*@
+<div id="CounponScopeDiv" style="display: none">
+    <div>
+        @Html.RadioButton("rb_CouponCash", 0, true, new { ID = "rb_all", })全场
+        @Html.RadioButton("rb_CouponCash", 1, false, new { ID = "rb_type", })商品种类
+        @Html.RadioButton("rb_CouponCash", 2, false, new { ID = "rb_category", })商品类别
+        @Html.RadioButton("rb_CouponCash", 3, false, new { ID = "rb_brand", })品牌
+        @Html.RadioButton("rb_CouponCash", 4, false, new { ID = "rb_product", })商品
+    </div>
+    <div id="chooseScope">
+    </div>
+    <div id="checkboxDiv">
+    </div>
+    <div id="couponContent"></div>
+</div>
+
+@*添加现金券 Start*@
+<div id="CounponCashCountent" style="display: none;">
+    <table width="100%">
+        <tr>
+            <td width="15%" style="text-align: right">
+                优惠券名称 ：
+            </td>
+            <td width="75%">
+                <input type="text" id="counponCashName" name="counponCashName" class="k-textbox" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                初始券数量 ：
+            </td>
+            <td>
+                @(Html.Kendo().IntegerTextBox().Name("Quantity").Min(0))
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                优惠券面额 ：
+            </td>
+            <td>
+                @(Html.Kendo().NumericTextBox<decimal>().Name("faceValue").Min(0))
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                生效日期：
+            </td>
+            <td>
+                <div style="width:160px;">
+                @Html.Kendo().DateTimePicker().Name("startTime").HtmlAttributes(new { @style = "width:150px" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                作废日期：
+            </td>
+            <td>
+                <div style="width:160px;">
+                @Html.Kendo().DateTimePicker().Name("endTime").HtmlAttributes(new { @style = "width:150px" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                活动备注：
+            </td>
+            <td>
+                <input type="text" id="cashRemarks" name="remarks" class="k-textbox" />
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="设置完成" class="k-button" onclick="SetCouponCash()" />
+    <input type="button" value="关闭" class="k-button" onclick="CloseAdd()"/>
+</div>
+@*添加现金券 End*@ 
+
+@*添加满减券 Start*@
+<div id="CouponDecreaseContent" style="display: none;">
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td width="15%" style="text-align: right">
+                    优惠券名称 ：
+                </td>
+                <td width="75%">
+                    <input type="text" id="decreaseName" name="decreaseName" class="k-textbox" />
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                    初始券数量 ：
+                </td>
+                <td>
+                    @(Html.Kendo().IntegerTextBox().Name("Quantity").Min(0))
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                    优惠券面额 ：
+                </td>
+                <td>
+                    @(Html.Kendo().NumericTextBox<decimal>().Name("faceValue").Min(0))
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                    满足的消费金额：
+                </td>
+                <td>
+                    @(Html.Kendo().NumericTextBox<decimal>().Name("meetMoney").Min(0))
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                    生效日期：
+                </td>
+                <td>
+                    @Html.Kendo().DateTimePicker().Name("startTime").HtmlAttributes(new { @style = "width:160px" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                    作废日期：
+                </td>
+                <td>
+                    @Html.Kendo().DateTimePicker().Name("endTime").HtmlAttributes(new { @style = "width:160px" })
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                    活动备注：
+                </td>
+                <td>
+                    <input type="text" id="dacreaseRemarks" name="remarks" class="k-textbox" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="button" value="设置完成" class="k-button" onclick="SetCouponDecrease()"/>
+    <input type="button" value="关闭" class="k-button" onclick="CloseAdd()"/>
+</div>
+@*添加满减券 End*@ 
+
+@*添加电子券选择使用范围 Start *@
+<div id="check_all" style="display: none">
+    <input type="checkbox" name="ck_all" value="1" />全场
+</div> 
+<div id="check_type" style="display: none">
+    @Html.Action("QuerySelectTypeListItems", "Promote")
+</div>
+<div id="drop_category" style="display: none">
+    @(Html.Kendo().DropDownList().Name("ParentCategory").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value").HtmlAttributes(new { @style = "width: 100px;" }).Events(e => e.Change("ParentCategoryChange")))
+</div>
+<div id="drop_brand" style="display: none">
+    @(Html.Kendo().DropDownList().Name("ProductCategory").DataSource(source => source.Read(read => read.Action("QuerySubCategorySelectListItems", "Product").Data("GetParentCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategory").HtmlAttributes(new { @style = "width: 100px;" }).Events(e => e.Change("ProductCategoryChange")))
+</div>
+<div id="grid_product" style="display: none">
+    <div id="SerchProduct">
+        商品名称：<input id="ProductName" type="text" class="k-textbox" />
+        商品编码：<input id="ProductBarcode" type="text"class="k-textbox"/>
+        <input type="button" class="k-button" value="查询" onclick="SearchProduct()" />
+    </div>
+    @(Html.Kendo().Grid<ProductModel>()
+          .Name("ProductGrid")
+          .Columns(columns =>
+              {
+                  columns.Template(e => { }).ClientTemplate("<input type='checkbox' name='selectproduct' value='#: ID#'/>").Width(10).Title("<input type='checkbox' id='SelectAll' />全选");
+                  columns.Bound(p => p.Name).Width(100).Title("商品名称");
+                  columns.Bound(p => p.GoujiuPrice).Width(100).Title("价格");
+                  columns.Bound(p => p.InventoryNumber).Width(100).Title("库存");
+                  columns.Bound(p => p.Status).Width(100).Title("状态");
+                  columns.Bound(p => p.CreateTime).Width(100).Format("{0:yyyy-MM-dd}").Title("最新上架时间");
+              })
+          .Pageable(pageable => pageable.ButtonCount(5))
+          .Selectable(selectable => selectable
+                                        .Mode(GridSelectionMode.Multiple))
+          .Navigatable()
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData"))
+          )
+    )
+</div>
+@*添加电子券选择使用范围 End *@
+
+@*给会员赠券指定会员 Start*@
+<div id="user_all" style="display: none;">
+   <input type="checkbox" name="ck_alluser" value="1" />所有会员
+</div>
+<div id="user_level" style="display: none">
+    @Html.Action("QuerySelectUserLevelListItems", "Promote")
+</div>
+<div id="user_single" style="display: none">
+    <div id="SerchUser">
+        <input id="UserName" type="text" class="k-textbox" /><input type="button" class="k-button"
+            value="查询" onclick="SearchUser()" />
+    </div>
+    @(Html.Kendo().Grid<UserModel>()
+          .Name("UserGrid")
+          .Columns(columns =>
+              {
+                  columns.Template(e => { }).ClientTemplate("<input type='checkbox' name='selectuser' value='#: ID#'/>").Width(10).Title("<input type='checkbox' id='SelectAllUser' onclick='SelectAllUser(this) '/>全选");
+                  columns.Bound(u => u.Name).Width(60).Title("会员姓名");
+                  columns.Bound(u => u.UserLevelName).Width(60).Title("会员等级");
+                  columns.Bound(u => u.LoginName).Width(60).Title("登录名");
+                  columns.Bound(u => u.NickName).Width(60).Title("昵称");
+                  columns.Bound(u => u.Mobile).Width(100).Title("手机号");
+                  columns.Bound(u => u.Email).Width(100).Title("邮箱");
+                  columns.Bound(u => u.CreateTime).Width(100).Format("{0:yyyy-MM-dd HH:mm:ss}").Title("注册时间");
+              })
+          .Pageable(pageable => pageable.ButtonCount(5))
+          .Selectable(selectable => selectable
+                                        .Mode(GridSelectionMode.Multiple))
+          .Navigatable()
+          .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .Read(read => read.Action("Query", "User").Data("SearchUserData"))
+          )
+    )
+</div>
+@*给会员赠券指定会员 End*@
+<style>
+    .k-datetimepicker{
+    width: 160px;
+}
+</style>

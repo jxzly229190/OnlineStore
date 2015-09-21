@@ -1,0 +1,166 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;系统管理&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div class="right-box">
+</div>
+<script type="text/javascript">
+    // 默认选中左边菜单的第一个
+    $(function () {
+        $("#top_system").addClass("select");
+        $('.left-f ul li:first a').trigger("click");
+    });
+
+    // 请求并显示部分视图
+    function ShowPartialView(a) {
+        // 拼接异步请求 url
+        var current = $(a).attr("name");
+        var href = "/" + $(a).attr("parent") + "/" + current + "/";
+
+        // 更新当前位置
+        var currentLabel = $("#current");
+        currentLabel.text($(a).text());
+        
+        // 发起异步请求
+        $.ajax({
+            type: "GET",
+            url: href,
+            data: null,
+            datatype: "html",
+            success: function (data) {
+                if (data.State == -401) {
+                    onSessionLost();
+                } else if (data.State == -403) {
+                    alert("对不起，您无此操作权限！");
+                } else {
+                    if (data.indexOf("loginBtn") > 0) {
+                        location.href = "/login";
+                        return false;
+                    }
+                    $('.right-box').html(data);
+                    return false;
+                }
+            },
+            error: function () {
+                errorMessage();
+            }
+        });
+
+        // 修改样式
+        $(a).parent().addClass("left-s").siblings().removeClass("left-s");
+    }
+
+    // 系统菜单相关脚本
+    // 菜单 Grid 行展开触发事件
+    var menuGridExpandedRow;
+    function onMenuDetailExpand(e) {
+        if (menuGridExpandedRow != null && menuGridExpandedRow[0] != e.masterRow[0]) {
+            var grid = $("#menuGrid").data("kendoGrid");
+            grid.collapseRow(menuGridExpandedRow);
+        }
+        menuGridExpandedRow = e.masterRow;
+        menuGridExpandedRow.next().css("display", "");
+
+        var permissionID = e.sender._data[e.masterRow[0].rowIndex].PermissionID;
+        $("#permissionID").val(permissionID);
+    }
+
+    // 获取父菜单对应的权限编号
+    function GetPermission() {
+        return { permissionID: $("#permissionID").val() };
+    }
+
+    function onMenuEdit(e) {
+        if (e.model.isNew()) {
+            $(".k-window-title").html("新建");
+            e.container.find(".k-update").parent().text("添加");
+        } else {
+            $(".k-window-title").html("编辑");
+            e.container.find(".k-update").parent().text("修改");
+            // 菜单编辑时，将 URL 属性设置为 只读
+            $("#URL").attr("readonly", "readonly");
+        }
+
+        e.container.find(".k-cancel").parent().text("取消");
+    }
+
+    // 系统角色相关脚本
+    // 显示添加角色的 Window
+    function showAddRoleWindow() {
+        $(".k-overlay").css('display', 'block');
+        $("#addRoleWindow").data("kendoWindow").open();
+        $("#addRoleWindow").data("kendoWindow").center();
+
+        $("#treeview").data("kendoTreeView").expand('.k-item');
+    };
+
+    // 关闭添加角色的 Window
+    function closeAddRoleWindow() {
+        $(".k-overlay").css('display', 'none');
+        $("#addRoleWindow").data("kendoWindow").close();
+        $("#roleGrid").data("kendoGrid").dataSource.read();
+    }
+
+    function close() {
+        $(".k-overlay").css('display', 'none');
+        $("#roleGrid").data("kendoGrid").dataSource.read();
+    }
+
+    // 添加角色
+    function addRole() {
+        var values = "";
+        $("input[name='checkedItems']").each(function () {
+            if (this.checked == true) {
+                values += "," + $(this).val();
+            }
+
+        });
+        if (values == "") {
+            alert("请选择权限！");
+            return;
+        }
+
+        // 发起异步请求
+        $.ajax({
+            type: "POST",
+            url: "/System/AddRole",
+            data: {
+                roleName: $("#roleName").val(),
+                checkedItems: values
+            },
+            datatype: "text",
+            success: function (data) {
+                if (data == "1") {
+                    $("#addRoleWindow").data("kendoWindow").close();
+                    $(".k-overlay").css('display', 'none');
+                    $("#roleGrid").data("kendoGrid").dataSource.read();
+                    $("#roleGrid").data("kendoGrid").dataSource.refresh();
+                } else {
+                    alert("添加角色失败！");
+                }
+            }
+        });
+    }
+
+    function onMenuTreeViewSelect(e) {
+        e.preventDefault();
+        $("#treeview").data("kendoTreeView").expand($(e.node));
+    }
+
+    // 系统用户相关脚本
+    function onUserEdit(e) {
+        if (e.model.isNew()) {
+            $(".k-window-title").html("新建");
+            e.container.find(".k-update").parent().text("添加");
+        } else {
+            $(".k-window-title").html("编辑");
+            e.container.find(".k-update").parent().text("修改");
+            // 用户编辑时，将密码属性设置为 只读
+            //$("#LoginPassword").attr("readonly", "readonly");
+        }
+
+        e.container.find(".k-cancel").parent().text("取消");
+    }
+</script>

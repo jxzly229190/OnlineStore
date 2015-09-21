@@ -1,0 +1,45 @@
+﻿@model V5.Portal.Backstage.Models.Transact.ProductConsultModel
+@Html.ValidationSummary(true)
+<div class="editor-label">
+    咨询人：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.UserName, new { @readonly = "readonly", @class = "k-unedit-textbox-container" })
+</div>
+<div class="editor-label">
+    咨询时间：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.ConsultTimeStr, new { @readonly = "readonly", @class = "k-unedit-textbox-container"})
+</div>
+<div class="editor-label">
+    电话：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.ConsultPersonMoblie, new { @readonly = "readonly", @class = "k-unedit-textbox-container" })
+</div>
+<div class="editor-label">
+    邮箱：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.ConsultPersonEmail, new { @readonly = "readonly", @class = "k-unedit-textbox-container" })
+</div>
+<div class="editor-label">
+    咨询商品：
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.ProductName, new { @readonly = "readonly", @class = "k-textbox", @style = "width: 400px" })
+</div>
+<div class="editor-label">
+    咨询内容：
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.ConsultContent, new { @readonly = "readonly", @class = "k-textbox", @style = " height: 100px;width: 400px" })
+</div>
+<div class="editor-label">
+    回复内容：
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.Content, new { @class = "k-textbox", @style = "width: 400px; height: 100px; color: black;" })
+    @Html.ValidationMessageFor(model => model.Content)
+</div>

@@ -1,0 +1,94 @@
+﻿namespace V5.Portal
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+
+    using V5.Portal.Models;
+    using V5.Service.Product;
+    using V5.Service.Transact;
+    using V5.DataContract.Transact.ShoppingCart;
+    using V5.Library;
+    using System.Threading;
+    using V5.Service.System;
+
+    public static class Refresh
+    {
+        public static object obj = new object();
+
+        public static void Init()
+        {
+<<<<<<< .mine
+			//加载MongoDB用户数据到缓存里
+			LoadExtraData();
+
+=======
+            Refresh.Product();
+            Refresh.Province();
+            Refresh.City();
+            Refresh.County();
+
+>>>>>>> .r1908
+            while (true)
+            {
+                //休眠时间
+                int time = Utils.ToInteger(System.Configuration.ConfigurationManager.AppSettings["RefreshTime"], 10);
+                Thread.Sleep(time * 60000);
+
+                //更新产品
+                Product();
+            }
+        }
+
+		/// <summary>
+		/// 加载额外数据到缓存中
+		/// </summary>
+	    public static void LoadExtraData()
+		{
+			HttpRuntime.Cache["UserCartModel"] = MongoDBHelper.GetMongoDBModels<UserCartModel>(uc => !string.IsNullOrWhiteSpace(uc.VisitorKey));
+			HttpRuntime.Cache["SpecialPromote"] = MongoDBHelper.GetMongoDBModels<SpecialPromote>(sp => sp.ID > 0);
+		}
+
+        /// <summary>
+        /// 更新全部商品信息.
+        /// </summary>
+        public static void Product()
+        {
+            lock (obj)
+            {
+                var productList = new ProductService().QueryAllProductID(2);
+                var orderBillService = new OrderBillServices();
+                var cartProducts = new List<Cart_Product>();
+                foreach (var product in productList)
+                {
+                    var cartProduct = orderBillService.QueryCartProductFromDB(product);
+                    cartProducts.Add(cartProduct);
+                }
+
+                HttpRuntime.Cache["CartProduct"] = cartProducts;
+            }
+        }
+
+        public static void Province()
+        {
+            var systemHomeService = new SystemHomeService();
+            var provinces = systemHomeService.QueryProvinces();
+            HttpRuntime.Cache["Provinces"] = provinces;
+        }
+
+        public static void City()
+        {
+            var systemHomeService = new SystemHomeService();
+            var items = systemHomeService.QueryCities();
+            HttpRuntime.Cache["Cities"] = items;
+        }
+
+        public static void County()
+        {
+            var systemHomeService = new SystemHomeService();
+            var items = systemHomeService.QueryCounties();
+            HttpRuntime.Cache["Counties"] = items;
+        }
+    }
+}

@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{71A64C58-7EA1-419F-9D45-F5C09B5388B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.DataAccess.Promote</RootNamespace>
+    <AssemblyName>V5.DataAccess.Promote</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CouponCashBindingDA.cs" />
+    <Compile Include="CouponCashDA.cs" />
+    <Compile Include="CouponDecreaseBindingDA.cs" />
+    <Compile Include="CouponDecreaseDA.cs" />
+    <Compile Include="CouponScopeDA.cs" />
+    <Compile Include="MeetAmount\PromoteMeetAmountRuleDA.cs" />
+    <Compile Include="MeetAmount\PromoteMeetAmountScopeDA.cs" />
+    <Compile Include="MeetMoney\PromoteMeetMoneyScopeDA.cs" />
+    <Compile Include="PromoteLimitedDiscountDA.cs" />
+    <Compile Include="MeetAmount\PromoteMeetAmountDA.cs" />
+    <Compile Include="MeetMoney\PromoteMeetMoneyDA.cs" />
+    <Compile Include="MeetMoney\PromoteMeetMoneyRuleDA.cs" />
+    <Compile Include="PromoteMuchBottledDA.cs" />
+    <Compile Include="PromoteMuchBottledRuleDA.cs" />
+    <Compile Include="PromoteLandingPageDA.cs" />
+    <Compile Include="PromoteVipDA.cs" />
+    <Compile Include="PromoteVipScopeDA.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Product\V5.DataContract.Product.csproj">
+      <Project>{8A6D374A-1AF2-4AA8-8C71-E91724E1D7B1}</Project>
+      <Name>V5.DataContract.Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Promote\V5.DataContract.Promote.csproj">
+      <Project>{3CEAB9B8-873B-4215-AF37-8DDAB50DC3C9}</Project>
+      <Name>V5.DataContract.Promote</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Storage\V5.Library.Storage.csproj">
+      <Project>{8ABCE18E-100C-4714-8D8D-55D95ADBED94}</Project>
+      <Name>V5.Library.Storage</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library\V5.Library.csproj">
+      <Project>{0A8000BD-A860-4BD8-96F3-415A61EB5098}</Project>
+      <Name>V5.Library</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\V5.DataAccess\V5.DataAccess.csproj">
+      <Project>{D59FA7AD-67E5-459D-97D3-DD92689E43D5}</Project>
+      <Name>V5.DataAccess</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

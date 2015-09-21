@@ -1,0 +1,43 @@
+﻿<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<div class="uc_left">
+  <dl>
+    <dt class="uc_left_top"><a href="/User">用户中心</a></dt>
+    <dd class="uc_left_item">
+        <dl>
+            <dt><em></em>订单中心</dt>
+            <dd><em></em><a href="/User/MyOrder" data="MyOrder" >我的订单</a></dd>
+            <dd><em></em><a href="/User/Collect" data="Collect" >我的收藏</a></dd>
+            <dd><em></em><a href="/User/History" data="History" >浏览历史</a></dd>
+            <dd><em></em><a href="/User/Rss" data="Rss" >邮件&手机订阅</a></dd>
+        </dl>
+    </dd>
+    <dd class="uc_left_item">
+        <dl>
+            <dt><em></em>服务中心</dt>
+            <dd><em></em><a href="/User/Advisory" data="Advisory" >我的咨询</a></dd>
+            <dd><em></em><a href="/User/Evaluate" data="Evaluate" >我的评价</a></dd>
+            <!-- <dd><em></em><a href="###" >推荐有礼</a></dd> -->
+            <!-- <dd><em></em><a href="/User/Message" data="Message" >消息精灵</a></dd> -->
+        </dl>
+    </dd>
+    <dd class="uc_left_item">
+        <dl>
+            <dt><em></em>账户管理</dt>
+            <!-- <dd><em></em><a href="/User/Integral" data="Integral" >我的积分</a></dd> -->
+            <dd><em></em><a href="/User/Info" data="Info" >修改个人资料</a></dd>
+            <dd><em></em><a href="/User/Password" data="Password" >修改密码</a></dd>
+            <dd><em></em><a href="/User/Address" data="Address" >收货地址簿</a></dd>
+        </dl>
+    </dd>
+  </dl>  
+</div>
+<script>
+    $(function () {
+        var href = window.location.href;
+        $(".uc_left_item a").each(function () {
+            if (href.indexOf($(this).attr("data")) > 0) {
+                $(this).parent().addClass("cur");
+            }
+        })
+    })
+</script>

@@ -1,0 +1,17 @@
+﻿.perview {width:800px;background:#fff;font-size:12px; border-collapse:collapse; overflow:auto;}
+.perview td, .perview th {padding:5px;border:1px solid #ccc;}
+.perview th {background-color:#f0f0f0; height:20px; text-align:center;}
+.perview a:link, .perview a:visited, .perview a:hover, .perview a:active {color:#00F;}
+.perview table{ width:100%;border-collapse:collapse;}
+#idPicList input {
+	font-size:20px;cursor:pointer;
+	position:absolute;right:0;bottom:0;
+	filter:alpha(opacity=0);opacity:0;
+	outline:none;hide-focus:expression(this.hideFocus=true);
+}
+#idPicList div
+{
+    width:80px;height:20px;overflow:hidden;position:relative;
+	background:url(o_addfile.jpg) center no-repeat;
+    cursor:pointer;
+}

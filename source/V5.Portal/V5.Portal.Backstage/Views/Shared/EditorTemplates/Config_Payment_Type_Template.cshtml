@@ -1,0 +1,18 @@
+﻿@model V5.Portal.Backstage.Models.Configuration.ConfigPaymentTypeModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    支付类别：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Name, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Name)
+</div>
+
+<div class="editor-label">
+    支付方式：
+</div>
+<div class="editor-field">
+    @Html.Kendo().DropDownListFor(model => model.PaymentMethodID).OptionLabel("请选择").Name("PaymentMethodID").DataSource(ds => ds.Read(action => action.Action("QueryMethodList", "Config"))).DataTextField("PaymentMethodName").DataValueField("PaymentMethodId")
+    @Html.ValidationMessageFor(model=>model.PaymentMethodID)
+</div>

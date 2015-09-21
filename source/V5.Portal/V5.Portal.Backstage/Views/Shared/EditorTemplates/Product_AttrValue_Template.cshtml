@@ -1,0 +1,23 @@
+﻿@using NPOI.SS.Formula.Functions
+@model V5.Portal.Backstage.Models.Product.ProductAttributeValueModel
+@Html.HiddenFor(model => model.ID)
+@Html.HiddenFor(model => model.AttributeID)
+<div class="editor-label">
+    属性值:
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.AttributeValue)
+</div>
+<div class="editor-label">
+    排序:
+</div>
+<div class="editor-field">
+    @(Html.Kendo().IntegerTextBoxFor(model => model.Sorting).Value(Model.Sorting))
+</div>
+<div class="editor-label">
+    设为默认:
+</div>
+<div class="editor-field">
+    <input type="checkbox" id="DefaultSetting" class="k-checkbox" />
+    @Html.ValidationMessageFor(m => m.IsDefault)
+</div>

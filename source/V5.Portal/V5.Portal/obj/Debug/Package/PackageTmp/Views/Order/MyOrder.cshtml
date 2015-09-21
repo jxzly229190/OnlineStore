@@ -1,0 +1,222 @@
+﻿@using V5.Portal.Common
+@model IList<V5.DataContract.Transact.Order.Order>
+<link href="../../Content/Order/cloud_002.css" rel="stylesheet" type="text/css">
+<link href="../../Content/Order/cloud_003.css" rel="stylesheet" type="text/css">
+<link href="../../Content/Order/cloud.css" rel="stylesheet" type="text/css">
+<link href="../../Content/Order/user.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    .content{width:1200px;}
+    .conCrumb{line-height:32px;}
+    
+    .conRight {
+        float: left !important;
+        width: 960px;
+    }
+    .con_hd{background-color:#FFF; margin:1px 1px 0px 15px;border-left: 4px solid #cf0404;}
+    .con_hd h3{background:url(../images/bg_index.png) no-repeat; text-indent:-1000px; overflow:hidden;}
+</style>
+<div class="content fix">
+        <!--内容导航 begin-->
+        <div class="conCrumb">
+            <div>
+                您当前的位置： <a href="http://v4.gjw.com/">首页</a> &nbsp;&gt;&nbsp; <a href="http://v4.gjw.com/user/">
+                    用户中心</a> &nbsp;&gt;&nbsp; <span class="c01">我的订单</span>
+            </div>
+        </div>
+        <!--内容导航 end-->
+        
+        <!--左侧 begin-->
+        <div class="conLeft">
+        	<div class="userCenter">
+            	<h2><a class="user_center_title" href="http://v4.gjw.com/user/">用户中心</a></h2>
+            </div>
+        	<!--侧边菜单 begin-->
+            <ul class="side-nav">
+            	<li>
+            		<h3>交易管理</h3>
+            	</li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyOrder.htm">我的订单</a>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyFav.htm">我的收藏</a>
+                </li>
+                <li>
+            		<h3>服务与评价</h3>
+            	</li>
+               <li>
+                	<a href="http://v4.gjw.com/user/MyAsk.htm">我的咨询</a>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyComment.htm">我的评价</a>
+                </li>
+                
+                <li>
+                	<h3>帐户管理</h3>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyAddress.htm">收货地址</a>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyVoucher.htm">我的电子券</a>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyAccount.htm">账户余额</a>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyInfo.htm">个人资料</a>
+                </li>
+                <li>
+                	<a href="http://v4.gjw.com/user/MyPsaaword.htm">密码管理</a>
+                </li>
+            </ul>
+            <!--侧边菜单 end-->
+        </div>
+        <!--左侧 end-->
+
+        <!--右侧 begin-->
+        <div class="conRight">
+            <!--我的订单 begin-->
+            <div class="con_myOrder con_bg">
+                <div class="con_hd">
+                    <h3>我的订单</h3>
+                </div>
+                <div class="con_bd">
+                    <div class="auto">
+                        <table class="user-tb">
+                            <tbody><tr>
+                                <td align="left" width="10%">
+                                    目前显示的
+                                </td>
+                                <td align="left" width="15%">
+                                    <input value="1" name="rdbMonths" id="rdbMonths1" checked="checked" type="radio" />
+                                    <label for="">
+                                        三个月内的订单</label>
+                                </td>
+                                <td align="left" width="15%">
+                                    <input value="2" name="rdbMonths" id="rdbMonths2" type="radio" />
+                                    <label for="">
+                                        三个月前的订单</label>
+                                </td>
+                                <td align="right" width="55%">
+                                    商品名称：<input name="txtKey" id="txtKey" class="user_input180" type="text" />
+                                    <input class="btnRed4" id="btnSearch" value="查询" type="button" />
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <div class="userTbList">
+                        <table class="user-tb">
+                            <thead>
+                                <tr>
+                                    <th width="8%">
+                                        订单号
+                                    </th>
+                                    <th width="20%">
+                                        商品
+                                    </th>
+                                    <th width="6%">
+                                        收货人
+                                    </th>
+                                    <th width="8%">
+                                        金额
+                                    </th>
+                                    <th width="6%">
+                                        支付方式
+                                    </th>
+                                    <th width="8%">
+                                        下单时间
+                                    </th>
+                                    <th width="6%">
+                                        状态
+                                    </th>
+                                    <th width="12%">
+                                        操作
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (Model != null)
+                                    {
+                                        foreach (var order in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a class="ordNumArea" href="@Html.Raw(ConstantParams.OrderDetailUrl + "?oid="+order.ID)" target="_blank">
+                                                        @order.OrderCode</a>
+                                                </td>
+                                                <td>
+                                                    <div class="productArea">
+                                                        <input name="rptOrder$ctl00$hifID" id="hifID" value="@Html.Raw(order.ID)" type="hidden">
+                                                        @Html.Action("OrderProducts",new{orderID=order.ID})
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="consigneeArea">
+                                                        @order.Consignee</span>
+                                                </td>
+                                                <td>
+                                                    <span class="moneyArea">¥
+                                                        @order.TotalMoney</span>
+                                                </td>
+                                                <td>
+                                                    <div class="payArea">
+                                                        <p>
+                                                            @order.PaymentMethodName</p>
+                                                        <p>
+                                                            @order.PaymentStatusName</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="timeArea">
+                                                        @order.CreateTime.ToLocalTime()</p>
+                                                </td>
+                                                <td>
+                                                    <span class="stateArea">
+                                                        @order.StatusName</span>
+                                                </td>
+                                                <td>
+                                                    <dl class="actionArea">
+                                                        <dd>
+                                                            <a href="@Html.Raw(ConstantParams.OrderDetailUrl+"?oid="+order.ID)" target="_blank">查看</a>&nbsp;|&nbsp;
+                                                            @{
+                                                                if (order.Status ==0 || order.Status==100)
+                                                                {
+                                                                    <a href="javascript:" class="Canceling" index="114793">取消</a>
+                                                                    @Html.Raw("&nbsp;|&nbsp;")
+                                                                }
+                                                                    
+                                                                if ((order.Status ==0 || order.Status==100)&&order.PaymentStatus==0)
+                                                                {
+                                                                    <a href="http://v4.gjw.com/purchase/ModifyPay-ID-114793.htm" target="_blank">支付</a>
+                                                                }
+                                                            }
+                                                        </dd>
+                                                    </dl>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                    
+                                <tr style="display: none;" id="trEmpty">
+                                    <td colspan="8">
+                                        没有符合条件的订单！
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="page_box">
+                            <span><font>&lt;&lt;首页</font></span><span><font>上一页</font></span><span class="page_on">1</span><span><font>下一页</font></span><span><font>尾页&gt;&gt;</font></span>
+                            <span>
+                                1/共1页
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--我的订单 end-->
+        </div>
+        <!--右侧 end-->
+    </div>

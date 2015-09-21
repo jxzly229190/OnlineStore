@@ -1,0 +1,31 @@
+﻿@model V5.Portal.Backstage.Models.Configuration.ConfigDeliveryCostModel
+@Html.ValidationSummary(true)
+
+
+<div class="editor-label">
+    合作快递：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.DeliveryCorporationID).Name("DeliveryCorporationID").OptionLabel(" 请选择 ").DataSource(ds => ds.Read("QuerySelectListItems", "Config")).DataTextField("Name").DataValueField("ID"))
+</div>
+<div class="editor-label">
+    到达城市：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.ProvinceID).Name("ProvinceID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read("QueryProvinces", "Home")).DataTextField("Name").DataValueField("ID"))
+    @(Html.Kendo().DropDownListFor(model => model.CityID).Name("CityID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCities", "Home").Data("filterCity")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("ProvinceID"))
+</div>
+<div class="editor-label">
+    运输耗时(天)：
+</div>
+<div class="editor-field">
+    @Html.Kendo().IntegerTextBoxFor(model=>model.Duration).Name("Duration")
+    @Html.ValidationMessageFor(model => model.Duration)
+</div>
+<div class="editor-label">
+    运费(元)：
+</div>
+<div class="editor-field">
+    @Html.Kendo().NumericTextBoxFor(model=>model.Cost).Name("cost")
+    @Html.ValidationMessageFor(model => model.Cost)
+</div>

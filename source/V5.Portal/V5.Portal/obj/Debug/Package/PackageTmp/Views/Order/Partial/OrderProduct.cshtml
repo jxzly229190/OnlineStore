@@ -1,0 +1,22 @@
+﻿@using V5.Portal.Common
+@model IList<V5.DataContract.Transact.Order.Order_Product>
+@{
+    Layout = null;
+}
+
+@{
+    if (Model != null)
+    {
+        foreach (var product in Model)
+        {
+            <ul class="orderList">
+                                                        
+            <li><a href="@Html.Raw(ConstantParams.ProductUrl+"?ID="+product.ID)" target="_blank" title="@Html.Raw(product.ProductName)">
+                <img src="@Html.Raw(product.Path)" alt="@Html.Raw(product.ProductName)"></a></li>
+                                                        
+            </ul>
+        }
+    }
+}
+
+

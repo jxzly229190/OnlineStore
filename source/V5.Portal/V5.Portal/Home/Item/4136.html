@@ -1,0 +1,871 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="购酒网,网上买酒专卖店,最好的买酒网" />
+  <meta name="description" content="购酒网作为国内第一网上买酒网官方专卖店，提供白酒、葡萄酒、洋酒、进口红酒、黄酒等10万种以上正品酒类商品，经过茅台、五粮液、洋河、王朝等数百种品牌授权，立志成为最好的买酒网。" />
+  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+  <link href="/Content/base.css" rel="stylesheet"/>
+ 
+  <link href="/Content/head.css" rel="stylesheet"/>
+ 
+  <link href="/Content/public.css" rel="stylesheet"/>
+ 
+  <script src="/Scripts/jquery-1.6.7.min.js"></script>
+ 
+  <script src="/Scripts/AjaxOverride.js"></script>
+
+  <script src="/Scripts/jquery.lazyload.min.js"></script>
+ 
+  <script src="/Scripts/global.js"></script>
+
+  <script src="/Scripts/public.js"></script>
+ 
+
+  <div class="topBar" id="topBar">
+  <div class="topBarCon">
+    <!-- 左侧栏目 -->
+    <div class="topBarFl fl">
+      <ul>
+        <li><span>欢迎来到购酒网！</span></li>
+        <li>
+          <!-- 登录 -->
+          <div class="login">
+            <div id="top_login">
+              <a href='#' class='login-name'>刷锅</a><a id='loginout' href='javascript:Navigation.LoginOut();'>退出</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 右侧栏目 -->
+    <div class="miniMenu fr">
+      <ul>
+        <!-- 购物车 -->
+        <li class="m1">
+          <a class="cart-a" href="/Cart">购物车<strong id="head_cart_no">0</strong>件</a>
+          <div class="mini-cart hide">
+            <div class="no-list hide">
+              您的购物车中暂时没有商品。
+            </div>
+            <div class="cart-list" id="head_cart"></div>
+          </div>
+        </li>
+
+        <!-- 我的订单 -->
+        <li class="m2"><a href="/User/MyOrder">我的订单</a></li>
+        
+        <!-- 用户中心 -->
+        <li class="m3">
+          <a class="user-a" href="/User/Index">用户中心</a>
+          <div class="miniMenu-child hide">
+            <dl>
+              <dd><a href="/User/Evaluate">商品评论</a></dd>
+              <dd><a href="/User/Collect">收藏夹</a></dd>
+            </dl>
+          </div>
+        </li>
+        <li class="m4"><a href="/Home/Help/6.html">帮助中心</a></li>
+        <li class="m55"><a href="/Home/FeedBack">提建议</a></li>
+        <li class="m66"><a href="http://tieba.baidu.com/f?tp=0&amp;kw=%B9%BA%BE%C6%CD%F8" rel="nofollow">贴吧</a></li>
+        <li class="m66"><a href="http://e.weibo.com/2205040202/profile" rel="nofollow">微博</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+  <div style="background-color:#fff;">
+    <div class="header">
+      <div class="hd_logo">
+        <a class="logo" href="/Home/Index"></a>
+        <a class="ad" href="###"></a>
+      </div>
+      <div class="searchArea fl">
+        <div class="searchInput">
+          <ul>
+            <li class="search_input">
+              <input id="sch" name="key" type="text" class="text_input" value="" />
+              <div class="search_suggest"></div>
+            </li>
+            <li class="search_btn"><input type="button" class="sch_btn" value="搜索" id="btnsch" /></li>
+          </ul>
+        </div>
+        <div class="search_list_box" id="search_list_box"></div>
+        <div class="keyword">
+          <strong>热门搜索：</strong>
+          <a href="/Home/Search?Search=baijiu-maotai" title="茅台">茅台</a>
+          <a href="/Home/Search?Search=baijiu-fenjiu" title="汾酒">汾酒</a>
+          <a href="/Home/Search?Search=baijiu-yanghe" title="洋河">洋河</a>
+          <a href="/Home/Search?Search=baijiu-langjiu" title="郎酒">郎酒</a>
+          <a href="/Home/Search?Search=baijiu-wuliangye" title="五粮液">五粮液</a>
+          <a href="/Home/Search?Search=baijiu-jiannanchun" title="剑南春">剑南春</a>
+          <a href="/Home/Search?Search=baijiu-maotai" title="泸州老窖">泸州老窖</a>
+        </div>
+      </div>
+      <div class="tubiao">
+        <span><img src="/images/hdxb1.jpg" alt="" /></span>
+        <span><img src="/images/hdxb2.jpg" alt="" /></span>
+        <span><img src="/images/hdxb3.jpg" alt="" /></span>
+      </div>
+    </div>
+</div>
+  <div class="headNav" id="headNav">
+    <div class="navCon">
+        <!-- 全部商品分类 -->
+        <div class="navCon-cate fl navCon_on">
+            <div class="navCon-cate-title">
+                <a href="#">全部商品分类</a>
+            </div>
+            <div class="cateMenu">
+                <ul>
+                    <li style="border-top: none;">
+                        <div class="cate-tag">
+                            <strong><a href="#">白酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=baijiu-maotai">茅台</a> <a href="/Home/Search?Brand=baijiu-yanghe">
+                                        洋河</a> <a href="/Home/Search?Brand=baijiu-langjiu">郎酒</a> <a href="/Home/Search?Brand=baijiu-gujinggongjiu">
+                                            古井贡酒</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=baijiu-xijiu">习酒</a> <a href="/Home/Search?Brand=baijiu-zhenjiu">
+                                        珍酒</a> <a href="/Home/Search?Brand=baijiu-hongxing">红星</a> <a href="/Home/Search?Brand=baijiu-luzhoulaojiao">
+                                            泸州老窖</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=baijiu-zuopai">沱牌</a> <a href="/Home/Search?Brand=baijiu-guotai">
+                                        国台</a> <a href="/Home/Search?Brand=baijiu-wuliangye">五粮液</a> <a href="/Home/Search?Brand=baijiu-jiannanchun">
+                                            剑南春</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=baijiu-maotai">茅台</a> <a href="/Home/Search?Brand=baijiu-wuliangye">
+                                            五粮液</a> <a href="/Home/Search?Brand=baijiu-jiannanchun">剑南春</a> <a href="/Home/Search?Brand=baijiu-shuijingfang">
+                                                水井坊</a> <a href="/Home/Search?Brand=baijiu-fenjiu">汾酒</a> <a href="/Home/Search?Brand=baijiu-yanghe">
+                                                    洋河</a> <a href="/Home/Search?Brand=baijiu-luzhoulaojiao">泸州老窖</a> <a href="/Home/Search?Brand=baijiu-zhenjiu">
+                                                        珍酒</a> <a href="/Home/Search?Brand=baijiu-langjiu">郎酒</a> <a href="/Home/Search?Brand=baijiu-gujinggongjiu">
+                                                            古井贡酒</a> <a href="/Home/Search?Brand=baijiu-xifengjiu">西凤酒</a>
+                                        <a href="/Home/Search?Brand=baijiu-dongjiu">董酒</a> <a href="/Home/Search?Brand=baijiu-jiuguijiu">
+                                            酒鬼酒</a> <a href="/Home/Search?Brand=baijiu-hongxing">红星</a> <a href="/Home/Search?Brand=baijiu-wenjunjiu">
+                                                文君酒</a> <a href="/Home/Search?Brand=baijiu-niulanshan">牛栏山</a> <a href="/Home/Search?Brand=baijiu-sitejiu">
+                                                    四特酒</a> <a href="/Home/Search?Brand=baijiu-kouzijiu">口子酒</a> <a href="/Home/Search?Brand=baijiu-zuopai">
+                                                        沱牌</a> <a href="/Home/Search?Brand=baijiu-xijiu">习酒</a> <a href="/Home/Search?Brand=baijiu-guotai">
+                                                            国台</a> <a href="/Home/Search?Brand=baijiu-hengshuilaobaigan">衡水老白干</a>
+                                        <a href="/Home/Search?Brand=baijiu-shedejiu">舍得酒</a> <a href="/Home/Search?Brand=baijiu-zhongzijiu">
+                                            种子酒</a> <a href="/Home/Search?Brand=baijiu-yilite">伊力特</a> <a href="/Home/Search?Brand=baijiu-dukang">
+                                                杜康酒</a> <a href="/Home/Search?Brand=baijiu-zhijiang">枝江酒</a> <a href="/Home/Search?Brand=baijiu-baiyunbian">
+                                                    白云边</a> <a href="/Home/Search?Brand=baijiu-kongfujia">孔府家</a> <a href="/Home/Search?Brand=baijiu-bandaojing">
+                                                        扳倒井</a> <a href="/Home/Search?Brand=baijiu-laimaojiu">赖茅酒</a> <a href="/Home/Search?Brand=baijiu-jinshiyuan">
+                                                            今世缘</a> <a href="/Home/Search?Brand=baijiu-yaxijiao">鸭溪窖</a>
+                                        <a href="/Home/Search?Brand=baijiu-jinliufu">金六福</a> <a href="/Home/Search?Brand=baijiu-xiaohutuxian">
+                                            小糊涂仙</a> <a href="/Home/Search?Brand=baijiu-yingjiajiu">迎驾酒</a> <a href="/Home/Search?Brand=baijiu-daohuaxiang">
+                                                稻花香</a> <a href="/Home/Search?Brand=baijiu-wanjiu">皖酒</a> <a href="/Home/Search?Brand=baijiu-taiwangaoliangjiu">
+                                                    台湾高粱酒</a> <a href="/Home/Search?Brand=baijiu-fenggu">丰谷酒</a> <a href="/Home/Search?Brand=baijiu-qiantaipai">
+                                                        黔台牌</a> <a href="/Home/Search?Brand=baijiu-shuanggoujiu">双沟酒</a>
+                                        <a href="/Home/Search?Brand=baijiu-huanghelou">黄鹤楼</a> <a href="/Home/Search?Brand=baijiu-jintanyuye">
+                                            金潭玉液</a> <a href="/Home/Search?Brand=baijiu-taibaijiu">太白酒</a> <a href="/Home/Search?Brand=baijiu-zuoyanghe">
+                                                浏阳河</a> <a href="/Home/Search?Brand=baijiu-gaolujia">高炉家</a> <a href="/Home/Search?Brand=baijiu-maotaizhenwuxing">
+                                                    茅台镇五星</a> <a href="/Home/Search?Brand=baijiu-sujiu">苏酒</a> <a href="/Home/Search?Brand=baijiu-guizhouqingjiu">
+                                                        贵州青酒</a> <a href="/Home/Search?Brand=baijiu-hetao">河套酒</a> <a href="/Home/Search?Brand=baijiu-hongloumeng">
+                                                            红楼梦</a> <a href="/Home/Search?Brand=baijiu-dongbeifang">东北坊</a>
+                                        <a href="/Home/Search?Brand=baijiu-sichuanquanxing">四川全兴</a> <a href="/Home/Search?Brand=baijiu-gaocan">
+                                            高参</a> <a href="/Home/Search?Brand=baijiu-shandongjingzhi">山东景芝</a> <a href="/Home/Search?Brand=baijiu-junjiu">
+                                                军酒</a> <a href="/Home/Search?Brand=baijiu-laozhanshi">老战士</a> <a href="/Home/Search?Brand=baijiu-xiaojiurensheng">
+                                                    小酒人生</a> <a href="/Home/Search?Brand=baijiu-jiangjinjiu">江津酒</a> <a href="/Home/Search?Brand=baijiu-dijiaojiu">
+                                                        地窖酒</a> <a href="/Home/Search?Brand=baijiu-yongdingheerguotou">永定河二锅头</a>
+                                        <a href="/Home/Search?Brand=baijiu-qixingerguotou">七星二锅头</a> <a href="/Home/Search?Brand=baijiu-zhanggongjiu">
+                                            张弓酒</a> <a href="/Home/Search?Brand=baijiu-fuchengerguotou">福城二锅头</a> <a href="/Home/Search?Brand=baijiu-zunyijiu">
+                                                遵义酒</a> <a href="/Home/Search?Brand=baijiu-xiaohulu">小葫芦</a> <a href="/Home/Search?Brand=baijiu-xiaofangzi">
+                                                    小房子</a> <a href="/Home/Search?Brand=baijiu-laojiaojiu">老窖酒</a> <a href="/Home/Search?Brand=baijiu-jinzuolaojiao">
+                                                        金泸老窖</a> <a href="/Home/Search?Brand=baijiu-huozhiniang">活之酿</a>
+                                        <a href="/Home/Search?Brand=baijiu-jiuzhongjiu">酒中酒</a> <a href="/Home/Search?Brand=baijiu-taishan">
+                                            泰山</a> <a href="/Home/Search?Brand=baijiu-liulingzui">刘伶醉</a> <a href="/Home/Search?Brand=baijiu-qinghuaci">
+                                                青花瓷</a> <a href="/Home/Search?Brand=baijiu-xinghewan">星河湾</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>香型</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=baijiu-search-t-110.htm">酱香型</a> <a href="/Home/Search?Brand=baijiu-search-t-116.htm">
+                                            浓香型</a> <a href="/Home/Search?Brand=baijiu-search-t-117.htm">清香型</a> <a href="/Home/Search?Brand=baijiu-search-t-107.htm">
+                                                凤香型</a> <a href="/Home/Search?Brand=baijiu-search-t-108.htm">馥郁香</a> <a href="/Home/Search?Brand=baijiu-search-t-104.htm">
+                                                    董香型</a> <a href="/Home/Search?Brand=baijiu-search-t-121.htm">特香型</a>
+                                        <a href="/Home/Search?Brand=baijiu-search-t-122.htm">芝麻香</a> <a href="/Home/Search?Brand=baijiu-search-t-109.htm">
+                                            兼香型</a> <a href="/Home/Search?Brand=baijiu-search-t-111.htm">金门香型</a> <a href="/Home/Search?Brand=baijiu-search-t-112.htm">
+                                                老干白</a> <a href="/Home/Search?Brand=baijiu-search-t-113.htm">绵柔型</a> <a href="/Home/Search?Brand=baijiu-search-t-118.htm">
+                                                    柔和型</a> <a href="/Home/Search?Brand=baijiu-search-t-728.htm">小曲型</a>
+                                        <a href="/Home/Search?Brand=baijiu-search-t-869.htm">生态竹香型</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=putaojiu">葡萄酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=putaojiu-zhongguo">中国</a> <a href="/Home/Search?Brand=putaojiu-faguo">
+                                        法国</a> <a href="/Home/Search?Brand=putaojiu-zhili">智利</a> <a href="/Home/Search?Brand=putaojiu-putaoya">
+                                            葡萄牙</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=putaojiu-yidali">意大利</a> <a href="/Home/Search?Brand=putaojiu-aodaliya">
+                                        澳大利亚</a> <a href="/Home/Search?Brand=putaojiu-deguo">德国</a> <a href="/Home/Search?Brand=putaojiu-nanfei">
+                                            南非</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=putaojiu-meiguo">美国</a> <a href="/Home/Search?Brand=putaojiu-agenting">
+                                        阿根廷</a> <a href="/Home/Search?Brand=putaojiu-xibanya">西班牙</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>产区</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=putaojiu-aodaliya">澳大利亚</a> <a href="/Home/Search?Brand=putaojiu-deguo">
+                                            德国</a> <a href="/Home/Search?Brand=putaojiu-faguo">法国</a> <a href="/Home/Search?Brand=putaojiu-jianada">
+                                                加拿大</a> <a href="/Home/Search?Brand=putaojiu-meiguo">美国</a> <a href="/Home/Search?Brand=putaojiu-xibanya">
+                                                    西班牙</a> <a href="/Home/Search?Brand=putaojiu-zhili">智利</a> <a href="/Home/Search?Brand=putaojiu-putaoya">
+                                                        葡萄牙</a> <a href="/Home/Search?Brand=putaojiu-eluosi">俄罗斯</a> <a href="/Home/Search?Brand=putaojiu-agenting">
+                                                            阿根廷</a> <a href="/Home/Search?Brand=putaojiu-xinxilan">新西兰</a>
+                                        <a href="/Home/Search?Brand=putaojiu-nanfei">南非</a> <a href="/Home/Search?Brand=putaojiu-yidali">
+                                            意大利</a> <a href="/Home/Search?Brand=putaojiu-zhongguo">中国</a> <a href="/Home/Search?Brand=putaojiu-xila">
+                                                希腊</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>类型</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=putaojiu-search-t-211.htm">红葡萄酒</a> <a href="/Home/Search?Brand=putaojiu-search-t-212.htm">
+                                            白葡萄酒</a> <a href="/Home/Search?Brand=putaojiu-search-t-213.htm">桃红葡萄酒</a> <a href="/Home/Search?Brand=putaojiu-search-t-214.htm">
+                                                起泡酒/香槟</a> <a href="/Home/Search?Brand=putaojiu-search-t-215.htm">冰酒/贵腐/甜酒</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>品种</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=putaojiu-search-g-168.htm">芭贝拉</a> <a href="/Home/Search?Brand=putaojiu-search-g-170.htm">
+                                            长相思</a> <a href="/Home/Search?Brand=putaojiu-search-g-173.htm">解百纳</a> <a href="/Home/Search?Brand=putaojiu-search-g-176.htm">
+                                                玛尔维萨</a> <a href="/Home/Search?Brand=putaojiu-search-g-177.htm">梅洛</a>
+                                        <a href="/Home/Search?Brand=putaojiu-search-g-182.htm">西拉子</a> <a href="/Home/Search?Brand=putaojiu-search-g-184.htm">
+                                            综合佳酿</a> <a href="/Home/Search?Brand=putaojiu-search-g-749.htm">美乐</a> <a href="/Home/Search?Brand=putaojiu-search-g-872.htm">
+                                                莫斯卡托</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=yangjiu">洋酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=yangjiu-gelanweite">格兰威特</a> <a href="/Home/Search?Brand=yangjiu-jiekedanni">
+                                        杰克丹尼</a> <a href="/Home/Search?Brand=yangjiu-xuannishi">轩尼诗</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=yangjiu-zunnihuojia">尊尼获加</a> <a href="/Home/Search?Brand=yangjiu-huangjialuyi">
+                                        皇家路易</a> <a href="/Home/Search?Brand=yangjiu-bailingtan">百龄坛</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px; display: none;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=yangjiu-diwang">帝王</a> <a href="/Home/Search?Brand=yangjiu-zhihuashi">
+                                            芝华士</a> <a href="/Home/Search?Brand=yangjiu-bailingtan">百龄坛</a> <a href="/Home/Search?Brand=yangjiu-madieli">
+                                                马爹利</a> <a href="/Home/Search?Brand=yangjiu-zunnihuojia">尊尼获加</a> <a href="/Home/Search?Brand=yangjiu-weique">
+                                                    威雀</a> <a href="/Home/Search?Brand=yangjiu-gelanfeidi">格兰菲迪</a> <a href="/Home/Search?Brand=yangjiu-lanchong">
+                                                        懒虫</a> <a href="/Home/Search?Brand=yangjiu-haoshuai">豪帅</a> <a href="/Home/Search?Brand=yangjiu-ruidianjuedui">
+                                                            瑞典绝对</a> <a href="/Home/Search?Brand=yangjiu-xuannishi">轩尼诗</a>
+                                        <a href="/Home/Search?Brand=yangjiu-sandeli">三得利</a> <a href="/Home/Search?Brand=yangjiu-zhanbian">
+                                            占边</a> <a href="/Home/Search?Brand=yangjiu-yiwan">伊万</a> <a href="/Home/Search?Brand=yangjiu-rentouma">
+                                                人头马</a> <a href="/Home/Search?Brand=yangjiu-napolun">拿破仑</a> <a href="/Home/Search?Brand=yangjiu-jiekedanni">
+                                                    杰克丹尼</a> <a href="/Home/Search?Brand=yangjiu-maikalun">麦卡伦</a> <a href="/Home/Search?Brand=yangjiu-gelanweite">
+                                                        格兰威特</a> <a href="/Home/Search?Brand=yangjiu-huangjialipao">皇家礼炮</a>
+                                        <a href="/Home/Search?Brand=yangjiu-diwang">帝王</a> <a href="/Home/Search?Brand=yangjiu-zhenbaowei">
+                                            珍宝威</a> <a href="/Home/Search?Brand=yangjiu-jianadaCC">加拿大CC</a> <a href="/Home/Search?Brand=yangjiu-shunfeng">
+                                                顺风</a> <a href="/Home/Search?Brand=yangjiu-laobowei">老伯威</a> <a href="/Home/Search?Brand=yangjiu-mengmailanbaoshi">
+                                                    孟买蓝宝石</a> <a href="/Home/Search?Brand=yangjiu-bifuda">必富达</a> <a href="/Home/Search?Brand=yangjiu-gedun">
+                                                        歌顿</a> <a href="/Home/Search?Brand=yangjiu-shigelanjinjiu">施格兰金酒</a>
+                                        <a href="/Home/Search?Brand=yangjiu-zuanshi">钻石</a> <a href="/Home/Search?Brand=yangjiu-baijiade">
+                                            百加得</a> <a href="/Home/Search?Brand=yangjiu-baijinwushi">白金武士</a> <a href="/Home/Search?Brand=yangjiu-weiboluowa">
+                                                维波罗瓦</a> <a href="/Home/Search?Brand=yangjiu-xueshu">雪树</a> <a href="/Home/Search?Brand=yangjiu-faguohuiyan">
+                                                    法国灰雁</a> <a href="/Home/Search?Brand=yangjiu-shigelan">施格兰</a> <a href="/Home/Search?Brand=yangjiu-siminuo">
+                                                        斯米诺</a> <a href="/Home/Search?Brand=yangjiu-fenlan">芬兰</a> <a href="/Home/Search?Brand=yangjiu-sulian">
+                                                            苏连</a> <a href="/Home/Search?Brand=yangjiu-boshi">波士</a> <a href="/Home/Search?Brand=yangjiu-huluzuo">
+                                                                葫芦樽</a> <a href="/Home/Search?Brand=yangjiu-sandeliyangjiu">三得利洋酒</a>
+                                        <a href="/Home/Search?Brand=yangjiu-lijia">力加</a> <a href="/Home/Search?Brand=yangjiu-bailitian">
+                                            百利甜</a> <a href="/Home/Search?Brand=yangjiu-ganlukafei">甘露咖啡</a> <a href="/Home/Search?Brand=yangjiu-malibao">
+                                                马利宝</a> <a href="/Home/Search?Brand=yangjiu-jundu">君度</a> <a href="/Home/Search?Brand=yangjiu-senbojia">
+                                                    森伯加</a> <a href="/Home/Search?Brand=yangjiu-bideli">必得利</a> <a href="/Home/Search?Brand=yangjiu-matianni">
+                                                        马天尼</a> <a href="/Home/Search?Brand=yangjiu-xianshanlu">仙山露</a>
+                                        <a href="/Home/Search?Brand=yangjiu-aomeijia">奥美加</a> <a href="/Home/Search?Brand=yangjiu-hawana">
+                                            哈瓦那</a> <a href="/Home/Search?Brand=yangjiu-meiyashi">美雅士</a> <a href="/Home/Search?Brand=yangjiu-taluo">
+                                                塔罗</a> <a href="/Home/Search?Brand=yangjiu-futejia">伏特加</a> <a href="/Home/Search?Brand=yangjiu-huangjialuyi">
+                                                    皇家路易</a> <a href="/Home/Search?Brand=yangjiu-tianbao">添宝</a> <a href="/Home/Search?Brand=yangjiu-leiboshi">
+                                                        雷博士</a> <a href="/Home/Search?Brand=yangjiu-hana">哈拿</a> <a href="/Home/Search?Brand=yangjiu-wukelanchunmai">
+                                                            乌克兰纯麦</a> <a href="/Home/Search?Brand=yangjiu-jueshi">爵士</a>
+                                        <a href="/Home/Search?Brand=yangjiu-madingmile">马丁米勒</a> <a href="/Home/Search?Brand=yangjiu-tianjiali">
+                                            添加利</a> <a href="/Home/Search?Brand=yangjiu-simeigui">四玫瑰</a> <a href="/Home/Search?Brand=yangjiu-bomo">
+                                                波摩</a> <a href="/Home/Search?Brand=yangjiu-gelanjie">格兰杰</a> <a href="/Home/Search?Brand=yangjiu-wensha">
+                                                    温莎</a> <a href="/Home/Search?Brand=yangjiu-qishi">骑士</a> <a href="/Home/Search?Brand=yangjiu-mazuoshi">
+                                                        马谛氏</a> <a href="/Home/Search?Brand=yangjiu-shenlan">深蓝</a> <a href="/Home/Search?Brand=yangjiu-bulangchuanchang">
+                                                            布朗船长</a> <a href="/Home/Search?Brand=yangjiu-heizun">黑樽</a>
+                                        <a href="/Home/Search?Brand=yangjiu-fukeni">福克尼</a> <a href="/Home/Search?Brand=yangjiu-zunmeichun">
+                                            尊美醇</a> <a href="/Home/Search?Brand=yangjiu-mengtebojue">蒙特伯爵</a> <a href="/Home/Search?Brand=yangjiu-disanuo">
+                                                帝萨诺</a> <a href="/Home/Search?Brand=yangjiu-saigetiba">赛格提芭</a> <a href="/Home/Search?Brand=yangjiu-dikaibao">
+                                                    迪凯堡</a> <a href="/Home/Search?Brand=yangjiu-meige">美格</a> <a href="/Home/Search?Brand=yangjiu-shengteleisha">
+                                                        圣特雷莎</a> <a href="/Home/Search?Brand=yangjiu-dilinke">第林可</a> <a href="/Home/Search?Brand=yangjiu-benniweisi">
+                                                            本尼维斯</a> <a href="/Home/Search?Brand=yangjiu-qizi">奇滋</a> <a href="/Home/Search?Brand=yangjiu-aokai">
+                                                                奥凯</a> <a href="/Home/Search?Brand=yangjiu-jianwei">剑威</a>
+                                        <a href="/Home/Search?Brand=yangjiu-pafulijisi">帕夫利季斯</a> <a href="/Home/Search?Brand=yangjiu-peiteleichengbao">
+                                            佩特雷城堡</a> <a href="/Home/Search?Brand=yangjiu-siduoke">斯多克</a> <a href="/Home/Search?Brand=yangjiu-aidehua">
+                                                爱德华</a> <a href="/Home/Search?Brand=yangjiu-gelanyulu">格兰御鹿</a> <a href="/Home/Search?Brand=yangjiu-salonggongjue">
+                                                    萨隆公爵</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>酒种</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=yangjiu-search-t-326.htm">白兰地</a> <a href="/Home/Search?Brand=yangjiu-search-t-327.htm">
+                                            伏特加</a> <a href="/Home/Search?Brand=yangjiu-search-t-328.htm">朗姆酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-329.htm">
+                                                力娇酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-331.htm">墨西哥烈酒</a>
+                                        <a href="/Home/Search?Brand=yangjiu-search-t-334.htm">甜酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-335.htm">
+                                            威士忌</a> <a href="/Home/Search?Brand=yangjiu-search-t-539.htm">金酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-888.htm">
+                                                利口酒</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=huangjiu">黄酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=huangjiu-shikumen">石库门</a> <a href="/Home/Search?Brand=huangjiu-nverhong">
+                                        女儿红</a> <a href="/Home/Search?Brand=huangjiu-guyuelongshan">古越龙山</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px; display: none;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=huangjiu-shikumen">石库门</a> <a href="/Home/Search?Brand=huangjiu-hejiu">
+                                            和酒</a> <a href="/Home/Search?Brand=huangjiu-guyuelongshan">古越龙山</a> <a href="/Home/Search?Brand=huangjiu-nverhong">
+                                                女儿红</a> <a href="/Home/Search?Brand=huangjiu-shazhouyouhuang">沙洲优黄</a>
+                                        <a href="/Home/Search?Brand=huangjiu-huijishan">会稽山</a> <a href="/Home/Search?Brand=huangjiu-tapai">
+                                            塔牌</a> <a href="/Home/Search?Brand=huangjiu-wuzhanmao">乌毡帽</a> <a href="/Home/Search?Brand=huangjiu-tangsonghuangjiu">
+                                                唐宋黄酒</a> <a href="/Home/Search?Brand=huangjiu-qiantangrenjia">钱塘人家</a>
+                                        <a href="/Home/Search?Brand=huangjiu-xianhenghuangjiu">咸亨黄酒</a> <a href="/Home/Search?Brand=huangjiu-jiashanhuangjiu">
+                                            嘉善黄酒</a> <a href="/Home/Search?Brand=huangjiu-shaoxingshiye">绍兴师爷</a> <a href="/Home/Search?Brand=huangjiu-liangzhu">
+                                                梁祝</a> <a href="/Home/Search?Brand=huangjiu-zuhezhuang">组合装</a>
+                                    </dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>年份</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=huangjiu-search-y-407.htm">100年</a> <a href="/Home/Search?Brand=huangjiu-search-y-408.htm">
+                                            10年</a> <a href="/Home/Search?Brand=huangjiu-search-y-409.htm">12年</a> <a href="/Home/Search?Brand=huangjiu-search-y-410.htm">
+                                                15年</a> <a href="/Home/Search?Brand=huangjiu-search-y-411.htm">18年</a>
+                                        <a href="/Home/Search?Brand=huangjiu-search-y-412.htm">20年</a> <a href="/Home/Search?Brand=huangjiu-search-y-413.htm">
+                                            25年</a> <a href="/Home/Search?Brand=huangjiu-search-y-414.htm">30年</a> <a href="/Home/Search?Brand=huangjiu-search-y-415.htm">
+                                                3年</a> <a href="/Home/Search?Brand=huangjiu-search-y-418.htm">5年</a> <a href="/Home/Search?Brand=huangjiu-search-y-419.htm">
+                                                    6年</a> <a href="/Home/Search?Brand=huangjiu-search-y-420.htm">8年</a>
+                                        <a href="/Home/Search?Brand=huangjiu-search-y-421.htm">9年</a> <a href="/Home/Search?Brand=huangjiu-search-y-422.htm">
+                                            常规年份</a>
+                                    </dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=baojianjiuyupijiu">保健酒与啤酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=baojianjiuyupijiu-baiwei">百威</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-qingdao">
+                                        青岛</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-xili">喜力</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-jinjiu">
+                                            劲酒</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-baiwei">百威</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-xili">
+                                            喜力</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-qingdao">青岛</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-jinjiu">
+                                                劲酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-huangjinjiu">黄金酒</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-lanzuojiu">蓝莓酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-yinxing">
+                                            银杏</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-chunshengtang">春生堂</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-zhangyujiu">张裕酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-danli">
+                                            丹力</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-guihuajiu">桂花酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-senlindamao">
+                                                森林大猫</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-kalite">卡力特</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-qilin">麒麟</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-kaisa">
+                                            凯撒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-xiushi">修士</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-heisenmati">
+                                                黑森马蹄</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-weilanshi">威兰仕</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-keluona">科罗娜</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-landai">
+                                            蓝带</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-bugefusi">布格福斯</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-boruike">
+                                                博瑞克</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-lizibao">力兹堡</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-jiashibo">嘉士伯</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-meimingge">
+                                            美名格</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-adengbao">阿登堡</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-bode">
+                                                博德</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-defubao">德福堡</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-delishi">
+                                                    德力士</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-langke">朗克</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-maideaohei">麦德奥黑</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-weiou">
+                                            威欧</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-weisima">威斯玛</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-zhaori">
+                                                朝日</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-bile">彼乐</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-baiguan">
+                                                    白鹳</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-debo">德博</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-zhuangyuanzhu">
+                                                        庄园主</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-delake">德拉克</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-xicangqingzuo">西藏青稞</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="float-list-dnav">
+                            <a href="/Utility/announcement">新品</a> <a href="/Utility/announcement/">清仓</a> <a
+                                href="/Utility/announcement">多买优惠</a>
+                        </div>
+                    </li>
+                    <li class="ppg"><a href="/Utility/announcement">
+                        <img src="/images/pinpaiguan.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 系统菜单 -->
+        <div class="navCon-menu fl">
+            <ul>
+                <li><a class="curMenu" href="/Home/Index">首页</a></li>
+                <li><a href="/Home/Tuan">购酒团</a></li>
+                <li><a href="/Utility/announcement">我爱小酒版</a></li>
+                <li><a href="/Utility/announcement">名家鉴赏</a></li>
+                <li><a href="/Utility/announcement">名庄酒窖</a></li>
+                <li><a href="/Utility/announcement">VIP专场</a></li>
+            </ul>
+        </div>
+        <!-- 我的购物车 -->
+        <div class="cart fr">
+            <a href="/Utility/announcement">我的购物车</a>
+        </div>
+    </div>
+</div>
+
+  <div id="body">
+    
+    
+<link href="/Content/goods/goods.css" rel="stylesheet"/>
+
+<link href="/Content/cloud.extend.css" rel="stylesheet"/>
+
+<script src="/Scripts/goods/jquery.js"></script>
+
+<script src="/Scripts/AjaxOverride.js"></script>
+
+<script src="/Scripts/goods/jquery_002.js"></script>
+
+<script src="/Scripts/goods/goods.js"></script>
+
+<script src="/Scripts/product.comment.js"></script>
+
+<script src="/Scripts/product.consult.js"></script>
+    
+<script src="/Scripts/product.info.js"></script>
+
+<style type="text/css">
+    .navCon {width:1020px !important; margin:0 auto;}
+    .topBarCon {width:1020px !important; margin:0 auto;}
+    .content {width:1020px !important; margin:0 auto;}    
+    .header .searchArea { margin-left: 25px !important; }
+    .header { width: 1020px !important; }
+    .headNav .navCon .navCon-menu li { width: 100px !important; }
+    .headNav .navCon .navCon-menu li a { width: 100px !important; }
+</style>
+
+<script type="text/javascript">
+    $(function() {
+        $(".cateMenu").hide();
+        $(".navCon_on").hover(function() {
+            $(".cateMenu").show();
+            $(".navCon-cate-title").addClass("hover");
+        },
+            function() {
+                $(".cateMenu").hide();
+                $(".navCon-cate-title").removeClass("hover");
+            });
+        $("img.lazy").lazyload({ effect: "fadeIn" });
+        Cat.LoadCatPop();
+        
+        var option = {};
+        // 评论
+        option.productID = 4136;
+        option.showCount = "commentCount";
+        option.container = "divComment";
+        option.pageUrl = "/Product/GetProductComment";
+        comment.Init(option);
+        // 咨询
+        option.showCount = "consultCount";
+        option.container = "divConsult";
+        option.pageUrl = "/Product/GetProductConsult";
+        consult.Init(option);
+        // 商品信息
+        var productobj = {};
+        productobj.container = "divProductInfo";
+        productobj.id = 4136;
+        productobj.name = "52度 红星 上将军窖酒 30年 500ml";
+        productobj.brandname = "";
+        productobj.parentbrandname = "红星";
+        productobj.barcode = "6906785017681";
+        productobj.marketprice = "430";
+        productobj.goujiuprice = "358";
+        productobj.inventory = 598;
+        productinfo.Init(productobj);
+    });
+</script>
+
+<div id="body">
+    <div class="content fix">
+        <!--当前位置 s-->
+        <div class="conCrumb">
+            您当前的位置： <a href="/Home/Index">首页</a>&nbsp;&gt;&nbsp;<a href="/Home/Search?Brand=baijiu">白酒</a>&nbsp;&gt;&nbsp;<a href="/Home/Search?Brand=baijiu-hongxing">红星</a>&nbsp;&gt;&nbsp;<span class="red">52度 红星 上将军窖酒 30年 500ml</span>
+        </div>
+        <!--当前位置 e-->
+
+        <!--商品详情 begin-->
+        <div class="goodsDetail fix">
+            <!--左侧 begin-->
+            <div class="colLeft">
+                <!--放大镜 begin-->
+                <div class="magnifier_bimg"><img alt="" src="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_3.jpg" bimg="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_3.jpg" limg="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_4.jpg" id="mBigImg"><div id="divShowFlash" style="display:none"><a id="aShowPic" class="detailShow" target="_blank" href="#"></a></div></div><a href="javascript:" class="magnifier_larrow"></a><div class="magnifier_simgbox"><ul style="width: 248px;" class="magnifier_simglist fix"><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_0.jpg" bimg="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_3.jpg" limg="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_4.jpg" id="mSmallImg0"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/4fa572726ea14712b0596847e95b747a_0.jpg" bimg="2013/1223/4fa572726ea14712b0596847e95b747a_3.jpg" limg="2013/1223/4fa572726ea14712b0596847e95b747a_4.jpg" id="mSmallImg1"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/2fcb57cfaa6840bf974495178907b709_0.jpg" bimg="2013/1223/2fcb57cfaa6840bf974495178907b709_3.jpg" limg="2013/1223/2fcb57cfaa6840bf974495178907b709_4.jpg" id="mSmallImg2"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/1f3386ad4799497eaab2df38f5c4114b_0.jpg" bimg="2013/1223/1f3386ad4799497eaab2df38f5c4114b_3.jpg" limg="2013/1223/1f3386ad4799497eaab2df38f5c4114b_4.jpg" id="mSmallImg3"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/dd4ba0c4402c4bb18cbbbc5eecd205ce_0.jpg" bimg="2013/1223/dd4ba0c4402c4bb18cbbbc5eecd205ce_3.jpg" limg="2013/1223/dd4ba0c4402c4bb18cbbbc5eecd205ce_4.jpg" id="mSmallImg4"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/06456a26c1bd48dcb63b3e47b1e6dfdb_0.jpg" bimg="2013/1223/06456a26c1bd48dcb63b3e47b1e6dfdb_3.jpg" limg="2013/1223/06456a26c1bd48dcb63b3e47b1e6dfdb_4.jpg" id="mSmallImg5"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/34aea8e90edd4b7388cffa844cf6eb1b_0.jpg" bimg="2013/1223/34aea8e90edd4b7388cffa844cf6eb1b_3.jpg" limg="2013/1223/34aea8e90edd4b7388cffa844cf6eb1b_4.jpg" id="mSmallImg6"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/5bee8706327045c282fae30f0f877972_0.jpg" bimg="2013/1223/5bee8706327045c282fae30f0f877972_3.jpg" limg="2013/1223/5bee8706327045c282fae30f0f877972_4.jpg" id="mSmallImg7"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/646a00e05291431696e71c6187972a4a_0.jpg" bimg="2013/1223/646a00e05291431696e71c6187972a4a_3.jpg" limg="2013/1223/646a00e05291431696e71c6187972a4a_4.jpg" id="mSmallImg8"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/dee1e15d6a59406793d29339a6eeaed4_0.jpg" bimg="2013/1223/dee1e15d6a59406793d29339a6eeaed4_3.jpg" limg="2013/1223/dee1e15d6a59406793d29339a6eeaed4_4.jpg" id="mSmallImg9"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_0.jpg" bimg="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_3.jpg" limg="2013/1223/5d924c8a848b4bdd9bc344b590a31e17_4.jpg" id="mSmallImg10"></a></li></ul></div><a href="javascript:" class="magnifier_rarrow"></a>
+                <!--放大镜 end-->
+            </div>
+            <!--左侧 end-->
+
+            <!--右侧 begin-->
+            <div class="colRight">
+                <div id="divProductInfo"></div>
+                
+            </div>
+            <!--右侧 end-->
+        </div>
+        <!--商品详情 end-->
+
+    <!--买了此商品的用户还买了-->        
+    <div id="bought_goods_div" class="shop_other">
+        <div class="ml_box mt10">
+            <dl class="ofh"><dd>买了此商品的用户还买了</dd></dl>
+            <div class="ml_sandow"></div>
+            <div class="p15">
+                <ul class="ml_box_1">   <div><a href="/Home/Item/928.html" target="_blank" title=""><img alt="" class="lazyload" src="2010/1210/9ba4888715c347819220f1482f3a7eb7_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/928.html" target="_blank" title="澳洲 克拉克杰克 霞多丽干白葡萄酒 750ml">澳洲 克拉克杰克 霞多丽干白葡萄酒 750ml</a></dt>   <dt><strong class="c_red">¥126</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/3814.html" target="_blank" title=""><img alt="" class="lazyload" src="2013/0715/012473a1766240389ce8c5c0e3aac9a7_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3814.html" target="_blank" title="法国 卡斯特 品酒大师 S93干红葡萄酒 750ml">法国 卡斯特 品酒大师 S93干红葡萄酒 750ml</a></dt>   <dt><strong class="c_red">¥299</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/1075.html" target="_blank" title=""><img alt="" class="lazyload" src="2011/0107/8c9d4fcd5574450f9fe2fa18311fd1d8_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1075.html" target="_blank" title="黑占边 威士忌 750ml">黑占边 威士忌 750ml</a></dt>   <dt><strong class="c_red">¥220</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/1168.html" target="_blank" title=""><img alt="" class="lazyload" src="2011/0112/a7e3800559d9458791071a17e644729d_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1168.html" target="_blank" title="三得利 纯正日式 利口酒樱花 500ml">三得利 纯正日式 利口酒樱花 500ml</a></dt>   <dt><strong class="c_red">¥145</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/1720.html" target="_blank" title=""><img alt="" class="lazyload" src="2011/0909/068ef0f806b6491ea2554af2c812806b_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1720.html" target="_blank" title="52° 茅台 国色天香 （6年陈酿）礼盒装 500ml*2瓶">52° 茅台 国色天香 （6年陈酿）礼盒装 500ml*2瓶</a></dt>   <dt><strong class="c_red">¥298</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/4035.html" target="_blank" title=""><img alt="" class="lazyload" src="2013/1115/a9c3bbdc65b84737969c625a7a44b1bb_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/4035.html" target="_blank" title="法国 荔仙庄园 2007 750ml">法国 荔仙庄园 2007 750ml</a></dt>   <dt><strong class="c_red">¥589</strong></dt></ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!--买了此商品的用户还买了 end-->
+
+    <!--左侧 s-->
+    <div class="colLeft">
+        <!--同类推荐 s-->
+        <div class="mt10 fl" id="sidebar">
+            <div id="similar_goods_div">
+                <div class="tj_box">
+                    <dl class="ofh">
+                        <dd> 同类推荐</dd>
+                    </dl>
+                    <div class="ml_sandow"></div>
+                    <ul class="tj_box_1">   <div><a href="/Home/Item/1805.html" target="_blank" title="52° 五粮液 豪华尊酒 750ml"><img alt="52° 五粮液 豪华尊酒 750ml" class="lazyload" src="2012/0411/b901f1e1374149e29847e1f63428c559_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1805.html" target="_blank" title="52° 五粮液 豪华尊酒 750ml">52° 五粮液 豪华尊酒 750ml</a></dt>   <dt><strong class="c_red">¥680</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3536.html" target="_blank" title="蓝带 黑啤 听装 500ml"><img alt="蓝带 黑啤 听装 500ml" class="lazyload" src="2013/0523/6c1139d7950d426283cfc8e17c38403d_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3536.html" target="_blank" title="蓝带 黑啤 听装 500ml">蓝带 黑啤 听装 500ml</a></dt>   <dt><strong class="c_red">¥6.6</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/2555.html" target="_blank" title="法国 十字勋爵庄园红葡萄酒 750ml"><img alt="法国 十字勋爵庄园红葡萄酒 750ml" class="lazyload" src="2012/0718/002f8c1bcdb94053acebfe25bac00e1b_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/2555.html" target="_blank" title="法国 十字勋爵庄园红葡萄酒 750ml">法国 十字勋爵庄园红葡萄酒 750ml</a></dt>   <dt><strong class="c_red">¥1180</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/1572.html" target="_blank" title="58° 数来宝酒 1500ml"><img alt="58° 数来宝酒 1500ml" class="lazyload" src="2012/1012/99832bd6222b408d8704a5b776989686_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1572.html" target="_blank" title="58° 数来宝酒 1500ml">58° 数来宝酒 1500ml</a></dt>   <dt><strong class="c_red">¥1380</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3543.html" target="_blank" title="35° 中国 劲酒 520ml"><img alt="35° 中国 劲酒 520ml" class="lazyload" src="2013/0524/81ad5598e8f148ffa23659ecbc9758dd_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3543.html" target="_blank" title="35° 中国 劲酒 520ml">35° 中国 劲酒 520ml</a></dt>   <dt><strong class="c_red">¥42</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/756.html" target="_blank" title="张裕 卡斯特 特选级蛇龙珠干红葡萄酒750ml"><img alt="张裕 卡斯特 特选级蛇龙珠干红葡萄酒750ml" class="lazyload" src="2013/0826/1f9fa1608ef94137986183b523d160fe_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/756.html" target="_blank" title="张裕 卡斯特 特选级蛇龙珠干红葡萄酒750ml">张裕 卡斯特 特选级蛇龙珠干红葡萄酒750ml</a></dt>   <dt><strong class="c_red">¥350</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/731.html" target="_blank" title="52° 五粮液 紫光液 500ml"><img alt="52° 五粮液 紫光液 500ml" class="lazyload" src="2012/1009/79f6a1b7298d473f9380e1402ed14d6b_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/731.html" target="_blank" title="52° 五粮液 紫光液 500ml">52° 五粮液 紫光液 500ml</a></dt>   <dt><strong class="c_red">¥698</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3671.html" target="_blank" title="53度 茅台 仁酒 500ml"><img alt="53度 茅台 仁酒 500ml" class="lazyload" src="2013/0624/6194abdf288248e2b06480601f2f3457_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3671.html" target="_blank" title="53度 茅台 仁酒 500ml">53度 茅台 仁酒 500ml</a></dt>   <dt><strong class="c_red">¥399</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/4050.html" target="_blank" title="52度 贵州茅台镇 百年传奇 浓香佳韵 500ml"><img alt="52度 贵州茅台镇 百年传奇 浓香佳韵 500ml" class="lazyload" src="2013/1204/c3e8a32bfb004ef1ad70350b9979bc21_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/4050.html" target="_blank" title="52度 贵州茅台镇 百年传奇 浓香佳韵 500ml">52度 贵州茅台镇 百年传奇 浓香佳韵 500ml</a></dt>   <dt><strong class="c_red">¥68</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3824.html" target="_blank" title="52° 五粮液 1618 250ml（残次品）"><img alt="52° 五粮液 1618 250ml（残次品）" class="lazyload" src="2013/0717/0862be1950ed4ba8846cd9925867de76_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3824.html" target="_blank" title="52° 五粮液 1618 250ml（残次品）">52° 五粮液 1618 250ml（残次品）</a></dt>   <dt><strong class="c_red">¥650</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3579.html" target="_blank" title="法国 卡斯特 沙仑 优质干红葡萄酒 750ml"><img alt="法国 卡斯特 沙仑 优质干红葡萄酒 750ml" class="lazyload" src="2013/0529/8a4bafea922a454083a9e1ee78043bee_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3579.html" target="_blank" title="法国 卡斯特 沙仑 优质干红葡萄酒 750ml">法国 卡斯特 沙仑 优质干红葡萄酒 750ml</a></dt>   <dt><strong class="c_red">¥139</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/4024.html" target="_blank" title="53度 星河湾 老酱香20年 500ml"><img alt="53度 星河湾 老酱香20年 500ml" class="lazyload" src="2013/1126/e099dd707a37453886f16e50b60b0b34_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/4024.html" target="_blank" title="53度 星河湾 老酱香20年 500ml">53度 星河湾 老酱香20年 500ml</a></dt>   <dt><strong class="c_red">¥780</strong></dt></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--左侧 e-->
+
+    <!--右侧 s-->
+    <div class="colRight">
+        <div class="mt10 fl" id="main_l">
+            <div id="scrip_lin" style="width: 790px; background: none repeat scroll 0% 0% rgb(255, 255, 255); position: static; top: 973px;">
+                <div class="scrip_lin">
+                    <div class="scrip_bar">
+                        <ul>
+                            <li style="background-position: 0 -205px;" class="scrip_1">商品详情</li>
+                            <li class="scrip_2">买家评价(<span id="commentCount"></span>)</li>
+                            <li class="scrip_3">商品咨询(<span id="consultCount"></span>)</li>
+                            <li class="scrip_4">质量保障</li>                                
+                        </ul>
+                    </div>
+                </div>
+                <div class="bb1s">
+                </div>
+            </div>
+
+            <!--商品详情 s-->
+            <div class="details1">
+                <div class=" mt10 cs_box fix">
+                    <table class="lineHeight30" border="0" width="100%">
+                        <tbody><tr>
+                                   <td colspan="3">单位：瓶</td>
+                               </tr>
+                            <tr class="bg_white">
+                                <td>
+                                条码：6906785017681
+                                </td>
+                                <td>规格：1箱=6瓶</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    净含量：500ml
+                                </td>
+                                <td>                                    
+                                    酒精度：52°(vol)
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody></table>
+                </div>
+                <div class=" mt15">
+                    <div class="gs_box">
+                        <p></p>
+                        <div><img alt="" style="margin: 10px 0px" src=/images/goods/title_0.jpg>
+                        </div>
+                        <div>
+                            <p>&nbsp;</p>
+<p>&nbsp; &nbsp; 香浓纯粹，不失将军风采：浓郁香醇的酒液，丰满纯厚的香气，层次清晰的酒体打造出一款入口圆润绵柔，口感致密，满口生香，令人通体舒畅的酒液，瓶形线条流畅柔美，张弛有度，在浓香美酒中脱颖而出，是酒类产品的又一经典著作。</p>
+<p>&nbsp; &nbsp; 红星将军窖上将30年采用优质原料，清蒸清烧，老五甑工艺蒸馏，掐头去尾截取中段，长年窖存，酒质清澈透明，气味香馥、醇厚甘冽、清香纯正、回味悠长。传统酿制技艺是中国酒文化的重要组成部分，是中国酒文化和北京传统文化的突出代表。</p>
+<p>&nbsp;</p>
+<p><a href="http://pinpai.zs88.cn/hongxing/about.html" style="font-family: Simsun; font-size: 14px; font-weight: bold; line-height: 29px; padding: 0px; margin: 0px; color: rgb(228, 22, 22); text-decoration: none; "><strong><span style="font-family: 宋体; "><span style="font-size: 12px; "><span style="color: rgb(0, 0, 0); ">品牌介绍</span></span></span></strong></a></p>
+<div class="pp_ppjs" style="padding: 15px 10px 10px; margin: 0px; border: 0px; color: rgb(0, 0, 0); font-family: Simsun; font-size: 13px; line-height: 25px; ">
+<div class="pp_logo" style="padding: 3px 3px 22px; margin: 0px; border: 0px; background-image: url(http://pinpai.zs88.cn/images/pp_pptubg.jpg); width: 236px; height: 150px; float: left; background-position: initial initial; background-repeat: no-repeat no-repeat; "><img src="http://www.zs88.cn/Upimg/2012/10-9/8324684738.jpg" alt="红星二锅头" style="padding: 0px; margin: 0px; border: 0px; vertical-align: bottom; width: 236px; height: 150px; " /></div>
+</div>
+<p><span style="color: rgb(75, 75, 75); font-family: Simsun; font-size: 13px; line-height: 25px; ">&nbsp; &nbsp; </span>北京红星股份有限公司是著名中华老字号企业。红星商标是中国驰名商标,红星独有的&ldquo;北京二锅头传统酿制技艺&rdquo;是国家级非物质文化遗产。它始建于1949年 5月，是中央税务局筹建的我国第一家国营酿酒厂，当时收编了北京城近郊的龙泉、永和成等十二家老字号酒作坊，汇集了酿酒人才和技术，&ldquo;红星&rdquo;全面继承了北京二锅头传统酿酒工艺。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp;&nbsp;红星二锅头源于北京烧酒已有800年历史了。1949年根据政府命令，由红星全面接收老北京12家老字号酒坊，独家传承北京二锅头酒酿制技艺！北京酿酒在开放、兼容的文化氛围中，完成了从古酒向烧酒的转变，当时酒坊&ldquo; 古代酿酒灶火如屋，突烟腾上，数里外皆见之。&rdquo;可见其规模之大。清康熙十九年（公元1680年），&ldquo;源升号&rdquo;酒坊的酿酒技师赵存仁等三兄弟为纯净烧酒质量，进行了工艺改革：在蒸酒时，将用作冷却器的天锅内第一次放入凉水冷却而流出的酒称为&ldquo;酒头&rdquo;，第三次换入锡锅里的凉水冷却流出的酒称为&ldquo;酒尾&rdquo;，提出做其它处理，只取第二次换入锡锅里的凉水冷却流出的酒，口味最为香醇，称为&ldquo;二锅头&rdquo;。二锅头工艺自此诞生。</p>
+<p style="text-align: left; ">&nbsp;</p>
+<p style="text-align: left; ">&nbsp;</p>
+<p>&nbsp;</p>
+<div>&nbsp;</div>
+<div><img src="/image/fck/title_1.jpg" alt="" /></div>
+<div class="pro_detail_pic">
+<p><br />
+<br />
+<img src="/upload@@/product/2013/1223/5d924c8a848b4bdd9bc344b590a31e17_4.jpg" alt="" /><img src="/upload@@/product/2013/1223/4fa572726ea14712b0596847e95b747a_4.jpg" alt="" /><img src="/upload@@/product/2013/1223/2fcb57cfaa6840bf974495178907b709_4.jpg" width="650" height="650" alt="" /><img src="/upload@@/product/2013/1223/dd4ba0c4402c4bb18cbbbc5eecd205ce_4.jpg" width="650" height="650" alt="" /><img src="/upload@@/product/2013/1223/1f3386ad4799497eaab2df38f5c4114b_4.jpg" alt="" /><img src="/upload@@/product/2013/1223/06456a26c1bd48dcb63b3e47b1e6dfdb_4.jpg" alt="" /><img src="/upload@@/product/2013/1223/646a00e05291431696e71c6187972a4a_4.jpg" width="650" height="650" alt="" /><img src="/upload@@/product/2013/1223/5bee8706327045c282fae30f0f877972_4.jpg" width="650" height="650" alt="" /><img src="/upload@@/product/2013/1223/34aea8e90edd4b7388cffa844cf6eb1b_4.jpg" width="650" height="650" alt="" /><img src="/upload@@/product/2013/1223/dee1e15d6a59406793d29339a6eeaed4_4.jpg" width="650" height="650" alt="" /></p>
+</div>
+<p>&nbsp;</p>
+                        </div>
+                        <div><img alt="" style="margin: 10px 0px"  src=/images/goods/title_1.jpg></div>
+                        <div class="pro_detail_pic">
+                            <p>
+                                <img alt="" src="2013/1223/5d924c8a848b4bdd9bc344b590a31e17.jpg"><img alt="" src="2013/1223/4fa572726ea14712b0596847e95b747a.jpg"><img alt="" src="2013/1223/2fcb57cfaa6840bf974495178907b709.jpg"><img alt="" src="2013/1223/1f3386ad4799497eaab2df38f5c4114b.jpg"><img alt="" src="2013/1223/dd4ba0c4402c4bb18cbbbc5eecd205ce.jpg"><img alt="" src="2013/1223/06456a26c1bd48dcb63b3e47b1e6dfdb.jpg"><img alt="" src="2013/1223/34aea8e90edd4b7388cffa844cf6eb1b.jpg"><img alt="" src="2013/1223/5bee8706327045c282fae30f0f877972.jpg"><img alt="" src="2013/1223/646a00e05291431696e71c6187972a4a.jpg"><img alt="" src="2013/1223/dee1e15d6a59406793d29339a6eeaed4.jpg"><img alt="" src="2013/1223/5d924c8a848b4bdd9bc344b590a31e17.jpg">
+                            </p>
+                        </div> 
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <!--商品详情 e-->
+
+            <!--质量保障 s-->
+            <div class="zl_box mt10 details6">
+                <dl class="ofh"><dd>质量保障</dd></dl>
+                <div class="ml_sandow"></div>
+                <div class="p10"><img src=/images/goods/sv.jpg></div>
+            </div>
+            <!--质量保障 e-->
+
+            <!--看了此商品的用户还看了-->
+            <dl id="see_goods_div">
+                <div class="kl_box mt10  details5  ">
+                    <dl class="ofh"><dd>看了此商品的用户还看了</dd></dl>
+                    <div class="ml_sandow"></div>
+                    <div class=" w718 p15">
+                        <div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3512.html" target="_blank" title="德国原装进口啤酒 伯顿美名格 黑啤 5L桶装"><img alt="德国原装进口啤酒 伯顿美名格 黑啤 5L桶装" class="lazyload" src="2013/0521/c2a2424e5cc94fcebc5a8c9ab18cac8e.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3512.html" target="_blank" title="德国原装进口啤酒 伯顿美名格 黑啤 5L桶装">德国原装进口啤酒 伯顿美名格 黑啤 5L桶装</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3430.html" target="_blank" title="澳大利亚 布琅兄弟 森娜甜红葡萄酒（低醇葡萄酒） 750ml 进口"><img alt="澳大利亚 布琅兄弟 森娜甜红葡萄酒（低醇葡萄酒） 750ml 进口" class="lazyload" src="2013/0424/ce0c31cf6a734cc1a94a918099683bc8.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3430.html" target="_blank" title="澳大利亚 布琅兄弟 森娜甜红葡萄酒（低醇葡萄酒） 750ml 进口">澳大利亚 布琅兄弟 森娜甜红葡萄酒（低醇葡萄酒） 750ml 进口</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/2861.html" target="_blank" title="53° 赖茅 赖世家 30年陈酿 500ml"><img alt="53° 赖茅 赖世家 30年陈酿 500ml" class="lazyload" src="2012/1009/cd08df60a5ae4f1fb3528318f86d2221.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/2861.html" target="_blank" title="53° 赖茅 赖世家 30年陈酿 500ml">53° 赖茅 赖世家 30年陈酿 500ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/2528.html" target="_blank" title="52° 酒鬼 精品酒鬼 500ml"><img alt="52° 酒鬼 精品酒鬼 500ml" class="lazyload" src="2012/0626/f31e3f82ab0b489fa437fc388e1ec1a7.JPG" height="130" width="125"></a></div>   <dt><a href="/Home/Item/2528.html" target="_blank" title="52° 酒鬼 精品酒鬼 500ml">52° 酒鬼 精品酒鬼 500ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="kl_box_1 ">   <div><a href="/Home/Item/1930.html" target="_blank" title="古越龙山 古藏浮雕酒十年陈 500ml"><img alt="古越龙山 古藏浮雕酒十年陈 500ml" class="lazyload" src="2011/1129/c297bc7beb3043d1bf9032860487b691.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/1930.html" target="_blank" title="古越龙山 古藏浮雕酒十年陈 500ml">古越龙山 古藏浮雕酒十年陈 500ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3346.html" target="_blank" title="白占边 威士忌 小酒版 50ml"><img alt="白占边 威士忌 小酒版 50ml" class="lazyload" src="2013/0325/b2273c9bfda04055991d95b27ad94609.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3346.html" target="_blank" title="白占边 威士忌 小酒版 50ml">白占边 威士忌 小酒版 50ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3134.html" target="_blank" title="52° 泸州老窖 八年窖酒 500ml*2瓶"><img alt="52° 泸州老窖 八年窖酒 500ml*2瓶" class="lazyload" src="2012/1220/ef39f45405484ddab9ecc30450b88be3.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3134.html" target="_blank" title="52° 泸州老窖 八年窖酒 500ml*2瓶">52° 泸州老窖 八年窖酒 500ml*2瓶</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/425.html" target="_blank" title="53° 茅台飞天 (2011年) 880ml"><img alt="53° 茅台飞天 (2011年) 880ml" class="lazyload" src="2013/1122/29dfaf7bb9fc488093e615b516f7c9f9.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/425.html" target="_blank" title="53° 茅台飞天 (2011年) 880ml">53° 茅台飞天 (2011年) 880ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3688.html" target="_blank" title="法国 朗克城堡珍藏干红葡萄酒（2011） 750ml"><img alt="法国 朗克城堡珍藏干红葡萄酒（2011） 750ml" class="lazyload" src="2013/0625/f324354061764d979edad9f601f5135b.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3688.html" target="_blank" title="法国 朗克城堡珍藏干红葡萄酒（2011） 750ml">法国 朗克城堡珍藏干红葡萄酒（2011） 750ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="kl_box_1 ">   <div><a href="/Home/Item/3123.html" target="_blank" title="52° 五粮液 十二生肖酒 马 500ml"><img alt="52° 五粮液 十二生肖酒 马 500ml" class="lazyload" src="2012/1220/78271930aa3041c98fc4da240ed80a2e.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3123.html" target="_blank" title="52° 五粮液 十二生肖酒 马 500ml">52° 五粮液 十二生肖酒 马 500ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="clear bb1s h10 mb10"></div>                                
+                        <div class="clear"></div>     
+                    </div>
+                </div>
+            </dl>
+            <!--看了此商品的用户还看了END-->
+           
+            <!--买家评论-->
+            <div class="p10 mt10 pl_box details2">
+                <a name="Comment" id="Comment"></a>
+                    <ul class=" bb1s db h35 ofh fix">
+                        <li class=" pl_box_title db" style="float:left;"></li>
+                        <li class="db fr">
+                            <a class="pl_btn fr" onclick="javascript:comment.CommentShow();">写评论</a>
+                        </li>
+                    </ul>
+                <div id="s1">
+                    <div style="display: none" id="add_pro_com">
+                        <a name="add_com" id="add_com"></a>
+                        <!--回复评论-->
+                        <dl class="pl_pingfen">
+                            <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 评分 </dt>
+                            <dd>
+                                <ul class="fix">
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="1" />
+                                        <span class="s_2 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="2" />
+                                        <span class="s_4 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="3" />
+                                        <span class="s_6 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="4" />
+                                        <span class="s_8 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" checked="checked" value="5" />
+                                        <span class="s_10 star db fl"></span></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl class="pl_con">
+                            <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 内容 </dt>
+                            <dd>
+                                <textarea name="txtContent" proID="4136" class="txtCon" id="txtContent" rows="3" cols="50" style="resize: none"></textarea>
+                            </dd>
+                        </dl>
+                        <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:comment.SubmitComment();" />
+                        <!--回复评论-->
+                    </div>
+                    <div id="divComment"></div>
+                </div>
+            </div>
+            <!--买家评论-->
+
+            <!--商品咨询-->
+            <div class="mt10 p10 sp_box w718 details3">
+                <a id="Consult" name="Consult"></a>
+                <ul class=" bb1s db h35">
+                    <li class=" sp_box_title"></li>
+                </ul>
+                <div id="divConsult">                    
+                   
+                </div>
+
+                <div class="qa_tishi">
+                    <ul>
+                        <li class="sp_box_alt"><span class="fl">没有您需要的答案？您可以提问，客服将在1个工作日内回复您。</span>
+                            <a  class="sp_btn" onclick="javascript:consult.ConsultShow();" >提交问题</a>
+                            <div class="clear">
+                            </div>
+                        </li>
+                        <li class="mt10 sp_box_alt">订单查询、物流配送、退换货、商品损坏等售后问题，您可以拨打7x12小时客服电话：400-722-1919 。</li>
+                    </ul>
+                </div>
+                <div id="add_pro_con" style="display: none">
+                    <dl class="pl_con bt1s">
+                        <dt class="fs14 fwb mb15"><span class="red">*</span> 咨询内容 </dt>
+                        <dd>
+                            <textarea name="txtContent" proID="4136" id="txtConsult" class="txtCon"></textarea>
+                        </dd>
+                    </dl>
+                    <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:consult.SubmitConsult();" />
+                    <!--咨询内容-->
+                </div>
+            </div>            
+        </div>
+        <!--商品咨询-->
+    </div>
+    <!--右侧 s-->
+    </div>
+    </div>
+
+  </div>
+  <div class="footer">
+  <div class="foot_up w1200">
+    <div class="phone">10000平方米仓储体验店<br />上海松江区茂盛路202弄18号<br />客服邮箱：service@lafaso.com</div>
+    <div class="help">
+      <dl>
+        <dt>新手指南</dt>
+        <dd><a href="/Home/Help/6.html">用户协议</a></dd>
+        <dd><a href="/Home/Help/7.html">常见问题</a></dd>
+        <dd><a href="/Home/Help/8.html">网站购物流程</a></dd>
+        <dd><a href="/Home/Help/9.html">会员制度</a></dd>
+        <dd><a href="/Home/Help/10.html">VIP客户与合作</a></dd>
+      </dl>
+      <dl>
+        <dt>如何付款</dt>
+        <dd><a href="/Home/Help/11.html">如何付款</a></dd>
+        <dd><a href="/Home/Help/12.html">发票制度说明</a></dd>
+        <dd><a href="/Home/Help/13.html">电子券说明</a></dd>
+        <dd><a href="/Home/Help/14.html">虚拟账户支付</a></dd>
+        <dd><a href="/Home/Help/15.html">商品优惠代码说明</a></dd>
+      </dl>
+      <dl>
+        <dt>配送方式</dt>
+        <dd><a href="/Home/Help/22.html">配送收费标准</a></dd>
+        <dd><a href="/Home/Help/21.html">配送时间</a></dd>
+        <dd><a href="/Home/Help/23.html">货到付款支持城市</a></dd>
+      </dl>
+      <dl>
+        <dt>售后服务</dt>
+        <dd><a href="/Home/Help/16.html">如何办理退换货</a></dd>
+        <dd><a href="/Home/Help/17.html">如何退款</a></dd>
+        <dd><a href="/Home/Help/18.html">联系客服</a></dd>
+      </dl>
+      <dl>
+        <dt>关于我们</dt>
+        <dd><a href="/Home/Help/24.html">了解购酒网</a></dd>
+        <dd><a href="/Home/Help/25.html">招兵买马</a></dd>
+        <dd><a href="/Home/Help/26.html">联系我们</a></dd>
+        <dd><a href="/Home/Help/27.html">隐私声明</a></dd>
+        <dd><a href="/Home/Help/28.html">友情链接</a></dd>
+      </dl>
+    </div>
+    <div class="clear"></div>
+    <div class="guarantee">
+      <span><img class="lazy" data-original="/images/foot-zhibao1.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao2.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao3.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao4.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao5.jpg" alt="" /></span>
+    </div>
+  </div>
+
+  <div class="foot_down w1200">
+    <div class="scrollDiv">
+      <p class="youlian">友情链接：</p>
+      <ul>
+        <li><a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店</a> <a href="#">酒水招商</a> <a href="#">58特产网</a><a href="#">名酒品牌</a> <a href="#">品茶汇</a> <a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店</a> <a href="#">酒水招商</a> <a href="#">58特产网</a><a href="#">名酒品牌</a> <a href="#">品茶汇</a></li>
+      </ul>
+    </div>
+    <p class="copy">Copyright? 2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</p>
+    <div class="authentication">
+      <a class="beian" href="http://www.miibeian.gov.cn"></a> <a class="depart" href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=20120216155829987" rel="nofollow"></a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

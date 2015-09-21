@@ -1,0 +1,119 @@
+﻿@using System.Diagnostics
+@using V5.Portal.Backstage.Controllers
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>购酒网后台管理系统</title>@*引入 javascript 打包压缩功能*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @*引入 javascript*@
+    @Scripts.Render("~/Scripts/Backstage/Backstage.Common.js")
+    @Scripts.Render("~/Scripts/Backstage/Backstage.Common.KendoUI.js")
+    @Scripts.Render("~/Scripts/Backstage/moment-with-langs.min.js")
+    @*引入 css*@
+    @Styles.Render("~/Content/Common.css")
+    @*引入 kendo css*@
+    @Styles.Render("~/Content/kendo/kendo.common.min.css")
+    @Styles.Render("~/Content/kendo/kendo.dataviz.min.css")
+    @Styles.Render("~/Content/kendo/kendo.uniform.min.css")
+    @Styles.Render("~/Content/kendo/kendo.dataviz.uniform.min.css")
+    @*引入 kendo javascript*@    
+    @Scripts.Render("~/Scripts/kendo/jquery.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.all.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.aspnetmvc.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.culture.zh-CN.min.js")
+    @Scripts.Render("~/Scripts/kendo.modernizr.custom.js")
+    @*引入重写ajax请求方法*@
+    @Scripts.Render("~/Scripts/AjaxOverride.js")
+    
+   @* 配置KendoUI的中文环境*@
+    <script>
+            kendo.culture("zh-CN");
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            moment.lang("zh-cn");
+            $("#datetime").html(moment().format('LLLL分s秒'));
+            setInterval(function () {
+                $("#datetime").html(moment().format('LLLL分s秒'));
+            }, 1000);
+            $("#top_home").addClass("select");
+            $('.left-f ul li:first a').trigger("click");
+        });
+    </script>
+</head>
+<body class="page-header">
+    <header>
+         <div class="header-box">
+             <div class="top-logo"><img src="../../Images/logo.jpg" /></div>
+             <div class="top-nav">
+                 <ul>
+                     @{
+                         var baseController = ViewContext.Controller as BaseController;
+                         if (baseController != null)
+                         {
+                             foreach (var topMenu in baseController.SystemUserSession.TopMenus)
+                             {
+                                 if (topMenu == null)
+                                 {
+                                     continue;
+                                     
+                                     
+                                 }
+
+                                 var href = "/" + topMenu.URL;
+                                 var id = "top_" + topMenu.URL;
+
+                                 var className = string.Empty;
+                                 if (topMenu.Name == "首页")
+                                 {
+                                     className = "select";
+                                 }
+
+                                 <li class="@className" id="@id"><a href="@href">@topMenu.Name</a></li>
+                             }
+                         }
+                     }
+                 </ul>
+             </div>
+             <div class="top-info">
+                 <div class="left-info"><span id="datetime"></span></div>
+                 <div class="right-info"><span><a href="#" style="font-weight: bold; font-size: 14px;">&nbsp;
+                                                   @{
+                                                       Debug.Assert(baseController != null, "baseController != null");
+                                                   }
+                                                   @baseController.SystemUserSession.Name</a>，欢迎您来到购酒网后台管理系统！&nbsp;[<a onclick="exit()" style="cursor:pointer; ">退出</a>] </span></div>
+             </div>
+         </div>
+    </header>
+    <div id="body" class="main">
+        <div class="left-f">
+            <ul>
+                @{
+                    {
+                        var topMenu = baseController.SystemUserSession.TopMenus.FirstOrDefault(item => item.ID == this.ViewBag.ParentID);
+                        var leftMenus = baseController.SystemUserSession.LeftMenus.Where(item => item.ParentID == this.ViewBag.ParentID).ToList();
+
+                        foreach (var leftMenu in leftMenus)
+                        {
+                            if (leftMenu == null || topMenu == null)
+                            {
+                                continue;
+                            }
+
+                            var leftMenuId = "left_" + leftMenu.URL;
+                            <li><a id="@leftMenuId" parent="@topMenu.URL" name="@leftMenu.URL" style="cursor:pointer;" onclick="ShowPartialView(this)">@leftMenu.Name</a></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        <div class="main-f">
+            @RenderSection("featured", false)
+            <section class="content-wrapper main-content clear-fix">@RenderBody()</section>
+        </div>
+    </div>
+    @RenderSection("scripts", false)
+</body>
+</html>

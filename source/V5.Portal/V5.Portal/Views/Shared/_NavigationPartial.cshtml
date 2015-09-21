@@ -1,0 +1,54 @@
+﻿@using V5.Portal.Common
+@using V5.Portal.Controllers
+<div class="topBar" id="topBar">
+  <div class="topBarCon">
+    <!-- 左侧栏目 -->
+    <div class="topBarFl fl">
+      <ul>
+        <li><span>欢迎来到购酒网！</span></li>
+        <li>
+          <!-- 登录 -->
+          <div class="login">
+            <div id="top_login" name="loginPlain">
+                @*@Html.Action("GetLoginHtml","Base")*@
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 右侧栏目 -->
+    <div class="miniMenu fr">
+      <ul>
+        <!-- 购物车 -->
+        <li class="m1">
+          <a class="cart-a" href="@Html.Raw(ConstantParams.ShoppingCartUrl)">购物车<strong id="head_cart_no">0</strong>件</a>
+          <div class="mini-cart hide">
+            <div class="no-list hide">
+              您的购物车中暂时没有商品。
+            </div>
+            <div class="cart-list" id="head_cart"></div>
+          </div>
+        </li>
+
+        <!-- 我的订单 -->
+        <li class="m2"><a href="@Html.Raw(ConstantParams.MyOrder)">我的订单</a></li>
+        
+        <!-- 用户中心 -->
+        <li class="m3">
+          <a class="user-a" href="@Html.Raw(ConstantParams.UserCenter)">用户中心</a>
+          <div class="miniMenu-child hide">
+            <dl>
+              <dd><a href="@Html.Raw(ConstantParams.UserEvaluate)">商品评论</a></dd>
+              <dd><a href="@Html.Raw(ConstantParams.UserCollect)">收藏夹</a></dd>
+            </dl>
+          </div>
+        </li>
+        <li class="m4"><a href="@Html.Raw(ConstantParams.HelpUrl)">帮助中心</a></li>
+        <li class="m55"><a href="@Html.Raw(ConstantParams.UserFeedBack)">提建议</a></li>
+        <li class="m66"><a href="http://tieba.baidu.com/f?tp=0&amp;kw=%B9%BA%BE%C6%CD%F8" rel="nofollow">贴吧</a></li>
+        <li class="m66"><a href="http://e.weibo.com/2205040202/profile" rel="nofollow">微博</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

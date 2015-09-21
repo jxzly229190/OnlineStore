@@ -1,0 +1,47 @@
+﻿@model V5.Portal.Backstage.Models.Promote.CouponCashModel
+ <h3><div class="member-btn"><a onclick="backList()" style="cursor:pointer;">返回列表</a></div></h3>
+<table>
+    <tr>
+        @Html.HiddenFor(model => model.ID)
+        <td width="20%" style="text-align: right"  >优惠券名称：</td>
+        <td colspan="5">@Html.DisplayFor(model=>model.Name)</td>
+    </tr>
+    <tr>
+        <td width="12%" style="text-align: right">优惠券面值：</td>
+        <td width="20%">@Html.DisplayFor(model=>model.FaceValue) 元</td>
+    </tr>
+    <tr>
+        <td style="text-align: right"  >建券时间：</td>
+        <td>@Html.DisplayFor(model=>model.CreateTime)</td>
+        <td style="text-align: right">优惠券有效期：</td>
+        <td colspan="5">@Html.DisplayFor(model=>model.StartTime) —— @Html.DisplayFor(model=>model.EndTime)</td>
+    </tr>
+    <tr>
+        <td style="text-align: right"  >优惠券数量：</td>
+        <td><span id="InitialNum">@Html.DisplayFor(model=>model.InitialNumber)</span> 张</td>
+        <td style="text-align: right"  >已绑定数量：</td>
+        <td >@Html.DisplayFor(model=>model.Bind) 张</td>
+    </tr>
+    <tr>
+        
+        <td style="text-align: right"  >使用对象：</td>
+        <td colspan="3">@Html.DisplayFor(model=>model.UseObject)<br/></td>
+    </tr>
+    @{
+        var getCss = "";
+        if (Model.EndTime < DateTime.Now)
+        {
+            getCss = "style = display:none";
+        }
+    }		
+    <tr @getCss>
+        <td style="text-align: right"  >追加电子券数量：</td>
+        <td colspan="5">
+            <div>
+                @Html.Kendo().IntegerTextBox().Min(0).Name("txtAddNum")张
+                <input type="button" value="确认添加" id="btnSubmit" class="k-button" onclick=" IncreaseCouponCash() " />
+            </div>
+        </td>
+    </tr>
+</table>
+

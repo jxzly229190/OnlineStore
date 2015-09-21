@@ -1,0 +1,410 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UserController.cs" company="www.gjw.com">
+//   (C) 2013 www.gjw.com. All rights reserved.
+// </copyright>
+// <summary>
+//   会员中心.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace V5.Portal.Controllers
+{
+<<<<<<< .mine
+    using System.Collections.Generic;
+    using System.Linq;
+=======
+    using System;
+>>>>>>> .r1252
+    using System.Web.Mvc;
+
+    using V5.DataContract.Transact.Order;
+    using V5.DataContract.User;
+    using V5.Library;
+    using V5.Library.Storage.DB;
+    using V5.Service.Transact;
+    using V5.Service.User;
+
+    /// <summary>
+    /// 会员中心.
+    /// </summary>
+    public class UserController : BaseController
+    {
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Index()
+        {
+            var userID = this.GetUserID();
+            if (userID == 0)
+            {
+                return this.RedirectToAction("Index", "Login");
+            }
+
+            var user = new UserService().QueryUserByID(userID);
+            var paging = new Paging("[view_Orders]", null, "ID", null, 1, 3, "CreateTime", 1);
+            int pageCount, rowCount;
+            user.Orders = new OrderService(userID, false).Query(paging, out pageCount, out rowCount);
+            return this.View(user);
+        }
+
+        /// <summary>
+        /// 邮件 and 微信订阅
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Rss()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 我的订单
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult MyOrder()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 获取订单数据
+        /// </summary>
+        /// <param name="pageIndex">
+        /// 页码
+        /// </param>
+        /// <param name="pageSize">
+        /// 页的大小
+        /// </param>
+        /// <param name="search">
+        /// 查询条件
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public JsonResult GetOrderData(int pageIndex, int pageSize, string search)
+        {
+            var userID = this.GetUserID();
+            var condition = "[UserID] = " + userID + " and " +
+                            (string.IsNullOrEmpty(search) ? "1=1" : "productName like '%" + search + "%'");
+            var paging = new Paging("[view_Orders]", null, "ID", condition, pageIndex, pageSize, "CreateTime", 1);
+            int pageCount, rowCount, totalCount;
+            var Orders = new OrderService(userID, false).Query(paging, out pageCount, out rowCount);
+            if (Orders == null || Orders.Count < 1)
+            {
+                return Json(new { data = Orders, rowsCount = rowCount });
+            }
+
+            //查找订单商品信息
+            string orderIDs="";
+            foreach (var order in Orders)
+            {
+                orderIDs += order.ID + ",";
+            }
+
+            orderIDs = orderIDs.Remove(orderIDs.Length-1, 1);
+            paging = new Paging("[view_Order_Products]", null, "ID", "[OrderID] in (" + orderIDs + ")", 1, 1000);
+            var orderProducts = new SqlServer().Paging<Order_Product>(paging, out pageCount, out totalCount, null);
+
+            for (var i=0; i<Orders.Count; i++)
+            {
+                Orders[i].Products = new List<Order_Product>();
+                foreach (var orderProduct in orderProducts)
+                {
+                    if (orderProduct.OrderID == Orders[i].ID)
+                    {
+                        Orders[i].Products.Add(orderProduct);
+                    }
+                }
+            }
+
+            return Json(new { data = Orders, rowsCount = rowCount });
+        }
+
+        /// <summary>
+        /// 删除订单
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public string DeleteOrder(string id)
+        {
+            return id;
+        }
+
+        /// <summary>
+        /// 我的收藏
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Collect()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 获取收藏数据
+        /// </summary>
+        /// <param name="pageIndex">
+        /// 页码
+        /// </param>
+        /// <param name="pageSize">
+        /// 页的大小
+        /// </param>
+        /// <param name="search">
+        /// 查询条件
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public JsonResult GetCollcetData(int pageIndex, int pageSize, string search)
+        {
+            var userID = this.GetUserID();
+            var condition = "[UserID] = " + userID + " and " +
+                            (string.IsNullOrEmpty(search) ? "1=1" : "productName like '%" + search + "%'");
+            var paging = new Paging("[view_User_Collect]", null, "ID", condition, pageIndex, pageSize, "CreateTime", 1);
+            int pageCount, rowCount;
+            var list = new UserCollectRecordService().Paging(paging, out pageCount, out rowCount);
+            return this.Json(new { data = list, rowsCount = rowCount });
+        }
+
+        /// <summary>
+        /// 批量删除收藏.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public JsonResult DeleteCollcet(string id)
+        {
+            try
+            {
+                var userCollect = new UserCollectRecordService();
+                userCollect.RemoveBatch(id);
+                return this.Json(new AjaxResponse(1, "删除成功！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, "删除失败！" + exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 浏览历史
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult History()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 获取收藏数据
+        /// </summary>
+        /// <param name="pageIndex">
+        /// 页码
+        /// </param>
+        /// <param name="pageSize">
+        /// 页的大小
+        /// </param>
+        /// <param name="search">
+        /// 查询条件
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public JsonResult GetHistoryData(int pageIndex, int pageSize, string search)
+        {
+            var userID = this.GetUserID();
+            var condition = "[UserID] = " + userID + " and " +
+                            (string.IsNullOrEmpty(search) ? "1=1" : "productName like '%" + search + "%'");
+            var paging = new Paging("[view_User_BrowerHistory]", null, "ID", condition, pageIndex, pageSize, "CreateTime", 1);
+            int pageCount, rowCount;
+            var list = new UserBrowseHistoryService().Paging(paging, out pageCount, out rowCount);
+            return this.Json(new { data = list, rowsCount = rowCount });
+        }
+
+        /// <summary>
+        /// 批量删除浏览历史.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public JsonResult DeleteHistory(string id)
+        {
+            try
+            {
+                var userHistory = new UserBrowseHistoryService();
+                userHistory.RemoveBatch(id);
+                return this.Json(new AjaxResponse(1, "删除成功！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, "删除失败！" + exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 我的咨询
+        /// </summary>
+        /// <param name="condition">
+        /// 查询条件.
+        /// </param>
+        /// <param name="pageIndex">
+        /// 页码.
+        /// </param>
+        /// <param name="pageSize">
+        /// 页的大小.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Advisory(string condition, int pageIndex = 1, int pageSize = 5)
+        {
+            ViewBag.searchText = condition;
+            var service = new ProductConsultService();
+            int rowCount, pageCount;
+            if (string.IsNullOrWhiteSpace(condition))
+            {
+                condition = "[UserID] = " + this.UserSession.UserID;
+            }
+            else
+            {
+                condition = "[UserID] = " + this.UserSession.UserID + " And (Content like '%" + condition
+                            + "%' Or ConsultContent like '%" + condition + "%' Or ProductName like '%" + condition
+                            + "%')";
+            }
+
+            var paging = new Paging("[view_Product_Consults_All]", null, "ID", condition, pageIndex, pageSize);
+            var list = service.QueryConsult(paging, out pageCount, out rowCount);
+            ViewBag.pageCount = pageCount;
+            ViewBag.pageIndex = pageIndex;
+            return this.View(list);
+        }
+
+        /// <summary>
+        /// 我的评价
+        /// </summary>
+        /// <param name="condition">
+        /// 查询条件.
+        /// </param>
+        /// <param name="pageIndex">
+        /// 页码.
+        /// </param>
+        /// <param name="pageSize">
+        /// 页的大小.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Evaluate(string condition, int pageIndex = 1, int pageSize = 5)
+        {
+            ViewBag.searchText = condition;
+            if (string.IsNullOrWhiteSpace(condition))
+            {
+                condition = "UserID=" + this.UserSession.UserID;
+            }
+            else
+            {
+                condition = "UserID=" + this.UserSession.UserID + " And (ProductName like '%" + condition + "%' Or Content like '%" + condition + "%')";
+            }
+
+            int pageCount, totalCount;
+            var paging = new Paging("view_UserProductComment", null, "CommentID", condition, pageIndex, pageSize);
+            var list = new SqlServer().Paging<UserCommentProduct>(paging, out pageCount, out totalCount, null);
+            ViewBag.pageCount = pageCount;
+            ViewBag.pageIndex = pageIndex;
+            return this.View(list);
+        }
+
+        /// <summary>
+        /// 消息精灵
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Message()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 我的积分
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Integral()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 修改个人资料
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Info()
+        {
+            var userModel = new UserService().QueryUserByID(this.UserSession.UserID);
+            return this.View(userModel);
+        }
+
+        public ActionResult ModifiyUserMessage(string headerimg, string email, bool gender, string nickname, int country,
+            string address)
+        {
+            var user = new User
+            {
+                ID = this.UserSession.UserID,
+                Head = headerimg,
+                Email = email,
+                Gender = gender,
+                CountyID = country,
+                Address = address,
+                NickName = nickname
+            };
+            var recevId = new UserService().ModifyUserMessage(user);
+            if (recevId > 0)
+            {
+                return this.Json(new AjaxResponse(1, "修改成功"));
+            }
+            return Json(string.Empty);
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Password()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 收货地址簿
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Address()
+        {
+            return this.View();
+        }
+    }
+
+}

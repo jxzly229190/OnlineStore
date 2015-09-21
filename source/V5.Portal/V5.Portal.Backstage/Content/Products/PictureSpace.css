@@ -1,0 +1,19 @@
+﻿.main-box { width: 1260px; margin: auto; margin-top: 4px; }
+.main-left { width:180px; float:left; background:#e7f4fc; border:#bddfee solid 1px; height:500px; }
+.main-right { width: 1038px; float:right; width: 1070px; height: 650px; background: #ffffff; }
+.main-right .right-top { border:#dedede solid 1px; padding:10px; margin-top:7px; background:#f5f5f5; }
+.main-right .right-down { border:#dedede solid 1px; height:525px; margin-top:7px; }
+.main-right .right-down .down-topic { background:#cfe6f5; height:35px;padding-top:5px;padding-left: 5px; }
+
+.demo-section-ListView { width: 1047px;height: 400px;padding: 10px 0 0 10px; }
+.pictureItemDiv { height: 175px;width: 155px;float: left;position: relative;margin-left: 10px;margin-right: 5px;margin-top: 10px;margin-bottom: 5px; }
+.itemOperateBar { position: absolute;top: 132px;left: -3px;background-color: #bddfee;filter: alpha(Opacity=70);-moz-opacity: 0.7;opacity: 0.7;height: 22px;line-height: 22px;width: 153px;margin-left: 4px;display: none; }
+.itemNameDiv { position: absolute;top: 155px;left: -1px;width: 157px;height: 18px;overflow: hidden; }
+.pictureItemCheckBox { position: absolute;height: 15px;width: 15px;left: 1px;top: 1px;opacity: 0.6;z-index: 2; }
+.pictureItemImg { height: 155px;width: 155px; }
+
+#picturelistView { padding: 10px;margin-bottom: -1px;min-height: 415px; }
+a:hover { cursor: pointer; }
+
+.demo-section { vertical-align: top;width: 180px;height: 500px;text-align: left; }
+.treeviewDiv { border: #dedede solid 1px;float: left;background-color: #f5f5f5;width: 180px;height:580px;margin-top: 7px; }

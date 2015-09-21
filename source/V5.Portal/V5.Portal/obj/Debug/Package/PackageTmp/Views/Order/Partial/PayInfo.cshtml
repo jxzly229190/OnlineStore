@@ -1,0 +1,25 @@
+﻿<div class="pay-info" id="pay_info" style="display: block;">
+    <b class="tit">支付及配送方式<a href="javascript:;" id="payModify">[选择支付及配送方式]</a></b>
+    <dl class="info">
+        <dd id="shipPayMethod">
+            支付方式：<span id="txtPayMethod">在线支付</span>
+            <br>配送方式：快递送货上门
+        </dd>
+        <dd id="blankPay" style="display:none;">
+            <b class="error-tip">您还没有选择支付及配送方式</b>
+        </dd>
+	</dl>
+</div>
+<div class="alert-pay hidden" name="alert-pay">
+    <b class="tit">支付及配送方式<a href="###" class="savePayInfo" onclick="">[保存]</a></b>
+    <p class="pay-tit"><b>支付方式：</b><span>温馨提示：选用<strong class="pink">在线支付</strong>收货更快！<strong class="pink">请您在24小时内完成付款，否则系统将自动取消订单。</strong></span></p>
+    <b class="borderdashed"></b>
+    <p><em class="alt"><label for="payzx"><input type="radio" checked="checked" id="payzx" name="pay" class="radio" value="0" paytype="在线支付">在线支付</label></em><span><span>支持绝大数银行卡在线支付<a href="#">查看在线支付的支持银行</a></span></span></p>
+    <p><em class="alt"><label for="payhdfk_cash"><input type="radio" id="payhdfk_cash" name="pay" class="radio" value="1" paytype="货到付款">货到付款（现金支付）</label></em><span>快递人员将在送货上门时收取现金（选择此项将不能使用POS机刷卡结算，不便之处，敬请谅解!）。<a href="#">查看货到付款的地区</a></p>
+    <p><em class="alt"><label for="payhdfk_pos"><input type="radio" id="payhdfk_pos" name="pay" class="radio" value="2" paytype="货到付款" >货到付款（pos机刷卡）</label></em><span>快递人员将在送货上门时提供POS刷卡服务。</span></p>
+    <p id="payErrorAlert" class="red"></p>
+    <b class="borderdashed"></b>
+    <div id="deliverMethod"><p><b>送货方式：</b>快递送货上门</p></div>
+    <b class="borderdashed"></b>
+    <p class="btn"><a class="enter savePayInfo" name="alert-pay" href="###">保存支付方式</a></p>
+</div>

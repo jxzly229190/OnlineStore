@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "修改个人资料";
+}
+@model V5.DataContract.User.User
+@Scripts.Render("~/Content/Uploader/CJL.0.1.min.js")
+@Styles.Render("~/Content/Uploader/ImagePreview.css")
+@Scripts.Render("~/Content/Uploader/ImagePreview.js")
+@Scripts.Render("~/Content/Uploader/ImagePreviewEx.js")
+@Scripts.Render("~/Content/Uploader/QuickUpload.js")
+@Styles.Render("~/Content/user.css")
+@Scripts.Render("~/Scripts/Validator.js")
+@Scripts.Render("~/Scripts/Info/addressData.js")
+@Scripts.Render("~/Scripts/Info/Info.js")
+@Scripts.Render("~/Scripts/Info/AddressLevel.js")
+<script type="text/javascript">
+    $(document).ready(function () {
+        Info.Init();
+        ImagePreviewEx.Init({ img: ["imgMaster"], type: "1" });
+        $("#addressContainer").myAreas({
+            province: "province",
+            city: "city",
+            country: "country",
+            countryId: $("#hdzone").val()
+        });
+    })
+</script>
+<style type="text/css">
+    .uc_data
+    {
+        color: #555;
+        padding-bottom: 36px !important;
+    }
+    .uc_data .uc_data_top
+    {
+        border-bottom: 3px solid #ff5f3e;
+        line-height: 36px;
+        font-size: 16px;
+        text-indent: 12px;
+    }
+    .uc_data .uc_data_item
+    {
+        padding: 15px 56px;
+    }
+    .uc_data .uc_data_item_top
+    {
+        height: 64px;
+        line-height: 64px;
+        font-size: 14px;
+        font-weight: bold;
+        border-bottom: 1px dashed #f0f0f0;
+        margin-bottom: 20px;
+        padding-left: 12px;
+    }
+    .uc_data .uc_data_item_top .progress
+    {
+        display: inline-block;
+        width: 520px;
+        height: 12px;
+        position: relative;
+        background-color: #f0f0f0;
+        margin-left: 6px;
+        top: 1px;
+    }
+    .uc_data .uc_data_item_top .progress_inner
+    {
+        width: 320px;
+        height: 12px;
+        position: absolute;
+        left: 0px;
+        background-color: #ff5f3e;
+    }
+    
+    .uc_data .uc_data_user
+    {
+        width: 120px;
+        padding: 12px;
+        vertical-align: top;
+    }
+    .uc_data .uc_data_user div
+    {
+        background-color: #e5e5e5;
+        width: 100%;
+        height: 120px;
+        position: relative;
+    }
+    .uc_data .uc_data_user a
+    {
+        position: absolute;
+        background-color: #9e9e9e;
+        height: 20px;
+        text-align: center;
+        color: #fff;
+        width: 100%;
+        bottom: 0px;
+        text-decoration: none;
+        padding: 0px;
+    }
+    
+    .uc_data .uc_data_table td
+    {
+        line-height: 32px;
+    }
+    .uc_data .uc_data_table .txt
+    {
+        width: 186px !important;
+        height: 18px !important;
+        border: 0;
+        border-radius: 3px;
+        padding: 3px 2px 4px 6px;
+        color: #606566;
+        font-size: 12px;
+        background-color: #f0f0f0;
+        display: inline-block;
+    }
+    tr td input[type=text]
+    {
+        width: 186px !important;
+        height: 18px !important;
+        border: 0;
+        border-radius: 3px;
+        padding: 3px 2px 4px 6px;
+        color: #606566;
+        font-size: 12px;
+        background-color: #f0f0f0;
+        display: inline-block;
+    }
+    .uc_data .uc_data_table #address
+    {
+        width: 320px !important;
+    }
+    .uc_data .uc_data_item_bottom
+    {
+        height: 36px;
+        margin: 30px 0px;
+        line-height: 24px;
+    }
+    .uc_data .uc_data_table .sex
+    {
+        margin: 0 3px;
+    }
+    .validate_message
+    {
+        color: #ff0000;
+        font-size: 12px;
+    }
+</style>
+<input type="hidden" id="hdzone" value="@Model.CountyID" />
+<input type="hidden" id="hdGender" value="@Html.Raw(Model.Gender)"/>
+<input type="hidden" id="head" value="@Model.Head"/>
+<div class="uc_container">
+    <div class="uc">
+        @Html.Partial("UserMenu")
+        <div class="uc_right">
+            <dl class="uc_right_item uc_data">
+                <dt class="uc_data_top">修改个人资料</dt>
+                <dd class="uc_data_item">
+                    <div class="uc_data_item_top">
+                        资料完整度：<div class="progress">
+                            <div class="progress_inner">
+                            </div>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <td class="uc_data_user">
+                                <table style="width: 105px; height: 131px;">
+                                    <tbody id="idPicList">
+                                        <tr>
+                                            <td align="center" class="pic" cid="imgMaster">
+                                                <img src="@Model.Head" id="imgpre"/>
+                                                <div id="imgMaster" style="display: none">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span style="margin-left: 20px;">设置用户头像</span>
+                            </td>
+                            <td class="uc_data_table">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            邮箱：
+                                        </td>
+                                        <td>
+                                            <input type="text"  class="validate" validate_length = "50" validate_message = "email有误" validate_type="email" value="@Model.Email" id="email" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            手机：
+                                        </td>
+                                        <td>
+                                            <label id="mobile">
+                                                @Model.Mobile</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            昵称：
+                                        </td>
+                                        <td>
+                                            <input type="text" class="validate" validate_message = "昵称长度过长" id="nickname" value="@Model.NickName" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            性别：
+                                        </td>
+                                        <td>
+                                            <input type="radio" id="male" name="sex" class="sex" checked="checked" /><label>男</label><input
+                                                id="female" type="radio" name="sex" class="sex" checked="" /><label>女</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            居住城市：
+                                        </td>
+                                        <td>
+                                            <div id="addressContainer">
+                                                <select id="province">
+                                                    <option selected="selected">请选择</option>
+                                                </select>
+                                                <select id="city">
+                                                    <option selected="selected">请选择</option>
+                                                </select>
+                                                <select id="country">
+                                                    <option selected="selected">请选择</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            详细地址：
+                                        </td>
+                                        <td>
+                                            <input type="text" class="txt" id="address" value="@Model.Address" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="uc_data_item_bottom">
+                        <div>
+                            <a href="###">郑重承诺：</a>我们将尊重您的个人隐私，您的个人信息不会被公开。我们会为您量身定制个性化的服务，让您享受更优质的购物体验！</div>
+                        <div style="text-align: right;">
+                            <a href="###" id="btnSave" class="button">保存并提交</a></div>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

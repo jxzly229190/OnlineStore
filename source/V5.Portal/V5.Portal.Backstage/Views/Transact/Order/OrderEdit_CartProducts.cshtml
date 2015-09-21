@@ -1,0 +1,108 @@
+﻿@using V5.Portal.Backstage.Models.Transact.Order
+
+@(Html.Kendo().Grid<OrderProductModel>()
+    .Name("OrderEditCartProductGrid")
+    .Columns(columns =>
+        {
+            //columns.Template(e => { }).ClientTemplate(" ").Width(120).Title("商品图片");
+            columns.Bound(e => e.ProductName).Width(180).Title("商品名称");
+            columns.Bound(p => p.InventoryNumber).Width(50).Title("库存");
+            columns.Bound(p => p.TransactPrice).Width(65).Title("价格（元）");
+            columns.Bound(p => p.Quantity).Width(50).Title("购买数量");
+            columns.Template(e => { }).ClientTemplate(" ").Width(60).Title("金额小计");
+            columns.Bound(p => p.ID).Width(100).Title("操作");
+        })
+        .ClientRowTemplate(
+            "<tr>" +
+                "<td class='details'>" +
+                   "<span class='title'><a target='_blank' href='#: ProductURL #'>#: ProductName #<a/></span>" +
+                "</td>" +
+                "<td class='details'>" +
+                   "<span class='title'>#: InventoryNumber #</span>" +
+                "</td>" +
+                "<td class='price'>" +
+                    "<input id='orderEdit_Price_#: ProductID #' onblur='orderEdit_EditPrice(this)' name='#: ProductID #'  onkeydown='checkNumeric(this.value,event);' value='#: TransactPrice#'  class='k-textbox' style='ime-mode:Disabled; width:60px' type='textbox' />元" +
+                "</td>" +
+                "<td class='price'>" +
+                    "<input id='orderEdit_Quantity_#: ProductID #' onblur='calcOrderEditAllMoney(this)' name='#: ProductID #'  onkeydown='checkKeyForInt(this.value,event);' value='#: Quantity#'  class='k-textbox' style='ime-mode:Disabled; width:60px' type='textbox' />" +
+                "</td>" +
+                "<td class='price'>" +
+                    "<label id='orderEdit_labelMoney_#: ProductID #'  >#: TotalPrice#</lable>" +
+                "</td>" +
+                "<td>" +
+                   "<input type='button' name='#: ProductID #' value='删除' class='k-button' onclick='orderEdit_DeleteCartProduct(this)' />" +
+                "</td>" +
+            "</tr>"
+        )
+        .ClientAltRowTemplate(
+            "<tr class='k-alt'>" +
+                    "<td class='details'>" +
+                         "<span class='title'><a target='_blank' href='#: ProductURL #'>#: ProductName #<a/></span>" +
+                    "</td>" +
+                    "<td class='details'>" +
+                       "<span class='title'>#: InventoryNumber #</span>" +
+                    "</td>" +
+                    "<td class='price'>" +
+                         "<input id='orderEdit_Price_#: ProductID #' onblur='orderEdit_EditPrice(this)' name='#: ProductID #'  onkeydown='checkNumeric(this.value,event);' value='#: TransactPrice#'  class='k-textbox' style='ime-mode:Disabled; width:60px' type='textbox' />元" +
+                    "</td>" +
+                    "<td class='price'>" +
+                         "<input id='orderEdit_Quantity_#: ProductID #' onblur='calcOrderEditAllMoney(this)' name='#: ProductID #'  onkeydown='checkKeyForInt(this.value,event);' value='#: Quantity#'  class='k-textbox' style='ime-mode:Disabled; width:60px' type='textbox' />" +
+                    "</td>" +
+                    "<td class='price'>" +
+                         "<label id='orderEdit_labelMoney_#: ProductID #' >#: TotalPrice#</lable>" +
+                    "</td>" +
+                    "<td>" +
+                         "<input type='button' name='#: ProductID #' value='删除' class='k-button' onclick='orderEdit_DeleteCartProduct(this)' />" +
+                    "</td>" +
+            "</tr>"
+         )
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:320px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(100)
+        .Model(model => model.Id(p => p.ID))
+        .Read(read=>read.Action("QueryOrderProductByOrderId","Transact").Data("getOrderID"))
+         ))
+
+
+@section HeadContent {
+    <style>
+        .title {
+            display: block;
+            font-size: 1.6em;
+        }
+        .description {
+            display: block;
+            padding-top: 1.6em;
+        }
+        .price {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-size: 50px;
+            font-weight: bold;
+            color: #898989;
+        }
+        td.photo, .price {
+            text-align: center;
+        }
+        .k-grid-header .k-header {
+            padding: 10px 20px;
+        }
+        .k-grid td {
+            background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.05)), color-stop(100%, rgba(0, 0, 0, 0.15)));
+            background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: -o-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            padding: 20px;
+        }
+        .k-grid .k-alt td {
+            background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.2)), color-stop(100%, rgba(0, 0, 0, 0.1)));
+            background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: -o-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+        }
+    </style>}

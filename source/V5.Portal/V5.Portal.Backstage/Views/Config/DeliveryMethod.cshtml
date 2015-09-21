@@ -1,0 +1,37 @@
+﻿@using V5.Portal.Backstage.Models.Configuration;
+@using V5.Portal.Backstage.Utils
+
+@{
+    ViewBag.Title = "配送方式管理";
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+}
+
+@(Html.Kendo().Grid<ConfigDeliveryMethodModel>().Name("configDeliveryCostGird")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Name).Title("送货方式").Width(80);
+        columns.Bound(model => model.Description).Width(200).Title("描述");
+        columns.Bound(model => model.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(160).Title("创建时间");
+        columns.Command(command => {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyMethod", "Config", "Post",true));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveMethod", "Config", "Post",true));
+        }).Width(160).Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("添加配送方式").HtmlAttributes(new PermissionUtility(Context.Session.SessionID).GetDisplayAttribute("AddMethod", "Config", "Post",false))).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Delivery_Method_Template").Window(edit => edit.Title("编辑")))
+    .Selectable()
+    .Scrollable()
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:450px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(p => p.ID))
+            .Events(e => e.Error("error_handler"))
+            .Read(read => read.Action("QueryMethod", "Config"))
+        .Create(create => create.Action("AddMethod", "Config"))
+        .Update(update => update.Action("ModifyMethod", "Config"))
+        .Destroy(destory => destory.Action("RemoveMethod", "Config"))
+    )
+    
+)

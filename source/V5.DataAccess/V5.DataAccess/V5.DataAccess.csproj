@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D59FA7AD-67E5-459D-97D3-DD92689E43D5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.DataAccess</RootNamespace>
+    <AssemblyName>V5.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\libraries\log4net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Advertise\IAdvertiseConfigDA.cs" />
+    <Compile Include="Channel\IChannelGroupBuyDA.cs" />
+    <Compile Include="Configuration\IConfigDeliveryCorporationDA.cs" />
+    <Compile Include="Configuration\IConfigDeliveryCostDA.cs" />
+    <Compile Include="Configuration\IConfigDeliveryMethodDA.cs" />
+    <Compile Include="Configuration\IConfigInvoiceContentDA.cs" />
+    <Compile Include="Configuration\IConfigInvoiceTypeDA.cs" />
+    <Compile Include="Configuration\IConfigPageDA.cs" />
+    <Compile Include="Configuration\IConfigPaymentOrganizationDA.cs" />
+    <Compile Include="Configuration\IConfigPaymentTypeDA.cs" />
+    <Compile Include="DAFactory.cs" />
+    <Compile Include="DAFactoryAdvertise.cs" />
+    <Compile Include="DAFactoryChannel.cs" />
+    <Compile Include="DAFactoryConfiguration.cs" />
+    <Compile Include="DAFactoryPicture.cs" />
+    <Compile Include="DAFactoryProduct.cs" />
+    <Compile Include="DAFactoryPromote.cs" />
+    <Compile Include="DAFactorySystem.cs" />
+    <Compile Include="DAFactoryUtility.cs" />
+    <Compile Include="DataAccess.cs" />
+    <Compile Include="DAFactoryTransact.cs" />
+    <Compile Include="DAFactoryUser.cs" />
+    <Compile Include="Product\IBrandInformationDA.cs" />
+    <Compile Include="Product\IImageEdit.cs" />
+    <Compile Include="Product\IPictureCategoryDA.cs" />
+    <Compile Include="Product\IPictureDA.cs" />
+    <Compile Include="Product\IProductAttributeDA.cs" />
+    <Compile Include="Product\IProductAttributeValueDA.cs" />
+    <Compile Include="Product\IProductAttributeValueSetDA.cs" />
+    <Compile Include="Product\IProductBrandDA.cs" />
+    <Compile Include="Product\IProductCategoryDA.cs" />
+    <Compile Include="Promote\ICouponCashBindingDA.cs" />
+    <Compile Include="Promote\ICouponCashDA.cs" />
+    <Compile Include="Promote\ICouponDecreaseBindingDA.cs" />
+    <Compile Include="Promote\ICouponDecreaseDA.cs" />
+    <Compile Include="Product\IProductPictureDA.cs" />
+    <Compile Include="Promote\ICouponScopeDA.cs" />
+    <Compile Include="Promote\IPromoteLimitedDiscountDA.cs" />
+    <Compile Include="Promote\IPromoteLandingPageDA.cs" />
+    <Compile Include="Promote\IPromoteVipDA.cs" />
+    <Compile Include="Promote\IPromoteVipScopeDA.cs" />
+    <Compile Include="Promote\MeetAmount\IPromoteMeetAmountDA.cs" />
+    <Compile Include="Promote\MeetAmount\IPromoteMeetAmountScopeDA.cs" />
+    <Compile Include="Promote\MeetMoney\IPromoteMeetMoneyRuleDA.cs" />
+    <Compile Include="Promote\MeetMoney\IPromoteMeetMoneyDA.cs" />
+    <Compile Include="Promote\MeetAmount\IPromoteMeetAmountRuleDA.cs" />
+    <Compile Include="Promote\IPromoteMuchBottledDA.cs" />
+    <Compile Include="Promote\IPromoteMuchBottledRuleDA.cs" />
+    <Compile Include="Promote\MeetMoney\IPromoteMeetMoneyScopeDA.cs" />
+    <Compile Include="System\ISystemDepartmentDA.cs" />
+    <Compile Include="System\ISystemEmployeeDA.cs" />
+    <Compile Include="System\ISystemHomeDA.cs" />
+    <Compile Include="System\ISystemMenuDA.cs" />
+    <Compile Include="System\ISystemPermissionDA.cs" />
+    <Compile Include="System\ISystemResourcesDA.cs" />
+    <Compile Include="System\ISystemRightsDA.cs" />
+    <Compile Include="System\ISystemRoleDA.cs" />
+    <Compile Include="System\ISystemRolePermissionDA.cs" />
+    <Compile Include="System\ISystemUserDA.cs" />
+    <Compile Include="System\ISystemLogDA.cs" />
+    <Compile Include="Transact\ICpsCommissionRatioDA.cs" />
+    <Compile Include="Transact\ICpsLinkRecordDA.cs" />
+    <Compile Include="Transact\ICpsOrderPushRecordDA.cs" />
+    <Compile Include="Transact\IProductCommentDA.cs" />
+    <Compile Include="Transact\IProductCommentReplyDA.cs" />
+    <Compile Include="Transact\IProductConsultDA.cs" />
+    <Compile Include="Transact\IProductConsultReplyDA.cs" />
+    <Compile Include="Product\IProductLimitedBuyAreaDA.cs" />
+    <Compile Include="Product\IProductLimitedBuyConditionDA.cs" />
+    <Compile Include="Product\IProductDA.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transact\ICpsDA.cs" />
+    <Compile Include="Transact\Order\IOrderBillDA.cs" />
+    <Compile Include="Transact\Order\IOrderCancelCauseDA.cs" />
+    <Compile Include="Transact\Order\IOrderCancelDA.cs" />
+    <Compile Include="Transact\Order\IOrderDA.cs" />
+    <Compile Include="Transact\Order\IOrderDeliveryTrackDetailDA.cs" />
+    <Compile Include="Transact\Order\IOrderErpLogDA.cs" />
+    <Compile Include="Transact\Order\IOrderInvoiceDA.cs" />
+    <Compile Include="Transact\Order\IOrderPaymentDA.cs" />
+    <Compile Include="Transact\Order\IOrderProductDA.cs" />
+    <Compile Include="Transact\Order\IOrderProductPromoteDA.cs" />
+    <Compile Include="Transact\Order\IOrderStatusLogDA.cs" />
+    <Compile Include="Transact\Order\IOrderStatusTrackingDA.cs" />
+    <Compile Include="User\IFeedBackDA.cs" />
+    <Compile Include="User\IUserBrowseHistoryDA.cs" />
+    <Compile Include="User\IUserCollectRecordDA.cs" />
+    <Compile Include="User\IUserDA.cs" />
+    <Compile Include="User\IUserLevelDA.cs" />
+    <Compile Include="User\IUserLevelPriceDA.cs" />
+    <Compile Include="User\IUserMessageEmailDA.cs" />
+    <Compile Include="User\IUserMessageSendRecordDA.cs" />
+    <Compile Include="User\IUserMessageSmsDA.cs" />
+    <Compile Include="User\IUserReceiveAddressDA.cs" />
+    <Compile Include="User\IUserAccountDA.cs" />
+    <Compile Include="User\Iv4UsrFindMailPasswordDA.cs" />
+    <Compile Include="Utility\ISystemVisitorDA.cs" />
+    <Compile Include="Utility\ICodeDA.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Promote\Coupon\" />
+    <Folder Include="Promote\LimitedDiscount\" />
+    <Folder Include="Promote\MuchBottled\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Advertise\V5.DataContract.Advertise.csproj">
+      <Project>{EEFFB28E-9876-42DB-8C41-4B5E0EF5D72B}</Project>
+      <Name>V5.DataContract.Advertise</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Utility\V5.DataContract.Utility.csproj">
+      <Project>{E1C6A652-88EC-4E4A-B42A-D5F383CB33BD}</Project>
+      <Name>V5.DataContract.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Channel\V5.DataContract.Channel.csproj">
+      <Project>{A8CEFCFE-89DA-4B55-9246-F2B5E00DA619}</Project>
+      <Name>V5.DataContract.Channel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Configuration\V5.DataContract.Configuration.csproj">
+      <Project>{F3E04C83-68B1-478A-9C14-D29885FD4806}</Project>
+      <Name>V5.DataContract.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Product\V5.DataContract.Product.csproj">
+      <Project>{8A6D374A-1AF2-4AA8-8C71-E91724E1D7B1}</Project>
+      <Name>V5.DataContract.Product</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Promote\V5.DataContract.Promote.csproj">
+      <Project>{3CEAB9B8-873B-4215-AF37-8DDAB50DC3C9}</Project>
+      <Name>V5.DataContract.Promote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.System\V5.DataContract.System.csproj">
+      <Project>{6FC20914-1D9F-4824-8F8B-22C183AAD524}</Project>
+      <Name>V5.DataContract.System</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Transact\V5.DataContract.Transact.csproj">
+      <Project>{7A795796-E69B-4780-987B-EF026F0AA136}</Project>
+      <Name>V5.DataContract.Transact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.User\V5.DataContract.User.csproj">
+      <Project>{06F0B648-8FE0-4D8D-9BBA-F0BB81CBE60B}</Project>
+      <Name>V5.DataContract.User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.User\V5.DataContract.User.csproj">
+      <Project>{06F0B648-8FE0-4D8D-9BBA-F0BB81CBE60B}</Project>
+      <Name>V5.DataContract.User</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Log\V5.Library.Logger.csproj">
+      <Project>{500C79FB-CFEB-45DB-BE5A-7D4FA0B62F7D}</Project>
+      <Name>V5.Library.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Storage\V5.Library.Storage.csproj">
+      <Project>{8ABCE18E-100C-4714-8D8D-55D95ADBED94}</Project>
+      <Name>V5.Library.Storage</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library\V5.Library.csproj">
+      <Project>{0A8000BD-A860-4BD8-96F3-415A61EB5098}</Project>
+      <Name>V5.Library</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Product\V5.DataContract.Product.csproj">
+      <Project>{8A6D374A-1AF2-4AA8-8C71-E91724E1D7B1}</Project>
+      <Name>V5.DataContract.Product</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

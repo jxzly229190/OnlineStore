@@ -1,0 +1,590 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Promote.MeetAmount.cs" company="www.gjw.com">
+//   (C) 2013 www.gjw.com. All rights reserved.
+// </copyright>
+// <summary>
+//   促销管理部分控制器.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace V5.Portal.Backstage.Controllers.Promote
+{
+    using global::System;
+    using global::System.Collections.Generic;
+    using global::System.Text;
+    using global::System.Web.Mvc;
+
+    using Kendo.Mvc.UI;
+
+    using V5.DataContract.Product;
+    using V5.DataContract.Promote.MeetAmount;
+    using V5.Library;
+    using V5.Library.Storage.DB;
+    using V5.Portal.Backstage.Models.Product;
+    using V5.Portal.Backstage.Models.Promote.MeetAmount;
+    using V5.Service.Product;
+    using V5.Service.Promote;
+
+    /// <summary>
+    /// 促销管理部分控制器.
+    /// </summary>
+    public partial class PromoteController
+    {
+        #region Constants and Fields
+
+        /// <summary>
+        /// 满件优惠数据服务类.
+        /// </summary>
+        private PromoteMeetAmountService promoteMeetAmountService;
+
+        /// <summary>
+        /// 满件优惠规则数据服务类.
+        /// </summary>
+        private PromoteMeetAmountRuleService promoteMeetAmountRuleService;
+
+        /// <summary>
+        /// 满件优惠活动商品数据服务类.
+        /// </summary>
+        private PromoteMeetAmountScopeService promoteMeetAmountScopeService;
+        
+        /// <summary>
+        /// The product service.
+        /// </summary>
+        private ProductService productService;
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// 满件优惠.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="PartialViewResult"/>.
+        /// </returns>
+        public PartialViewResult MeetAmount()
+        {
+            return this.PartialView("MeetAmount");
+        }
+
+        /// <summary>
+        /// The meet amount edit.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="PartialViewResult"/>.
+        /// </returns>
+        public PartialViewResult MeetAmountEdit()
+        {
+            return this.PartialView("MeetAmountEdit");
+        }
+
+        /// <summary>
+        /// The meet amount detail.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="PartialViewResult"/>.
+        /// </returns>
+        public PartialViewResult MeetAmountDetail(int id)
+        {
+            return this.PartialView("MeetAmountDetail");
+        }
+
+        /// <summary>
+        /// 查询满件优惠列表.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <param name="amountName">
+        /// 活动名称.
+        /// </param>
+        /// <param name="amountStatus">
+        /// 活动状态.
+        /// </param>
+        /// <param name="startStartTime">
+        /// 活动开始时间范围起点时间.
+        /// </param>
+        /// <param name="startEndTime">
+        /// 活动开始时间范围结点时间.
+        /// </param>
+        /// <param name="endStartTime">
+        /// 活动结束时间范围起点时间.
+        /// </param>
+        /// <param name="endEndTime">
+        /// 活动结束时间范围结点时间.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public JsonResult QueryMeetAmount(
+            [DataSourceRequest] DataSourceRequest request,
+            string amountName,
+            string amountStatus,
+            string startStartTime,
+            string startEndTime,
+            string endStartTime,
+            string endEndTime)
+        {
+            if (request.Page <= 0)
+            {
+                request.Page = 1;
+            }
+
+            if (request.PageSize == 0)
+            {
+                request.PageSize = 10;
+            }
+
+            int totalCount;
+            var stringBuilder = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(amountName))
+            {
+                CheckCondition(stringBuilder);
+                stringBuilder.Append("[Name] like '%" + amountName + "%'");
+            }
+
+            if (!string.IsNullOrEmpty(startStartTime))
+            {
+                CheckCondition(stringBuilder);
+                stringBuilder.Append("[StartTime] >= '" + startStartTime + "'");
+            }
+
+            if (!string.IsNullOrEmpty(startEndTime))
+            {
+                CheckCondition(stringBuilder);
+                stringBuilder.Append("[StartTime] <= '" + startEndTime + "'");
+            }
+
+            if (!string.IsNullOrEmpty(endStartTime))
+            {
+                CheckCondition(stringBuilder);
+                stringBuilder.Append("[EndTime] >= '" + endStartTime + "'");
+            }
+
+            if (!string.IsNullOrEmpty(endEndTime))
+            {
+                CheckCondition(stringBuilder);
+                stringBuilder.Append("[EndTime] <= '" + endEndTime + "'");
+            }
+
+            switch (amountStatus)
+            {
+                case "1":
+                    CheckCondition(stringBuilder);
+                    stringBuilder.Append("[StartTime] > '" + DateTime.Now + "'");
+                    break;
+                case "2":
+                    CheckCondition(stringBuilder);
+                    stringBuilder.Append("'" + DateTime.Now + "' Between [StartTime] And [EndTime]");
+                    break;
+                case "3":
+                    CheckCondition(stringBuilder);
+                    stringBuilder.Append("[EndTime] < '" + DateTime.Now + "'");
+                    break;
+            }
+
+            CheckCondition(stringBuilder);
+            stringBuilder.Append("[IsDelete] = 0");
+            var condition = stringBuilder.ToString();
+            List<Promote_MeetAmount> list;
+            try
+            {
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+                var paging = new Paging("[Promote_MeetAmount]", null, "[ID]", condition, request.Page, request.PageSize);
+                int pageCount;
+                list = this.promoteMeetAmountService.Query(paging, out pageCount, out totalCount);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message, exception);
+            }
+
+            if (list != null)
+            {
+                var modelList = new List<PromoteMeetAmountModel>();
+                foreach (var limitedDiscount in list)
+                {
+                    modelList.Add(
+                        DataTransfer.Transfer<PromoteMeetAmountModel>(limitedDiscount, typeof(Promote_MeetAmount)));
+                }
+
+               foreach (var model in modelList)
+                {
+                    switch (model.Status)
+                    {
+                        case 1:
+                            model.StatusName = "正常";
+                            break;
+                        case 2:
+                            model.StatusName = "停止";
+                            break;
+                    }
+
+                    model.StatusText = this.GetAmountOperationHtml(model.ID, model.Status, model.EndTime);
+                }
+
+                var data = new DataSource { Data = modelList, Total = totalCount };
+                return this.Json(data, JsonRequestBehavior.AllowGet);
+            }
+
+            return this.Json(string.Empty);
+        }
+                   
+        /// <summary>
+        /// 添加满件优惠的促销活动.
+        /// </summary>
+        /// <param name="promoteMeetAmountModel">
+        /// The promote Meet Amount Model.
+        /// </param>
+        /// <param name="meetAmountScopeModel">
+        /// The meet Amount Scope Model.
+        /// </param>
+        /// <param name="contents">
+        /// 促销活动规则集合.
+        /// </param>
+        /// endEndTime: $("
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult AddMeetAmount(
+            PromoteMeetAmountModel promoteMeetAmountModel,
+            PromoteMeetAmountScopeModel meetAmountScopeModel,
+            List<PromoteMeetAmountRuleModel> contents)
+        {
+            try
+            {
+                // 验证相同商品是否参与其他促销
+<<<<<<< .mine
+                if (!string.IsNullOrEmpty(this.VerifyPromote(meetAmountScopeModel.Scope,0,0)))
+=======
+                var products = this.VerifyPromote(meetAmountScopeModel.Scope, 0, 0);
+                if (!string.IsNullOrEmpty(products))
+>>>>>>> .r1478
+                {
+                    return this.Json(new AjaxResponse(0, "以下商品已参加其他促销活动：" + products));
+                }
+
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+
+                promoteMeetAmountModel.EmployeeID = this.SystemUserSession.EmployeeID;
+                promoteMeetAmountModel.Status = 1;
+
+                var promoteMeetAmount = DataTransfer.Transfer<Promote_MeetAmount>(
+                    promoteMeetAmountModel,
+                    typeof(PromoteMeetAmountModel));
+
+                promoteMeetAmount.MeetAmountScope = DataTransfer.Transfer<Promote_MeetAmount_Scope>(
+                    meetAmountScopeModel,
+                    typeof(PromoteMeetAmountScopeModel));
+
+                var promoteMeetAmountRuleList = new List<Promote_MeetAmount_Rule>();
+                foreach (var promoteMeetAmountRuleModel in contents)
+                {
+                    promoteMeetAmountRuleList.Add(DataTransfer.Transfer<Promote_MeetAmount_Rule>(
+                    promoteMeetAmountRuleModel,
+                    typeof(PromoteMeetAmountRuleModel)));
+                }
+
+                promoteMeetAmount.MeetAmountRules = promoteMeetAmountRuleList;
+                this.promoteMeetAmountService.Add(promoteMeetAmount);
+                return this.Json(new AjaxResponse(1, "设置成功！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 查询指定的活动信息.
+        /// </summary>
+        /// <param name="promoteID">
+        /// 活动编号.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult QueryMeetAmountByID(int promoteID)
+        {
+            PromoteMeetAmountModel promoteMeetAmountModel = null;
+            try
+            {
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+                var promoteMeetAmount = this.promoteMeetAmountService.QueryByID(promoteID);
+                
+                if (promoteMeetAmount != null)
+                {
+                    promoteMeetAmountModel = DataTransfer.Transfer<PromoteMeetAmountModel>(
+                    promoteMeetAmount,
+                    typeof(Promote_MeetAmount));
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message, exception);
+            }
+
+            return this.Json(promoteMeetAmountModel, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 修改满件优惠的促销活动.
+        /// </summary>
+        /// <param name="promoteMeetAmountModel">
+        /// The promote Meet Amount Model.
+        /// </param>
+        /// <param name="meetAmountScopeModel">
+        /// The meet Amount Scope Model.
+        /// </param>
+        /// <param name="removeRuleId">
+        /// 删除的活动规则编号.
+        /// </param>
+        /// <param name="contents">
+        /// 促销活动规则集合.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult ModifyMeetAmount(
+            PromoteMeetAmountModel promoteMeetAmountModel,
+            PromoteMeetAmountScopeModel meetAmountScopeModel,
+            string[] removeRuleId,
+            List<PromoteMeetAmountRuleModel> contents)
+        {
+            try
+            {
+                // 验证相同商品是否参与其他促销
+                var products = this.VerifyPromote(meetAmountScopeModel.Scope, 2, promoteMeetAmountModel.ID);
+                if (!string.IsNullOrEmpty(products))
+                {
+                    return this.Json(new AjaxResponse(0, "以下商品已参加其他促销活动：" + products));
+                }
+
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+                promoteMeetAmountModel.EmployeeID = this.SystemUserSession.EmployeeID;
+                promoteMeetAmountModel.Status = 1;
+
+                var promoteMeetAmount = DataTransfer.Transfer<Promote_MeetAmount>(
+                    promoteMeetAmountModel,
+                    typeof(PromoteMeetAmountModel));
+
+                promoteMeetAmount.MeetAmountScope = DataTransfer.Transfer<Promote_MeetAmount_Scope>(
+                    meetAmountScopeModel,
+                    typeof(PromoteMeetAmountScopeModel));
+
+                var promoteMeetAmountRuleList = new List<Promote_MeetAmount_Rule>();
+                foreach (var promoteMeetAmountRuleModel in contents)
+                {
+                    promoteMeetAmountRuleList.Add(DataTransfer.Transfer<Promote_MeetAmount_Rule>(
+                    promoteMeetAmountRuleModel,
+                    typeof(PromoteMeetAmountRuleModel)));
+                }
+
+                promoteMeetAmount.MeetAmountRules = promoteMeetAmountRuleList;
+                this.promoteMeetAmountService.Modify(promoteMeetAmount, removeRuleId);
+                return this.Json(new AjaxResponse(1, "设置成功！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 显示修改页面.
+        /// </summary>
+        /// <param name="meetAmountID">
+        /// The meet Amount ID.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpGet]
+        public JsonResult ModifyMeetAmountShow(string meetAmountID)
+        {
+            PromoteMeetAmountModel promoteMeetAmountModel;
+            try
+            {
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+                var promoteMeetAmount = this.promoteMeetAmountService.QueryByID(int.Parse(meetAmountID));
+                promoteMeetAmountModel = DataTransfer.Transfer<PromoteMeetAmountModel>(
+                    promoteMeetAmount,
+                    typeof(Promote_MeetAmount));
+                if (promoteMeetAmount != null)
+                {
+                    this.promoteMeetAmountScopeService = new PromoteMeetAmountScopeService();
+                    var meetAmountScope = this.promoteMeetAmountScopeService.QueryByMeetAmountID(int.Parse(meetAmountID));
+                    this.promoteMeetAmountRuleService = new PromoteMeetAmountRuleService();
+                    var list = this.promoteMeetAmountRuleService.QueryByMeetAmountID(promoteMeetAmount.ID);
+                    var promoteMeetAmountList = new List<PromoteMeetAmountRuleModel>();
+                    foreach (var moneyRule in list)
+                    {
+                        promoteMeetAmountList.Add(
+                            DataTransfer.Transfer<PromoteMeetAmountRuleModel>(moneyRule, typeof(Promote_MeetAmount_Rule)));
+                    }
+
+                    promoteMeetAmountModel.MeetAmountScopeModel =
+                        DataTransfer.Transfer<PromoteMeetAmountScopeModel>(
+                            meetAmountScope,
+                            typeof(Promote_MeetAmount_Scope));
+                    promoteMeetAmountModel.MeetAmountRuleModels = promoteMeetAmountList;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message, exception);
+            }
+
+            return this.Json(promoteMeetAmountModel, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 暂停/恢复/停止指定的的促销活动.
+        /// </summary>
+        /// <param name="meetAmountID">
+        /// 促销活动编号.
+        /// </param>
+        /// <param name="status">
+        /// 活动状态（1：正常,2:暂停,3：停止）.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult ChangesMeetAmountStatus(string meetAmountID, string status)
+        {
+            try
+            {
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+                this.promoteMeetAmountService.ModifyStatus(int.Parse(meetAmountID), int.Parse(status));
+                return this.Json(new AjaxResponse(1, "操作成功！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, "操作失败：" + exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 删除指定的的促销活动.
+        /// </summary>
+        /// <param name="meetAmountID">
+        /// 促销活动编号.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult RemoveMeetAmount(string meetAmountID)
+        {
+            try
+            {
+                this.promoteMeetAmountService = new PromoteMeetAmountService();
+                this.promoteMeetAmountService.Remove(int.Parse(meetAmountID));
+                return this.Json(new AjaxResponse(1, "删除成功！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 查询指定商品编号的信息.
+        /// </summary>
+        /// <param name="productID">
+        /// 商品编号.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpGet]
+        public JsonResult QueryProductByProductID(string productID)
+        {
+            var productModel = new ProductModel();
+
+            if (!string.IsNullOrEmpty(productID))
+            {
+                this.productService = new ProductService();
+                var product = this.productService.QueryByID(productID);
+                
+                productModel = DataTransfer.Transfer<ProductModel>(product, typeof(Product));
+            }
+
+            return this.Json(productModel, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region 
+
+        /// <summary>
+        /// 根据活动状态和结束时间获取相应的操作按钮.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="status">
+        /// The status.
+        /// </param>
+        /// <param name="endTime">
+        /// The end time.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        private string GetAmountOperationHtml(int id, int status, DateTime endTime)
+        {
+            var sb = new StringBuilder();
+            if (endTime > DateTime.Now)
+            {
+                switch (status)
+                {
+                    // todo: 添加权限验证
+                    case 1:
+                        sb.Append(
+                            "<input type='button' class='k-button k-grid-edit' name='" + id
+                            + "' value='编辑' onclick='meetAmount.MeetAmountEdit(this)'/>");
+                        sb.Append(
+                            "<input type='button' class='k-button k-grid-suspend' name='" + id
+                            + "'  value='暂停' onclick='meetAmount.MeetAmountSuspend(this)'/>");
+                        sb.Append(
+                            "<input type='button' class='k-button k-grid-stop' name='" + id
+                            + "'  value='停止' onclick='meetAmount.MeetAmountStop(this)'/>");
+                        break;
+                    case 2:
+                        sb.Append(
+                            "<input type='button' class='k-button k-grid-edit' name='" + id
+                            + "'  value='编辑' onclick='meetAmount.MeetMoneyEdit(this)'/>");
+                        sb.Append(
+                            "<input type='button' class='k-button k-grid-suspend' name='" + id
+                            + "'  value='恢复' onclick='meetAmount.MeetAmountSuspend(this)'/>");
+                        sb.Append(
+                            "<input type='button' class='k-button k-grid-stop' name='" + id
+                            + "'  value='停止' onclick='meetAmount.MeetAmountStop(this)'/>");
+                        break;
+                    case 3:
+                        break;
+                }
+            }
+
+            sb.Append(
+                "<input type='button' class='k-button k-grid-detail' name='" + id
+                + "' value='查看' onclick='meetAmount.MeetAmountDetail(this)'/>");
+            sb.Append(
+                "<input type='button' class='k-button k-grid-delete' name='" + id
+                + "' value='删除' onclick='meetAmount.MeetAmountDelete(this)'/>");
+
+            return sb.ToString();
+        }
+
+        #endregion
+    }
+}

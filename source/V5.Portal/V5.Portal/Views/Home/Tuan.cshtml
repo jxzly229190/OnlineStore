@@ -1,0 +1,126 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@using V5.Portal.Common;
+@{
+    var home = new HomeController();
+    ViewBag.Title = "购酒网团购-品牌酒水低价团购";
+    ViewBag.Description = "购酒网是综合的网上购酒商城,提供白酒,红酒,葡萄酒,洋酒,黄酒,啤酒,保健酒各类酒的最新价格,评价等信息,真品保障,货到付款,支持全国8000个城市和地区(可POS机刷卡)";            
+}
+@Styles.Render("~/Content/tuan.css?t=241")
+@Scripts.Render("~/Scripts/unslider.min.js")
+@Scripts.Render("~/Scripts/Xslider.js")
+<style type="text/css">
+    #headNav { display:none; }
+    .headNav .navCon{ width:1145px !important; }
+    .topBarCon { width:1145px !important; }
+    .header { width:1145px !important; }
+    .ad{ background-image:url(../images/goujiutuan.png) !important; }
+    .banner_img { position: relative; overflow: auto; }
+    .banner_img li { list-style: none; }
+    .banner_img ul li { float: left; }
+</style>
+<script type="text/javascript">
+    $(function () {
+        //循环切换;
+        $(".hd_scroll:eq(0)").Xslider({
+            unitdisplayed: 4,
+            numtoMove: 4,
+            viewedSize: 720,
+            loop: "cycle"
+        });
+        
+        $('.banner_img').unslider({
+            dots: true
+        });
+    });
+</script>
+
+<div class="headNav">
+<div class="navCon w1145">
+    <dl class="sidebar" id="sidebar2">
+        <dt class="sidebar_top"></dt>
+        <dd class="sidebar_list sidebar_shadow">
+            <dl>
+                <dt class="sidebar_goujiu"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=343"))</dt> <!-- 购酒团 -->
+                <dd><a href="###">白酒</a></dd>
+                <dd><a href="###">葡萄酒</a></dd>
+                <dd><a href="###">洋酒</a></dd>
+                <dd><a href="###">啤酒</a></dd>
+                <dd><a href="###">黄酒</a></dd>
+                <dd><a href="###">保健酒</a></dd>
+                <div class="clear"></div>
+            </dl>
+            <dl><dt class="sidebar_pinpai"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=344"))</dt></dl> <!-- 品牌团 -->
+            <dl><dt class="sidebar_xinpin"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=345"))</dt></dl> <!-- 新品推荐 -->
+            <dl><dt class="sidebar_huodong"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=346"))</dt></dl> <!-- 缤纷活动 -->
+            <!-- <dl><dt class="sidebar_begin"><i class="image_group"></i></dt></dl> -- 即将开始 -->
+        </dd>
+        <dd class="sidebar_adv">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" target=\"_blank\" ><img src=\"$ImagePath$\" alt=\"$Name$\" /></a>", "pid=399", 2, AdvertiseSource.Custom))
+        </dd>
+    </dl>
+    <div class="navCon-menu fl" >
+        <ul>
+            <li><a href="@V5.Portal.Common.ConstantParams.IndexUrl">首页</a></li>
+            <li><a class="curMenu" href="/Home/Tuan">购酒团</a></li>
+            <!--<li><a href="###">明日预告</a></li>-->
+        </ul>
+    </div>
+    <div class="cart fr">
+    <span class="cart_icon fl"></span><a href="/Cart/Index">我的购物车</a> <span class="cart_icon2 fl"></span>
+    </div>
+</div>
+</div>
+<div id="body">
+<div class="page">
+    <div class="content">
+        <div class="silder ">
+            <div class="silder_left shadow">    
+                <!--轮播 s-->
+			    <div class="banner_img">
+				    <ul>
+                        @Html.Raw(home.GetAdvertiseHtml("<li><a href=\"$URL$\" target=\"_blank\" ><img src=\"$ImagePath$\" alt=\"$Name$\" /></a></li>", "pid=346", 8, AdvertiseSource.Custom))
+				    </ul>
+			    </div>
+			    <!--轮播 e-->
+            </div>
+            <ul class="silder_right shadow">
+              <li><a href="/Home/Search?Brand=putaojiu" target=\"_blank\" ><img src="../../Images/tuan/tuan-hongjiu.jpg" /></a></li>
+              <li><a href="/Home/Search?Brand=yangjiu" target=\"_blank\" ><img src="../../Images/tuan/tuan-yangjiu.jpg" /></a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <dl class="chosen shadow">
+            <dt class="chosen_top"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=347"))</dt>
+            <dd class="chosen_list">
+                <div class="hd_scroll">
+                <div class="adv" >
+                    <ul>
+                    @Html.Raw(home.GetAdvertiseHtml(
+                    "<li class=\"chosen_item\"><a href=\"$URL$\"  title=\"$Name$\" target=\"_blank\" >" +
+                    "    <div class=\"chosen_item_top\"><em class=\"tp\">全场<em>$GoujiuPrice$</em>元起</em><em class=\"btm\">$Advertisement$</em></div>" +
+                    "    <div class=\"chosen_item_image\" style=\"background-image:url($ImagePath$)\"></div></a>" +
+                    "</li>","pid=347", 8, AdvertiseSource.Custom))
+                    </ul>
+                </div>
+                <a class="abtn aleft" href="#left">左移</a>
+	            <a class="abtn aright" href="#right">右移</a>
+                </div>
+            </dd>
+        </dl>
+        <div class="group_list">            
+            @Html.Raw(home.GetGroupListNavHtml(Request.Params))
+            @Html.Raw(home.GetGroupListHtml(30, "pid=348", Request.Params))
+            <div class="clear"></div>
+        </div>
+        <div class="group_foot">
+            <div class="group_foot_top">
+                <em>以下优惠活动正在进行</em><div></div>
+            </div>
+            <div class="group_foot_list">
+                @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\" target=\"_blank\" ><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "pid=400", 3, AdvertiseSource.Custom))
+            </div>
+        </div>
+    </div>
+</div>
+</div>

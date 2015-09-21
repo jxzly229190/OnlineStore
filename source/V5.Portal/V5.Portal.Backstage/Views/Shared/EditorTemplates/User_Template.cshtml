@@ -1,0 +1,126 @@
+﻿@using System.Globalization
+@model V5.Portal.Backstage.Models.User.UserModel
+@Html.ValidationSummary(true)
+
+@Html.HiddenFor(model => model.ID)
+
+<div class="editor-label">
+    电子邮箱：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+</div>
+
+<div class="editor-label">
+    登录名：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.LoginName)
+    @Html.ValidationMessageFor(model => model.LoginName)
+</div>
+
+<div class="editor-label">
+    密码：
+</div>
+<div class="editor-field">
+    @Html.PasswordFor(model => model.LoginPassword, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.LoginPassword)
+</div>
+
+<div class="editor-label">
+    确认密码：
+</div>
+<div class="editor-field">
+    @Html.PasswordFor(model => model.ConformPassword, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.ConformPassword)
+</div>
+
+<div class="editor-label">
+    真实姓名：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+
+<div class="editor-label">
+    昵称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.NickName)
+    @Html.ValidationMessageFor(model => model.NickName)
+</div>
+
+<div class="editor-label">
+    性别：
+</div>
+<div class="editor-field">
+    @Html.Kendo().DropDownListFor(model=>model.Gender).BindTo(new List<SelectListItem>(){new SelectListItem()
+                                                                                             {
+                                                                                                 Text = "男",
+                                                                                                 Value = true.ToString()
+                                                                                             },
+                                                                                         new SelectListItem()
+                                                                                            {
+                                                                                                Text = "女",
+                                                                                                Value = false.ToString()
+                                                                                            }}).Value(false.ToString(CultureInfo.InvariantCulture))
+</div>
+
+<div class="editor-label">
+    手机号码：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Mobile)
+    @Html.ValidationMessageFor(model => model.Mobile)
+</div>
+
+<div class="editor-label">
+    户口所在地：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.ProvinceID).Name("ProvinceID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read("QueryProvinces", "Home")).DataTextField("Name").DataValueField("ID"))
+    @(Html.Kendo().DropDownListFor(model => model.CityID).Name("CityID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCities", "Home").Data("filterCity")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("ProvinceID"))
+    @(Html.Kendo().DropDownListFor(model => model.CountyID).OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCounties", "Home").Data("filterCounty")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("CityID"))
+
+</div>
+
+<div class="editor-label">
+    住址：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Address)
+    @Html.ValidationMessageFor(model => model.Address)
+</div>
+
+<div class="editor-label">
+    年龄：
+</div>
+<div class="editor-field">
+    @Html.Kendo().IntegerTextBoxFor(model => model.Age).Value(Model.Age).Min(0).Max(120)
+</div>
+
+<div class="editor-label">
+    生日：
+</div>
+<div class="editor-field">
+    @Html.Kendo().DatePickerFor(model => model.Birthday)
+    @Html.ValidationMessageFor(model => model.Birthday)
+</div>
+
+<div class="editor-label">
+    QQ：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.QQ)
+    @Html.ValidationMessageFor(model => model.QQ)
+</div>
+
+<div class="editor-label">
+    MSN：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.MSN)
+    @Html.ValidationMessageFor(model => model.MSN)
+</div>

@@ -1,0 +1,238 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@using V5.Portal.Common;
+@{
+    var home = new HomeController();
+}
+@model V5.DataContract.Product.ProductSearchResult
+@Styles.Render("~/Content/tuan.css")
+@Styles.Render("~/Content/tuan_item.css")
+@Styles.Render("~/Content/goods/goods.css")
+@Scripts.Render("~/Scripts/product.comment.js")
+@Scripts.Render("~/Scripts/tuan.js")
+<script type="text/javascript">
+    $(function () {
+        // 评论
+        var option = {};
+        option.productID = @ViewBag.ID;
+        option.showCount = "commentCount";
+        option.container = "divComment";
+        option.pageUrl = "/Product/GetProductComment";
+        comment.Init(option);
+
+        // 团购信息
+        var productobj = {};
+        productobj.container = "tuan_main";
+        productobj.id = @Model.ID;
+        productobj.name = "@Model.Name";
+        productobj.advertisement = "@Model.Advertisement";
+        productobj.marketprice = "@Model.MarketPrice";
+        productobj.goujiuprice = "@Model.GoujiuPrice";
+        productobj.soldofvirtual = @Model.SoldOfVirtual;
+        productobj.pageview= @Model.PageView;
+        productobj.thumbnailpath = $("#thumbnailPath").val()||"";
+        team.Init(productobj);
+    });
+</script>
+@Html.HiddenFor(m => m.ThumbnailPath, new { @id="thumbnailPath" })
+@Html.HiddenFor(m => m.ID, new { @id="productId" })
+<div class="headNav">
+<div class="navCon" style="overflow:hidden;">
+    <dl class="sidebar">
+        <dt class="sidebar_top"></dt>
+        <dd class="sidebar_list sidebar_shadow" style="display:none;">
+            <dl>
+                <dt class="sidebar_goujiu"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=343"))</dt> <!-- 购酒团 -->
+                <dd><a href="###">白酒</a></dd>
+                <dd><a href="###">葡萄酒</a></dd>
+                <dd><a href="###">洋酒</a></dd>
+                <dd><a href="###">啤酒</a></dd>
+                <dd><a href="###">黄酒</a></dd>
+                <dd><a href="###">保健酒</a></dd>
+                <div class="clear"></div>
+            </dl>
+            <dl><dt class="sidebar_pinpai"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=344"))</dt></dl> <!-- 品牌团 -->
+            <dl><dt class="sidebar_xinpin"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=345"))</dt></dl> <!-- 新品推荐 -->
+            <dl><dt class="sidebar_huodong"><i class="image_group"></i>@Html.Raw(home.GetAdvertiseHtml("$Name$", "id=346"))</dt></dl> <!-- 缤纷活动 -->
+            <!-- <dl><dt class="sidebar_begin"><i class="image_group"></i></dt></dl> -- 即将开始 -->
+        </dd>
+        <dd class="sidebar_adv" style="display:none;">
+            @Html.Raw(home.GetAdvertiseHtml("<a href=\"$URL$\"><img class=\"lazy\" data-original=\"$ImagePath$\" alt=\"$Name$\" /></a>", "pid=399", 2, AdvertiseSource.Custom))
+        </dd>
+    </dl>
+    <div class="navCon-menu fl">
+        <ul>
+            <li><a href="@V5.Portal.Common.ConstantParams.IndexUrl">首页</a></li>
+            <li><a class="curMenu" href="/Home/Tuan">购酒团</a></li>
+            <!--<li><a href="http://quan.gjw.com">明日预告</a></li>-->
+        </ul>
+    </div>
+    <div class="cart fr">
+    <span class="cart_icon fl"></span><a href="/cart/index">我的购物车</a> <span class="cart_icon2 fl"></span>
+    </div>
+</div>
+</div>
+
+<div class="main">
+    <div id="tuan_main"class="main-top silder_left">
+        
+    </div>
+    <div class="main-left">
+        <div class="product-info">
+            <!-- 今日推荐、猜你喜欢 -->
+            <div class="more-product">                
+                <div class="tabbtn">
+                    <b class="">今日推荐</b>
+                    <b class="down">猜你喜欢</b>
+                </div>
+
+                <!-- 今日推荐 -->
+                <div class="mptabc" style="display: none;">                    
+                    <b class="b-l"></b><b class="b-r"></b>
+                    <div>
+                        @Html.Raw(home.GetHtml("<dl>"+
+                            "<dt>"+
+                            "    <a href=\"/product/item-id-$ProductID$.htm\">"+
+                            "    <img class=\"lazy\" data-original=\"$ThumbnailPath$\"></a></dt>" +
+                            "<dd>"+
+                            "    <a href=\"/product/item-id-$ProductID$.htm\">$ProductName$</a></dd>" +
+                            "<dd><span><b>¥</b>$GoujiuPrice$</span></dd>" +
+                            "</dl>",25,ProductType.Rand))
+                    </div>
+                </div>
+                
+                <!-- 猜你喜欢 -->
+                <div class="mptabc" style="display: block;">
+                    <b class="b-l"></b><b class="b-r"></b>
+                    <div style="left: 0px;">
+                        @Html.Raw(home.GetHtml("<dl>"+
+                            "<dt>"+
+                            "    <a href=\"/product/item-id-$ProductID$.htm\">" +
+                            "    <img class=\"lazy\" data-original=\"$ThumbnailPath$\"></a></dt>" +
+                            "<dd>"+
+                            "    <a href=\"/product/item-id-$ProductID$.htm\">$ProductName$</a></dd>" +
+                            "<dd><span><b>¥</b>$GoujiuPrice$</span></dd>" +
+                            "</dl>",8,ProductType.Rand))
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容详情 -->
+            <div id="detail" class="detail">
+                <div id="detail-nav" class="detail-nav">
+                    <ul class="menu">
+                        <li class="current"><a href="#xinxi">商品信息</a></li>
+                        <li class=""><a href="#pinglun">商品评论</a></li>
+                    </ul>
+                </div>
+                <div class="content" style="width:100% !important;">
+                    <!-- 商品详情 -->
+                    <a name="xinxi" id="xinxi"></a>
+                    <div class="detail-content ">
+                            @Html.DisplayTextFor(m => m.Introduce)
+                    </div>
+                    <div class="pro_detail_pic">
+                        @Html.Raw(home.GetHtml_ProductPicture_List(Utils.ToString(ViewBag.ID)))
+                    </div>
+
+                    <!-- 买家评价 -->
+                    <div class="comment ">
+                        <a name="pinglun" id="pinglun"></a>
+                        <!-- 买家评论 -->
+                        <div class="pingjia-content">
+                            <div class="p10 mt15 pl_box details2">
+                                <a name="Comment" id="Comment"></a>
+                                <ul class=" bb1s db h35 w725 ofh fix">
+                                    <li class=" pl_box_title db fl"></li>
+                                    <li class="db fr">
+                                        <a login="1" class="pl_btn fr"  onclick="javascript:comment.CommentShow();">写评论</a>
+                                    </li>
+                                </ul>
+                                <div id="s1">
+                                    <div style="display: none" id="add_pro_com">
+                                        <a name="add_com" id="add_com"></a>
+                                        <!--回复评论-->
+                                        <dl class="pl_pingfen">
+                                            <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 评分 </dt>
+                                            <dd>
+                                                <ul class="fix">
+                                                    <li>
+                                                        <input type="radio" name="Score" class="fl" value="1" />
+                                                        <span class="s_2 star db fl"></span></li>
+                                                    <li>
+                                                        <input type="radio" name="Score" class="fl" value="2" />
+                                                        <span class="s_4 star db fl"></span></li>
+                                                    <li>
+                                                        <input type="radio" name="Score" class="fl" value="3" />
+                                                        <span class="s_6 star db fl"></span></li>
+                                                    <li>
+                                                        <input type="radio" name="Score" class="fl" value="4" />
+                                                        <span class="s_8 star db fl"></span></li>
+                                                    <li>
+                                                        <input type="radio" name="Score" class="fl" checked="checked" value="5" />
+                                                        <span class="s_10 star db fl"></span></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                        <dl class="pl_con">
+                                            <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 内容 </dt>
+                                            <dd>
+                                                <textarea name="txtContent" proID="@ViewBag.ID" class="txtCon" id="txtContent" rows="3" cols="50" style="resize: none"></textarea>
+                                            </dd>
+                                        </dl>
+                                        <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:comment.SubmitComment();" />
+                                        <!--回复评论-->
+                                    </div>
+                                    <div id="divComment"></div>
+                                </div>
+                            </div>
+                            <!--买家评论-->
+                         </div>
+                    </div>                       
+                </div>
+            </div>
+       </div>
+    </div>
+    <div class="main-right">
+       <!-- 购买该商品的用户还购买 -->
+       <div class="evaluation brandstreet">
+           <h3 style="font-size: 14px;">购买该商品的用户还购买</h3>
+           @Html.Raw(home.GetHtml("<dl>"+
+                           "<dt>"+
+                           "    <a href=\"/product/item-id-$ProductID$.htm\">"+
+                           "    <img class=\"lazy\" data-original=\"$ThumbnailPath$\"></a></dt>" +
+                           "<dd><h5><a href=\"/product/item-id-$ProductID$.htm\">$ProductName$</a></h5>" +
+                           "<b>¥$GoujiuPrice$</b><br/></dd>" +
+                           "</dl>",7,ProductType.Rand))                    
+       </div>
+              
+       <!-- 热销排行 -->
+       <div id="hotproduct" class="hotproduct">
+           <h3>热销排行</h3>
+           @Html.Raw(home.GetHtml("<dl class=\"hovershow\">" +
+                       "<dt><a target=\"_blank\" href=\"/product/item-id-$ProductID$.htm\"><img src=\"$ThumbnailPath$\"></a></dt>" +
+                       "<dd class=\"index\"><span>TOP</span>#Index#</dd>"+
+                       "<dd><a target=\"_blank\" title=\"$Name$\" href=\"/product/item-id-$ProductID$.htm\">$ProductName$</a></dd>" +
+                       "<dd class=\"price\">"+
+                       "    <strong><span>￥</span>$GoujiuPrice$</strong><del><span>￥</span>$MarketPrice$</del>" +
+                       "    <b><span>$Sold$</span>人已购买</b>" +
+                       "</dd>"+
+                       "</dl>"+
+                       "<p><b>#Index#</b><a target=\"_blank\" href=\"#\">$ProductName$</a></p>", 7, ProductType.Rand))
+               
+       </div>
+
+       <!-- 明星爆款 -->
+       <div class="hotproduct">
+           <h3>明星爆款</h3>
+           @Html.Raw(home.GetHtml("<dl>"+
+                       "<dt><a target=\"_blank\" href=\"/product/item-id-$ProductID$.htm\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\"></a></dt>" +
+                       "<dd><a target=\"_blank\" title=\"$ProductName$\" href=\"/product/item-id-$ID$.htm\">$ProductName$</a></dd>" +
+                       "<dd class=\"price\">"+
+                       "    <strong><span>￥</span>$GoujiuPrice$</strong><del><span>￥</span>$MarketPrice$</del>" +
+                       "    <b><span>$Sold$</span>人已购买</b>" +
+                       "</dd>"+
+                       "</dl>", 3, ProductType.Rand))
+       </div>
+    </div>
+</div>

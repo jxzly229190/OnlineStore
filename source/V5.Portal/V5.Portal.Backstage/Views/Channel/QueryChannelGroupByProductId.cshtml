@@ -1,0 +1,98 @@
+﻿@model V5.Portal.Backstage.Models.Channel.ViewGroupBuyProductModel
+<h3>
+    <div class="member-btn">
+        <a onclick="backList()" style="cursor: pointer;">返回列表</a></div>
+</h3>
+<div>
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="3" align="left">
+                        <label>
+                            活动名称：</label>@Html.DisplayFor(model => model.GroupBuyName)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" align="left">
+                        <labe> 最低会员限制：</labe>@Html.DisplayFor(model => model.LevelName)
+                    </td>
+                    <td colspan="2" align="left">
+                        <label>
+                            开始时间：</label>
+                        @Html.DisplayFor(model => model.StartTime)
+                        <label>
+                            至</label>
+                        @Html.DisplayFor(model => model.EndTime)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <label>
+                            单次最多购买数量：</label>12
+                    </td>
+                    <td width="20%" align="left">
+                        仅限在线支付：
+                    </td>
+                    <td align="left">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left">
+                        是否显示时间：否
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left">
+                        <label>
+                            活动备注：</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="6%">
+                            商品编码
+                        </th>
+                        <th width="32%">
+                            商品名称
+                        </th>
+                        <th width="6%">
+                            购酒网价
+                        </th>
+                        <th width="4%">
+                            数量
+                        </th>
+                        <th width="6%">
+                            团购价
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="p5">
+                    <tr>
+                        <td width="6%">
+                            @Html.DisplayFor(model => model.Barcode)
+                        </td>
+                        <td width="32%">
+                            @Html.DisplayFor(model => model.ProductName)
+                        </td>
+                        <td width="6%">
+                            @Html.DisplayFor(model => model.GBPrice)
+                        </td>
+                        <td width="4%">
+                            @Html.DisplayFor(model => model.TotalNumber)
+                        </td>
+                        <td width="6%">
+                            @Html.DisplayFor(model => model.GBPrice)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

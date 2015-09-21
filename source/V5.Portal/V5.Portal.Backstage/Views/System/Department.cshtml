@@ -1,0 +1,71 @@
+﻿@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.System
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionObj2 = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<DepartmentModel>()
+    .Name("departmentGrid")
+    .Columns(columns =>
+        {
+        columns.Bound(d => d.Name).Title("部门名称");
+        columns.Bound(d => d.Principal).Title("负责人");
+        columns.Bound(d => d.PrincipalMobile).Title("手机号码");
+        columns.Bound(d => d.Headcount).Title("部门人数");
+        columns.Command(command => {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("System.ModifyDepartment.Post"));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("System.RemoveDepartment.Post"));
+        }).Width(300).Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("新建部门").HtmlAttributes(permissionObj.GetDisplayAttribute("System.AddDepartment.Post", false)))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("System_Department_Template").Window(edit => edit.Title("编辑")))
+    .Pageable()
+    .Scrollable()
+    .Selectable(seleted => seleted.Type(GridSelectionType.Row))
+    .ClientDetailTemplateId("employeeTemplate")
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(d => d.ID))
+    .Create(update => update.Action("AddDepartment", "System"))
+    .Destroy(update => update.Action("RemoveDepartment", "System"))
+    .Update(update => update.Action("ModifyDepartment", "System"))
+    .Read(read => read.Action("QueryAllDepartment", "System"))
+    )
+)
+<script id="employeeTemplate" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<EmployeeModel>()
+          .Name("employeeGrid_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(e => e.Name).Title("姓名");
+                  columns.Bound(e => e.Gender).Title("性别");
+                  columns.Bound(e => e.IdentityCard).Title("身份证");
+                  columns.Bound(e => e.Mobile).Title("手机号码");
+                  columns.Command(command => {
+                      command.Edit().Text("编辑").HtmlAttributes(permissionObj2.GetDisplayAttribute("System.ModifyEmployee.Post"));
+                      command.Destroy().Text("删除").HtmlAttributes(permissionObj2.GetDisplayAttribute("System.RemoveEmployee.Post")); 
+                  }).Width(300).Hidden(permissionObj2.Hidden);
+              })
+          .ToolBar(toolbar => toolbar.Create().Text("添加员工").HtmlAttributes(permissionObj2.GetDisplayAttribute("System.AddEmployee.Post", false)))
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("System_Employee_Template").Window(edit => edit.Title("编辑")))
+          .Pageable()
+          .Scrollable()
+          .Selectable(seleted => seleted.Type(GridSelectionType.Row))
+          .Events(e => e.Edit("onEdit"))
+          .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Model(model => model.Id(d => d.ID))
+                                        .Create(update => update.Action("AddEmployee", "System"))
+                                        .Destroy(update => update.Action("RemoveEmployee", "System"))
+                                        .Update(update => update.Action("ModifyEmployee", "System"))
+                                        .Read(read => read.Action("QueryEmployeeByDepartmentID", "System", new { departmentID = "#=ID#" }))
+          ).ToClientTemplate())
+</script>

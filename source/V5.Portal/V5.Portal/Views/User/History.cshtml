@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "浏览历史";
+}
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .uc_order .check{ width:40px; text-align:left !important; text-indent:12px; }
+    .uc_order .price{ text-align:center; width:12%; }
+    .uc_order .image{ width:80px; }
+    .uc_order .title{ vertical-align:middle; width:65%; }
+</style>
+<script src="../../Scripts/table.js" type="text/javascript"></script>
+<script>
+    function GetCell(fcolumn, fdata, fvalue) {
+        var html = "";
+        switch (fcolumn.name) {
+            case "$Product$":
+                html += "<img src=\"" + fdata.Path + "\" alt=\"\"  />";
+                html += "<a href=\"../Product/Item-id-" + fdata.ProductID + ".htm\" target =\"_blank\" >" + fdata.ProductName + "</a>";
+                break;
+            case "$Button$":
+                if (fdata.ProductStatus == 2) {
+                    html += "<a href=\"../Product/Item-id-" + fdata.ProductID + ".htm\" class=\"button\" target =\"_blank\" >查看</a>";
+                    html += "<a href=\"javascript:table.Delete(" + fdata.ID + ")\" class=\"button\">删除</a>";
+                    html += "<a href=\"javascript:table.Cart(" + fdata.ProductID + ")\" class=\"button\">加入购物车</a>";
+                } else {
+                    html += "<a href=\"javascript:table.Delete(" + fdata.ID + ")\" class=\"button\">删除</a>";
+                    html += "<span class=\"\">已下架</span>";
+                }
+                break;
+        }
+        return html;
+    }
+
+    $(function () {
+        var columnType = table.columnType;
+        var columnAlign = table.columnAlign;
+        var option = {};
+
+        option.columns = [
+            { name: "$Product$", desc: "商品", align: columnAlign.left, type: columnType.Custom },
+            { name: "GoujiuPrice", desc: "价格", align: columnAlign.center, type: columnType.Amt, width: 100 },
+            { name: "$Button$", desc: "操作", align: columnAlign.center, type: columnType.Custom, width: 160}];
+        option.container = "uc_history_table";
+        option.select = { enabled: true, url: "/User/DeleteHistory", key: "ID" };
+        option.search = "uc_history_search_text";
+        option.pageUrl = "/User/GetHistoryData";
+        option.getCustomCell = GetCell;
+        table.Init(option);
+    });
+</script>
+
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_order">
+            <dt class="uc_order_top">浏览历史
+                <div class="uc_order_search">
+                    <input type="text" class="search_text animation" id="uc_history_search_text"/>
+                </div>
+            </dt>
+             <dd id="uc_history_table">
+                
+            </dd>
+        </dl>
+    </div>
+    <div class="clear"></div>
+</div>
+</div>

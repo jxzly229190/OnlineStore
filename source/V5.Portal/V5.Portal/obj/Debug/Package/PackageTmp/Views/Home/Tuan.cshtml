@@ -1,0 +1,363 @@
+﻿@{
+    Layout = null;
+    var home = new HomeController();
+}
+@using V5.Portal.Controllers;
+@using V5.Library;
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">       
+    <head>    
+    <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="购酒网,网上买酒专卖店,最好的买酒网" />
+    <meta name="description" content="购酒网作为国内第一网上买酒网官方专卖店，提供白酒、葡萄酒、洋酒、进口红酒、黄酒等10万种以上正品酒类商品，经过茅台、五粮液、洋河、王朝等数百种品牌授权，立志成为最好的买酒网。" />
+    <meta property="qc:admins" content="105166734767276375" />
+    <meta property="wb:webmaster" content="8ad79d8293d7cb6d" />
+    <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @*引入 javascript 打包压缩功能*@
+    @Styles.Render("~/Content/base.css")
+    @Styles.Render("~/Content/head.css")
+    @Styles.Render("~/Content/public.css")
+    @Scripts.Render("~/Scripts/jquery-1.6.7.min.js")
+    @Scripts.Render("~/Scripts/jquery.lazyload.min.js")
+    @Scripts.Render("~/Scripts/global.js")
+    @Scripts.Render("~/Scripts/public.js")
+    @Scripts.Render("~/Scripts/head.js")
+    @Styles.Render("~/Content/base.css")
+    @Styles.Render("~/Content/tuan.css")
+    @Scripts.Render("~/Scripts/Xslider.js")
+    <script type="text/javascript">
+        function GetDiffTime(diffTime) {
+            if (!diffTime) return;
+
+            //计算出相差天数
+            var days = Math.floor(diffTime / (24 * 3600 * 1000));
+
+            //计算出小时数
+            var leave1 = diffTime % (24 * 3600 * 1000);     //计算天数后剩余的毫秒数
+            var hours = Math.floor(leave1 / (3600 * 1000));
+
+            //计算相差分钟数
+            var leave2 = leave1 % (3600 * 1000);   //计算小时数后剩余的毫秒数
+            var minutes = Math.floor(leave2 / (60 * 1000));
+
+            //计算相差秒数
+            var leave3 = leave2 % (60 * 1000);    //计算分钟数后剩余的毫秒数
+            var seconds = Math.round(leave3 / 1000);
+
+            return { day: days, hour: hours, minute: minutes, second: seconds };
+        }
+
+        function UpdateTime() {
+            $(".silder_column_time .time").each(function () {
+                var time = $(this).attr("time");
+                var end = new Date(parseInt(time));
+                if (new Date() < end) {
+                    var diff = GetDiffTime(end.getTime() - new Date().getTime()); //时间差的毫秒数
+                    $(this).html("距团购结束<span class=\"hour\">" + diff.hour + "</span>小时<span class=\"minute\">" + diff.minute + "</span>分<span class=\"second\">" + diff.second + "</span>秒");
+                }
+            });
+        }
+
+        $(function () {
+            $(".silder_item").first().show();
+            $(".silder_item").each(function () {
+                $(this).children(":first").children(":first").show();
+                $(this).children(":first").siblings().children(":first").addClass("silder_column_foot_current");
+            });
+
+            $(".silder_right li").mouseover(function () {
+                var data = $(this).attr("data");
+                $(this).addClass("silder_right_current").siblings().removeClass("silder_right_current");
+                $(this).parent().siblings(":first").find("[data=" + data + "]").show().siblings().hide();
+            });
+
+            $(".silder_column_foot li").mouseover(function () {
+                var data = $(this).attr("data");
+                $(this).addClass("silder_column_foot_current").siblings().removeClass("silder_column_foot_current");
+                $(this).parent().siblings(":first").find("[data=" + data + "]").show().siblings().hide();
+            });
+
+            $(".group_item_list").mouseover(function () {
+                $(this).addClass("group_item_list_current");
+            }).mouseout(function () {
+                $(this).removeClass("group_item_list_current");
+            });
+
+            //循环切换;
+            $(".hd_scroll:eq(0)").Xslider({
+                unitdisplayed: 4,
+                numtoMove: 4,
+                viewedSize: 720,
+                loop: "cycle"
+            });
+
+            var id = 1;
+            $(".chosen_item_image").each(function () {
+                $(this).css("background-image", "url(../images/chosen0" + id + ".jpg)");
+                id++;
+            });
+
+            UpdateTime();
+            setInterval(UpdateTime, 1000);
+        });
+    </script>
+    </head>
+    <body>
+        <header>
+            <!-------S 顶部导航条-------->
+            <div class="topBar" id="topBar">
+                <div class="topBarCon w1145">
+                    <div class="topBarFl fl">
+                        <ul>
+                            <li><span>欢迎来到购酒网！</span></li>
+                            <li>
+                                 <div class="login">
+                                        <a class="login-btn" href="http://www.gjw.com/login/login.htm" target="_self">登录</a> <a class="reg-btn" href="http://www.gjw.com/login/register.htm" target="_self">快速注册</a>
+                                  </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="miniMenu fr">
+                        <ul>
+                            <li class="m1"><a class="cart-a" href="@Html.Raw(V5.Portal.Common.ConstantParams.CartUrl)"><b></b>购物车<strong id="head_cart_no">0</strong>件<u></u></a>
+                                <div class="mini-cart hide">
+                                    <div class="no-list hide">
+                                        您的购物车中暂时没有商品。</div>
+                                    <div class="cart-list" id="head_cart">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="m2"><a href="@Html.Raw(V5.Portal.Common.ConstantParams.MyOrder)">我的订单</a></li>
+                            <li class="m3"><a class="user-a" href="http://www.gjw.com/user/">用户中心<u></u></a>
+                                <div class="miniMenu-child hide">
+                                    <dl>
+                                        <dd>
+                                            <a href="http://www.gjw.com/user/MyComment.htm">商品评论</a></dd>
+                                        <dd>
+                                            <a href="http://www.gjw.com/user/MyFav.htm">收藏夹</a></dd>
+                                        <dd>
+                                            <a href="http://www.gjw.com/user/MyVoucher.htm">我的电子券</a></dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="m4"><a href="http://www.gjw.com/help/show.htm">帮助</a></li>
+                            <li class="m55"><a href="http://www.gjw.com/FeedBack/default.htm">提建议</a></li>
+                            <li class="m66"><a href="http://tieba.baidu.com/f?tp=0&amp;kw=%B9%BA%BE%C6%CD%F8" rel="nofollow">贴吧</a></li>
+                            <li class="m66"><a href="http://e.weibo.com/2205040202/profile" rel="nofollow">微博</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-------E 顶部导航条 -------->
+            <!-------S 头部-------->
+            <div class="header" style="width:1145px;">
+	            <div class="hd_logo"><span class="logo"><a href="/Home"><img src=@Url.Content("~/images/hd_logo.jpg") alt="" /></a></span> <span class="hd_ad" style="height:30px;padding-top:18px;"><img src=@Url.Content("~/images/goujiutuan.png") alt="" /></span></div>
+                <div class="searchArea fl">
+                        <div class="searchInput">
+                            <ul>
+                                <li class="search_input">
+                                    <input id="sch" name="key" type="text" class="text_input" value="" >
+                                    <div class="search_suggest"></div>
+                                </li>
+                                <li class="search_btn">
+                                    <input type="button" class="sch_btn" value="搜索" id="btnsch">
+                              </li>
+                            </ul>
+                        </div>
+                        <div class="search_list_box" id="search_list_box"></div>
+                        <div class="keyword">
+                            <strong>热门搜索：</strong>
+                	            <a href="#" title="茅台">茅台</a>&nbsp;
+                                <a href="#" title="汾酒">汾酒</a>&nbsp;
+                                <a href="#" title="洋河">洋河</a>&nbsp;
+                                <a href="#" title="郎酒  ">郎酒  </a>&nbsp;
+                                <a href="#" title="五粮液">五粮液</a>&nbsp;
+                                <a href="#" title="剑南春">剑南春</a>&nbsp;
+                                <a href="#" title="泸州老窖">泸州老窖</a>&nbsp;
+                                <a href="#" title="更多">更多</a>&nbsp;
+                    
+                        </div>
+	            </div>
+                <div class="tubiao">
+    	            <span><img src=@Url.Content("~/images/hdxb1.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                    <span><img src=@Url.Content("~/images/hdxb2.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                    <span><img src=@Url.Content("~/images/hdxb3.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                </div>
+            </div>
+            <!-------E 头部 -------->
+                <div class="headNav">
+	    <div class="navCon w1145">
+        <div class="sidebar">
+            <dl>
+                <dt class="sidebar_top"></dt>
+                <dd class="sidebar_list sidebar_shadow">
+                    <dl>
+                        <dt class="sidebar_goujiu"><i class="image_group"></i>购酒团</dt>
+                        <dd><a href="###">白酒</a></dd>
+                        <dd><a href="###">葡萄酒</a></dd>
+                        <dd><a href="###">洋酒</a></dd>
+                        <dd><a href="###">啤酒</a></dd>
+                        <dd><a href="###">黄酒</a></dd>
+                        <dd><a href="###">保健酒</a></dd>
+                        <div class="clear"></div>
+                    </dl>
+                    <dl><dt class="sidebar_pinpai"><i class="image_group"></i>品牌团</dt></dl>
+                    <dl><dt class="sidebar_xinpin"><i class="image_group"></i>新品推荐</dt></dl>
+                    <dl><dt class="sidebar_huodong"><i class="image_group"></i>缤纷活动</dt></dl>
+                    <dl><dt class="sidebar_begin"><i class="image_group"></i>即将开始</dt></dl>
+                </dd>
+            </dl>
+            <div class="sidebar_adv"></div>
+        </div>
+        <div class="navCon-menu fl">
+            <ul>
+                <li><a href="/Home">首页</a></li>
+                <li><a class="curMenu" href="/Home/Tuan">购酒团</a></li>
+                <li><a href="http://quan.gjw.com">明日预告</a></li>
+            </ul>
+        </div>
+        <div class="cart fr">
+        <span class="cart_icon fl"></span><a href="">我的购物车</a> <span class="cart_icon2 fl"></span>
+        </div>
+        </div>
+        </header>
+        <div id="body">
+<div class="page">
+
+<div class="content">
+<div class="silder shadow">
+    <ul class="silder_left">    
+        <li data="silder_item01" class="silder_item"">
+            @Html.Raw(home.GetTuanSilderItemHtml())
+        </li>
+        <li data="silder_item02" class="silder_item">
+            @Html.Raw(home.GetTuanSilderItemHtml())
+        </li>
+        <li data="silder_item03" class="silder_item">
+            @Html.Raw(home.GetTuanSilderItemHtml())            
+        </li>
+        <li data="silder_item04" class="silder_item">
+            @Html.Raw(home.GetTuanSilderItemHtml())            
+        </li>
+    </ul>
+    <ul class="silder_right">
+        <li data="silder_item01" class="silder_goujiu"><i class="image_group"></i>购酒团</li>
+        <li data="silder_item02" class="silder_pinpai"><i class="image_group"></i>品牌团</li>
+        <li data="silder_item03" class="silder_xinpin"><i class="image_group"></i>新品推荐</li>
+        <li data="silder_item04" class="silder_huodong"><i class="image_group"></i>缤纷活动</li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<dl class="chosen shadow">
+    <dt class="chosen_top"><i class="image_group"></i>精选品牌团</dt>
+    <dd class="chosen_list">
+        <div class="hd_scroll">
+        <div class="adv" >
+            <ul>
+            @Html.Raw(home.GetHtml(
+            "<li class=\"chosen_item\">"+
+            "    <div class=\"chosen_item_top\"><em class=\"tp\">全场<em>$GoujiuPrice$</em>元起</em><em class=\"btm\">$Advertisement$</em></div>" +
+            "    <div class=\"chosen_item_image\" style=\"background-image:url($ThumbnailPath$)\"></div>" +
+            "</li>", 8, ProductType.Rand))
+           </ul>    
+        </div>
+        <a class="abtn aleft" href="#left">左移</a>
+	    <a class="abtn aright" href="#right">右移</a>
+        </div>
+    </dd>
+</dl>
+<div class="group_list">
+    @Html.Raw(home.GetGroupListHtml(30))
+    <div class="clear"></div>
+</div>
+<div class="group_foot">
+    <div class="group_foot_top">
+        <em>以下优惠活动正在进行</em><div></div>
+    </div>
+    <div class="group_foot_list"></div>
+</div>
+</div>
+</div>
+
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="footer">
+	                <div class="foot_up w1200">
+    	                <div class="phone">
+                        10000平方米仓储体验店<br />
+		                上海松江区茂盛路202弄18号<br />
+		                客服邮箱：service@lafaso.com
+                        </div>
+                        <div class="help">
+        	                <dl>
+            	                <dt><b class="zhinan"></b>新手指南</dt>
+                                <dd><a href="">用户协议</a></dd>
+                                <dd><a href="">常见问题</a></dd>
+                                <dd><a href="">网站购物流程</a></dd>
+                                <dd><a href="">会员制度</a></dd>
+                                <dd><a href="">VIP客户与合作</a></dd>
+                            </dl>
+                            <dl>
+            	                <dt><b class="zhinan"></b>如何付款</dt>
+                                <dd><a href="">如何付款</a></dd>
+                                <dd><a href="">发票制度说明</a></dd>
+                                <dd><a href="">电子券说明</a></dd>
+                                <dd><a href="">虚拟账户支付</a></dd>
+                                <dd><a href="">商品优惠代码说明</a></dd>
+                            </dl>
+                            <dl>
+            	                <dt><b class="zhinan"></b>配送方式</dt>
+                                <dd><a href="">配送收费标准</a></dd>
+                                <dd><a href="">配送时间</a></dd>
+                                <dd><a href="">货到付款支持城市</a></dd>
+                
+                            </dl>
+                            <dl>
+            	                <dt><b class="zhinan"></b>售后服务</dt>
+                                <dd><a href="">如何办理退换货</a></dd>
+                                <dd><a href="">如何退款</a></dd>
+                                <dd><a href="">联系客服</a></dd>
+              
+                            </dl>
+                            <dl>
+            	                <dt><b class="zhinan"></b>关于我们</dt>
+                                <dd><a href="">了解购酒网</a></dd>
+                                <dd><a href="">招兵买马</a></dd>
+                                <dd><a href="">联系我们</a></dd>
+                                <dd><a href="">隐私声明</a></dd>
+                                <dd><a href="">友情链接</a></dd>
+                            </dl>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="guarantee">
+        	                <span><img class="lazy" data-original=@Url.Content("~/images/foot-zhibao1.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                            <span><img class="lazy" data-original=@Url.Content("~/images/foot-zhibao2.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                            <span><img class="lazy" data-original=@Url.Content("~/images/foot-zhibao3.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                            <span><img class="lazy" data-original=@Url.Content("~/images/foot-zhibao4.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                            <span><img class="lazy" data-original=@Url.Content("~/images/foot-zhibao5.jpg") alt="{白酒}{茅台}-{飞天茅台}" /></span>
+                        </div>
+                    </div>
+                    <div class="foot_down w1200">
+    	                <div  class="scrollDiv">
+        	                <p class="youlian">友情链接：</p>
+                            <ul>
+            	                <li><a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店 </a><a href="#">酒水招商 </a><a href="#">58特产网</a><a href="#">名酒品牌 </a><a href="#">品茶汇</a>
+                                <a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店 </a><a href="#">酒水招商 </a><a href="#">58特产网</a><a href="#">名酒品牌 </a><a href="#">品茶汇</a>
+                                </li>
+                            </ul>             
+                        </div>
+                        <p class="copy">Copyright® 2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</p> 
+                        <div class="authentication">
+            	                <a class="beian" href="http://www.miibeian.gov.cn"></a>
+                                <a class="depart" href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=20120216155829987" rel="nofollow"></a>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

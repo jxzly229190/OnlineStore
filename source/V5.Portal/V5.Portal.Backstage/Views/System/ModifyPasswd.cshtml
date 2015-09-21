@@ -1,0 +1,84 @@
+﻿@using V5.Portal.Backstage.Controllers
+@{
+    ViewBag.Title = "ModifyPasswd";
+}
+@{ var baseController = ViewContext.Controller as BaseController; }
+<style type="text/css">
+    span
+    {
+        margin-left: 20px;
+        width: 100px;
+    }
+</style>
+<div style="width: 350px; margin: 100px auto">
+    <div>
+        <input type="hidden" value="@baseController.SystemUserSession.SystemUserID" id="loginId"/></div>
+    <div>
+        <span>登陆账号：</span> <span>
+            <input type="text" disabled="false" value="@baseController.SystemUserSession.LoginName" id="loginName" class="k-textbox" style="margin-left:30px;" /></span>
+    </div>
+    <div>
+        <span>姓名:</span> <span>
+            <input type="text" disabled="false" value="@baseController.SystemUserSession.Name" class="k-textbox" style="margin-left:65px;margin-top: 5px;" /></span>
+    </div>
+    <div>
+        <span>旧密码:</span> <span>
+            <input type="password" value="" id="oldpwd" class="k-textbox" style="margin-left: 52px;
+                margin-top: 5px;" /><span style="color: red">*</span></span>
+    </div>
+    <div>
+        <span>新密码:</span> <span>
+            <input type="password" value="" id="newPwd" class="k-textbox" style="margin-left: 52px;
+                margin-top: 5px;" /><span style="color: red">*</span></span>
+    </div>
+    <div>
+        <span>确认新密码：</span> <span>
+            <input type="password" value="" id="reNewPwd" class="k-textbox" style="margin-left: 20px;
+                margin-top: 5px;" /><span style="color: red">*</span></span>
+    </div>
+    <div style="margin-top: 5px;">
+        <span><a class="k-button k-button-icontext k-grid-update" style="margin-left: 115px;"
+            onclick="modifyPwd()">确认修改</a></span>
+    </div>
+</div>
+<script type="text/javascript">
+    function modifyPwd() {
+        var loginName = $("#loginName").val();
+        var userId = $("#loginId").val();
+        var newPwd = $("#newPwd").val();
+        var reNewPwd = $("#reNewPwd").val();
+        var oldpwd = $("#oldpwd").val();
+        if (newPwd == "" || reNewPwd == "") {
+            alert("请输入密码");
+            return;
+        }
+        if (oldpwd == "") {
+            alert("请输入旧密码");
+        }
+        if (newPwd != reNewPwd) {
+            alert("两次密码输入不一致，请重新输入");
+            $("#newPwd").val("");
+            $("#reNewPwd").val("");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/System/UpdatePwd",
+            datatype: "json",
+            data: { loginName: loginName, userId: userId, password: newPwd, oldpwd: oldpwd },
+            success: function (callback) {
+                if (callback == 1) {
+                    alert("旧密码不正确，请重新输入旧密码");
+                    $("#newPwd").val("");
+                    $("#reNewPwd").val("");
+                    $("#oldpwd").val("");
+                } else {
+                    alert("修改成功，请重新登陆");
+                    location.href = "/Login";
+                }
+
+
+            }
+        });
+    }
+</script>

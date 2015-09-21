@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;团购管理&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div id="detailDiv" class="right-box">
+</div>
+<div id="defaultDiv" class="right-box" style="display: none;">
+</div>
+<script type="text/javascript">
+
+    // 默认选中左边菜单的第一个
+    $(function () {
+        $("#top_Channel").addClass("select");
+        $('.left-f ul li:first a').trigger("click");
+    });
+
+    function ShowPartialView(a) {
+        var current = $(a).attr("name");
+        var href = "/" + $(a).attr("parent") + "/" + current + "/";
+
+        var currentLabel = $("#current");
+        currentLabel.text($(a).text());
+
+        $.ajax({
+            type: "GET",
+            url: href,
+            data: null,
+            datatype: "html",
+            success: function (data) {
+                if (data.State == -401) {
+                    onSessionLost();
+                } else if (data.State == -403) {
+                    alert("对不起，您无此操作权限！");
+                } else {
+                    $('#defaultDiv').html(data);
+                    $('#detailDiv').css("display", "none");
+                    $('#defaultDiv').css("display", "block");
+                }
+            },
+            error: function () {
+                alert("处理失败!");
+            }
+        });
+
+        $(a).parent().addClass("left-s").siblings().removeClass("left-s");
+    }
+</script>

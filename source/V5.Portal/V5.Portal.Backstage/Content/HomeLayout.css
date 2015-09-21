@@ -1,0 +1,18 @@
+﻿html,body{font-family:Verdana,Arial,Lucida,Helvetica,"\5B8B\4F53","\5FAE\8F6F\96C5\9ED1",sans-serif;margin:0;padding:0;font-size:12px;color:#333}
+div,form,img,ul,ol,li,th,td,dl,dt,dd, i,p,button,input{margin:0;padding:0;border:0}
+li{list-style-type:none}
+img{vertical-align:top}
+strong{font-weight:normal}
+h1,h2,h3,h4,h5,h6{margin:0;padding:0;font-size:12px}
+input{font-size:12px;vertical-align:middle}
+a{color:#025db6;text-decoration:none;}
+
+
+
+.main-box{ width:1260px; margin:auto}
+.left-nav{ width:206px; float:left; background:#e7f4fc; border:#bddfee solid 1px; height:800px; }
+.right-main{ width: 1038px; float:right; }
+.right-main .right-top{ border:#dedede solid 1px; padding:10px; background:#f5f5f5; }
+.right-main .right-down{border:#dedede solid 1px; height:750px; margin-top:10px;}
+.right-main .right-down .rightlist-topic{ background:#cfe6f5; height:40px;padding-top: 10px;padding-left: 10px;}
+.right-main .right-down .rightlist-topic li{ float:left; }

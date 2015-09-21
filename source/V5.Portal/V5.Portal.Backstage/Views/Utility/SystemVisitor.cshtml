@@ -1,0 +1,723 @@
+﻿@{
+    ViewBag.Title = "SystemVisitor";  
+}
+@using System.Web.UI.WebControls
+@using Kendo.Mvc.UI
+<script src="../../Scripts/Utility/ichart.1.2.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        Init();
+    });
+
+    //初始化
+    function Init() {
+        SelectedTabStrip("day");
+        $("#year").kendoDropDownList();
+        $("#month").kendoDropDownList();
+        $("#month_year").kendoDropDownList();
+        $("#season").kendoDropDownList();
+        $("#season_year").kendoDropDownList();
+        //SelectedTabStrip('day');
+        DropMonth();
+    }
+
+    //访问数据
+    function SystemVisitorCount(data, fn) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/Utility/SystemVisitorCount",
+            data: data,
+            success: function (callback) {
+                if ($.isFunction(fn)) {
+                    fn(callback);
+                }
+            }
+        });
+    }
+
+    function loadline(startTime, endTime, condition) {
+        var data = { startTime: startTime, endTime: endTime, condition: condition };
+        SystemVisitorCount(data, function (callback) {
+            switch (condition) {
+                case "day":
+                    lineDay(callback);
+                    break;
+                case "month":
+                    lineMonth(callback);
+                    break;
+                case "season":
+                    lineSeason(callback);
+                    break;
+                case "year":
+                    lineYear(callback);
+                    break;
+            }
+        });
+    }
+
+    //选择Ta
+
+    function SelectedTabStrip(condition) {
+        condition = condition || "";
+        if (condition == "") return;
+        var data = { startTime: $("#startTime").val(), endTime: $("#endTime").val(), condition: condition };
+        SystemVisitorCount(data, function (callback) {
+            switch (condition) {
+                case "day":
+                    lineDay(callback);
+                    break;
+                case "month":
+                    lineMonth(callback);
+                    break;
+                case "season":
+                    lineSeason(callback);
+                    break;
+                case "year":
+                    lineYear(callback);
+                    break;
+            }
+        });
+    }
+
+    //选择
+
+    function onSelect(e) {
+        var Kind = $(e.item).attr("Kind");
+        SelectedTabStrip(Kind);
+    }
+
+    //年
+
+    function lineYear(callback) {
+        var labels = callback[0].systemVisitorLineYear[0].labels;
+        var renderDiv = callback[0].render;
+        var vptitle = callback[0].systemVisitorLineYear[0].vptitle;
+        var dateString = callback[0].dateString;
+        var scaleSpace = callback[0].scale_space;
+
+        var chart = new iChart.LineBasic2D({
+            render: 'lineYear',
+            data: callback[0].systemVisitorLineYear,
+            align: 'center',
+            title: {
+                text: vptitle,
+                font: '微软雅黑',
+                fontsize: 24,
+                color: '#b4b4b4'
+            },
+            subtitle: {
+                //text: '14:00-16:00访问量达到最大值',
+                font: '微软雅黑',
+                color: '#b4b4b4'
+            },
+            footnote: {
+                text: 'ichartjs.com',
+                font: '微软雅黑',
+                fontsize: 11,
+                fontweight: 600,
+                padding: '0 28',
+                color: '#b4b4b4'
+            },
+            width: 800,
+            height: 400,
+            shadow: true,
+            shadow_color: 'red',
+            shadow_blur: 8,
+            shadow_offsetx: 0,
+            shadow_offsety: 0,
+            background_color: '#2e2e2e',
+            tip: {
+                enable: true,
+                shadow: true,
+                listeners: {
+                    //tip:提示框对象、name:数据名称、value:数据值、text:当前文本、i:数据点的索引
+                    parseText: function (tip, name, value, text, i) {
+                        return "<span style='color:#005268;font-size:12px;'>" + labels[i] + "月 ~ " + (Number(labels[i]) + 1) + "月访问量约:" + value + "</span>";
+                    }
+                }
+            },
+            crosshair: {
+                enable: true,
+                line_color: 'red'
+            },
+            sub_option: {
+                smooth: true,
+                label: false,
+                hollow: false,
+                hollow_inside: false,
+                point_size: 8
+            },
+            coordinate: {
+                width: 640,
+                height: 260,
+                striped_factor: 0.18,
+                grid_color: '#4e4e4e',
+                axis: {
+                    color: '#252525',
+                    width: [0, 0, 4, 4]
+                },
+                scale: [{
+                    position: 'left',
+                    start_scale: 0,
+                    end_scale: 100,
+                    scale_space: 100,
+                    scale_size: 2,
+                    scale_enable: false,
+                    label: { color: '#9d987a', font: '微软雅黑', fontsize: 11, fontweight: 600 },
+                    scale_color: '#9f9f9f'
+                }, {
+                    position: 'bottom',
+                    label: { color: '#9d987a', font: '微软雅黑', fontsize: 11, fontweight: 600 },
+                    scale_enable: false,
+                    labels: labels
+                }]
+            }
+        });
+        //利用自定义组件构造左侧说明文本
+        chart.plugin(new iChart.Custom({
+            drawFn: function () {
+                //计算位置
+                var coo = chart.getCoordinate(),
+                    x = coo.get('originx'),
+                    y = coo.get('originy'),
+                    w = coo.width,
+                    h = coo.height;
+                //在左上侧的位置，渲染一个单位的文字
+                chart.target.textAlign('start')
+                    .textBaseline('bottom')
+                    .textFont('600 11px 微软雅黑')
+                    .fillText('访问量(万)', x - 40, y - 12, false, '#9d987a')
+                    .textBaseline('top')
+                    .fillText('(月)', x + w + 12, y + h + 10, false, '#9d987a');
+
+            }
+        }));
+        //开始画图
+        chart.draw();
+    }
+
+    //日
+
+    function lineDay(callback) {
+        var data = callback[0].systemVisitorLineDay;
+        var labels = callback[0].systemVisitorLineDay[0].labels;
+        var vptitle = callback[0].systemVisitorLineDay[0].vpTitle;
+
+        var chart = new iChart.LineBasic2D({
+            render: 'lineDay',
+            data: data,
+            align: 'center',
+            title: {
+                text: vptitle,
+                fontsize: 24,
+                color: '#f7f7f7'
+            },
+            subtitle: {
+                // text: '平均18:00-22:00访问量达到最大值(单位：万)',
+                color: '#f1f1f1'
+            },
+            footnote: {
+                // text: '数据来源：模拟数据',
+                color: '#f1f1f1'
+            },
+            width: 800,
+            height: 400,
+            shadow: true,
+            shadow_color: '#20262f',
+            shadow_blur: 4,
+            shadow_offsetx: 0,
+            shadow_offsety: 2,
+            background_color: '#383e46',
+            tip: {
+                enable: true,
+                shadow: true,
+                listeners: {
+                    //tip:提示框对象、name:数据名称、value:数据值、text:当前文本、i:数据点的索引
+                    parseText: function (tip, name, value, text, i) {
+                        return "<span style='color:#005268;font-size:12px;'>" + labels[i] + ":00 ~ " + (Number(labels[i]) + 1) + ":00访问量约:" + value + "次</span>";
+                    }
+                }
+            },
+            crosshair: {
+                enable: true,
+                line_color: '#62bce9'
+            },
+            sub_option: {
+                label: false,
+                hollow_inside: false,
+                point_size: 8
+            },
+            coordinate: {
+                width: 640,
+                height: 260,
+                grid_color: '#cccccc',
+                axis: {
+                    color: '#cccccc',
+                    width: [0, 0, 4, 4]
+                },
+                grids: {
+                    vertical: {
+                        way: 'share_alike',
+                        value: 24
+                    }
+                },
+                scale: [{
+                    position: 'left',
+                    start_scale: 0,
+                    end_scale: 100,
+                    scale_space: 10,
+                    scale_size: 2,
+                    label: { color: '#ffffff', fontsize: 11 },
+                    scale_color: '#9f9f9f'
+                }, {
+                    position: 'bottom',
+                    label: { color: '#ffffff', fontsize: 11 },
+                    labels: labels
+                }]
+            }
+        });
+        chart.plugin(new iChart.Custom({
+            drawFn: function () {
+                //计算位置
+                var coo = chart.getCoordinate(),
+                    x = coo.get('originx'),
+                    y = coo.get('originy'),
+                    w = coo.width,
+                    h = coo.height;
+                //在左上侧的位置，渲染一个单位的文字
+                chart.target.textAlign('start')
+                    .textBaseline('bottom')
+                    .textFont('600 11px 微软雅黑')
+                    .fillText('访问量(次)', x - 40, y - 12, false, '#9d987a')
+                    .textBaseline('top')
+                    .fillText('(时)', x + w + 12, y + h + 10, false, '#9d987a');
+
+            }
+        }));
+        //开始画图
+        chart.draw();
+    }
+
+    //月
+
+    function lineMonth(callback) {
+        var data = callback[0].systemVisitorLineMonth;
+        var labels = callback[0].systemVisitorLineMonth[0].labels;
+        var vptitle = callback[0].systemVisitorLineMonth[0].vptitle;
+        var chart = new iChart.LineBasic2D({
+            render: 'lineMonth',
+            data: data,
+            align: 'center',
+            title: {
+                text: vptitle,
+                font: '微软雅黑',
+                fontsize: 24,
+                color: '#b4b4b4'
+            },
+            subtitle: {
+                //text:'14:00-16:00访问量达到最大值',
+                font: '微软雅黑',
+                color: '#b4b4b4'
+            },
+            footnote: {
+                //text:'ichartjs.com',
+                font: '微软雅黑',
+                fontsize: 11,
+                fontweight: 600,
+                padding: '0 28',
+                color: '#b4b4b4'
+            },
+            width: 800,
+            height: 400,
+            shadow: true,
+            shadow_color: '#202020',
+            shadow_blur: 8,
+            shadow_offsetx: 0,
+            shadow_offsety: 0,
+            //background_color: '#9f9f9f',
+            tip: {
+                enable: true,
+                shadow: true,
+                listeners: {
+                    //tip:提示框对象、name:数据名称、value:数据值、text:当前文本、i:数据点的索引
+                    parseText: function (tip, name, value, text, i) {
+                        return "<span style='color:#005268;font-size:12px;'>" + labels[i] + "天访问量约:<br/>" +
+                            "</span><span style='color:#005268;font-size:20px;'>" + value + "次</span>";
+                    }
+                }
+            },
+            crosshair: {
+                enable: true,
+                line_color: '#62bce9'
+            },
+            sub_option: {
+                smooth: true,
+                label: false,
+                hollow: false,
+                hollow_inside: false,
+                point_size: 8
+            },
+            coordinate: {
+                width: 640,
+                height: 260,
+                striped_factor: 0.18,
+                //grid_color: '#4e4e4e',
+                axis: {
+                    color: '#252525',
+                    width: [0, 0, 4, 4]
+                },
+                scale: [{
+                    position: 'left',
+                    start_scale: 0,
+                    end_scale: 100,
+                    scale_space: 10,
+                    scale_size: 2,
+                    scale_enable: false,
+                    label: { color: '#9f9f9f', font: '微软雅黑', fontsize: 11, fontweight: 600 },
+                    scale_color: '#9f9f9f'
+                }, {
+                    position: 'bottom',
+                    label: { color: '#9f9f9f', font: '微软雅黑', fontsize: 11, fontweight: 600 },
+                    scale_enable: false,
+                    labels: labels
+                }]
+            }
+        });
+        //利用自定义组件构造左侧说明文本
+        chart.plugin(new iChart.Custom({
+            drawFn: function () {
+                //计算位置
+                var coo = chart.getCoordinate(),
+                    x = coo.get('originx'),
+                    y = coo.get('originy'),
+                    w = coo.width,
+                    h = coo.height;
+                //在左上侧的位置，渲染一个单位的文字
+                chart.target.textAlign('start')
+                    .textBaseline('bottom')
+                    .textFont('600 11px 微软雅黑')
+                    .fillText('访问量(人次)', x - 40, y - 12, false, '#9d987a')
+                    .textBaseline('top')
+                    .fillText('(天)', x + w + 12, y + h + 10, false, '#9d987a');
+
+            }
+        }));
+        //开始画图
+        chart.draw();
+    }
+
+    //季
+
+    function lineSeason(callback) {
+        var data = callback[0].systemVisitorLineSeason;
+        var labels = callback[0].systemVisitorLineSeason[0].labels;
+        var vptitle = callback[0].systemVisitorLineSeason[0].vptitle;
+        var chart = new iChart.LineBasic2D({
+            render: 'lineSeason',
+            data: data,
+            align: 'center',
+            title: {
+                text: vptitle,
+                font: '微软雅黑',
+                fontsize: 24,
+                color: '#b4b4b4'
+            },
+            subtitle: {
+                //text:'14:00-16:00访问量达到最大值',
+                font: '微软雅黑',
+                color: '#b4b4b4'
+            },
+            footnote: {
+                //text:'ichartjs.com',
+                font: '微软雅黑',
+                fontsize: 11,
+                fontweight: 600,
+                padding: '0 28',
+                color: '#b4b4b4'
+            },
+            width: 800,
+            height: 400,
+            shadow: true,
+            shadow_color: 'red',
+            shadow_blur: 8,
+            shadow_offsetx: 0,
+            shadow_offsety: 0,
+            //background_color: '#9f9f9f',
+            tip: {
+                enable: true,
+                shadow: true,
+                listeners: {
+                    //tip:提示框对象、name:数据名称、value:数据值、text:当前文本、i:数据点的索引
+                    parseText: function (tip, name, value, text, i) {
+                        return "<span style='color:#005268;font-size:12px;'>" + labels[i] + "天访问量约:<br/>" +
+                            "</span><span style='color:#005268;font-size:20px;'>" + value + "次</span>";
+                    }
+                }
+            },
+            crosshair: {
+                enable: true,
+                line_color: 'red'
+            },
+            sub_option: {
+                smooth: true,
+                label: false,
+                hollow: false,
+                hollow_inside: false,
+                point_size: 8
+            },
+            coordinate: {
+                width: 640,
+                height: 260,
+                striped_factor: 0.18,
+                //grid_color: '#4e4e4e',
+                axis: {
+                    color: '#252525',
+                    width: [0, 0, 2, 2]
+                },
+                scale: [{
+                    position: 'left',
+                    start_scale: 0,
+                    end_scale: 100,
+                    scale_space: 100,
+                    scale_size: 2,
+                    scale_enable: false,
+                    label: { color: '#9f9f9f', font: '微软雅黑', fontsize: 11, fontweight: 600 },
+                    scale_color: '#9f9f9f'
+                }, {
+                    position: 'bottom',
+                    label: { color: '#9f9f9f', font: '微软雅黑', fontsize: 11, fontweight: 600 },
+                    scale_enable: false,
+                    labels: labels
+                }]
+            }
+        });
+        //利用自定义组件构造左侧说明文本
+        chart.plugin(new iChart.Custom({
+            drawFn: function () {
+                //计算位置
+                var coo = chart.getCoordinate(),
+                    x = coo.get('originx'),
+                    y = coo.get('originy'),
+                    w = coo.width,
+                    h = coo.height;
+                //在左上侧的位置，渲染一个单位的文字
+                chart.target.textAlign('start')
+                    .textBaseline('bottom')
+                    .textFont('600 11px 微软雅黑')
+                    .fillText('访问量(人次)', x - 40, y - 12, false, '#9d987a')
+                    .textBaseline('top')
+                    .fillText('(季)', x + w + 12, y + h + 10, false, '#9d987a');
+
+            }
+        }));
+        //开始画图
+        chart.draw();
+    }
+
+    function GetDate(startDate, type, AddOne) {
+        var result = null;
+        switch (type) {
+            case "year":
+                result = new Date(startDate).setYear(new Date(startDate).getYear(), AddOne ? 1 : -1).getYear();
+                break;
+            case "season":
+                //result = new Date(startDate)(startDate.getYear(), AddOne ? 1 : -1);
+                break;
+            case "month":
+                result = new Date(startDate).setMonth(new Date(startDate).getMonth(), AddOne ? 1 : -1).getMonth();
+                break;
+            case "day":
+                result = new Date(startDate).setDate(new Date(startDate).getDay(), AddOne ? 1 : -1).getDay();
+                break;
+        }
+        return result;
+    }
+
+    // 对Date的扩展，将 Date 转化为指定格式的String 
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+    // 例子： 
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+    //    Date.prototype.Format = function (fmt) { //author: meizz 
+    //        var o = {
+    //            "M+": this.getMonth() + 1,                 //月份 
+    //            "d+": this.getDate(),                    //日 
+    //            "h+": this.getHours(),                   //小时 
+    //            "m+": this.getMinutes(),                 //分 
+    //            "s+": this.getSeconds(),                 //秒 
+    //            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+    //            "S": this.getMilliseconds()             //毫秒 
+    //        };
+    //        if (/(y+)/.test(fmt))
+    //            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    //        for (var k in o)
+    //            if (new RegExp("(" + k + ")").test(fmt))
+    //                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    //        return fmt;
+    //    }
+
+    function AddDate() {
+
+        var startTime = $("#startTime").val();
+        var result = new Date(startTime);
+        var time = result.setDate(result.getDate() + 1);
+        var day = new Date(time);
+        alert(day.getDate());
+        alert(day.getMonth() + 1);
+        alert(day.getFullYear());
+    }
+
+    function GetPartDate(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        return y + "/" + m + "/" + d;
+    }
+
+    function DropMonth() {
+        var monthyear = $("#month_year").val();
+        $.post("Utility/DropListMonth", { year: monthyear }, function (data) {
+            $("#monthinYear").kendoDropDownList({
+                dataSource: data,
+                dataTextField: "Name",
+                dataValueField: "Id"
+            });
+        });
+    }
+
+    //    function changeDropmonth() {
+    //        alert(1);
+    //        //        var year = $("#month_year").val();
+    //        //        var monthinyear = $("#monthinYear").val();
+    //        //        var startTime = year + "/" + monthinyear + "/" + 0;
+    //        //        var endTime = year + "/" + (monthinyear + 1) + "/" + 0;
+    //        //        alert(endTime);
+    //        //        loadline(startTime, endTime, "month");
+    //    }
+    var month = 1;
+
+    function AddMonth() {
+        var year = $("#month_year").val();
+        var monthinyear = $("#monthinYear").val();
+        var Time = year + "/" + monthinyear + "/" + 1;
+        var date = new Date(Time);
+        date.setMonth(date.getMonth() + 1 + month);
+        var startTime = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        var endTime = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+        loadline(startTime, endTime, "month");
+        //alert(startTime);
+        month++;
+    }
+
+    function MultyMonth() {
+        var year = $("#month_year").val();
+        var monthinyear = $("#monthinYear").val();
+        var Time = year + "/" + monthinyear + "/" + 1;
+        var date = new Date(Time);
+        date.setMonth(date.getMonth() + 1 + month);
+        var startTime = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        var endTime = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+        loadline(startTime, endTime, "month");
+        month--;
+    }
+
+    var season = 1;
+    function nextSeason() {
+        var year = $("#season_year").val();
+        var season = $("#season").val();
+        var startTime = year + "/" + season;
+        loadline(startTime, startTime, "season");
+        season++;
+    }
+    function 
+</script>
+<div id="forecast" style="width: 90%; margin: 15px auto;">
+    @(Html.Kendo().TabStrip()
+          .Name("tabstrip")
+          .Events(e => e.Select("onSelect"))
+          .Items(tabstrip =>
+          {
+              tabstrip.Add().Text("日视图").HtmlAttributes(new { Style = "text-align:center;" }).HtmlAttributes(new { Kind = "day" })
+                  .Selected(true)
+                  .Content(@<text>
+    <div id="lineDay">
+    </div>
+    <div style="margin-top: 10px;">
+        <span style="padding: 0px 5px;">开始时间:</span>@Html.Kendo().DatePicker().Name("startTime").Value(DateTime.Now.AddDays(-1))
+        <span style="padding: 0px 5px;">结束时间:</span>@Html.Kendo().DatePicker().Name("endTime").Value(DateTime.Now)
+        <input type="button" class="k-button" value="上一日" onclick="AddDate()" />
+        <input type="button" class="k-button" value="下一日" onclick="AddDate()" />
+    </div>
+    </text>);
+              tabstrip.Add().Text("月度视图").HtmlAttributes(new { Style = "text-align:center;" }).HtmlAttributes(new { Kind = "month" })
+                  .Content(@<text>
+    <div id="lineMonth">
+    </div>
+    <div style="margin-top: 10px;">
+        <select id="month_year" onchange="DropMonth()">
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014" selected="selected">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+        </select>
+        @(Html.Kendo().DropDownList().Name("monthinYear"))
+        <input type="button" class="k-button" value="上一月" onclick="AddMonth()" />
+        <input type="button" class="k-button" value="下一月" onclick="MultyMonth()" />
+    </div>
+    </text>);
+              tabstrip.Add().Text("季度视图").HtmlAttributes(new { Style = "text-align:center;" }).HtmlAttributes(new { Kind = "season" })
+                  .Content(@<text>
+    <div id="lineSeason">
+    </div>
+    <div style="margin-top: 10px;">
+        <select id="season_year">
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+        </select>
+        <select id="season">
+            <option value="1">第一季度</option>
+            <option value="4">第二季度</option>
+            <option value="7">第三季度</option>
+            <option value="10">第四季度</option>
+        </select>
+        <input type="button" class="k-button" value="上一季" />
+        <input type="button" class="k-button" value="下一季" onclick="nextSeason()" />
+    </div>
+    </text>);
+              tabstrip.Add().Text("年度视图").HtmlAttributes(new { Style = "text-align:center;" }).HtmlAttributes(new { Kind = "year" })
+                  .Content(@<text>
+    <div id="lineYear">
+    </div>
+    <div style="margin-top: 10px;">
+        <select id="year">
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+        </select>
+        <input type="button" class="k-button" value="上一年" />
+        <input type="button" class="k-button" value="下一年" />
+    </div>
+    </text>);
+          })
+    )
+</div>

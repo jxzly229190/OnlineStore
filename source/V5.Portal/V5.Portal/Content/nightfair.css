@@ -1,0 +1,63 @@
+﻿.container{ color: #fff; padding-top: 550px; font-family: 微软雅黑,Tahoma,Verdana; }
+.container-inner { width: 965px;margin: 0 auto; padding-bottom:50px; }
+.yeshi-star dt{ text-align: center; font-size: 40px;font-weight: bold; line-height:80px; }
+		
+.yeshi-star .yeshi-star1{ border:3px solid #7F1E7A; width:465px; padding-top:10px; margin: 0 10px 10px 0; float:left; background:#11043a; position:relative;}
+.yeshi-star .yeshi-star1 dt {float:left;}		
+.yeshi-star .star-pro1{ padding:10px; }
+.yeshi-start1-adv { font-size:36px; line-height:42px; font-weight:bold; color:#d00837; letter-spacing:4px;height: 85px; }
+.yeshi-start1-name { font-size:20px; line-height:28px; font-weight:bold; padding-top:6px; }
+.yeshi-star1-bottom .yeshi-start1-price { font-size:32px; }
+.yeshi-star1-bottom .yeshi-start1-price em{ font-size: 42px;}
+.yeshi-star1-top {position: absolute; top:10px; right:0; width:170px;}
+.yeshi-star1-bottom { position:absolute; bottom:10px; right:0; width:170px;}		
+.yeshi-star1-bottom em { font-weight:bold; font-size:18px; }
+.yeshi-star1-bottom i { text-decoration:line-through; font-size:16px; }		
+.yeshi-start1-view a{ display:block; background:url(/images/yeshi-start-botton.png) left top no-repeat; width:111px; height:36px; margin-top:20px; }
+		
+.yeshi-star .yeshi-star2{ border:3px solid #7F1E7A; width:285px;height:420px; padding:10px; margin-right: 10px; float:left; position:relative; }
+.yeshi-start2-name {font-size:18px;line-height:36px; font-weight:bold;}
+.yeshi-start2-adv { font-size:30px; line-height:48px; font-weight:bold; color:#d00837; letter-spacing:2px;height: 50px; }
+.yeshi-start2-button { background:url("/images/yeshi-start2-button.png") left center no-repeat; width:177px; height:57px; position:relative; color:#381129; padding:12px 0 0 6px;}
+.yeshi-start2-gjprice { position:absolute; left:82px; top:0px; }
+.yeshi-start2-gjprice label { font-size:48px; font-weight:bold;cursor: pointer;}
+.yeshi-start2-button em { font-size:18px; font-weight:bold;}
+.yeshi-start2-price { font-size:14px; line-height:14px; text-decoration:line-through; }
+.yeshi-start2-tip { background:url("/images/yeshi-start2-tip.png") left center no-repeat;  width:87px; height:88px; position:absolute; bottom:-10px; right:5px;  }
+
+.yeshi-remai dt{ background:url(/images/yeshi-light.png) repeat-x; text-align: center; font-size: 40px;font-weight: bold; padding:100px 0 10px; clear:both;}	
+.yeshi-remai .yeshi-remai-top { margin-bottom:10px; }		
+.yeshi-remai .li1 {float: left; margin-left:10px;}
+.yeshi-remai .li2 {float: left; margin-right:10px;}
+		
+.yeshi-remai .yeshi-remai-left {padding-right:264px; background-position: right bottom; }
+.yeshi-remai .yeshi-remai-right {padding-left:264px; margin-right:7px; background-position: left bottom; }
+		
+.yeshi-remai .yeshi-remai-product { background-color:#fff; width:219px; border:1px solid #ccc; position:relative; }
+.yeshi-remai .yeshi-remai-product .product-img { display: block; padding:2px 0; }
+.yeshi-remai .yeshi-remai-product .product-desc { height:32px; overflow:hidden; padding:5px 10px;}
+.yeshi-remai .yeshi-remai-product .product-desc a{ cursor:pointer; overflow: hidden; text-indent: 11px; text-overflow: ellipsis; white-space: nowrap; word-break: keep-all;}
+.yeshi-remai .yeshi-remai-product .product-desc em{ height:20px; overflow:hidden;}
+.product-buy { background-color:#ededed; height:40px; line-height:40px; }
+.product-buy span { color:#d00837; font-size:21px; padding:0 5px 0 10px; }
+.product-buy span em{ font-size:30px; }
+.product-buy i { font-size:12px; text-decoration:line-through; color:#000; }
+.product-buy .product-buy-botton { position: absolute; right: -3px; bottom: 3px; background:url(/images/yeshi-button.png) no-repeat; width:60px; height:40px;}
+		
+.act { width: 965px; margin: 20px auto; font-family: 微软雅黑,Tahoma,Verdana; }
+.act dt{ background:url(/images/t_01.jpg) no-repeat; padding-bottom: 40px}
+
+.act .act-link ul{display: block;margin: 0 auto;overflow: hidden;width: 980px;}
+.act .act-link ul .first{ width: 380px;height: 250px;}
+.act .act-link li {display: block;float: left;height: 250px;margin: 5px 10px 0 0;overflow: hidden;width: 185px;}
+.act table {width: 971px; height:180px; border-collapse: collapse;position: relative;left: -3px;margin: 10px 0 0 0;}
+.act td { text-align: center; border:3px solid #fff; cursor:pointer;}
+.act a { color:#fff;  font-weight: bold;}
+.brandcolr1{ background-color:#f2b6a6;}
+.brandcolr2{ background-color:#f98984;}
+.brandcolr3{ background-color:#ed646e;}
+.brandsize1{ font-size:16px;}		
+.brandsize2{ font-size:25px;}		
+.brandsize3{ font-size:32px;}
+.backhome { text-align: center; background-color:#08052b; font-family: 微软雅黑,Tahoma,Verdana; }
+.backhome .backhomea {display:block; width:280px; background:url(/Images/backhome.jpg) right center no-repeat; margin:0 auto; padding:5px 0; color:#fff; font-size:36px; font-weight:bold; text-decoration:none;}

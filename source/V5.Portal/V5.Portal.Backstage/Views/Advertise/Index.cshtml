@@ -1,0 +1,57 @@
+﻿@using System.Web.UI.WebControls
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/zTree/css/zTreeStyle/zTreeStyle.css")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.all-3.5.min.js")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.core-3.5.js")
+@Scripts.Render("/Scripts/Backstage/Advertise/Backstage.AdvertiseConfig.js")
+@Scripts.Render("~/Scripts/Backstage/Advertise/Backstage.AdvertiseLp.js")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.excheck-3.5.min.js")
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;广告配置&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div id="detailDiv" class="right-box">
+</div>
+<div id="defaultDiv" class="right-box" style="display: none;">
+</div>
+<script type="text/javascript">
+
+    // 默认选中左边菜单的第一个
+    $(function () {
+        $("#top_Advertise").addClass("select");
+        //$('.left-f ul li:first a').trigger("click");
+    });
+
+    function ShowPartialView(a) {
+        var current = $(a).attr("name");
+        var href = "/" + $(a).attr("parent") + "/" + current + "/";
+
+        var currentLabel = $("#current");
+        currentLabel.text($(a).text());
+
+        $.ajax({
+            type: "GET",
+            url: href,
+            data: null,
+            datatype: "html",
+            success: function (data) {
+                if (data.State == -401) {
+                    onSessionLost();
+                } else if (data.State == -403) {
+                    alert("对不起，您无此操作权限！");
+                } else {
+                    $('#defaultDiv').html(data);
+                    $('#detailDiv').css("display", "none");
+                    $('#defaultDiv').css("display", "block");
+                }
+            },
+            error: function () {
+                alert("处理失败!");
+            }
+        });
+
+        $(a).parent().addClass("left-s").siblings().removeClass("left-s");
+    }
+</script>

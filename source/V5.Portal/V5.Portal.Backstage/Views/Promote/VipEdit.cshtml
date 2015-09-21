@@ -1,0 +1,42 @@
+﻿@Styles.Render("~/Content/Promote/choose.css")
+@Scripts.Render("~/Scripts/Promote/Choose.js")
+
+<div>
+    <div class="right">
+        <table class="baseinfo">
+            <tr style="height: 50px">
+                <td>活动名称：</td>
+                <td>
+                    <input type="hidden" id="promoteID"/>
+                    <input type="text" class="k-textbox" id="promoteName" style="width:180px;" />
+                </td>
+                <td>活动备注：</td>
+                <td><input type="text" class="k-textbox" id="promoteDescription" style="width:180px;" /></td>
+            </tr>
+            <tr style="height: 50px">                
+                <td>开始时间：</td>
+                <td>@Html.Kendo().DateTimePicker().Name("promoteStartTime")</td>                
+                <td>截止时间：</td>
+                <td>@Html.Kendo().DateTimePicker().Name("promoteEndTime")</td>
+            </tr>
+            <tr style="height: 50px">
+                <td>活动规则：</td>
+                <td>
+                    <input type="checkbox" id="mobileVerify"/><label for="mobileVerify">是否手机验证</label>&nbsp;
+                    <input type="checkbox" id="newUser"/><label for="newUser">是否新会员活动</label>&nbsp;
+                    <input type="checkbox" id="useCoupon" checked="checked"/><label for="useCoupon">能否使用优惠券</label>
+                </td> 
+            </tr>
+        </table>
+        <div id="container"></div>
+        
+        <div id="AddBtn">
+            <input type="button" class="k-button" value="确认" onclick="promotevip.Add()"/>
+            <input type="reset" class="k-button" value="返回" onclick="promotevip.Close()"/>
+        </div>
+        <div id="UpdateBtn" style="display: none">
+            <input type="button" class="k-button" value="修改" onclick="promotevip.Modify()"/>
+            <input type="submit" class="k-button" value="取消" onclick="promotevip.Close()"/>
+        </div>
+    </div>
+</div>

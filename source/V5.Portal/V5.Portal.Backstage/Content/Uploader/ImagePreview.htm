@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>图片预览效果</title>
+<script src="CJL.0.1.min.js"></script>
+<script src="QuickUpload.js"></script>
+<script src="ImagePreview.js"></script>
+</head>
+<body>
+<style>
+.perview {width:600px;background:#fff;font-size:12px; border-collapse:collapse;}
+.perview td, .perview th {padding:5px;border:1px solid #ccc;}
+.perview th {background-color:#f0f0f0; height:20px;}
+.perview a:link, .perview a:visited, .perview a:hover, .perview a:active {color:#00F;}
+.perview table{ width:100%;border-collapse:collapse;}
+#idPicList input {
+	font-size:20px;cursor:pointer;
+	position:absolute;right:0;bottom:0;
+	filter:alpha(opacity=0);opacity:0;
+	outline:none;hide-focus:expression(this.hideFocus=true);
+}
+#idPicList div
+{
+    width:80px;height:20px;overflow:hidden;position:relative;
+	background:url(o_addfile.jpg) center no-repeat;
+    cursor:pointer;
+}
+</style>
+<table class="perview">
+	<tr>
+		<td>
+            <table>
+				<thead>
+					<tr>
+						<th> 主图 </th>
+                        <th> 副图 </th>
+                        <th> 副图 </th>
+                        <th> 副图 </th>
+                        <th> 副图 </th>
+                        <th> 副图 </th>
+					</tr>
+				</thead>
+				<tbody id="idPicList">
+					<tr>
+						<td align="center" class="pic" cid="imgMaster"><div id="imgMaster"></div></td>
+                        <td align="center" class="pic" cid="imgPic01"><div id="imgPic01"></div></td>
+                        <td align="center" class="pic" cid="imgPic02"><div id="imgPic02"></div></td>
+                        <td align="center" class="pic" cid="imgPic03"><div id="imgPic03"></div></td>
+                        <td align="center" class="pic" cid="imgPic04"><div id="imgPic04"></div></td>
+                        <td align="center" class="pic" cid="imgPic05"><div id="imgPic05"></div></td>
+					</tr>
+				</tbody>
+			</table>
+         </td>
+	</tr>
+</table>
+<script>
+    var ImagePreviewEx = {
+        //检测程序
+        exts: String,
+        paths: String,
+
+        Init: function (opt) {
+            ImagePreviewEx.SetOption(opt);
+        },
+
+        //设置选项
+        SetOption: function (opt) {
+            ImagePreviewEx.exts = opt.exts || "jpg|gif|bmp";
+            ImagePreviewEx.paths = opt.paths || "|";
+
+            if (opt.img && opt.img.length > 0) {
+                for (var i = 0; i < opt.img.length; i++) {
+                    ImagePreviewEx.AddPreview(opt.img[i]);
+                }
+            }
+        },
+
+        //添加预览
+        AddPreview: function (obj) {
+            obj = document.getElementById(obj);
+            var file = document.createElement("input");
+            var img = document.createElement("img");
+
+            var ip = new ImagePreview(file, img, {
+                maxWidth: 150,
+                maxHeight: 100,
+                action: "ImagePreview.ashx",
+                onErr: function () { alert("载入预览出错！"); ResetFile(file); },
+                onCheck: ImagePreviewEx.CheckPreview,
+                onShow: ImagePreviewEx.ShowPreview
+            });
+            file.type = "file"; file.name = "pic";
+            file.onchange = function () {
+                ip.preview();
+            };
+            obj.appendChild(file);
+        },
+
+        //检测预览
+        CheckPreview: function () {
+            var value = this.file.value, check = true;
+            if (!value) {
+                check = false; alert("请先选择文件！");
+            } else if (!RegExp("\.(?:" + ImagePreviewEx.exts + ")$$", "i").test(value)) {
+                check = false; alert("只能上传以下类型：" + exts);
+            } else if (ImagePreviewEx.paths.indexOf("|" + value + "|") >= 0) {
+                check = false; alert("已经有相同文件！");
+            }
+            check || ImagePreviewEx.ResetFile(this.file);
+            return check;
+        },
+
+        //显示预览
+        ShowPreview: function () {
+            var file = this.file, value = file.value, oThis = this;
+            var td = this.file.parentNode.parentNode.parentNode;
+            td.removeChild(this.file.parentNode.parentNode);
+            td.appendChild(this.img);
+
+            this.img.title = "双击移除";
+            this.img.ondblclick = function () {
+                var td = this.parentNode;
+                td.removeChild(this);
+                ImagePreviewEx.paths = ImagePreviewEx.paths.replace(value, "");
+
+                var cid = td.getAttribute("cid");
+                var div = document.createElement("div");
+                div.id = cid;
+                td.appendChild(div)
+                ImagePreviewEx.AddPreview(cid);
+                return false;
+            };
+            ImagePreviewEx.paths += value + "|";
+        },
+
+        //重置
+        ResetFile: function (file) {
+            file.value = ""; //ff chrome safari
+            if (file.value) {
+                if ($$B.ie) {//ie
+                    with (file.parentNode.insertBefore(document.createElement('form'), file)) {
+                        appendChild(file); reset(); removeNode(false);
+                    }
+                } else {//opera
+                    file.type = "text"; file.type = "file";
+                }
+            }
+        }
+    }
+    ImagePreviewEx.Init({ img: ["imgMaster", "imgPic01", "imgPic02", "imgPic03", "imgPic04", "imgPic05"] });
+</script>
+</body>
+</html>

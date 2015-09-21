@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "在线支付成功 - 购酒网";
+    Layout = "../Shared/_OrderLayout.cshtml";
+}
+
+<script>
+    $(function () {
+        SetFlow(3);
+    })
+</script>
+<div class="order_success">
+    <dl class="order_success_info">
+        <dt class="info_image"></dt>
+        <dd class="info_label label_1">订单支付成功！</dd>
+        <dd class="info_label label_4">您已经成功支付了 @ViewBag.Money 元</dd>
+        <dd class="clear"></dd>
+    </dl>
+    <p class="order_success_label">您现在可以：&nbsp;&nbsp;<a href="/User/MyOrder">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="@V5.Portal.Common.ConstantParams.IndexUrl">继续购物</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/User">去用户中心</a></p>
+    @Html.Action("GuessLike", "Home")
+</div>

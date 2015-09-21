@@ -1,0 +1,5 @@
+﻿.main-f { width: 1070px; height: 500px; background: #ffffff; float: right; }
+.main-f .weizhi { height: 42px; line-height: 42px; display: block; font-family: "微软雅黑";font-size: 13px;}
+.main { width: 1260px; margin: auto; margin-top: 4px; }
+
+.right-box { width: 1068px; height: 500px; background: white; border: #dddddd solid 0px; }

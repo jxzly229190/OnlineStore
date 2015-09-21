@@ -1,0 +1,306 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="../../Scripts/Validate.js" type="text/javascript"></script>
+<script src="../../Scripts/Order/OrderAdd.js" type="text/javascript"></script>
+<script src="../../Scripts/Order/OrderEdit.js" type="text/javascript"></script>
+<script src="../../Scripts/Order/OrderCancel.js" type="text/javascript"></script>
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;交易管理&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div class="right-box">
+</div>
+
+@(Html.Kendo().Window().Name("OrderCancelWindow")
+    .Title("取消订单")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(320)
+)
+
+<script type="text/x-kendo-template" id="DetailsTemplate">
+  <table>
+     <tr>
+	    <td width="25%" align="right"> 用户名： </td>
+	    <td width="30%" valign="middle" >#= UserName # </td>
+    </tr>
+  	<tr>
+	    <td align="right"> 站点名称： </td>
+	    <td valign="middle" class="tl">#= Name # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 站点网址： </td>
+	    <td valign="middle" class="tl">#= URL # </td>
+    </tr>
+  	<tr>
+	    <td align="right"> 公司名称： </td>
+	    <td valign="middle" class="tl">#= Company # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 联系人： </td>
+	    <td valign="middle" class="tl">#= Linkman # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 地址： </td>
+	    <td valign="middle" class="tl">#= CompanyAddress # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 电话： </td>
+	    <td valign="middle" class="tl">#= Tel # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 手机： </td>
+	    <td valign="middle" class="tl">#= Mobile # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 邮箱： </td>
+	    <td valign="middle" class="tl">#= Email #</td>	
+	<tr>
+	    <td align="right"> QQ： </td>
+	    <td valign="middle" class="tl">#= QQ # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 邮编： </td>
+	    <td valign="middle" class="tl">#= ZipCode # </td>
+    </tr>
+	<tr>
+	    <td align="right"> 订单推送地址： </td>
+	    <td valign="middle" class="tl">#= TrackingURL # </td>
+    </tr>
+</table>
+</script>
+
+<script type="text/javascript"> 
+    $(function () {
+        $("#top_transact").addClass("select");
+        $('.left-f ul li:first a').trigger("click");    
+    });
+    
+    var detailsTemplate = kendo.template($("#DetailsTemplate").html());
+
+    function ShowDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#CpsDetails").data("kendoWindow");
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+
+function ShowPartialView(a) {
+    var current = $(a).attr("name");
+    var href = "/" + $(a).attr("parent") + "/" + current + "/";
+
+        var currentLabel = $("#current");
+        currentLabel.text($(a).text());
+
+        $.ajax({
+            type: "GET",
+            url: href,
+            data: null,
+            datatype: "html",
+            success: function (data) {
+                if (data.State == -401) {
+                    onSessionLost();
+                }else if (data.State == -403) {
+                    alert("对不起，您无此操作权限！");
+                }else{
+                    $('.right-box').html(data);
+                    $('#FromDateTime').attr("readonly", "readonly");
+                    $('#ToDateTime').attr("readonly", "readonly");
+                    $('#StartDateTime').attr("readonly", "readonly");
+                    $('#EndDateTime').attr("readonly", "readonly");
+                    $(a).parent().addClass("left-s").siblings().removeClass("left-s");
+                }
+            },
+            error: function() {
+                alert("处理失败!");
+            }
+        });
+
+    }
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function(key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function() {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    function RefCps() {
+        $("#cpsGird").data("kendoGrid").dataSource.read();
+        $("#cpsGird").data("kendoGrid").dataSource.refresh();
+    }
+
+    function onEditCps(e) {
+        if (e.model.isNew()) {
+            $(".k-window-title").html("新建");
+            e.container.find(".k-update").parent().text("添加");
+        } else {
+            $(".k-window-title").html("编辑");
+            e.container.find(".k-update").parent().text("修改");
+        }
+
+        e.container.find(".k-cancel").parent().text("取消");
+    }
+
+    function onEditOrderDescription(e) {
+        if (e.model.isNew()) {
+            $(".k-window-title").html("备注信息");
+            e.container.find(".k-update").parent().text("添加");
+        } else {
+            $(".k-window-title").html("备注信息");
+            e.container.find(".k-update").parent().text("提交");
+        }
+
+        e.container.find(".k-cancel").parent().text("取消");
+    }
+
+    function SearchProductComment() {
+        var filter = new Array();
+        var grid = $("#productCommentGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+
+    function GetCommentSearchData() {
+        return {
+            StatusForSearch: $("#StatusForSearch").val(),
+            UserName: $("#UserName").val(),
+            ProductName: $("#ProductName").val(),
+            FromDateTime: $("#FromDateTime").val(),
+            ToDateTime: $("#ToDateTime").val()
+        };
+    }
+    
+    function selectAll() {
+        $("input[name=commentIds]").prop("checked", "checked");
+    }
+
+    function batchOperate() {
+        var win = '<div class="k-widget k-window" style="padding-top: 28.35999870300293px; min-width: 90px; min-height: 50px; display: block; top: 249.6666717529297px; left: 463.5px; z-index: 10003; opacity: 1; -webkit-transform: scale(1); " data-role="draggable"><div class="k-window-titlebar k-header" style="margin-top: -28.35999870300293px; ">&nbsp;<span class="k-window-title" style="right: 30px; ">编辑</span><div class="k-window-actions"><a role="button" href="#" class="k-window-action k-link"><span role="presentation" class="k-icon k-i-close">Close</span></a></div></div><div data-uid="d11647df-3065-4753-a85e-229a89cb6e40" class="k-popup-edit-form k-window-content k-content" data-role="window" style="overflow: auto; " tabindex="0"><div class="k-edit-form-container"><div class="editor-label">    审核状态：</div><div class="editor-field">    <span style="" class="k-widget k-dropdown k-header" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="Status_listbox" aria-disabled="false" aria-readonly="false" aria-busy="false" aria-activedescendant="Status_option_selected"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">通过</span><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-arrow-s">select</span></span></span><input id="Status" name="Status" type="text" value="0" data-role="dropdownlist" style="display: none; " data-bind="value:Status"></span></div><div class="editor-label">    备注：</div><div class="editor-field">    <textarea class="k-textbox" cols="20" data-val="true" data-val-length="长度不能超过128" data-val-length-max="128" id="AuditDescription" name="AuditDescription" rows="2" style="width: 220px;height: 100px" data-bind="value:AuditDescription"></textarea>    <span class="field-validation-valid" data-valmsg-for="AuditDescription" data-valmsg-replace="true"></span></div><div class="k-edit-buttons k-state-default"><a class="k-button k-button-icontext k-grid-update" style="visibility:visible;" href="#">修改</a><a class="k-button k-button-icontext k-grid-cancel" style="visibility:visible;" href="#">取消</a></div></div></div></div>';
+        $("body").after(win);
+    }
+
+    function filterParentCategoryId() {
+        return {
+            ParentCategoryID: $("#ParentCategoryID").val()
+        };
+    }
+
+    function filterCategoryId() {
+        return {
+            CategoryID: $("#CategoryID").val()
+        };
+    }
+
+    function SearchProductConsult() {
+        var filter = new Array();
+        var grid;
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 0) {
+            grid = $("#productConsultGrid").data("kendoGrid");
+        } else if ($("#tabStrip").data("kendoTabStrip").select().index() == 1) {
+            grid = $("#productConsultRepliedGrid").data("kendoGrid");
+        }
+        grid.dataSource.filter(filter);
+    }
+
+    function GetConsultSearchData() {
+        return {
+            ParentCategoryID: $("#ParentCategoryID").val(),
+            CategoryID: $("#CategoryID").val(),
+            BrandId: $("#BrandId").val(),
+            ProductName: $("#ProductName").val(),
+            UserName: $("#UserName").val(),
+            FromDateTime: $("#FromDateTime").val(),
+            ToDateTime: $("#ToDateTime").val()
+        };
+    }
+
+/***********订单查询相关JS方法 ->开始 *********/
+
+    function SearchOrder() {
+        var filter = new Array();
+        var grid;
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 0) {
+            grid = $("#unpaidOrderGird").data("kendoGrid");
+        }
+
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 1) {
+            grid = $("#unconfirmedOrderGird").data("kendoGrid");
+        }
+
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 4) {
+            grid = $("#receivedOrderGird").data("kendoGrid");
+        }
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 3) {
+            grid = $("#postedOrderGird").data("kendoGrid");
+        }
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 2) {
+            grid = $("#confirmedOrderGird").data("kendoGrid");
+        }
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 6) {
+            grid = $("#cancelledOrderGird").data("kendoGrid");
+        }
+
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 5) {
+            grid = $("#invalidOrderGird").data("kendoGrid");
+        }
+
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 7) {
+            grid = $("#orderGird").data("kendoGrid");
+        }
+        
+        grid.dataSource.filter(filter);
+    }
+
+    function GetOrderData() {
+        return {
+            OrderCode: $("#OrderCode").val(),
+            Status: $("#Status").val(),
+            StartDateTime: $("#StartDateTime").val(),
+            EndDateTime: $("#EndDateTime").val(),
+            MinTotalMoney: $("#MinTotalMoney").val(),
+            MaxTotalMoney: $("#MaxTotalMoney").val(),
+            PaymentMethodID: $("#PaymentMethodID").val(),
+            UserName: $("#UserName").val(),
+            Consignee: $("#Consignee").val(),
+            CpsID: $("#CpsID").val(),
+            ReceiveMoblie: $("#ReceiveMoblie").val()
+        };
+    }
+</script>
+
+<script type="text/javascript">
+    /***********订单查询相关JS方法 ->结束 *********/
+    function showDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.open("Transact/QueryOrderDetails?orderID=" + dataItem.ID);
+    }
+
+    function OnOrderTabSelect(e) {
+        var dropdownlist = $("#Status").data("kendoDropDownList");
+        if ($("#tabStrip").data("kendoTabStrip").select().index() == 0) {
+            dropdownlist.selectedIndex = 0;
+            dropdownlist.enable();
+        } else {
+            dropdownlist.enable(false);
+        }
+    }
+
+</script>
+
+
+
+

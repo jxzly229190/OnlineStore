@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "BatchLeadProduct";
+}
+@using V5.Portal.Backstage.Models.Product
+@Scripts.Render("~/Scripts/Backstage/Advertise/Backstage.AdvertiseProduct.js")
+<div id="batchProduct">
+    <div id="batchp">
+        <input type="button" value="返回" class="k-button" style="width: 100px" id="comeback"
+            onclick="comeback()" />
+    </div>
+    <div style="height: 35px; margin-top: 5px;">
+        <span>商品类别：</span> <span>
+            @(Html.Kendo().DropDownList().Name("ParentCategory").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value").HtmlAttributes(new { @style = "width: 100px;" }))
+            @(Html.Kendo().DropDownList().Name("ProductCategory").DataSource(source => source.Read(read => read.Action("QuerySubCategorySelectListItems", "Product").Data("GetParentCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(true).AutoBind(false).CascadeFrom("ParentCategory").HtmlAttributes(new { @style = "width: 100px;" }))
+            @(Html.Kendo().DropDownList().Name("ParentBrand").DataSource(source => source.Read(read => read.Action("QueryBrandSelectListItems", "Product").Data("GetProductCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ProductCategory").HtmlAttributes(new { @style = "width: 100px;" }))
+            @(Html.Kendo().DropDownList().Name("ProductBrand").DataSource(source => source.Read(read => read.Action("QuerySubBrandSelectListItems", "Product").Data("GetParentBrandID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentBrand").HtmlAttributes(new { @style = "width: 100px;" }))
+        </span><span style="padding-left: 30px;">商品名称：</span> <span>
+            <input type="text" id="ProductName" name="ProductName" class="k-textbox" style="width: 100px;" />
+            <input type="button" class="k-button" style="width: 60px; padding-left: 10px;" id="OnSaleSearchBtn"
+                onclick="SearchOnSaleProduct()" value="查 询" />
+        </span>
+    </div>
+    <div style="height: 25px;">
+        <span>价格区间：</span> <span>
+            @(Html.Kendo().NumericTextBox().Name("MinPrice").Min(0).HtmlAttributes(new { style = "width:195px" }))
+            至
+            @(Html.Kendo().NumericTextBox().Name("MaxPrice").Min(0).HtmlAttributes(new { style = "width:195px" }))
+        </span><span style="padding-left: 30px;">条形编码：</span> <span>
+            <input type="text" id="Barcode" name="Barcode" class="k-textbox" style="width: 100px;" />
+            <input type="button" class="k-button" style="width: 60px; padding-left: 10px;" id="OnSaleResetBtn"
+                value="重 置" />
+        </span>
+    </div>
+    <div id="GridDiv" style="margin-top: 10px;">
+        @(Html.Kendo().Grid<ProductSearchResultModel>()
+          .Name("ProductOnSaleGrid")
+          .Columns(columns =>
+          {
+              columns.Template(e => { }).ClientTemplate("<input type='checkbox' name='multiSelect'value='#=ID#' attname='#=Name#' onclick='checkedProduct()'/>").Width(20);
+              columns.Bound(p => p.Name).Title("商品名称").Width(150);
+              columns.Bound(p => p.Barcode).Title("条形码").Width(90);
+              columns.Bound(p => p.GoujiuPrice).Title("价格").Width(50);
+              columns.Bound(p => p.InventoryNumber).Title("库存").Width(50);
+              columns.Bound(p => p.StatusName).Title("状态").Width(50);
+              //columns.Command(e => e.Custom("<input type='button' value='确定'>")).Title("操作").Width(70);
+          })
+          .Pageable()
+          .Scrollable()
+          .HtmlAttributes(new { style = "height:420px;" })
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(9)
+              .Model(model => model.Id(p => p.ID))
+              .Create(update => update.Action("Add", "Product"))
+              .Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData"))
+              .Update(update => update.Action("Modify", "Product"))
+              .Destroy(update => update.Action("Remove", "Product"))
+          ))
+    </div>
+    <div style="margin-top: 10px;">
+        <input type="button" value="确定添加" id="MultiAddProduct" class="k-button" style="width: 100px;
+            float: right; margin-top: 20px;" onclick="CloseWindow()" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        advertiseLp.Init();
+    });
+    function checkedProduct() {
+        $("input[name='chkproduct']").each(function () {
+            if (this.checked == true) {
+                $("#advertiseUrl").val($(this).attr("value"));
+            }
+        });
+    }
+    function CloseWindow() {
+        $("#SelectProduct").data("kendoWindow").close();
+    }
+
+</script>

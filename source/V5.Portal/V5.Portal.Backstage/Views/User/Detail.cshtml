@@ -1,0 +1,224 @@
+﻿@{
+    Layout = null;
+}
+@model V5.Portal.Backstage.Models.User.UserModel
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>会员详情</title>
+    @*引入 javascript 打包压缩功能*@
+    @Scripts.Render("~/bundles/jquery")
+    @*引入 javascript*@
+    @Scripts.Render("~/Scripts/Backstage/Backstage.Common.KendoUI.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.all.min.js")
+    @*引入自定义的Jquery Ajax请求 JS*@
+    @Scripts.Render("~/Scripts/AjaxOverride.js")
+    
+    @*引入 css*@
+    @Styles.Render("~/Content/Common.css")
+    @Styles.Render("~/Content/kendo/kendo.common.min.css")
+    @Styles.Render("~/Content/kendo/kendo.uniform.min.css")
+</head>
+    <body>
+        <script type="text/javascript">
+            function resetPassword() {
+                if (!confirm("确实要重置该用户的登录密码?")) {
+                    return false;
+                }
+                
+                var url = window.location.href;
+                var vars = url.split("/");
+                $.post("/user/ResetPassword", { "ID": vars[vars.length - 1] },
+                    function call() {
+                        alert("密码重置成功");
+                    }, "json");
+            }
+        </script>
+        <div>
+            <div class="member-box">
+                <h3>会员详情 <div class="member-btn"><a onclick='resetPassword()' style="cursor:pointer;">重置密码</a></div></h3>
+                <div class="member-detail">
+                    <table width="1020" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="85" rowspan="3" align="center"><img src="@Html.DisplayFor(model=>model.Head)" width="70" height="70" /></td>
+                            <td width="89" height="5" align="right">会员名称：</td>
+                            <td width="174" align="left">@Html.DisplayFor(model => model.LoginName)</td>
+                            <td width="108" align="right">会员姓名：</td>
+                            <td width="544" align="left">@Html.DisplayFor(model => model.Name)</td>
+                        </tr>
+                        <tr>
+                            <td width="89" height="5" align="right">会员级别：</td>
+                            <td width="174" align="left">@Html.DisplayFor(model=>model.UserLevelName)</td>
+                            <td width="108" align="right">账号余额：</td>
+                            <td width="544" align="left"><span class="red14">￥@Html.DisplayFor(model=>model.Account.Balance)</span>（<a href="#">锁定余额</a>）</td>
+                        </tr>
+                        <tr>
+                            <td width="89" height="5" align="right">订单总数：</td>
+                            <td width="174" align="left"><span class="red14">0</span>（<a href="#">查看订单</a>）</td>
+                            <td width="108" align="right">订单总额：</td>
+                            <td width="544" align="left" class="red14">￥2563.00</td>
+                        </tr>
+                    </table>
+                </div>
+       
+                <h3>会员基本信息</h3>
+                <div class="member-info">
+                    <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#dddddd">
+                        <tr>
+                            <td width="13%" height="30" align="right" bgcolor="#FFFFFF">电子邮箱：</td>
+                            <td width="36%" bgcolor="#FFFFFF">@Html.DisplayFor(model=>model.Email)</td>
+                            <td width="12%" align="right" bgcolor="#FFFFFF">手机号码：</td>
+                            <td width="39%" bgcolor="#FFFFFF">@Html.DisplayFor(model=>model.Mobile)</td>
+                        </tr>
+                        <tr>
+                            <td height="30" align="right" bgcolor="#FFFFFF"> 省 &gt; 市 &gt; 区：</td>
+                            <td bgcolor="#FFFFFF">
+                                @(Html.Kendo().DropDownListFor(model => model.ProvinceID).HtmlAttributes(new { style = "width: 80px" }).Name("ProvinceID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read("QueryProvinces", "Home")).DataTextField("Name").DataValueField("ID"))
+                                @(Html.Kendo().DropDownListFor(model => model.CityID).HtmlAttributes(new { style = "width: 100px" }).Name("CityID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCities", "Home").Data("filterCity")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").AutoBind(false).CascadeFrom("ProvinceID").Enable(false))
+                                @(Html.Kendo().DropDownListFor(model => model.CountyID).HtmlAttributes(new { style = "width: 100px" }).OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCounties", "Home").Data("filterCounty")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").AutoBind(false).CascadeFrom("CityID").Enable(false))
+                            </td>
+                            <td align="right" bgcolor="#FFFFFF">@*电话号码：*@</td>
+                            <td bgcolor="#FFFFFF">@*0214-65326533*@</td>
+                        </tr>
+                        <tr>
+                            <td height="30" align="right" bgcolor="#FFFFFF">注册时间：</td>
+                            <td bgcolor="#FFFFFF">@Html.DisplayFor(model=>model.CreateTime)</td>
+                            <td align="right" bgcolor="#FFFFFF">QQ号码：</td>
+                            <td bgcolor="#FFFFFF">@Html.DisplayFor(model=>model.QQ)</td>
+                        </tr>
+                        <tr>
+                            <td height="30" align="right" bgcolor="#FFFFFF">默认地址：</td>
+                            <td bgcolor="#FFFFFF">@Html.DisplayFor(model => model.DefaultAddress)</td>
+                            <td align="right" bgcolor="#FFFFFF">邮政编码：</td>
+                            <td bgcolor="#FFFFFF">@Html.DisplayFor(model=>model.PostCode)</td>
+                        </tr>
+                        <tr>
+                            <td height="30" align="right" bgcolor="#FFFFFF">会员状态：</td>
+                            <td bgcolor="#FFFFFF" class="green">@Html.DisplayFor(model=>model.StateName)</td>
+                            <td align="right" bgcolor="#FFFFFF">消费总金额：</td>
+                            <td bgcolor="#FFFFFF" class="red14">￥2563.00</td>
+                        </tr>
+                    </table>
+                </div>
+        
+                <h3>会员订单
+                    <div class="member-btn"><a href="#">新增订单</a></div>
+                </h3>
+                <div class="member-order">
+                    <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#dddddd">
+                        <tr>
+                            <td width="11%" height="30" align="center" bgcolor="#d1e8f3">订单编号 </td>
+                            <td width="16%" align="center" bgcolor="#d1e8f3">商品信息</td>
+                            <td width="7%" align="center" bgcolor="#d1e8f3">下单时间</td>
+                            <td width="6%" align="center" bgcolor="#d1e8f3">金额</td>
+                            <td width="8%" align="center" bgcolor="#d1e8f3">支付方式</td>
+                            <td width="8%" align="center" bgcolor="#d1e8f3">收货人</td>
+                            <td width="11%" align="center" bgcolor="#d1e8f3">会员名</td>
+                            <td width="8%" align="center" bgcolor="#d1e8f3">支付状态</td>
+                            <td width="8%" align="center" bgcolor="#d1e8f3">订单来源</td>
+                            <td width="7%" align="center" bgcolor="#d1e8f3">操作</td>
+                            <td width="10%" align="center" bgcolor="#d1e8f3">原单号/外单号</td>
+                        </tr>
+                        <tr>
+                            <td height="30" align="center" bgcolor="#FFFFFF">563263656</td>
+                            <td align="center" bgcolor="#FFFFFF">52度 茅台 王子啤酒 酱香型 数量6瓶</td>
+                            <td align="center" bgcolor="#FFFFFF">2012</td>
+                            <td align="center" bgcolor="#FFFFFF">256</td>
+                            <td align="center" bgcolor="#FFFFFF">货到刷卡</td>
+                            <td align="center" bgcolor="#FFFFFF">张三</td>
+                            <td align="center" bgcolor="#FFFFFF">13846236564</td>
+                            <td align="center" bgcolor="#FFFFFF">待付款</td>
+                            <td align="center" bgcolor="#FFFFFF">本站</td>
+                            <td align="center" bgcolor="#FFFFFF"><a href="#">确认</a></td>
+                            <td align="center" bgcolor="#FFFFFF">原201309123563</td>
+                        </tr>
+                        <tr>
+                            <td height="30" bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<style>
+    .member-box{
+width:1058px;
+background:#f4f6f9;
+border:#dddddd solid 1px;
+overflow:hidden;
+padding-bottom:20px;
+}
+.member-detail{
+margin-left:10px;
+margin-top:10px;
+width:1016px;
+border:#dddddd solid 1px;
+background:#ffffff;
+padding:10px;
+
+}
+.member-detail td{
+padding:5px;}
+.red14{
+color:#FF0000;
+font-weight:bold;
+font-family:Arial;
+}
+.green{
+color: #009900
+}
+.member-info ,.member-order{
+clear:both;
+width:1036px;
+margin-top:10px;
+margin-left:10px;
+}
+.member-box h3{
+clear:both;
+font-size:14px;
+color:#333333;
+font-weight:bold;
+padding-top:10px;
+padding-left:10px;
+margin-top:10px;
+position:relative;
+
+}
+.member-info td{
+padding:0 10px;
+}
+.member-order td{
+padding:5px;
+}
+.member-btn {
+position:absolute;
+right:13px;
+top:0px;
+width:80px;
+}
+.member-btn a{
+display:block;
+width:80px;
+height:30px;
+line-height:30px;
+text-align:center;
+color:#FFFFFF;
+font-weight:bold;
+background:#48a7e7;
+}
+.member-btn a:hover{
+background:#0976B7;
+}
+</style>

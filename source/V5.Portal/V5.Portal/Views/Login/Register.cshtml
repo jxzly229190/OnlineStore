@@ -1,0 +1,107 @@
+﻿@using V5.Portal.Common
+@using V5.Portal.Controllers
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+    var adv = new HomeController().GetAdvertiseHtml("$ImagePath$", "id=829");
+    if (!string.IsNullOrEmpty(adv))
+    {
+        adv = "background-image:url('" + adv + "')";
+    }
+        
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">       
+    <head>    
+        <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+        <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        
+        @Styles.Render("~/Content/base.css")
+        @Styles.Render("~/Content/register.css")
+        <!--[if lt IE 9]> 
+            <style>
+                .register .msg{filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#336337,endColorstr=#336337);}
+            </style>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo"><a href="@V5.Portal.Common.ConstantParams.IndexUrl" title="购酒网"></a></div>
+            <div class="legend shadow"><em>注册新用户</em>您提供的所有信息，绝不会被公开用作其他用途，请放心填写。<label>已有购酒网账号?<a href="/Login"></a></label></div>
+            <div class="main shadow" style="@adv">
+                <form id="register_form" method="post" onsubmit="return false;">
+                    <div class="register">            
+                        <ul>
+                            <li class="uname"><label>*账户名称:</label><label id="info">邮箱/手机号</label><input type="text" class="txt" id="uname" name="n" value="" label="uname_msg"/><label class="msg" id="uname_msg" info="请输入邮箱/手机号" error="用户名长度必须在6-20位之间" ></label></li>
+                            <li class="uname"><label>*账户昵称:</label><input type="text" class="txt" id="unick" name="u" value="" label="unick_msg"/><label class="msg" id="unick_msg" info="请输入会员昵称" error="会员昵称长度必须在6-20位之间" ></label></li>
+                            <li class="upwd"><label>*设置密码:</label><input type="password" class="txt" id="upwd" name="p" label="upwd_msg"/><label class="msg" id="upwd_msg" info="长度必须在6-20之间" error="用户名长度必须在6-20位之间" ></label></li>
+                            <li class="upwd"><label>*确认密码:</label><input type="password" class="txt" id="upwd2" label="upwd2_msg"/><label class="msg" id="upwd2_msg" info="长度必须在6-20之间" error="用户名长度必须在6-20位之间" ></label></li>               
+                            <li class="validate"><label>*验证码:</label><input type="text" class="txt" id="authcode" name="v"/><img id="SecurityCodeImg"  src="" alt=""><span>看不清?<a id="replace_img" href="javascript:void(0);">换一张</a></span></li>
+                            <li class="protocol"><input type="checkbox" id="agree"/><span>已阅读并同意<a href="/Home/Help?id=6" target="_blank">《购酒网用户注册协议》</a></span></li>
+                            <li class="button"><input type="submit" id="register_submit" value=""/></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="foot">
+                <div>
+                    <a href="/Home/Help/24.html" title="关于我们">关于我们</a>|<a href="/Home/Help/26.html" title="联系我们">联系我们</a>|<a href="/Home/Help/25.html" title="人才招聘">人才招聘</a>|<a href="/Home/Help/27.html" title="隐私声明">隐私声明</a>|<a href="@Html.Raw(ConstantParams.HelpUrl)" title="帮助中心">帮助中心</a>|<a href="/Home/Help/28.html" title="友情链接">友情链接</a>
+                </div>
+                <div>Copyright&copy;2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</div>
+            </div>
+        </div>
+        @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+        @Scripts.Render("~/Scripts/jquery.cookie.js")
+        @Scripts.Render("~/Scripts/Login/Barrett.js")
+        @Scripts.Render("~/Scripts/Login/BigInt.js")
+        @Scripts.Render("~/Scripts/Login/jQuery.md5.js")
+        @Scripts.Render("~/Scripts/Login/RSA.js")
+        @Scripts.Render("~/Scripts/Login/register.js")
+        <script type="text/javascript">
+            $(function () {
+                var fvalue = $("#uname").val() || "";
+                if (fvalue == "") {
+                    $("#info").show();
+                } else {
+                    $("#info").hide();
+                }
+
+                $(".txt").each(function () {
+                    $(this).focus(function () {
+                        $(this).addClass("cur");
+
+                        var label = $(this).attr("label") || "";
+                        if (label == "") return;
+
+                        var info = $("#" + label).attr("info") || "";
+                        if (info == "") return;
+
+                        $("#" + label).text(info).css("display", "inline-block");
+                    }).blur(function () {
+                        $(this).removeClass("cur");
+
+                        var label = $(this).attr("label") || "";
+                        if (label == "") return;
+
+                        $("#" + label).hide();
+                    });
+
+                    if ($(this).attr("id") == "uname") {
+                        $(this).focus(function () {
+                            $("#info").hide();
+                        }).blur(function () {
+                            var fvalue = $("#uname").val() || "";
+                            if (fvalue == "") {
+                                $("#info").show();
+                            }
+                        });
+                    }
+                });
+            });
+
+            $(function () {
+                register.init();
+            });
+        </script>
+    </body>
+</html>

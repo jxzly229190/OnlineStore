@@ -1,0 +1,37 @@
+﻿@model V5.Portal.Backstage.Models.System.DepartmentModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    部门名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    部门人数：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().IntegerTextBoxFor(model => model.Headcount).Value(Model.Headcount).Min(0))
+</div>
+<div class="editor-label">
+    负责人：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Principal)
+    @Html.ValidationMessageFor(model => model.Principal)
+</div>
+<div class="editor-label">
+    手机号码：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.PrincipalMobile)
+    @Html.ValidationMessageFor(model => model.PrincipalMobile)
+</div>
+<div class="editor-label">
+    描述：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Description)
+    @Html.ValidationMessageFor(model => model.Description)
+</div>

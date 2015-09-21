@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "邮件&微信订阅";
+}
+
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .uc_rss {color:#555; padding-bottom:36px !important;}
+    .uc_rss .uc_rss_top {border-bottom:3px solid #ff5f3e; line-height:36px; font-size:16px; text-indent:12px; }
+    .uc_rss .uc_rss_item_top {position:relative; text-indent:18px !important;}
+    .uc_rss .uc_rss_item_top em {background-color: #FE4819;display: block;height: 6px;position: absolute;left: 5px;top: 14px;width: 6px;}
+    .uc_rss .uc_rss_item {padding:6px 12px; line-height:32px;}
+    .uc_rss .uc_rss_item .uc_rss_item_top{ font-size:14px; border-bottom:1px dashed #f0f0f0; text-indent:12px;}
+    .uc_rss .uc_rss_label{ display:block; text-indent:12px; }
+    .uc_rss .uc_rss_choose{ padding:12px 24px; background-color:#f8f8f8; line-height:28px; }
+    .uc_rss .uc_rss_choose label{padding:0 5px; position:relative; top:-2px;}
+    .uc_rss .uc_rss_choose dt {float:left; margin-right:12px; }
+    .uc_rss .uc_rss_choose dt img{width:100px; height:100px; }
+    .uc_rss a{ -webkit-transition: all .3s;-moz-transition: all .3s;-o-transition: all .3s;transition: all .3s; padding:2px 5px; text-decoration:none; margin-left:3px;}
+    .uc_rss a:hover{ background-color:#ff5f3e; color:#fff; }        
+</style>
+
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_rss">
+            <dt class="uc_rss_top">邮件&微信订阅</dt>
+            <dd>
+                <dl class="uc_rss_item uc_rss_mail">
+                    <dt class="uc_rss_item_top"><em></em>邮件订阅</dt>
+                    <dd>
+                        <label class="uc_rss_label">请选择您希望订阅的邮件内容(可多选)</label>
+                        <dl class="uc_rss_choose">
+                            <dd><input type="checkbox" /><label>每日团购：每周一到周五每天1期；推荐20款热卖商品</label></dd>
+                            <dd><input type="checkbox" /><label>促销活动：每周一期；全网大型专题活动，限时抢购，超值买赠等</label></dd>
+                            <dd><input type="checkbox" /><label>订单状态提醒：及时了解订单进度</label></dd>
+                        </dl>
+                        <label class="uc_rss_label">您尚未订阅邮件，立即订阅，不错过每一天的独享特价惊喜！</label>
+                        <label class="uc_rss_label">您的邮箱是：tqjsh2006@126.com<a href="###">修改邮箱</a></label>
+                        <label class="uc_rss_label"><a href="###">立即订阅</a></label>
+                    </dd>
+                </dl>
+                <dl class="uc_rss_item uc_rss_weixin">
+                    <dt class="uc_rss_item_top"><em></em>微信订阅</dt>
+                    <dd>
+                        <label class="uc_rss_label">请选择您希望订阅的邮件内容(可多选)</label>
+                        <dl class="uc_rss_choose">
+                            <dt><img src="/Content/images/weixin.jpg" /></dt>
+                            <dd style="margin-top:3px;"><input type="checkbox" /><label>每日团购：每周一到周五每天1期；推荐20款热卖商品</label></dd>
+                            <dd><input type="checkbox" /><label>促销活动：每周一期；全网大型专题活动，限时抢购，超值买赠等</label></dd>
+                            <dd><a href="###">立即订阅</a></dd>
+                            <div class="clear"></div>
+                        </dl>                        
+                    </dd>
+                </dl>
+            </dd>
+        </dl>        
+    </div>
+    <div class="clear"></div>
+</div>
+</div>

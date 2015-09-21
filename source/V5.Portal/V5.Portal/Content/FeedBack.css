@@ -1,0 +1,117 @@
+body
+{
+    background: #EAE8E9 url(../images/bg_top.gif) top repeat-x;
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+}
+.container
+{
+    width: 1000px;
+    margin: 0 auto;
+}
+.header
+{
+    height: 129px;
+    position: relative;
+}
+.header .logo
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.header .nav
+{
+    position: absolute;
+    right: 30px;
+    bottom: 36px;
+    color: #666;
+}
+.header .nav a
+{
+    color: #666;
+    text-decoration: none;
+}
+.feedback
+{
+    padding: 20px 50px;
+    margin: 15px 0 20px;
+    background: #fff;
+    font-size: 14px;
+}
+.feedback .top
+{
+    border-bottom: 3px solid #E0DFE2;
+    padding-bottom: 6px;
+}
+.feedback .top dt
+{
+    font-size: 16px;
+    font-weight: bold;
+}
+.feedback .top dd
+{
+    margin: 10px 12px;
+    letter-spacing: 1px;
+}
+.feedback table
+{
+    width: 100%;
+}
+.feedback table tr
+{
+    height: 32px;
+}
+.feedback .txt
+{
+    width: 320px;
+    padding: 5px 3px;
+    border-top: 1px solid #6D8EBA;
+    border-left: 1px solid #6D8EBA;
+    border-bottom: 1px solid #BFCEE1;
+    border-right: 1px solid #BFCEE1;
+}
+.feedback #content
+{
+    width: 485px;
+    height: 130px;
+}
+.feedback #btnSubmit
+{
+    width: 120px;
+    height: 32px;
+}
+.feedback #validate
+{
+    width: 120px;
+}
+.feedback em
+{
+    color: #ff0000;
+    font-weight: normal !imporant;
+    font-style: normal !imporant;
+}
+.footer
+{
+    text-align: center;
+    line-height: 21px;
+    color: #6c6c6c;
+    letter-spacing: 1px;
+}
+.footer a
+{
+    text-decoration: none;
+    color: #6c6c6c;
+    padding: 0px 6px;
+    display: inline-block;
+}
+.footer .copyright
+{
+    font-family: Arial;
+}
+.validate_message
+{
+    color: #ff0000;
+    font-size: 12px;
+}

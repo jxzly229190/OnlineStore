@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "BatchLeadLp";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        advertiseLp.Init();
+    });
+</script>
+<div id="batchlp" style="margin-left: 200px;">
+    <div>
+        <input type="button" value="返回" class="k-button" style="width: 100px" id="comeback"
+            onclick="comeback()" />
+    </div>
+    <div style="height: 50px;">
+        <fieldset style="width: 300px; height: 400px;">
+            <legend style="font-size: 15px;">Lp目录</legend>
+            <div>
+                <ul id="batchlpTree" class="ztree">
+                </ul>
+            </div>
+        </fieldset>
+        <input type="button" value="确定导入" class="k-button" style="width: 100px; margin-left: 200px;"
+            id="btnSureLead" />
+    </div>
+</div>

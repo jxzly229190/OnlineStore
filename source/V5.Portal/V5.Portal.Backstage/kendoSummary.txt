@@ -1,0 +1,10 @@
+Kendo UI 官网：www.kendoui.com
+
+1：样式文件存放目录：~/V5.Portal.Backstage/Content/Kendo/
+
+2：JS文件存放目录：~/V5.Portal.Backstage/Scripts/kendo/
+
+3：基本文件在 _Layout.cshtml 中引用，目前基本文件已在_Layout.cshtml中引用。
+
+    
+

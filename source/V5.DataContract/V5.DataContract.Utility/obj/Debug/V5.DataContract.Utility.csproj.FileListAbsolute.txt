@@ -1,0 +1,7 @@
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Utility\bin\Debug\V5.DataContract.Utility.dll
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Utility\bin\Debug\V5.DataContract.Utility.pdb
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Utility\obj\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Utility\obj\Debug\V5.DataContract.Utility.dll
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Utility\obj\Debug\V5.DataContract.Utility.pdb
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.DataContract.Utility.dll
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.DataContract.Utility.pdb

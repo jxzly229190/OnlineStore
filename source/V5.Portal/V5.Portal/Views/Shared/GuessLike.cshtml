@@ -1,0 +1,16 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@{
+    var home = new HomeController();
+}
+<div>
+    <dl class="uc_right_item uc_recommend">
+        <dt class="uc_recommend_top">你可能感兴趣</dt>
+        @Html.Raw(home.GetHtml("<dd class=\"uc_recommend_item\">"+
+            "    <a class=\"image\" href=\"/product/item-id-$ProductID$.htm\" ><img src=\"$ThumbnailPath$\" /></a>" +
+            "    <p class=\"price\">¥$GoujiuPrice$</p>"+
+            "    <a class=\"title\" href=\"/product/item-id-$ProductID$.htm\" >$ProductName$($Advertisement$)</a>" +
+            "</dd>",6,ProductType.Rand))
+        <dd class="clear"></dd>
+    </dl>
+</div>

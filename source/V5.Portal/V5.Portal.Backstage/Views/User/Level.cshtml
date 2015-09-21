@@ -1,0 +1,34 @@
+﻿@using V5.Portal.Backstage.Models.User
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<UserLevelModel>()
+    .Name("levelGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.Name).Title("会员等级");
+        columns.Bound(u => u.Money).Title("满足金额");
+        columns.Command(command =>
+            {
+                command.Edit().Text("修改").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyLevel", "User", "POST"));
+                command.Custom("delete").Click("deleteLevel").Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveLevel", "User", "POST"));
+            }).Title("操作").Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("添加会员等级").HtmlAttributes(permissionObj.GetDisplayAttribute("AddLevel", "User", "POST", false)))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("User_Level_Template"))
+    .Pageable()
+    .Scrollable()
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(u => u.ID))
+        .Create(update => update.Action("AddLevel", "User"))
+        .Read(read => read.Action("QueryLevel", "User"))
+        .Update(update => update.Action("ModifyLevel", "User"))
+        .Destroy(update => update.Action("RemoveLevel", "User"))
+    )
+)

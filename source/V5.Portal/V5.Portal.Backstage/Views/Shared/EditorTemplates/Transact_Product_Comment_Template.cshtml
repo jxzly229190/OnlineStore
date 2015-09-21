@@ -1,0 +1,16 @@
+﻿@model V5.Portal.Backstage.Models.Transact.ProductCommentModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    审核状态：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.Status).OptionLabel(" 请选择 ").Name("Status").DataSource(ds => ds.Read("GetCommentStatusItems", "Transact")).DataTextField("Text").DataValueField("Value"))
+</div>
+<div class="editor-label">
+    备注：
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(m => m.AuditDescription, new { @class = "k-textbox",@style="width: 220px;height: 100px" })
+    @Html.ValidationMessageFor(model => model.AuditDescription)
+</div>

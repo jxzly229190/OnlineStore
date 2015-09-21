@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "在线支付 - 购酒网";
+    Layout = "../Shared/_OrderLayout.cshtml";
+}
+
+<script>
+    $(function () {
+        SetFlow(3);
+    })
+</script>
+<link href="../../Content/Order/order.css" rel="stylesheet" type="text/css" />
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<div class="order_success">
+    <dl class="order_success_info">
+        @if (ViewBag.Money != null)
+        {
+            <dt class="info_image"></dt>
+            <dd class="info_label label_1">订单支付成功！</dd>
+            @*<dd class="info_label label_2">您已经成功支付了 @Html.Raw(ViewBag.Money) 元</dd>*@
+            <dd class="clear"></dd>
+        }
+        else
+        {
+            <dt class="info_image"></dt>
+            <dd class="info_label label_1">订单支付异常！</dd>
+            <dd class="info_label label_2">@Html.Raw(ViewBag.Message)</dd>
+            <dd class="clear"></dd>
+        }
+    </dl>
+
+    <p class="order_success_label">您现在可以：&nbsp;&nbsp;<a href="/User/MyOrder">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="@V5.Portal.Common.ConstantParams.IndexUrl">继续购物</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/User">去用户中心</a></p>
+    <div class="uc_right">
+        @Html.Action("GuessLike", "Home")
+    </div>
+</div>

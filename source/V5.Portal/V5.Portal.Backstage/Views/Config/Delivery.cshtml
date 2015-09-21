@@ -1,0 +1,77 @@
+﻿@using V5.Portal.Backstage.Utils;
+@using V5.Portal.Backstage.Models.Configuration;
+@{
+    ViewBag.Title = "快递管理";
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionCostObj = new PermissionUtility(Context.Session.SessionID);
+}
+
+@(Html.Kendo().Grid<ConfigDeliveryCorporationModel>().Name("configDeliveryCorporationGird")
+    .Columns(columns =>
+     {
+        columns.Bound(p => p.Name).Title("名称").Width(80);
+        columns.Bound(p => p.URL).Width(200).Title("网址（URL）");
+        columns.Bound(p => p.Description).Title("描述");
+        columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(160).Title("创建");
+        columns.Command(command =>
+        {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyCorporation", "Config", "Post",true));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveCorporation", "Config", "Post", true));
+        }).Width(160).Title("操作").Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().HtmlAttributes(permissionObj.GetDisplayAttribute("AddCorporation", "Config", "Post",false)).Text("添加配送公司")).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Delivery_Corporation_Template").Window(edit => edit.Title("编辑")))
+    .Selectable()
+    .Scrollable()
+        .ClientDetailTemplateId("SubTemplate1")
+    .Events(e =>
+        {
+            e.Edit("onEdit");
+            e.DetailExpand("onDetailDeliveryExpand");
+        })
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+            .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+        .Model(model => model.Id(p => p.ID))
+        .Read(read => read.Action("QueryCorporation", "Config"))
+        .Create(create => create.Action("AddCorporation", "Config"))
+        .Update(update => update.Action("ModifyCorporation", "Config"))
+        .Destroy(destory => destory.Action("RemoveCorporation", "Config"))
+    )
+)
+
+<input type="hidden" id="deliveryCorpIDHidden"/>
+<script id="SubTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ConfigDeliveryCostModel>().Name("configDeliveryCostGird_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.CityName).Width(200).Title("到达城市");
+                  columns.Bound(p => p.Cost).Width(150).Title("运费（单位：人民币元）");
+                  columns.Bound(p => p.Duration).Title("运输耗时（单位：天）");
+                  columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(160).Title("创建时间");
+                  columns.Command(command =>
+                      {
+                      command.Edit().Text("编辑").HtmlAttributes(permissionCostObj.GetDisplayAttribute("ModifyCost", "Config", "Post", true));
+                      command.Destroy().Text("删除").HtmlAttributes(permissionCostObj.GetDisplayAttribute("RemoveCost", "Config", "Post",true)); }).Width(160).Hidden(permissionCostObj.Hidden);
+              })
+                  .ToolBar(toolbar => toolbar.Create().Text("添加配送城市").HtmlAttributes(permissionCostObj.GetDisplayAttribute("AddCost", "Config", "Post",false))).Pageable()
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Delivery_Cost_Template").Window(edit => edit.Title("编辑")))
+          .Selectable()
+          .Scrollable()
+          .Events(e => e.Edit("onEditDelivery"))
+          .HtmlAttributes(new { style = "height:450px;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                                .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+                                        .Model(model => model.Id(d => d.ID))
+                                        .Create(create => create.Action("AddCost", "Config", new { corporationId = "#=ID#" }))
+                                        .Destroy(destory => destory.Action("RemoveCost", "Config"))
+                                        .Update(update => update.Action("ModifyCost", "Config"))
+                                        .Read(read => read.Action("QueryByCorporationIDWithPaging", "Config", new { corporationId = "#=ID#" }))
+          ).ToClientTemplate()
+          )
+</script>
+    

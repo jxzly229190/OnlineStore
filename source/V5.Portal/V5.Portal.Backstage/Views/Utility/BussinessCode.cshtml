@@ -1,0 +1,225 @@
+﻿@{
+    ViewBag.Title = "BussinessCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style type="text/css">
+    .tableair
+    {
+    }
+</style>
+<h2>
+    编号生成器</h2>
+<div>
+    <table class="tableair">
+        <tr>
+            <td>
+                自定义编号预览:
+            </td>
+            <td>
+                <input type="text" class="k-textbox" style="width: 300px;" id="customcode" />
+            </td>
+            <td>
+                <input type="button" class="k-button" value="自增取号" onclick="cuctomiterator()" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                订单编号预览:
+            </td>
+            <td>
+                <input type="text" class="k-textbox" style="width: 300px;" id="showDIv" />
+                <input type="hidden" id="orderTime" value="" />
+            </td>
+            <td>
+                <input type="button" class="k-button" value="自增取号" onclick="iterator()" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                用户编号:
+            </td>
+            <td>
+                <input type="text" class="k-textbox" style="width: 300px;" id="userCode" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                业务类型：
+            </td>
+            <td>
+                <select name="business" id="business" class="k-textbox" style="width: 300px;">
+                    <option value="1">网购 </option>
+                    <option value="2">团购 </option>
+                    <option value="3">内部人员 </option>
+                </select>
+            </td>
+            <td>
+                <input type="button" class="k-" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                编码格式：
+            </td>
+            <td>
+                <select name="codeFormat" id="codeFormat" class="k-textbox" style="width: 300px;">
+                    <option value="-">如：rt001-GJW-20131226-000000232</option>
+                    <option value="/">如：rt001/GJW/20131226/000000230</option>
+                    <option value="_">如：rt001_GJW_20131226_000000231</option>
+                </select>
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td class="">
+                命名前缀：
+            </td>
+            <td class="">
+                <input type="text" value="" class="k-textbox" style="width: 300px;" name="prefixName"
+                    id="prefixName" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                流水号长度：
+            </td>
+            <td>
+                <input type="text" value="" class="k-textbox" style="width: 300px;" name="transactionLength"
+                    id="transactionLength" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                起始流水号：
+            </td>
+            <td>
+                <input type="text" value="" class="k-textbox" style="width: 300px;" name="transaction"
+                    id="transaction" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                生成时间：
+            </td>
+            <td>
+                <input type="radio" value="1" name="transaction" id="transaction1" />按年生成
+                <input type="radio" value="2" name="transaction" id="transaction2" />按月生成
+                <input type="radio" value="3" name="transaction" checked="checked" id="transaction3" />按日生成
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                生成：
+            </td>
+            <td>
+                <input type="button" class="k-button" onclick="CodeSubmit()" value="生成编号" />
+            </td>
+        </tr>
+        <tr style="margin-top: 5px;">
+            <td>
+                反推编号:
+            </td>
+            <td>
+                <input type="text" class="k-textbox" style="width: 300px;" id="newCode" />
+                <input type="button" class="k-button" value="反推" onclick="reverseCode()" />
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="width: 100px; height: 50px; border: 1px solid red; display: none;" id="trandiv">
+</div>
+</>
+<script type="text/javascript">
+    function cuctomiterator() {
+        var userCode = $("#userCode").val();
+        $.ajax({
+            type: "POST",
+            url: "/Utility/GetCustomeCode",
+            data: { usercode: userCode },
+            success: function (data) {
+                $("#customcode").val(data.customCode);
+            }
+
+        });
+    }
+    function reverseCode() {
+        var orderCode = $("#showDIv").val();
+        var orderTime = $("#orderTime").val();
+        $.ajax({
+            type: "POST",
+            url: "/Utility/ReverseOrderCode",
+            data: { orderCode: orderCode, createOrderTime: orderTime },
+            success: function (data) {
+                $("#newCode").val(data.newCode);
+            }
+        });
+    }
+    function showDiv() {
+        $("#trandiv").css("display", "block");
+    }
+    function radioCheck(atr) {
+        if ($("#transaction1").is(":checked")) {
+            alert("年");
+        }
+        if ($("#transaction2").is(":checked")) {
+            alert("月");
+        }
+        if ($("#transaction3").is(":checked")) {
+            alert("日");
+        }
+    }
+    function CodeSubmit() {
+        var business = $("#business").val();
+        var codeFormat = $("#codeFormat").val();
+        var prefixName = $("#prefixName").val();
+        var transactionLength = $("#transactionLength").val();
+        var transaction = $("#transaction").val();
+        var userCode = $("#userCode").val();
+        var aseSelf = false;
+        if ($("#aseSelf").is(":checked")) {
+            aseSelf = "true";
+        }
+        else {
+            aseSelf = "false";
+        }
+        if (transactionLength > 13) {
+            alert("流水号长度可以大于13");
+        }
+        //1年2月3日
+        var expireTime = 0;
+        if ($("#transaction1").is(":checked")) {
+            expireTime = 1;
+        }
+        if ($("#transaction2").is(":checked")) {
+            expireTime = 2;
+        }
+        if ($("#transaction3").is(":checked")) {
+            expireTime = 3;
+        }
+        var data = { business: business, codeFormat: codeFormat, prefixName: prefixName, tLength: transactionLength, transaction: transaction, userCode: userCode, expireTime: expireTime };
+        $.ajax({
+            type: "GET",
+            url: "/Utility/Register/",
+            data: data,
+            async: false,
+            success: function (callback) {
+                var arr = callback.split('|');
+                $("#userCode").val(arr[1]);
+                $("#showDIv").val(arr[0]);
+            }
+        }
+        );
+    }
+    function iterator() {
+        var userCode = $("#userCode").val();
+        $.ajax({
+            type: "GET",
+            url: "/Utility/GetCode",
+            data: { userCode: userCode },
+            success: function (data) {
+                $("#showDIv").val(data.orderCode);
+                $("#orderTime").val(data.createTime);
+            }
+        });
+    }
+</script>

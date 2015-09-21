@@ -1,0 +1,209 @@
+﻿@using System.Text
+@using MongoDB
+@using V5.DataContract.Transact.Order
+@using V5.Portal.Common
+@using V5.Portal.Controllers
+@model V5.DataContract.Transact.Order.Order
+@{
+    ViewBag.Title = "订单提交 - 购酒网";
+    Layout = "../Shared/_OrderLayout.cshtml";
+}
+
+@{
+    StringBuilder gaScript = new StringBuilder();
+    StringBuilder gaCallback=new StringBuilder();
+    StringBuilder strYiMa_OrderFinish = new StringBuilder();
+    string strYiMa = "";
+    
+    gaScript.AppendFormat("_gaq.push(['_addTrans','{0}','','{1}','','','','','']);", Model.OrderCode, Model.TotalMoney + Model.DeliveryCost).Append("\r\n");
+    gaCallback.AppendFormat("_gsTracker.addOrder('{0}',{1} );", Model.OrderCode, Model.TotalMoney + Model.DeliveryCost).Append("\r\n");
+
+    if (Model.CpsID == 5)
+    {
+        #region 亿玛访问跟踪代码
+
+        strYiMa_OrderFinish.Append("http://o.yiqifa.com/adv/goujiuwang.jsp?");
+        strYiMa_OrderFinish.Append("id=" + Model.OrderCode);
+        strYiMa_OrderFinish.Append("&uid=5513");
+        if (Request.Cookies["CPS_IN"] != null)
+        {
+            strYiMa_OrderFinish.Append("&ex=" + Request.Cookies["CPS_IN"].Values["SiteEx"]);
+        }
+        strYiMa_OrderFinish.Append("&fee=" + Server.UrlEncode(Model.TotalMoney.ToString()));
+        strYiMa_OrderFinish.Append("&time=" + Server.UrlEncode(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+        strYiMa_OrderFinish.Append("&ip=" + Server.UrlEncode(Request.UserHostAddress));
+        strYiMa_OrderFinish.Append("&goods=");
+        #endregion
+    }
+    
+    var products = new OrderController().GetOrderProducts(Model.ID);
+    if (products != null && products.Count > 0)
+    {
+        foreach (var orderProduct in products)
+        {
+            gaScript.AppendFormat(@"_gaq.push(['_addItem', 
+                            '{0}', // order ID - required 
+                            '{1}', // SKU/code - required 
+                            '{2}', // product name 
+                            '',
+                            '{3}', // unit price - required 
+                            '{4}' // quantity - required 
+                            ]); ", Model.OrderCode, orderProduct.Barcode, orderProduct.ProductName, orderProduct.TransactPrice, orderProduct.Quantity).Append("\r\n");
+            
+            gaCallback.AppendFormat(@"_gsTracker.addProduct('{0}', '{1}','{2}',{3} , {4}, '');", Model.OrderCode, orderProduct.ProductName,orderProduct.Barcode, orderProduct.TransactPrice, orderProduct.Quantity).Append("\r\n");
+
+            if (!string.IsNullOrWhiteSpace(strYiMa_OrderFinish.ToString()))
+            {
+                #region 亿玛订单商品跟踪代码
+
+                strYiMa_OrderFinish.Append("Commission:" + orderProduct.RebateRate + ",GoodsNo:" + orderProduct.Barcode + ",Name:" + Server.UrlEncode(orderProduct.ProductName) + ",Price:" + orderProduct.TransactPrice + ",Quantity:" + orderProduct.Quantity).Append(";");
+
+                #endregion
+            }
+
+        }
+    }
+    
+    if (!string.IsNullOrEmpty(strYiMa_OrderFinish.ToString()))
+    {
+        strYiMa = "<iframe src=\"" + strYiMa_OrderFinish + "\" style=\"display:none;\"></iframe>";
+        @Html.Raw(strYiMa);
+    }
+}
+
+<script>
+    $(function () {
+        SetFlow(3);
+    })
+</script>
+<script type="text/javascript">
+     var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-42350784-1']);
+	_gaq.push(['_addOrganic', 'baidu', 'word']);
+	_gaq.push(['_addOrganic', 'baidu', 'kw']);
+	_gaq.push(['_addOrganic', 'baidu', 'wd']);
+	_gaq.push(['_addOrganic', 'baidu', 'q1']);
+	_gaq.push(['_addOrganic', 'baidu', 'q2']);
+	_gaq.push(['_addOrganic', 'baidu', 'q3']);
+	_gaq.push(['_addOrganic', 'baidu', 'q4']);
+	_gaq.push(['_addOrganic', 'baidu', 'q5']);
+	_gaq.push(['_addOrganic', 'baidu', 'q6']);
+	_gaq.push(['_addOrganic', 'baidu', 's']);
+	_gaq.push(['_addOrganic', 'm.baidu', 'word']);
+	_gaq.push(['_addOrganic', 'wap.baidu', 'word']);
+	_gaq.push(['_addOrganic', 'bing', 'q']);
+	_gaq.push(['_addOrganic', 'soso', 'w']);
+	_gaq.push(['_addOrganic', 'yodao', 'q']);
+	_gaq.push(['_addOrganic', 'wap.soso.com', 'key']);
+	_gaq.push(['_addOrganic', '3721', 'name']);
+	_gaq.push(['_addOrganic', 'youdao', 'q']);
+	_gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+	_gaq.push(['_addOrganic', '360so', 'q']);
+	_gaq.push(['_addOrganic', '360sou', 'q']);
+	_gaq.push(['_addOrganic', 'vnet', 'kw']);
+	_gaq.push(['_addOrganic', 'sogou', 'query']);
+	_gaq.push(['_addOrganic', 'ucweb', 'keyword']);
+	_gaq.push(['_addOrganic', 'ucweb', 'word']);
+	_gaq.push(['_addOrganic', '114so', 'kw']);
+	_gaq.push(['_addOrganic', 'glb.uc.cn', 'keyword']);
+	_gaq.push(['_addOrganic', 'so.com', 'q']);
+	_gaq.push(['_setDomainName', 'gjw.com']);
+	_gaq.push(['_addIgnoredRef', 'gjw.com']);
+	_gaq.push(['_addIgnoredRef', 'goujiuwang.com']);
+	_gaq.push(['_trackPageview']);
+
+    @Html.Raw(gaScript)
+    
+    _gaq.push(['_trackTrans']);
+	_gaq.push(['_trackPageLoadTime']);
+	(function () {
+	var ga = document.createElement('script'); 
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(ga, s);
+	})();
+	
+    function _gsCallback() {
+	if (window._gsTracker) {
+	    @Html.Raw(gaCallback.ToString())
+	    _gsTracker.trackECom();
+	}
+    }
+    
+</script> 
+<div class="order_success">
+    <dl class="order_success_info">
+        <dt class="info_image"></dt>
+        @{
+            if (ViewBag.PayType != null && ViewBag.PayType == 0)
+            {
+                <dd class="info_label label_1">订单提交成功，请您尽快付款！</dd>
+            }
+            else
+            {
+                <dd class="info_label label_1">订单提交成功！</dd>
+            }
+
+            if (Model != null&&!string.IsNullOrWhiteSpace(Model.OrderCode))
+            {
+                <dd class="info_label label_2">
+                    订单号：<a href="@Html.Raw(ConstantParams.OrderDetailUrl + "?ono=" + Model.OrderCode)" id="ANumber0" class="blue">@Model.OrderCode</a>
+                    应付金额：<label>¥@(Model.TotalMoney+Model.DeliveryCost) @(Model.DeliveryCost > 0 ? "（含" + Model.DeliveryCost + "元运费）" : "")</label>
+                    支付方式：<label>@Model.PaymentMethodName</label></dd>
+            }
+
+            if (ViewBag.PayType != null && ViewBag.PayType == 0)
+            {
+                <dd class="info_label label_3">温馨提示：请您在24小时内完成付款，否则系统将取消该订单。</dd>
+            }
+        }
+        <dd class="clear"></dd>
+    </dl>
+    @{
+        if (ViewBag.PayType != null && ViewBag.PayType == 0)
+        {
+            if (Model != null && !string.IsNullOrWhiteSpace(Model.OrderCode))
+            {
+                <dl class="order_success_payment">
+                    <dt class="payment_info">还差一步，请继续完成在线支付</dt>
+                    <dd class="payment_list">
+                        <label class="payment_warning">某些银行只支持部分浏览器，建议使用IE核心的浏览器。</label>
+                        <dl class="payment_item">
+                            <dt>请点击选择网银：</dt>
+                            <dd>
+                            <a class="u05" title="交通银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.JiaoTong)&ono=@Html.Raw(Model.OrderCode)"></a>
+                             <a class="u10" title="工商银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.GongHang)&ono=@Html.Raw(Model.OrderCode)"></a>                  
+                             <a class="u20" title="招商银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.ZhaoHang)&ono=@Html.Raw(Model.OrderCode)"></a>
+                             <a class="u25" title="浦发银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.PuFa)&ono=@Html.Raw(Model.OrderCode)"></a>                                 
+                             <a class="u40" title="中国银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.ZhongHang)&ono=@Html.Raw(Model.OrderCode)"></a>           
+                             <a class="u45" title="广发银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.GuangFa)&ono=@Html.Raw(Model.OrderCode)"></a>              
+                             <a class="u60" title="建设银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.JianHang)&ono=@Html.Raw(Model.OrderCode)"></a>                
+                             <a class="u80" title="农业银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.NongHang)&ono=@Html.Raw(Model.OrderCode)"></a>                
+                             <a class="u85" title="中信银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.ZhongXin)&ono=@Html.Raw(Model.OrderCode)"></a>                 
+                             <a class="u95" title="兴业银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.XingYe)&ono=@Html.Raw(Model.OrderCode)"></a>               
+                             <a class="u100" title="民生银行" href="/_99Bill/Index?bankId=@Html.Raw(ConstantBankID.MinSheng)&ono=@Html.Raw(Model.OrderCode)"></a>             
+                        </dd>
+                        </dl>
+                        <dl class="payment_item">
+                            <dt>第三方支付平台：</dt>
+                            <dd>
+                                <a class="u1010" title="支付宝支付" href="/Alipay/Alipay?ono=@Html.Raw(Model.OrderCode)"></a>
+                                <a class="u1015" title="快钱支付" href="/_99Bill/Index?ono=@Html.Raw(Model.OrderCode)"></a>
+                                <a class="u015" title="财付通支付" href="/Tenpay/DoPay?ono=@Html.Raw(Model.OrderCode)"></a>
+                        </dd>
+                        </dl>
+                    </dd>
+                </dl>
+            }
+            else
+            {
+                <dl class="order_success_payment">
+                    <dt class="payment_info">对不起，我们没有获取到您的订单号。您想去 @Html.ActionLink("<用户中心>", "Index", "User")-@Html.ActionLink("<我的订单>", "MyOrder", "User")</dt>
+                </dl>
+            }
+        }
+    }
+</div>
+

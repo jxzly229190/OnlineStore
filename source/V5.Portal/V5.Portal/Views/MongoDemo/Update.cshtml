@@ -1,0 +1,14 @@
+﻿@model IList<V5.Portal.Models.PageModel>
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update</h2>
+
+<ol>
+    @foreach (var item in Model)
+    {
+        <li>PageKey: @item.PageKey &nbsp;PageContent:@item.PageContent &nbsp; LastUpdate:@item.LastUpdateTime.ToLocalTime()</li>
+    }
+</ol>

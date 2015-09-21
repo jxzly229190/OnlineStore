@@ -1,0 +1,10 @@
+﻿PerRequestCache：
+1. 如果数据的生存期仅仅是一个请求，就可以考虑使用 PerRequestCache 作为短期的高速缓存；
+2. 应仔细考虑对高速缓存的需求，不要仅凭感觉就进行高速缓存，而应在确实需要时进行高速缓存。
+
+HttpRuntimeCache：
+1. HttpRuntimeCache 就是当前应用程序运行时的缓存。
+
+MemoryCache：
+1. MemoryCache 就是全局缓存，它的核心就是 ObjectCache 类，它是内存中的对象缓存的主要类型；
+2. ObjectCache 类的所有实现都应该禁止使用 null 作为缓存数据的值，这有助于避免在作为数据值的 null 和未找到的缓存项之间出现混淆。

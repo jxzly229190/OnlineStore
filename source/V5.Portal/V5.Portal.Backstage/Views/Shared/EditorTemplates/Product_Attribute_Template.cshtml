@@ -1,0 +1,37 @@
+﻿@model V5.Portal.Backstage.Models.Product.ProductAttributeModel
+@Html.HiddenFor(model => model.ID)
+@Html.HiddenFor(model => model.ProductCategoryID)
+<div class="editor-label">
+    属性:
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.AttributeName)
+    @Html.ValidationMessageFor(model => model.AttributeName)
+</div>
+<div class="editor-label">
+    排序:
+</div>
+<div class="editor-field">
+    @(Html.Kendo().IntegerTextBoxFor(model => model.Sorting).Value(Model.Sorting))
+</div>
+<div class="editor-label">
+    输入类型:
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownList().Name("InputType").OptionLabel("选择输入类型").BindTo(new List<SelectListItem> { new SelectListItem() { Text = "文本框", Value = "text" }, new SelectListItem() { Text = "单选按钮", Value = "radio" }, new SelectListItem() { Text = "多选", Value = "checkbox" }, new SelectListItem { Text = "下拉", Value = "drop" } }))
+    @Html.ValidationMessageFor(model => model.InputType)
+</div>
+<div class="editor-label">
+    数据类型:
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownList().Name("DataType").OptionLabel("选择数据类型").BindTo(new List<SelectListItem> { new SelectListItem { Text = "整数", Value = "int" }, new SelectListItem { Text = "小数", Value = "float" }, new SelectListItem { Text = "字符串", Value = "string" } }))
+    @Html.ValidationMessageFor(model => model.DataType)
+</div>
+<div class="editor-label">
+    长度:
+</div>
+<div class="editor-field">
+    @(Html.Kendo().IntegerTextBoxFor(model => model.DataLength).Value(Model.DataLength))
+    @Html.ValidationMessageFor(model => model.DataLength)
+</div>

@@ -1,0 +1,176 @@
+﻿.w1000
+{
+    width: 1000px;
+}
+.pl_box_title
+{
+    background: url(../Content/images/Detail_bg.gif) no-repeat -298px -279px;
+    height: 28px;
+    width: 77px;
+}
+.mt10
+{
+    margin-top: 10px;
+}
+.p10
+{
+    padding: 10px;
+}
+.pl_box
+{
+    border: 1px solid #DADADA;
+}
+.pl_user_say
+{
+    line-height: 24px;
+    padding: 15px 0;
+}
+.pl_box li
+{
+    display: block;
+}
+.h35
+{
+    height: 35px;
+}
+.ofh
+{
+    overflow: hidden;
+}
+.db
+{
+    display: block;
+}
+.bb1s
+{
+    border-bottom: 1px solid #DADADA;
+}
+ol, ul
+{
+    list-style: none;
+}
+.fr
+{
+    float: right;
+}
+.db
+{
+    display: block;
+}
+.s_10
+{
+    background-position: 0 -373px;
+}
+.star
+{
+    background-image: url(../Content/images/Detail_bg.gif);
+    height: 16px;
+    margin-right: 5px;
+    margin-top: 6px;
+    width: 75px;
+}
+.colRight
+{
+    color: #666;
+}
+.pl_user_say
+{
+    line-height: 24px;
+}
+.pb10
+{
+    padding-bottom: 10px;
+}
+.pt10
+{
+    padding-top: 10px;
+}
+
+.bb1d
+{
+    border-bottom: 1px dotted #EAEAEA;
+}
+.fix
+{
+    color: black;
+}
+dl
+{
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+#goodsInfo, #sidebar
+{
+    width: 195px;
+}
+.tj_box
+{
+    border: 1px solid #DADADA;
+    padding-bottom: 15px;
+}
+.ml_sandow
+{
+    background: none repeat 0 0 #F4F4F4;
+    border-top: 1px solid #DADADA;
+    font-size: 1px;
+    height: 2px;
+}
+.tj_box_1
+{
+    line-height: 18px;
+    margin: 15px auto;
+    width: 160px;
+}
+.tj_box dd
+{
+    background: url(../image/Detail_bg.gif) no-repeat 0 -287px;
+    font-family: '微软雅黑';
+    font-size: 15px;
+    font-weight: bold;
+    height: 20px;
+    margin-left: 15px;
+    margin-top: 5px;
+    width: 134px;
+}
+.pl_face
+{
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+.pl_user_say_r strong
+{
+    color: #cf0404;
+    font-weight: bold;
+}
+.pl_star_2
+{
+    display: block;
+    float: right;
+    width: 100px;
+}
+.pp_title
+{
+    width: 100%;
+    height: 32px;
+    background-color: #F8F8F8;
+    border: 1px solid #EAEAEA;
+    margin: 10px 0;
+}
+.pp_title span
+{
+    line-height: 32px;
+    text-indent: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+}
+.pp_title a
+{
+    margin-top: 8px;
+    margin-right: 10px;
+}

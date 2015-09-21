@@ -1,0 +1,113 @@
+﻿@using V5.Portal.Backstage.Models.Product
+<script src="../../Scripts/Backstage/Picture/Backstage.Picture.js" type="text/javascript"></script>
+<style type="text/css">
+    .select-product-table .k-dropdown { display:inline-block !important; width:6.6em !important; }
+    .select-product-table .t-label { width:80px; }
+    .select-product-table .t-button { width:80px; }
+    .select-product-table .t-textbox { width:120px; }
+    .select-product-table thead td{ padding:3px 0px 0px 6px; }
+    .select-product-table tbody td{ padding:3px 0px; }
+    .select-product-table tfoot td{ text-align:right }
+    .select-product-table tfoot .k-button { margin-left:6px !important; }
+</style>
+<script type="text/javascript">    
+    function SaveAndClose() {
+        var proID = $("input[name='chkproduct']:checked").val();
+        var proName = "";
+        var dataItems = $("#ProductOnSaleGrid").data("kendoGrid").dataSource.data();
+        $(dataItems).each(function () {
+            if (this.ID == proID) {
+                proName = this.Name;
+            }
+        });
+        $("#SelectProduct").data("kendoWindow").close();
+
+        $("#pro_ID").html(proName);
+        $("#pro_ID").attr("href", GetWebSiteUrl($("input[name='chkproduct']:checked").val(), "1"));
+        $("#advertiseUrl").val(GetWebSiteUrl($("input[name='chkproduct']:checked").val(), "1"));
+        $("#advertiseIndexID").val($("input[name='chkproduct']:checked").val());
+    }
+
+    function CloseWindow() {
+        $("#SelectProduct").data("kendoWindow").close();
+    }
+
+    function SearchOnSaleProduct() {
+        var filter = new Array();
+        var grid = $("#ProductOnSaleGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+    // 搜索商品时，获取搜索条件值
+    function SearchProductData() {
+        return {
+            parentCategoryID: $("#ParentCategory").val(),
+            productCategoryID: $("#ProductCategory").val(),
+            parentBrandID: $("#ParentBrand").val(),
+            productBrandID: $("#ProductBrand").val(),
+            productName: $("#ProductName").val(),
+            barcode: $("#Barcode").val(),
+            minPrice: $("#MinPrice").val(),
+            maxPrice: $("#MaxPrice").val()
+        };
+    }
+</script>
+<input type="hidden" id="WebSiteUrl" value="@Html.Raw(System.Configuration.ConfigurationManager.AppSettings["WebSiteUrl"].ToString())"/>
+<table class="select-product-table">
+    <thead>
+        <tr>
+            <td class="t-label">商品类别：</td>
+            <td>
+                @(Html.Kendo().DropDownList().Name("ParentCategory").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value"))
+                @(Html.Kendo().DropDownList().Name("ProductCategory").DataSource(source => source.Read(read => read.Action("QuerySubCategorySelectListItems", "Product").Data("GetParentCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategory"))
+                @(Html.Kendo().DropDownList().Name("ParentBrand").DataSource(source => source.Read(read => read.Action("QueryBrandSelectListItems", "Product").Data("GetProductCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ProductCategory"))
+                @(Html.Kendo().DropDownList().Name("ProductBrand").DataSource(source => source.Read(read => read.Action("QuerySubBrandSelectListItems", "Product").Data("GetParentBrandID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentBrand"))
+            </td>
+            <td class="t-label">商品名称：</td>
+            <td class="t-textbox"><input type="text" class="k-textbox" id="ProductName" /></td>
+            <td class="t-button"><input type="button" class="k-button" onclick="SearchOnSaleProduct()" value="查 询" /></td>
+        </tr>
+        <tr>
+            <td class="t-label">价格区间：</td>
+            <td>
+                @(Html.Kendo().NumericTextBox().Name("MinPrice").Min(0))至@(Html.Kendo().NumericTextBox().Name("MaxPrice").Min(0))
+            </td>
+            <td class="t-label">条形编码：</td>
+            <td class="t-textbox"><input type="text" class="k-textbox" id="Barcode" /></td>
+            <td class="t-button"><input type="button" class="k-button" id="OnSaleResetBtn" value="重 置" /></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="GridDiv" colspan="5">
+                 @(Html.Kendo().Grid<ProductSearchResultModel>()
+                  .Name("ProductOnSaleGrid")
+                  .Columns(columns =>
+                  {
+                      columns.Template(e => { }).ClientTemplate("<input type='radio' name='chkproduct' value='#=ID#' />").Width(20);
+                      columns.Bound(p => p.Name).Title("商品名称").Width(150);
+                      columns.Bound(p => p.Barcode).Title("条形码").Width(90);
+                      columns.Bound(p => p.GoujiuPrice).Title("价格").Width(50);
+                      columns.Bound(p => p.InventoryNumber).Title("库存").Width(50);
+                      columns.Bound(p => p.StatusName).Title("状态").Width(50);
+                  })
+                  .Pageable()
+                  .Scrollable()
+                  .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(10)
+                                            .Model(model => model.Id(p => p.ID))
+                                            .Create(update => update.Action("Add", "Product"))
+                                            .Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData"))
+                                            .Update(update => update.Action("Modify", "Product"))
+                                            .Destroy(update => update.Action("Remove", "Product"))
+                                            ))
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5"><input type="button" class="k-button" id="btnAddProduct" onclick="SaveAndClose()" value="确定" /><input type="button" class="k-button" onclick="CloseWindow()" value="取消" /></td>
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+@model V5.Portal.Backstage.Models.Promote.MeetMoney.PromoteMeetMoneyModel
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>促销详情</title>
+    @*引入 javascript 打包压缩功能*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/AjaxOverride.js")
+    @*引入 javascript*@
+    @Scripts.Render("~/Scripts/Backstage/Backstage.Common.KendoUI.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.all.min.js")
+    @*引入 css*@
+    @Styles.Render("~/Content/Common.css")
+    @Styles.Render("~/Content/kendo/kendo.common.min.css")
+    @Styles.Render("~/Content/kendo/kendo.uniform.min.css")
+</head>
+<body>
+    <div>
+        <div class="member-box">
+            <h3>促销基本信息 </h3>
+            <div class="member-detail">
+                <table width="1020" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="89" height="5" align="right">活动名称：</td>
+                        <td width="174" align="left">@Html.DisplayFor(model => model.Name)</td>
+                        <td width="108" align="right">手机验证: @Html.CheckBoxFor(model => model.IsMobileValidate)新会员: @Html.CheckBoxFor(model => model.IsNewUser)使用优惠券: @Html.CheckBoxFor(model => model.IsUseCoupon)</td>
+                    </tr>
+                    <tr>
+                        <td width="89" height="5" align="right">活动时间：</td>
+                        <td width="174" align="left">@Html.DisplayFor(model => model.StartTime)</td>
+                        <td width="174" align="right">@Html.DisplayFor(model => model.EndTime)</td>
+                    </tr>
+                    <tr>
+                        <td width="89" height="5" align="right">活动备注：</td>
+                        <td width="174" align="left">@Html.DisplayFor(model => model.Description)</td>
+                        <td width="108" align="right"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <h3>促销详细信息 </h3>
+            <div >
+                <h4>促销商品</h4>
+                <div>
+                    <table>
+                        <thead><tr><td class="p_name">商品信息</td></tr></thead>
+                    </table>
+                    <div class="choose_item_body_inner">
+                        <table id="item_list_selected"></table>
+                    </div>
+                </div>
+                <h4>优惠信息</h4>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

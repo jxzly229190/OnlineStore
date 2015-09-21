@@ -1,0 +1,9 @@
+﻿.main { background:#fff url(../images/registersuccess.jpg) 240px 130px no-repeat;}
+.main label{ display:block; width:300px; margin:5px auto; font-size:21px; font-weight:bold; }
+.back { color:#b3b3b3; }
+.back em { font-size:26px; }
+.info { margin-top:120px !important; color:#78bb52; }
+.info .button{ font-weight:normal; margin-left:6px; }
+.info .button{ background-color:#78bb52; color:#fff; width:60px; margin:0 auto !important; -webkit-transition: all .3s;-moz-transition: all .3s;-o-transition: all .3s;transition: all .3s; padding:2px 5px; text-decoration:none; margin-left:3px;}
+.info .button:hover{ background-color:#ff5f3e; color:#fff; }  
+.main .adv_link { display:block; width:650px; height:80px; margin:60px auto 10px; }

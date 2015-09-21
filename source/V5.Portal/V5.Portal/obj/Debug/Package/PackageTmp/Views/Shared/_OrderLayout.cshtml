@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>@ViewBag.Title</title>
+<link href="../../Content/Order/base.css" rel="stylesheet" type="text/css" />
+<link href="../../Content/Order/pub.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/Order/order.css" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
+</head>
+    <body>
+        <div class="header">
+            <div class="topbar">
+                <ul>
+                    <li>欢迎twwkjh@126.com <a href="#">退出登录</a></li>
+                    <li>用户中心 |</li>
+                    <li>帮助中心</li>
+                </ul>
+            </div>
+            <div class="logo-cont">
+                <span class="logo"><img src="../../Content/images/hd_logo.jpg" /></span>
+                <span class="flow bz1 "></span>
+            </div>
+        </div>
+        
+        @this.RenderBody()
+
+        <div class="footer">
+            <div id="foot">
+                <dl class="guarantee">
+                    <dt></dt>
+                    <dd>
+                        <a class="guar_1">100%正品真货</a><span>&nbsp;</span><a class="guar_2">30天退换货保障</a><span>&nbsp;</span><a class="guar_3">货到付款开箱验货</a></dd>
+                </dl>
+                <div class="links">
+                    <a href="http://www.gjw.com/help/show-id-12.htm" target="_blank">关于我们</a> <span>|</span> <a href="http://www.gjw.com/help/show-id-18.htm" target="_blank">联系我们</a> <span>|</span> <a href="http://www.gjw.com/help/show-id-19.htm" target="_blank">
+                                                                                                                                                                                                          友情链接</a> <span>|</span> <a href="http://www.gjw.com/help/show-id-20.htm" target="_blank">隐私声明</a>
+                </div>
+                <div class="copyright">
+                    <p>
+                        Copyright® 2009-2012 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</p>
+                </div>
+                <div class="authentication">
+                    <a class="beian" href="http://www.miibeian.gov.cn/" target="_blank"></a>
+                    <a class="depart" target="_blank" href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=20120216155829987"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

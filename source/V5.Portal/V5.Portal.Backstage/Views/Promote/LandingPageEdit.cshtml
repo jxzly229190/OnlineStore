@@ -1,0 +1,25 @@
+﻿
+<div class="item" style="padding-top:0;">
+    <div>
+        <label>活动主题：</label><input type="hidden"id="lpID"/><input id="lpName" type="text" class="k-textbox" style="width: 240px"/>
+        <label>制作人：</label><input id="lpEmployee" type="text" class="k-textbox"  style="width: 240px"/>
+    </div>
+    <div style="margin-top:3px;">
+        <label>开始时间：</label>@Html.Kendo().DateTimePicker().Name("LpStartTime").HtmlAttributes(new { style = "width: 240px;" })
+        <label>截止时间：</label>@Html.Kendo().DateTimePicker().Name("LpEndTime").HtmlAttributes(new { style = "width: 240px;" })
+    </div>
+    <div style="margin-top:3px;">
+        <label>链接地址：</label><input id="lpLink" type="text" class="k-textbox"  style="width: 550px"/>
+    </div>
+</div>
+<div class="item">
+    <script type="text/javascript">
+        CKEDITOR.replace('LPContent')
+    </script>
+    <input id="LPContent" type="text" value="" />
+</div>
+<div style="text-align: center">
+    <input id="addBtn" type="button" class="k-button" value="确　定" onclick="AddLandingPage()"/>
+    <input id="modifyBtn" type="button" class="k-button" value="修　改" onclick="ModifyLandingPage()"/>
+    <input type="button" class="k-button" value="取　消" onclick="CancelEdit()"/>
+</div>

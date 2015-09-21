@@ -1,0 +1,869 @@
+﻿using System.Web.Mvc;
+
+namespace V5.Portal.Controllers
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Linq;
+
+    using V5.DataContract.Transact.Order;
+    using V5.DataContract.User;
+    using V5.Library;
+    using V5.Library.Logger;
+    using V5.Portal.Attributes;
+    using V5.Portal.Models;
+    using V5.Service.Product;
+    using V5.Service.System;
+    using V5.Service.Transact;
+    using V5.Service.User;
+    using V5.Service.Utility;
+    using V5.Portal.Common;
+
+    public class OrderController : BaseController
+    {
+        //
+        // GET: /Order/
+
+        public ActionResult Index()
+        {
+            return null;
+        }
+
+        [CustomAuthorize]
+        public ActionResult RemoveAddress(int addressID)
+        {
+            if (addressID < 1)
+            {
+                return this.Json(new AjaxResponse(0, "没有操作"));
+            }
+
+            var service = new UserReceiveAddressService();
+            var userID = service.QueryByID(addressID).UserID;
+
+            if (this.UserSession.UserID != userID)
+            {
+                return this.Json(new AjaxResponse(-1, "无权修改本地址信息"));
+            }
+
+            service.RemoveByID(addressID);
+
+            return this.Json(new AjaxResponse(1, "删除成功"));
+        }
+
+        [CustomAuthorize]
+        public ActionResult SetAddressDefault(int addressID)
+        {
+            if (addressID < 1)
+            {
+                return this.Json(new AjaxResponse(0, "参数错误"));
+            }
+
+            var service = new UserReceiveAddressService();
+            var userID = service.QueryByID(addressID).UserID;
+
+            if (this.UserSession.UserID != userID)
+            {
+                return this.Json(new AjaxResponse(-1, "无权修改本地址信息"));
+            }
+
+            service.SetDefault(addressID, userID);
+            
+            return this.Json(new AjaxResponse(1, "操作成功"));
+        }
+
+        [CustomAuthorize]
+        public ActionResult EditAddress(int addressID)
+        {
+            if (addressID < 1)
+            {
+                return this.Json(new AjaxResponse(0, "没错操作"));
+            }
+            return this.Json(new AjaxResponse(1, "编辑成功"));
+        }
+
+        [CustomAuthorize]
+        [HttpPost]
+        public ActionResult AddOrEditUserReceiveAddress(int addressId, string consignee, string mobile, string tel, int countyID, string address, int isDefault)
+        {
+            if (string.IsNullOrWhiteSpace(consignee))
+            {
+                return this.Json(new AjaxResponse(0, "收货人地址不正确"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(mobile) && !CustomValidator.IsMobile(mobile))
+            {
+                return this.Json(new AjaxResponse(0, "收货人手机号码不正确"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(tel) && !CustomValidator.IsPhone(tel))
+            {
+                return this.Json( new AjaxResponse(0, "收货人电话号码不正确"));
+            }
+
+            if (string.IsNullOrWhiteSpace(mobile) && string.IsNullOrWhiteSpace(tel))
+            {
+                return this.Json(new AjaxResponse(0,"收货人电话号码和手机号码不能都为空"));
+            }
+
+            if (countyID < 1)
+            {
+                return this.Json(new AjaxResponse(0, "收货人省市区地址不正确"));
+            }
+
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                return this.Json(new AjaxResponse(0, "收货人详细地址信息不能为空"));
+            }
+
+            var userReceiveAddressService = new UserReceiveAddressService();
+            var model = new UserReceiveAddressModel
+            {
+                Consignee = consignee,
+                Mobile = mobile,
+                Tel = tel,
+                CountyID = countyID,
+                UserID = this.UserSession.UserID,
+                IsDefault = false,
+                Address = address
+            };
+
+            try
+            {
+                if (addressId > 0)
+                {
+                    SqlTransaction transaction;
+                    var userReceiveAddress = DataTransfer.Transfer<User_RecieveAddress>(model, typeof(UserReceiveAddressModel));
+                    userReceiveAddress.ID = addressId;
+                    userReceiveAddressService.Modify(userReceiveAddress, out transaction);
+                }
+                else
+                {
+                    var userReceiveAddress = DataTransfer.Transfer<User_RecieveAddress>(model, typeof(UserReceiveAddressModel));
+                    addressId = userReceiveAddressService.Add(userReceiveAddress, null);
+                }
+
+                if (isDefault == 1)
+                {
+                    userReceiveAddressService.SetDefault(addressId, this.UserSession.UserID); //todo:此处应起数据库事务
+                }
+
+                model.ID = addressId;
+                return this.PartialView("Partial/NewAddress", model);
+            }
+            catch (Exception exception)
+            {
+                LogUtils.Log(
+                    "前台用户下单时添加或修改收货地址出错，错误原因:" + exception.Message,
+                    "前台添加用户收货信息",
+                    Category.Fatal,
+                    this.Session.SessionID,
+                    this.UserSession.UserID,
+                    "Order/AddOrEditUserReceiveAddress");
+                TextLogger.Instance.Log("前台用户下单时添加或修改收货地址出错", Category.Fatal, exception);
+                return Json(new AjaxResponse(-1, "操作失败"));
+            }
+        }
+        
+        //提交订单
+        [HttpGet]
+        [CustomAuthorize]
+        public ActionResult OrderInfo(int[] proIds, int[] quantity)
+        {
+            var orderInfo = new OrderInfoViewModel();
+            var addresses = new UserReceiveAddressService().QueryReceiveAddressByUserID(this.UserSession.UserID);
+            if (addresses != null)
+            {
+                orderInfo.UserReceiveAddressList = new List<UserReceiveAddressModel>();
+                foreach (var userRecieveAddress in addresses)
+                {
+                    orderInfo.UserReceiveAddressList.Add(
+                        DataTransfer.Transfer<UserReceiveAddressModel>(userRecieveAddress, typeof(User_RecieveAddress)));
+                }
+            }
+            var userCart = MongoDBHelper.GetModel<UserCartModel>(m => m.UserId == this.UserSession.UserID||m.VisitorKey==this.UserSession.VisitorKey); //todo: 动态获取用户ID
+            if (userCart == null)
+            {
+                var products = BuildCartProducts(proIds, quantity);
+                userCart = new UserCartModel()
+                               {
+                                   ProductItems = products,
+                                   UserId = this.UserSession.UserID,
+                                   VisitorKey = this.UserSession.VisitorKey
+                               };
+            }
+            else if (userCart.ProductItems == null)
+            {
+                var products = BuildCartProducts(proIds, quantity);
+                userCart.ProductItems = products;
+            }
+            else
+            {
+                for (int i = 0; i < proIds.Length; i++)
+                {
+                    if (userCart.ProductItems.FirstOrDefault(p=>p.ProductID==proIds[i]) == null)
+                    {
+                        var cartProduct = this.BuildCartProduct(proIds[i], quantity[i]);
+                        if (cartProduct != null)
+                        {
+                            userCart.ProductItems.Add(cartProduct);
+                        }
+                    }
+                }
+            }
+
+            MongoDBHelper.UpdateModel<UserCartModel>(
+                userCart,
+                u => u.UserId == this.UserSession.UserID || u.VisitorKey == this.UserSession.VisitorKey);
+
+            var list = (from p in userCart.ProductItems where proIds.Contains(p.ProductID) select p).ToList();
+
+            orderInfo.Products = list;
+
+            return this.View(orderInfo);
+        }
+
+        private List<CartProduct> BuildCartProducts(int[] proIds, int[] quantity)
+        {
+            var products = new List<CartProduct>();
+            for (int i = 0; i < proIds.Length; i++)
+            {
+                var cartProduct = BuildCartProduct(proIds[i], quantity[i]);
+                if (cartProduct != null)
+                {
+                    products.Add(cartProduct);
+                }
+            }
+            return products;
+        }
+
+        private CartProduct BuildCartProduct(int proId, int quantity)
+        {
+            var product = new ProductService().QueryByID(proId);
+            if (product != null && product.InventoryNumber >0) //若库存不足，则不允许下单
+            {
+                var cartProduct = new CartProduct
+                                      {
+                                          ProductID = product.ID,
+                                          ProductName = product.Name,
+                                          GoujiuPrice = product.GoujiuPrice,
+                                          Discount = 0,
+                                          ProductPic = product.ThumbnailPath,
+                                          Quantity =
+                                              quantity > product.InventoryNumber
+                                                  ? product.InventoryNumber
+                                                  : quantity,
+                                          UpdateTime = DateTime.Now
+                                      };
+                return cartProduct;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 检查余额是否足够
+        /// </summary>
+        /// <param name="balance">余额</param>
+        /// <returns></returns>
+        private bool CheckAccountBalance(double balance)
+        {
+            if (balance <= 0)
+            {
+                return true;
+            }
+            //todo:调用方法检查余额是否足够
+            return false;
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult Add(int addressID, int payMethod, string productIds, string intro, 
+            int isRequireInvoice, string invoiceTitle, int invoiceContent, int ctype, int cId, double account)
+        {
+            /***************
+             * 前台添加订单流程：
+             * 1.检查是否用券，若用，则检查券是否存在，是否符合使用条件。
+             * 2.检查是否用余额抵扣，若用，则检查用户是否有足够余额。
+             * 3.检查用户是否开发票，若是，检查发票内容是否填写。
+             * 4.检查用户收货地址ID是否填写正确
+             * 5.检查商品ID列表是否正确
+             * todo:下单时检查商品库存
+             * ********************/
+
+            #region 检查是否用券
+            //todo:券检查
+            #endregion
+
+            #region 余额抵用检查
+
+            if (account > 0)
+            {
+                if (!CheckAccountBalance(account))
+                {
+                    return this.Json(new AjaxResponse(-1, "账户余额不足"));
+                }
+            }
+
+            #endregion
+
+            #region 检查发票信息
+
+            if (isRequireInvoice > 0)
+            {
+                if (invoiceContent < 0)
+                {
+                    return this.Json(new AjaxResponse(-1, "发票内容错误"));
+                }
+            }
+
+            #endregion
+
+            #region 检查收货地址ID是否填写正确
+
+            if (addressID <= 0)
+            {
+                return this.Json(new AjaxResponse(-1, "收货地址错误"));
+            }
+
+            #endregion
+
+            #region 检查商品列表是否正确
+
+            if (string.IsNullOrWhiteSpace(productIds))
+            {
+                return this.Json(new AjaxResponse(-1, "商品列表为空"));
+            }
+
+            var proStringList = productIds.Split(',');
+            if (proStringList.Length <1)
+            {
+                return this.Json(new AjaxResponse(-1, "商品列表为空"));
+            }
+
+            var proList=new List<int>();
+            foreach (var s in proStringList)
+            {
+                int proId = 0;
+                if (!string.IsNullOrWhiteSpace(s)&&!int.TryParse(s,out proId))
+                {
+                    return this.Json(new AjaxResponse(-1, "商品列表错误"));
+                }
+                proList.Add(proId);
+            }
+            #endregion
+
+            var orderService = new OrderService(this.UserSession.UserID, false);
+            try
+            {
+                var cart = MongoDBHelper.GetModel<UserCartModel>(u => u.UserId == this.UserSession.UserID); 
+                if (cart == null || cart.ProductItems == null)
+                {
+                    return this.Json(new AjaxResponse(-1, "用户购物车不存在"));
+                }
+
+<<<<<<< .mine
+	            DateTime createTime;
+	            var orderCode = MadeCodeService.GetOrderCode(out createTime);
+	            var order = new Order
+		                        {
+			                        UserID = this.UserSession.UserID,
+			                        RecieveAddressID = addressID,
+			                        CpsID = 0,
+			                        PaymentMethodID = payMethod,
+			                        OrderCode = orderCode,
+			                        OrderNumber = MadeCodeService.ReverseOrderCode(orderCode, createTime),
+			                        TotalMoney = 0,
+			                        TotalIntegral = 0,
+			                        PaymentStatus = 0,
+			                        IsRequireInvoice = isRequireInvoice != 0,
+			                        Status = payMethod == 0 ? 100 : 0, // 若是在线支付，则设置为等待付款，否则设置为等待确认
+			                        Remark = intro,
+			                        CreateTime = createTime
+		                        };
+=======
+                var order = new Order
+                {
+                    UserID = this.UserSession.UserID,
+                    RecieveAddressID = addressID,
+                    CpsID = 0,
+                    PaymentMethodID = 0,
+                    //OrderCode = MadeCodeService.GetEncrypCode(CodeMakeParams.OrderCode),
+                    OrderNumber = MadeCodeService.GetCodeByClientCode(CodeMakeParams.OrderCode),
+                    TotalMoney = 0,
+                    TotalIntegral = 0,
+                    PaymentStatus = 0,
+                    IsRequireInvoice = isRequireInvoice != 0,
+                    Status = payMethod==0? 100:0, // 若是在线支付，则设置为等待付款，否则设置为等待确认
+                    Remark = intro,
+                    CreateTime = DateTime.Now
+                };
+>>>>>>> .r1324
+
+                Order_Invoice invoice = null;
+
+                if (isRequireInvoice!=0) //需要开发票
+                {
+                    invoice = new Order_Invoice
+                                    {
+                                        InvoiceContentID = invoiceContent,
+                                        InvoiceTitle = string.IsNullOrWhiteSpace(invoiceTitle)?this.UserSession.Name:invoiceTitle,
+                                        InvoiceTypeID = 0
+                                    };
+                }
+
+                var list = new List<Order_Product>();
+
+                foreach (var proId in proList)
+                {
+                    var productItem = cart.ProductItems.FirstOrDefault(p => p.ProductID == proId);
+                    if (productItem != null)
+                    {
+                        list.Add(
+                            new Order_Product
+                                {
+                                    ProductID = productItem.ProductID,
+                                    Quantity = productItem.Quantity,
+                                    TransactPrice = productItem.GoujiuPrice,
+                                });
+                    }
+                }
+
+                if (list.Count < 1)
+                {
+                    return this.Json(new AjaxResponse(-1, "商品列表错误"));
+                }
+
+                var orderId = orderService.Add(order, list, invoice);
+                this.ResetUserCart(cart,list);
+                return this.Json(new AjaxResponse(1, "添加成功", orderId));
+            }
+            catch (Exception ex)
+            {
+                LogUtils.Log(
+                    "前台添加订单出错了，错误信息："+ex.Message+"\n\r"+ex.StackTrace,
+                    "Order.Add",
+                    Category.Fatal,
+                    this.UserSession.SessionId,
+                    this.UserSession.UserID);
+                return this.Json(new AjaxResponse(-2, "添加订单出错了~~"));
+            }
+        }
+
+        /// <summary>
+        /// 更新用户购物车
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="removeItems"></param>
+        private void ResetUserCart(UserCartModel cart, IEnumerable<Order_Product> removeItems)
+        {
+            foreach (var orderProduct in removeItems)
+            {
+                Order_Product product = orderProduct;
+                cart.ProductItems.Remove(p => p.ProductID == product.ProductID);
+            }
+            MongoDBHelper.UpdateModel<UserCartModel>(cart, c => c.UserId == cart.UserId);
+        }
+
+        [HttpGet]
+        [CustomAuthorize]
+        public ActionResult Success(int oid, int payType)
+        {
+            var order = new OrderService().QueryById(oid);
+            this.ViewBag.PayType = payType;
+            return this.View(order);
+        }
+
+        [CustomAuthorize]
+        public ActionResult Payment(string ono)
+        {
+            var order = new OrderService().QueryByOrderCode(ono);
+            if (order.UserID != this.UserSession.UserID || order.Status != 100)
+            {
+                order = null;
+            }
+            return this.View(order);
+        }
+
+        [HttpGet]
+        [CustomAuthorize]
+        public ActionResult OrderDetail(int oid)
+        {
+            var orderID = oid;
+            var orderDetailModel = new OrderDetailModel();
+
+            if (orderID > 0)
+            {
+                var order = new OrderService().QueryById(orderID);
+                orderDetailModel.OrderInfo = DataTransfer.Transfer<OrderModel>(order, typeof(Order));
+                var orderStatusTrackings = new OrderStatusTrackingService().QueryByOrderID(orderID);
+
+                #region 订单状态信息
+
+                var orderState = new OrderState { PaymentMethod = order.PaymentMethodID };
+                switch (order.Status)
+                {
+                    case 0:
+                    case 1:
+                        orderState.Status = order.PaymentMethodID == 0 ? 1 : 0;
+                        break;
+                    case 2:
+                        orderState.Status = 2;
+                        break;
+                    case 3:
+                        orderState.Status = 4;
+                        break;
+                    case 100:
+                        if (order.PaymentMethodID == 0)
+                        {
+                            orderState.Status = 0;
+                        }
+
+                        break;
+                }
+
+                if (orderStatusTrackings != null)
+                {
+                    orderState.ProcessDatetimes = new List<string>();
+                    foreach (var orderStatusTracking in orderStatusTrackings)
+                    {
+                        if (orderState.Status == 0 && orderStatusTracking.Status == 0)
+                        {
+                            orderState.ProcessDatetimes.Add(
+                                orderStatusTracking.CreateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                        }
+
+                        if (order.PaymentMethodID == 0 && orderState.Status == 1
+                            && (orderStatusTracking.Status == 0 || orderStatusTracking.Status == 1))
+                        {
+                            orderState.ProcessDatetimes.Add(
+                                orderStatusTracking.CreateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                        }
+
+                        if (orderState.Status == 2
+                            && (orderStatusTracking.Status == 0 || orderStatusTracking.Status == 1
+                                || orderStatusTracking.Status == 2))
+                        {
+                            orderState.ProcessDatetimes.Add(
+                                orderStatusTracking.CreateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                        }
+
+                        if (orderState.Status == 4
+                            && (orderStatusTracking.Status == 0 || orderStatusTracking.Status == 1
+                                || orderStatusTracking.Status == 2 || orderStatusTracking.Status == 3))
+                        {
+                            orderState.ProcessDatetimes.Add(
+                                orderStatusTracking.CreateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                        }
+                    }
+                }
+
+                orderDetailModel.CurrentOrderState = orderState;
+
+                #endregion
+
+                #region 订单发票信息
+
+                if (order.IsRequireInvoice)
+                {
+                    orderDetailModel.InvoiceInfo =
+                        DataTransfer.Transfer<OrderInvoiceModel>(
+                            new OrderInvoiceService().SelectByOrderID(orderID),
+                            typeof(Order_Invoice));
+                }
+
+                #endregion
+
+                #region 订单变化追踪记录
+                orderDetailModel.OrderDeliveryTrackDetails = new List<OrderDeliveryTrackDetailModel>();
+
+                if (orderStatusTrackings != null)
+                {
+                    foreach (var orderStatusTracking in orderStatusTrackings)
+                    {
+                        orderDetailModel.OrderDeliveryTrackDetails.Add(
+                            new OrderDeliveryTrackDetailModel()
+                            {
+                                Operator =
+                                    orderStatusTracking.EmployeeID > 0
+                                        ? new SystemEmployeeService().QueryByID(orderStatusTracking.EmployeeID).Name
+                                        : (orderStatusTracking.UserID > 0) ? "客户" : "系统",
+                                OperateSummary = orderStatusTracking.Remark,
+                                OperateTime = orderStatusTracking.CreateTime
+                            });
+
+                        if (orderStatusTracking.Status == 2)
+                        {
+                            // 若产品已发货，则获取快递跟踪信息
+                            var orderDeliverTrackDetails =
+                                new OrderDeliveryTrackDetailService().QueryOrderDeliveryTrackDetailsByOrderID(orderID);
+                            if (orderDeliverTrackDetails != null)
+                            {
+                                foreach (var orderDeliveryTrackingDetail in orderDeliverTrackDetails)
+                                {
+                                    orderDetailModel.OrderDeliveryTrackDetails.Add(
+                                        DataTransfer.Transfer<OrderDeliveryTrackDetailModel>(
+                                            orderDeliveryTrackingDetail,
+                                            typeof(Order_Delivery_Tracking_Details)));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #region 老的方法
+
+                /*
+                string summary = string.Empty;
+                if (order.PaymentMethodID == 0)
+                {
+                    summary = order.PaymentStatus == 0 ? "您提交了订单，等待付款。" : "您提交了订单，商品准备出库。";
+                }
+                else if (order.PaymentMethodID == 1)
+                {
+                    summary = "您提交了订单，请等待确认。";
+                }
+
+                orderDetailModel.OrderDeliveryTrackDetails.Add(
+                       new OrderDeliveryTrackDetailModel
+                       {
+                           OperateSummary = summary,
+                           Operator = "客户",
+                           OperateTime = order.CreateTime
+                       });
+
+                if (order.Status == 6)
+                {
+                    orderDetailModel.OrderDeliveryTrackDetails.Add(
+                       new OrderDeliveryTrackDetailModel
+                       {
+                           OperateSummary = "订单已取消",
+                           Operator = "客户",
+                           OperateTime = order.CreateTime
+                       });
+                }
+                else if (order.Status == 4 || order.Status == 8)
+                {
+                    orderDetailModel.OrderDeliveryTrackDetails.Add(
+                        new OrderDeliveryTrackDetailModel
+                            {
+                                OperateSummary = "订单已作废",
+                                Operator = "系统",
+                                OperateTime = order.CreateTime
+                            });
+                }
+                else
+                {
+                    if (orderStatusLogs != null)
+                    {
+                        foreach (var orderStatusLog in orderStatusLogs)
+                        {
+                            if (orderStatusLog.Status == 1)
+                            {
+                                summary = "您的订单已确认，准备出库";
+                            }
+
+                            if (orderStatusLog.Status == 2)
+                            {
+                                summary = "您的订单已出库"; // todo: 添加快递单号,快递公司名称
+                            }
+
+                            orderDetailModel.OrderDeliveryTrackDetails.Add(
+                            new OrderDeliveryTrackDetailModel
+                            {
+                                OperateSummary = summary,
+                                Operator = new SystemEmployeeService().QueryByID(orderStatusLog.EmployeeID).Name,  // todo: 添加操作员工名称
+                                OperateTime = order.CreateTime
+                            });
+                        }
+                    }
+                }
+
+                // 若订单已发货或已签收，则有物流流转信息
+                if (order.Status == 3 || order.Status == 2)
+                {
+                    var orderDeliverTrackDetails =
+                        new OrderDeliveryTrackDetailService().QueryOrderDeliveryTrackDetailsByOrderID(orderID);
+                    foreach (var orderDeliveryTrackingDetail in orderDeliverTrackDetails)
+                    {
+                        orderDetailModel.OrderDeliveryTrackDetails.Add(
+                            DataTransfer.Transfer<OrderDeliveryTrackDetailModel>(
+                                orderDeliveryTrackingDetail,
+                                typeof(Order_Delivery_Tracking_Details)));
+                    }
+                }
+                */
+
+                #endregion
+
+                #endregion
+
+                #region 订单收货信息
+
+                orderDetailModel.ReceiverInfo =
+                    DataTransfer.Transfer<UserReceiveAddressModel>(
+                        new UserReceiveAddressService().QueryByID(order.RecieveAddressID),
+                        typeof(User_RecieveAddress));
+
+                #endregion
+
+                #region 订单商品信息
+
+                orderDetailModel.OrderProducts = new List<OrderProductModel>();
+
+                var orderProducts = new OrderProductService().QueryByOrderId(orderID);
+                if (orderProducts != null)
+                {
+                    foreach (var orderProduct in orderProducts)
+                    {
+                        orderDetailModel.OrderProducts.Add(
+                            DataTransfer.Transfer<OrderProductModel>(orderProduct, typeof(Order_Product)));
+                    }
+                }
+
+                #endregion
+
+                #region 订单支付信息
+
+                orderDetailModel.PaymentInfo = new PaymentInfoModel
+                {
+                    OrderID = orderID,
+                    PaymentMethodID = order.PaymentMethodID,
+                    TotalMoney = order.TotalMoney,
+                    DeliveryCost = order.DeliveryCost,
+                    ActualPaid =
+                        order.PaymentStatus == 1
+                            ? order.TotalMoney + order.DeliveryCost
+                            : 0,
+                    ActualMoney =
+                        order.TotalMoney + order.DeliveryCost
+                };
+
+                #endregion
+            }
+            return this.View("OrderDetail", orderDetailModel);
+        }
+
+        [CustomAuthorize]
+        public ActionResult MyOrder()
+        {
+            var orders = new OrderService(this.UserSession.UserID, false).QueryByUserID(this.UserSession.UserID);
+            return this.View("MyOrder", orders);
+        }
+
+        [HttpGet]
+        public PartialViewResult OrderProducts(int orderID)
+        {
+            var orderProducts = new OrderProductService().QueryByOrderId(orderID);
+            return this.PartialView("Partial/OrderProduct", orderProducts);
+        }
+
+        [CustomAuthorize]
+        public ActionResult Cancel(string ono, int orderCancelCauseID)
+        {
+            var response = new AjaxResponse();
+            //if (orderID < 1 || orderCancelCauseID < 1)
+            //{
+            //    response.State = -1;
+            //    response.Message = "参数错误";
+            //    return this.Json(response, JsonRequestBehavior.AllowGet);
+            //}
+
+            var order = new OrderService(this.UserSession.UserID, false).QueryByOrderCode(ono);
+            if (order == null || order.UserID != this.UserSession.UserID)
+            {
+                response.State = -1;
+                response.Message = "订单编号错误";
+                LogUtils.Log(
+                    "用户取消订单时订单编号（" + ono + "）错误或者获取对应订单数据为空",
+                    "前台取消订单",
+                    Category.Error,
+                    this.UserSession.SessionId,
+                    this.UserSession.UserID,
+                    "/Order/Cancel");
+                return this.Json(response, JsonRequestBehavior.AllowGet);
+            }
+
+            //可取消条件：
+            // 1.只有在线支付且未支付
+            // 2.订单货到付款且未确认
+            if (order.Status != 100 && (order.Status == 0 && order.PaymentMethodID > 0))
+            {
+                LogUtils.Log(
+                    "前台尝试取消不符合取消条件的订单（订单号：" + ono + "）",
+                    "前台取消订单",
+                    Category.Warn,
+                    this.UserSession.SessionId,
+                    this.UserSession.UserID,
+                    "/Order/Cancel");
+                TextLogger.Instance.Log("前台尝试取消不符合取消条件的订单（订单号：" + ono + ",用户名："+this.UserSession.UserID+"）", Category.Warn, null);
+
+                response.State = -1;
+                response.Message = "此订单不符合取消条件";
+                return this.Json(response);
+            }
+
+            try
+            {
+                var orderCancel = new Order_Cancel
+                                      {
+                                          OrderID = order.ID,
+                                          CreateTime = DateTime.Now,
+                                          OrderCancelCauseID = orderCancelCauseID,
+                                          UserID = this.UserSession.UserID
+                                      };
+
+                int state = new OrderService(this.UserSession.UserID,false).OrderCancelByBackstage(orderCancel);
+
+                // 0-订单状态异常，1-操作成功，2-已发货，3-订单已取消、损失或者作废
+                if (state == 0)
+                {
+                    response.State = 0;
+                    response.Message = "订单状态异常";
+                }
+                else if (state == 1)
+                {
+                    response.State = 1;
+                    response.Message = "订单取消成功";
+                }
+                else if (state == 2)
+                {
+                    response.State = 2;
+                    response.Message = "已发货，取消订单操作取消";
+                }
+                else if (state == 3)
+                {
+                    response.State = 3;
+                    response.Message = "订单已取消、已损失或者已作废";
+                }
+                else if (state == 4)
+                {
+                    response.State = 4;
+                    response.Message = "订单已付款";
+                }
+                else
+                {
+                    response.State = 0;
+                    response.Message = "订单状态异常";
+                }
+
+                LogUtils.Log(
+                    "前台尝试取消订单（订单号：" + ono + "），结果：（状态：" + response.State + "；消息：" + response.Message + "）",
+                    "前台取消订单",
+                    Category.Info,
+                    this.UserSession.SessionId,
+                    this.UserSession.UserID,
+                    "/Order/Cancel");
+
+                return this.Json(response, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+                TextLogger.Instance.Log("订单取消操作发生错误", Category.Error, exception);
+
+                response.State = -2;
+                response.Message = exception.Message;
+                return this.Json(response, JsonRequestBehavior.AllowGet);
+            }
+        }
+    }
+}

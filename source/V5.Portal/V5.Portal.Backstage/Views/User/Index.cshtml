@@ -1,0 +1,249 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;会员管理&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div id="defaultDiv" class="right-box">
+</div>
+<div id="detailDiv" class="right-box" style="display: none;">
+</div>
+
+<script type="text/javascript">
+    function onEdit(e) {
+        if (e.model.isNew()) {
+            $(".k-window-title").html("新建");
+            e.container.find(".k-update").parent().text("添加");
+        } else {
+            $(".k-window-title").html("编辑");
+            e.container.find(".k-update").parent().text("修改");
+            $("#ProductBarcode").attr("readonly", "readonly");
+        }
+
+        e.container.find(".k-cancel").parent().text("取消");
+    }
+
+    // 默认选中左边菜单的第一个
+    $(function() {
+        $("#top_user").addClass("select");
+        $('.left-f ul li:first a').trigger("click");
+    });
+
+    function filterCity() {
+        return {
+            provinceID: $("#ProvinceID").val()
+        };
+    }
+
+    function filterCounty() {
+        return {
+            cityID: $("#CityID").val()
+        };
+    }
+
+    //会员管理展示子项
+    function ShowPartialView(a) {
+        var current = $(a).attr("name");
+        var href = "/" + $(a).attr("parent") + "/" + current + "/";
+
+        var currentLabel = $("#current");
+        currentLabel.text($(a).text());
+
+        $.ajax({
+            type: "GET",
+            url: href,
+            data: null,
+            datatype: "html",
+            async: false,
+            success: function (data) {
+                if (data.State == -401) {
+                    onSessionLost();
+                } else if (data.State == -403) {
+                    alert("对不起，您无此操作权限！");
+                } else {
+                    $('#defaultDiv').html(data);
+                    $("#createStartTime").attr("readonly", "readonly");
+                    $("#createEndTime").attr("readonly", "readonly");
+                    $('#detailDiv').css("display", "none");
+                    $('#defaultDiv').css("display", "block");
+                    $(a).parent().addClass("left-s").siblings().removeClass("left-s");
+                }
+            },
+            error: function() {
+                alert("处理失败!");
+            }
+        });
+
+    }
+
+    /******** 会员列表页Start ********/
+
+    //锁定解锁帐号
+    function userLock(user) {
+        if ($(user).val() == "锁定帐号") {
+            var mess = confirm("确实要锁定吗?");
+            if (mess != "0") {
+                $.post("/user/UserLock",
+                    { "ID": $(user).attr("name") },
+                    function call() {
+                    },
+                    "json"
+                );
+            } else {
+                return;
+            }
+            $(user).val("解除锁定");
+        } else {
+            $.post("/user/UserUnlock",
+                { "ID": $(user).attr("name") },
+                function call() {
+                },
+                "json"
+            );
+            $(user).val("锁定帐号");
+        }
+    }
+
+    //会员列表页重置密码
+    function resetpwd(user) {
+        var mess = confirm("确实要重置该用户的登录密码?");
+        if (mess == "1") {
+            $.post("/user/ResetPassword", { "ID": $(user).attr("name") },
+                function call() {
+                }, "json");
+        } else {
+            return;
+        }
+    }
+
+    //会员列表页查看详情
+    function detail(user) {
+        if ($(user).attr("name") != null) {
+            var href = "/user/detail/" + $(user).attr("name");
+            window.open(href);
+        }
+    }
+
+    //会员列表页搜索查询
+    function SearchUser() {
+        var filter = new Array();
+        var grid = $("#userGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+    //会员列表页查询所需要的数据
+    function SearchData() {
+        return {
+            userLevelID: $("#userlevelID").val(),
+            userName: $("#UserName").val(),
+            isHasOrder: $("#ishasorder").val(),
+            status: $("#status").val(),
+            email: $("#Email").val(),
+            mobile: $("#Mobile").val(),
+            startTime: $("#createStartTime").val(),
+            endTime: $("#createEndTime").val(),
+            orderStarTime: $("#orderStarTime").val(),
+            orderEndTime: $("#orderEndTime").val()
+        };
+    }
+
+    //禁用交易时间
+    function ShowOrderTime() {
+        var temp = $("#ishasorder").val();
+        if (temp == "1") {
+            $("#orderStarTime").data("kendoDateTimePicker").enable(true);
+            $("#orderEndTime").data("kendoDateTimePicker").enable(true);
+        } else {
+            $("#orderStarTime").data("kendoDateTimePicker").enable(false);
+            $("#orderEndTime").data("kendoDateTimePicker").enable(false);
+        }
+    }
+
+    /******** 会员列表页 End ********/
+    /******** 会员详情页 Start ********/
+    //会员详情页返回列表
+    function backList() {
+        $('#detailDiv').css("display", "none");
+        $('#defaultDiv').css("display", "block");
+    }
+
+    /******** 会员详情页 End ********/
+    /******** 会员等级价格页 Start ********/
+    //会员等级价格页搜索查询
+    function SearchUserLevelPrice() {
+        var filter = new Array();
+        var grid = $("#userLevelPriceGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+    //会员等级价格页查询所需要的数据
+    function UserLevelPriceSearchData() {
+        return {
+            userLevelID: $("#userLevelID").val(),
+            productName: $("#ProductName").val(),
+            employeeName: $("#EmployeeName").val(),
+            status: $("#searchStatus").val(),
+            startTime: $("#starttime").val(),
+            endTime: $("#endtime").val()
+        };
+    }
+
+    //会员等级价格页删除数据
+    function deleteLevelPrice(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var userLevelPriceID = dataItem.ID;
+        var mess = confirm("确实要删除吗?");
+        if (mess != "0") {
+            if (userLevelPriceID != null) {
+                $.post("/user/RemoveUserLevelPrice", { "id": userLevelPriceID },
+                    function(data) {
+                        alert(data);
+                        $("#userLevelPriceGrid").data("kendoGrid").dataSource.read();
+                        $("#userLevelPriceGrid").data("kendoGrid").dataSource.refresh();
+                    });
+            }
+        }
+    }
+    /******** 会员等级价格页 End ********/
+    /******** 会员等级页 Start********/
+    //会员等级页删除数据
+    function deleteLevel(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var userLevelID = dataItem.ID;
+        var mess = confirm("确实要删除吗?");
+        if (mess != "0") {
+            if (userLevelID != null) {
+                $.post("/user/RemoveLevel", { "id": userLevelID },
+                    function (data) {
+                        alert(data);
+                        $("#levelGrid").data("kendoGrid").dataSource.read();
+                        $("#levelGrid").data("kendoGrid").dataSource.refresh();
+                    });
+            }
+        }
+    }
+    /******** 会员等级页 End ********/
+
+
+    //去掉首尾空格
+    function trim(str) {
+        return str.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '');
+    }
+    
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>

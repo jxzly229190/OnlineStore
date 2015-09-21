@@ -1,0 +1,76 @@
+﻿@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.System
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionObj2 = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<MenuModel>()
+    .Name("menuGrid")
+    .Columns(columns =>
+        {
+            columns.Bound(m => m.Name).Title("菜单名称");
+            columns.Bound(m => m.PermissionID).Title("权限名称");
+            columns.Bound(m => m.CreateTime).Title("创建时间").Format("{0: yyyy-MM-dd hh:mm:ss}");
+            columns.Command(command => {
+                command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("System.ModifyMenu.Post"));
+                command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("System.RemoveMenu.Post"));
+            }).Width(300).Hidden(permissionObj.Hidden);
+        })
+        .ToolBar(toolbar => toolbar.Create().Text("添加菜单").HtmlAttributes(permissionObj.GetDisplayAttribute("System.AddMenu.Post", false)))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("System_Menu_Template").Window(edit => edit.Title("编辑")))
+        .Pageable()
+        .Scrollable()
+        .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+        .ClientDetailTemplateId("subMenuTemplate")
+        .Events(e =>
+            {
+                e.Edit("onMenuEdit");
+                e.DetailExpand("onMenuDetailExpand");
+            })
+        .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(d => d.ID))
+        .Create(update => update.Action("AddMenu", "System"))
+        .Destroy(update => update.Action("RemoveMenu", "System"))
+        .Update(update => update.Action("ModifyMenu", "System"))
+        .Read(read => read.Action("QueryMenu", "System"))
+    )
+)
+<input type="hidden" id="permissionID" value="" />
+<script id="subMenuTemplate" type="text/kendo-tmpl">
+@(Html.Kendo().Grid<MenuModel>()
+      .Name("menuGrid_#=ID#")
+      .Columns(columns =>
+          {
+              columns.Bound(m => m.Name).Title("菜单名称").Width(60);
+              columns.Bound(m => m.PermissionID).Title("权限名称").Width(60);
+              columns.Bound(m => m.CreateTime).Title("创建时间").Width(60).Format("{0: yyyy-MM-dd hh:mm:ss}");
+              columns.Command(command => { 
+                command.Edit().Text("编辑").HtmlAttributes(permissionObj2.GetDisplayAttribute("System.ModifyMenu.Post")); 
+                command.Destroy().Text("删除").HtmlAttributes(permissionObj2.GetDisplayAttribute("System.RemoveMenu.Post")); 
+              }).Width(100).Hidden(permissionObj2.Hidden);
+          })
+      .ToolBar(toolbar => toolbar.Create().Text("添加菜单").HtmlAttributes(permissionObj2.GetDisplayAttribute("System.AddMenuSecond.Post", false)))
+      .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("System_Menu_Template_Sub").Window(edit => edit.Title("编辑")))
+      .Pageable()
+      .Scrollable()
+      .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+      .Events(e => e.Edit("onMenuEdit"))
+      .HtmlAttributes(new { style = "height:450px; text-align:left;" })
+      .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .PageSize(10)
+                                    .Events(events => events.Error("error_handler"))
+                                    .Model(model => model.Id(d => d.ID))
+                                    .Create(update => update.Action("AddMenuSecond", "System", new { menuID = "#=ID#" }))
+                                    .Destroy(update => update.Action("RemoveMenu", "System"))
+                                    .Update(update => update.Action("ModifyMenu", "System"))
+                                    .Read(read => read.Action("QueryMenuByID", "System", new { menuID = "#=ID#" }))
+      ).ToClientTemplate()
+      ) 
+      
+</script>

@@ -1,0 +1,37 @@
+﻿@model V5.Portal.Backstage.Models.User.UserMessageEmailModel
+@Html.ValidationSummary(true)
+
+@Html.HiddenFor(model => model.ID)
+
+<div class="editor-label">
+    名称：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Name,new{@style="width:300px",@class="k-textbox"})
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+
+<div class="editor-label">
+    主题：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Title,new{@style="width:300px",@class="k-textbox"})
+    @Html.ValidationMessageFor(model => model.Title)
+</div>
+
+<div class="editor-label">
+    内容：
+</div>
+<div class="editor-field">
+    <script type="text/javascript">
+        CKEDITOR.replace('Content')
+    </script>
+    @Html.TextAreaFor(model => model.Content)
+</div>
+
+<div class="editor-label">
+    状态：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.Status).DataSource(ds => ds.Read("QueryStatus", "User")).DataTextField("Text").DataValueField("Value"))
+</div>

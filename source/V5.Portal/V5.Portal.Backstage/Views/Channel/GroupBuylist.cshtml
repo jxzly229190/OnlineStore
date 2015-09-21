@@ -1,0 +1,287 @@
+﻿@model V5.Portal.Backstage.Models.Channel.ChannelGroupBuyModel
+@using V5.Portal.Backstage.Models.Channel
+@{
+    ViewBag.Title = "GroupBuylist";
+}
+<div style="width: 100%">
+    <div class="search-box">
+        <div>
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td width="10%" align="right">
+                            商品名称：
+                        </td>
+                        <td width="20%">
+                            <input type="text" name="txtProductName" id="txtProductName" value="" />
+                        </td>
+                        <td width="8%" align="right">
+                            开始时间：
+                        </td>
+                        <td width="38%">
+                            @(Html.Kendo().DateTimePicker().Name("TimeStart").ParseFormats(new string[] { "MM/dd/yyyy" }))
+                            @(Html.Kendo().DateTimePicker().Name("TimeStart1").ParseFormats(new string[] { "MM/dd/yyyy" }))
+                        </td>
+                        <td align="right">
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            促销名称：
+                        </td>
+                        <td>
+                            <input type="text" name="txtPromotionName" id="txtPromotionName" />
+                        </td>
+                        <td align="right">
+                            结束时间：
+                        </td>
+                        <td>
+                            @(Html.Kendo().DateTimePicker().Name("TimeEnd").ParseFormats(new string[] { "MM-dd-yyyy" }))
+                            @(Html.Kendo().DateTimePicker().Name("TimeEnd1").ParseFormats(new string[] { "MM-dd-yyyy" }))
+                        </td>
+                        <td align="left">
+                            <input type="button" id="btnSearch" onclick="groupBuytSearch()" value="搜索" />*
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10%" align="right">
+                            会员级别：
+                        </td>
+                        <td colspan="2" id="checkState">
+                            @Html.Kendo().DropDownList().Name("userlevelID").OptionLabel("全部会员").BindTo(new List<SelectListItem>() { new SelectListItem() { Text = "普通会员", Value = "1" },
+                           new SelectListItem() { Text = "铜牌会员", Value = "2" },
+                           new SelectListItem() { Text = "银牌会员", Value = "3" }, 
+                           new SelectListItem() { Text = "金牌会员", Value = "4" },
+                           new SelectListItem() { Text = "VIP", Value = "5" } })
+                        </td>
+                        <td>
+                            团购状态:
+                            @Html.RadioButton("radiosSelectType", 1, false, new
+                       {
+                           id = "radiosSelectType1"
+                       })全部
+                            @Html.RadioButton("radiosSelectType", 2, false, new
+                       {
+                           id = "radiosSelectType2"
+                       })进行中
+                            @Html.RadioButton("radiosSelectType", 3, false, new
+                       {
+                           id = "radiosSelectType3"
+                       })已结束
+                            @Html.RadioButton("radiosSelectType", 4, true, new
+                       {
+                           id = "radiosSelectType4"
+                       })未开始
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10%" align="right">
+                            显示级别：
+                        </td>
+                        <td>
+                            @(Html.Kendo().DropDownList().Name("ShowLevel").OptionLabel("所有级别").BindTo(new List<SelectListItem>() { new SelectListItem() { Text = "第一级别", Value = "1" }, new SelectListItem() { Text = "第二级别", Value = "2" }, new SelectListItem() { Text = "第三级别", Value = "3" } }))
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div id="patTeam">
+            <div id="divTeam">
+                <div>
+                    <div>
+                        @(Html.Kendo().Grid<ViewGroupBuyProductModel>()
+                              .Name("View_GroupBuy_Product").HtmlAttributes(new
+                              {
+                                  css = "css"
+                              })
+                              .Columns(columns =>
+                                  {
+                                      columns.Template(e =>
+                                      {
+                                      }).ClientTemplate("#=StatusName#").Title("状态");
+                                      columns.Bound(p => p.GroupBuyName).Title("促销名称").Width(150);
+                                      columns.Bound(p => p.StartTime).Format("{0:yyyy-MM-dd}").Title("开始时间");
+                                      columns.Bound(p => p.EndTime).Format("{0:yyyy-MM-dd}").Title("结束时间");
+                                      columns.Bound(p => p.ProductName).Title("对应商品").Width(150);
+                                      columns.Bound(p => p.TotalNumber).Title("总数").Width(60);
+                                      columns.Bound(p => p.GoujiuPrice).Title("原价").Width(60);
+                                      columns.Bound(p => p.GBPrice).Title("团购价格").Width(60);
+                                      columns.Bound(p => p.LevelName).Title("会员等级");
+                                      columns.Bound(p => p.ShowLevelName).Title("显示级别");
+                                      columns.Template(e =>
+                                      {
+                                      }).ClientTemplate("#=OperatorColumns#").Title("操作").Width(150);
+                                  })
+
+                              .Editable(editable => editable.Mode(GridEditMode.InLine))
+                              .Pageable()
+                              .Sortable()
+                              .Scrollable()
+                              .HtmlAttributes(new
+                                                  {
+                                                      style = "height:430px;"
+                                                  })
+                              .DataSource(dataSource => dataSource
+                                                            .Ajax()
+                                                            .PageSize(20)
+                                                            .Events(events => events.Error("error_handler"))
+                                                            .Model(model => model.Id(p => p.ProductId))
+
+                                                            .Create(update => update.Action("EditingInline_Create", "Grid"))
+                                                                    .Read(read => read.Action("QueryViewGroupBuyProduct", "Channel").Data("groupBuySearchData"))
+                                                            .Update(update => update.Action("EditingInline_Update", "Grid"))
+
+                              )
+                              .Selectable(select => select.Mode(GridSelectionMode.Single))
+                              )
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document.body).keydown(function (e) {
+        if (e.altKey && e.keyCode == 87) {
+            $("#View_GroupBuy_Product").data("kendoGrid").table.focus();
+        }
+    });
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+    //查看团购详细信息
+    function loadLookView(pid) {
+        $.ajax({
+            type: "POST",
+            data: { productId: pid },
+            url: "/Channel/QueryChannelGroupByProductId",
+            success: function (html) {
+                $("#detailDiv").text("");
+                $("#detailDiv").append(html);
+                $("#detailDiv").css("display", "block");
+                $("#defaultDiv").css("display", "none");
+            }
+        });
+    }
+    function groupBuytSearch() {
+        var filter = new Array();
+        var grid = $("#View_GroupBuy_Product").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+    function groupBuySearchData() {
+        var txtProductName = $("#txtProductName").val();
+        var TimeStart = $("#TimeStart").val();
+        var TimeStart1 = $("#TimeStart1").val();
+        var TimeEnd = $("#TimeEnd").val();
+        var TimeEnd1 = $("#TimeEnd1").val();
+        var UserLevel = $("#userlevelID").val();
+        var mydate = new Date();
+        var Status = 0;
+        if ($("#radiosSelectType1").is(":checked") == true) {
+            Status = 1;
+        }
+        if ($("#radiosSelectType2").is(":checked") == true) {
+            Status = 2;
+        }
+        if ($("#radiosSelectType3").is(":checked") == true) {
+            Status = 3;
+        }
+        if ($("#radiosSelectType4").is(":checked") == true) {
+            Status = 4;
+        }
+
+        var ShowLevel = $("#ShowLevel").val();
+        return {
+            name: txtProductName,
+            timestart: TimeStart,
+            timestart1: TimeStart1,
+            timeEnd: TimeEnd,
+            timeEnd1: TimeEnd1,
+            status: Status,
+            userLevel: UserLevel,
+            showLevel: ShowLevel
+        };
+    }
+
+    function transformSuspend(proId) {
+        var pid;
+        if ($("#suspend" + proId + "").text() == "暂停") {
+            pid = $("#suspend" + proId + "").attr("value");
+            Ajax(pid, "暂停");
+            $("#suspend" + proId + "").text("恢复").css("color", "red");
+        } else if ($("#suspend" + proId + "").text() == "恢复") {
+            alert($("#suspend" + proId + "").text());
+            pid = $("#suspend" + proId + "").attr("value");
+            Ajax(pid, "恢复");
+            $("#suspend" + proId + "").text("恢复").css("color", "");
+            $("#suspend" + proId + "").text("暂停");
+            groupBuytSearch();
+        }
+
+    }
+    //停止
+    function transformSuspendS(proId) {
+        if ($("#setback" + proId + "").text() == "停止") {
+            var pid = $("#setback" + proId + "").attr("value");
+            var vname = $("#setback" + proId + "").attr("vname");
+            var a = confirm("您确实要停止" + vname + "团购吗");
+            if (a == true) {
+                Ajax(pid, "停止");
+                $("#setback" + proId + "").text("已停止");
+                $("#setback" + proId + "").css("color", "red");
+                groupBuytSearch();
+            }
+            //            alert("您确实要停止" + vname + "团购吗");
+
+        }
+    }
+    // 删除团购
+    function deleteGroup(deleteId) {
+        var a = confirm("您真的要删除吗");
+        if (a == true) {
+            $.ajax({
+                type: "POST",
+                url: "/Channel/DeleteGrouBuyProductId",
+                data: { productId: deleteId },
+                datatype: "json",
+                success: function (data) {
+                    alert(data);
+                }
+            });
+            groupBuytSearch();
+        }
+    }
+    function Ajax(id, status) {
+        $.ajax({
+            type: "POST",
+            url: "/Channel/TransforSuspend",
+            data: { productId: id, statusName: status },
+            datatype: "json",
+            success: function (data) {
+                alert(data);
+            }
+        });
+    }
+    //返回商品列表
+    function backList() {
+        $('#detailDiv').css("display", "none");
+        $('#defaultDiv').css("display", "block");
+    }
+</script>

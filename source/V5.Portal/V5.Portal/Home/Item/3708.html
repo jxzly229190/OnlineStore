@@ -1,0 +1,1143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="购酒网,网上买酒专卖店,最好的买酒网" />
+  <meta name="description" content="购酒网作为国内第一网上买酒网官方专卖店，提供白酒、葡萄酒、洋酒、进口红酒、黄酒等10万种以上正品酒类商品，经过茅台、五粮液、洋河、王朝等数百种品牌授权，立志成为最好的买酒网。" />
+  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+  <link href="/Content/base.css" rel="stylesheet"/>
+ 
+  <link href="/Content/head.css" rel="stylesheet"/>
+ 
+  <link href="/Content/public.css" rel="stylesheet"/>
+ 
+  <script src="/Scripts/jquery-1.6.7.min.js"></script>
+ 
+  <script src="/Scripts/AjaxOverride.js"></script>
+
+  <script src="/Scripts/jquery.lazyload.min.js"></script>
+ 
+  <script src="/Scripts/global.js"></script>
+
+  <script src="/Scripts/public.js"></script>
+ 
+
+  <div class="topBar" id="topBar">
+  <div class="topBarCon">
+    <!-- 左侧栏目 -->
+    <div class="topBarFl fl">
+      <ul>
+        <li><span>欢迎来到购酒网！</span></li>
+        <li>
+          <!-- 登录 -->
+          <div class="login">
+            <div id="top_login">
+              <a href='#' class='login-name'>刷锅</a><a id='loginout' href='javascript:Navigation.LoginOut();'>退出</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 右侧栏目 -->
+    <div class="miniMenu fr">
+      <ul>
+        <!-- 购物车 -->
+        <li class="m1">
+          <a class="cart-a" href="/Cart">购物车<strong id="head_cart_no">0</strong>件</a>
+          <div class="mini-cart hide">
+            <div class="no-list hide">
+              您的购物车中暂时没有商品。
+            </div>
+            <div class="cart-list" id="head_cart"></div>
+          </div>
+        </li>
+
+        <!-- 我的订单 -->
+        <li class="m2"><a href="/User/MyOrder">我的订单</a></li>
+        
+        <!-- 用户中心 -->
+        <li class="m3">
+          <a class="user-a" href="/User/Index">用户中心</a>
+          <div class="miniMenu-child hide">
+            <dl>
+              <dd><a href="/User/Evaluate">商品评论</a></dd>
+              <dd><a href="/User/Collect">收藏夹</a></dd>
+            </dl>
+          </div>
+        </li>
+        <li class="m4"><a href="/Home/Help/6.html">帮助中心</a></li>
+        <li class="m55"><a href="/Home/FeedBack">提建议</a></li>
+        <li class="m66"><a href="http://tieba.baidu.com/f?tp=0&amp;kw=%B9%BA%BE%C6%CD%F8" rel="nofollow">贴吧</a></li>
+        <li class="m66"><a href="http://e.weibo.com/2205040202/profile" rel="nofollow">微博</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+  <div style="background-color:#fff;">
+    <div class="header">
+      <div class="hd_logo">
+        <a class="logo" href="/Home/Index"></a>
+        <a class="ad" href="###"></a>
+      </div>
+      <div class="searchArea fl">
+        <div class="searchInput">
+          <ul>
+            <li class="search_input">
+              <input id="sch" name="key" type="text" class="text_input" value="" />
+              <div class="search_suggest"></div>
+            </li>
+            <li class="search_btn"><input type="button" class="sch_btn" value="搜索" id="btnsch" /></li>
+          </ul>
+        </div>
+        <div class="search_list_box" id="search_list_box"></div>
+        <div class="keyword">
+          <strong>热门搜索：</strong>
+          <a href="/Home/Search?Search=baijiu-maotai" title="茅台">茅台</a>
+          <a href="/Home/Search?Search=baijiu-fenjiu" title="汾酒">汾酒</a>
+          <a href="/Home/Search?Search=baijiu-yanghe" title="洋河">洋河</a>
+          <a href="/Home/Search?Search=baijiu-langjiu" title="郎酒">郎酒</a>
+          <a href="/Home/Search?Search=baijiu-wuliangye" title="五粮液">五粮液</a>
+          <a href="/Home/Search?Search=baijiu-jiannanchun" title="剑南春">剑南春</a>
+          <a href="/Home/Search?Search=baijiu-maotai" title="泸州老窖">泸州老窖</a>
+        </div>
+      </div>
+      <div class="tubiao">
+        <span><img src="/images/hdxb1.jpg" alt="" /></span>
+        <span><img src="/images/hdxb2.jpg" alt="" /></span>
+        <span><img src="/images/hdxb3.jpg" alt="" /></span>
+      </div>
+    </div>
+</div>
+  <div class="headNav" id="headNav">
+    <div class="navCon">
+        <!-- 全部商品分类 -->
+        <div class="navCon-cate fl navCon_on">
+            <div class="navCon-cate-title">
+                <a href="#">全部商品分类</a>
+            </div>
+            <div class="cateMenu">
+                <ul>
+                    <li style="border-top: none;">
+                        <div class="cate-tag">
+                            <strong><a href="#">白酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=baijiu-maotai">茅台</a> <a href="/Home/Search?Brand=baijiu-yanghe">
+                                        洋河</a> <a href="/Home/Search?Brand=baijiu-langjiu">郎酒</a> <a href="/Home/Search?Brand=baijiu-gujinggongjiu">
+                                            古井贡酒</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=baijiu-xijiu">习酒</a> <a href="/Home/Search?Brand=baijiu-zhenjiu">
+                                        珍酒</a> <a href="/Home/Search?Brand=baijiu-hongxing">红星</a> <a href="/Home/Search?Brand=baijiu-luzhoulaojiao">
+                                            泸州老窖</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=baijiu-zuopai">沱牌</a> <a href="/Home/Search?Brand=baijiu-guotai">
+                                        国台</a> <a href="/Home/Search?Brand=baijiu-wuliangye">五粮液</a> <a href="/Home/Search?Brand=baijiu-jiannanchun">
+                                            剑南春</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=baijiu-maotai">茅台</a> <a href="/Home/Search?Brand=baijiu-wuliangye">
+                                            五粮液</a> <a href="/Home/Search?Brand=baijiu-jiannanchun">剑南春</a> <a href="/Home/Search?Brand=baijiu-shuijingfang">
+                                                水井坊</a> <a href="/Home/Search?Brand=baijiu-fenjiu">汾酒</a> <a href="/Home/Search?Brand=baijiu-yanghe">
+                                                    洋河</a> <a href="/Home/Search?Brand=baijiu-luzhoulaojiao">泸州老窖</a> <a href="/Home/Search?Brand=baijiu-zhenjiu">
+                                                        珍酒</a> <a href="/Home/Search?Brand=baijiu-langjiu">郎酒</a> <a href="/Home/Search?Brand=baijiu-gujinggongjiu">
+                                                            古井贡酒</a> <a href="/Home/Search?Brand=baijiu-xifengjiu">西凤酒</a>
+                                        <a href="/Home/Search?Brand=baijiu-dongjiu">董酒</a> <a href="/Home/Search?Brand=baijiu-jiuguijiu">
+                                            酒鬼酒</a> <a href="/Home/Search?Brand=baijiu-hongxing">红星</a> <a href="/Home/Search?Brand=baijiu-wenjunjiu">
+                                                文君酒</a> <a href="/Home/Search?Brand=baijiu-niulanshan">牛栏山</a> <a href="/Home/Search?Brand=baijiu-sitejiu">
+                                                    四特酒</a> <a href="/Home/Search?Brand=baijiu-kouzijiu">口子酒</a> <a href="/Home/Search?Brand=baijiu-zuopai">
+                                                        沱牌</a> <a href="/Home/Search?Brand=baijiu-xijiu">习酒</a> <a href="/Home/Search?Brand=baijiu-guotai">
+                                                            国台</a> <a href="/Home/Search?Brand=baijiu-hengshuilaobaigan">衡水老白干</a>
+                                        <a href="/Home/Search?Brand=baijiu-shedejiu">舍得酒</a> <a href="/Home/Search?Brand=baijiu-zhongzijiu">
+                                            种子酒</a> <a href="/Home/Search?Brand=baijiu-yilite">伊力特</a> <a href="/Home/Search?Brand=baijiu-dukang">
+                                                杜康酒</a> <a href="/Home/Search?Brand=baijiu-zhijiang">枝江酒</a> <a href="/Home/Search?Brand=baijiu-baiyunbian">
+                                                    白云边</a> <a href="/Home/Search?Brand=baijiu-kongfujia">孔府家</a> <a href="/Home/Search?Brand=baijiu-bandaojing">
+                                                        扳倒井</a> <a href="/Home/Search?Brand=baijiu-laimaojiu">赖茅酒</a> <a href="/Home/Search?Brand=baijiu-jinshiyuan">
+                                                            今世缘</a> <a href="/Home/Search?Brand=baijiu-yaxijiao">鸭溪窖</a>
+                                        <a href="/Home/Search?Brand=baijiu-jinliufu">金六福</a> <a href="/Home/Search?Brand=baijiu-xiaohutuxian">
+                                            小糊涂仙</a> <a href="/Home/Search?Brand=baijiu-yingjiajiu">迎驾酒</a> <a href="/Home/Search?Brand=baijiu-daohuaxiang">
+                                                稻花香</a> <a href="/Home/Search?Brand=baijiu-wanjiu">皖酒</a> <a href="/Home/Search?Brand=baijiu-taiwangaoliangjiu">
+                                                    台湾高粱酒</a> <a href="/Home/Search?Brand=baijiu-fenggu">丰谷酒</a> <a href="/Home/Search?Brand=baijiu-qiantaipai">
+                                                        黔台牌</a> <a href="/Home/Search?Brand=baijiu-shuanggoujiu">双沟酒</a>
+                                        <a href="/Home/Search?Brand=baijiu-huanghelou">黄鹤楼</a> <a href="/Home/Search?Brand=baijiu-jintanyuye">
+                                            金潭玉液</a> <a href="/Home/Search?Brand=baijiu-taibaijiu">太白酒</a> <a href="/Home/Search?Brand=baijiu-zuoyanghe">
+                                                浏阳河</a> <a href="/Home/Search?Brand=baijiu-gaolujia">高炉家</a> <a href="/Home/Search?Brand=baijiu-maotaizhenwuxing">
+                                                    茅台镇五星</a> <a href="/Home/Search?Brand=baijiu-sujiu">苏酒</a> <a href="/Home/Search?Brand=baijiu-guizhouqingjiu">
+                                                        贵州青酒</a> <a href="/Home/Search?Brand=baijiu-hetao">河套酒</a> <a href="/Home/Search?Brand=baijiu-hongloumeng">
+                                                            红楼梦</a> <a href="/Home/Search?Brand=baijiu-dongbeifang">东北坊</a>
+                                        <a href="/Home/Search?Brand=baijiu-sichuanquanxing">四川全兴</a> <a href="/Home/Search?Brand=baijiu-gaocan">
+                                            高参</a> <a href="/Home/Search?Brand=baijiu-shandongjingzhi">山东景芝</a> <a href="/Home/Search?Brand=baijiu-junjiu">
+                                                军酒</a> <a href="/Home/Search?Brand=baijiu-laozhanshi">老战士</a> <a href="/Home/Search?Brand=baijiu-xiaojiurensheng">
+                                                    小酒人生</a> <a href="/Home/Search?Brand=baijiu-jiangjinjiu">江津酒</a> <a href="/Home/Search?Brand=baijiu-dijiaojiu">
+                                                        地窖酒</a> <a href="/Home/Search?Brand=baijiu-yongdingheerguotou">永定河二锅头</a>
+                                        <a href="/Home/Search?Brand=baijiu-qixingerguotou">七星二锅头</a> <a href="/Home/Search?Brand=baijiu-zhanggongjiu">
+                                            张弓酒</a> <a href="/Home/Search?Brand=baijiu-fuchengerguotou">福城二锅头</a> <a href="/Home/Search?Brand=baijiu-zunyijiu">
+                                                遵义酒</a> <a href="/Home/Search?Brand=baijiu-xiaohulu">小葫芦</a> <a href="/Home/Search?Brand=baijiu-xiaofangzi">
+                                                    小房子</a> <a href="/Home/Search?Brand=baijiu-laojiaojiu">老窖酒</a> <a href="/Home/Search?Brand=baijiu-jinzuolaojiao">
+                                                        金泸老窖</a> <a href="/Home/Search?Brand=baijiu-huozhiniang">活之酿</a>
+                                        <a href="/Home/Search?Brand=baijiu-jiuzhongjiu">酒中酒</a> <a href="/Home/Search?Brand=baijiu-taishan">
+                                            泰山</a> <a href="/Home/Search?Brand=baijiu-liulingzui">刘伶醉</a> <a href="/Home/Search?Brand=baijiu-qinghuaci">
+                                                青花瓷</a> <a href="/Home/Search?Brand=baijiu-xinghewan">星河湾</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>香型</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=baijiu-search-t-110.htm">酱香型</a> <a href="/Home/Search?Brand=baijiu-search-t-116.htm">
+                                            浓香型</a> <a href="/Home/Search?Brand=baijiu-search-t-117.htm">清香型</a> <a href="/Home/Search?Brand=baijiu-search-t-107.htm">
+                                                凤香型</a> <a href="/Home/Search?Brand=baijiu-search-t-108.htm">馥郁香</a> <a href="/Home/Search?Brand=baijiu-search-t-104.htm">
+                                                    董香型</a> <a href="/Home/Search?Brand=baijiu-search-t-121.htm">特香型</a>
+                                        <a href="/Home/Search?Brand=baijiu-search-t-122.htm">芝麻香</a> <a href="/Home/Search?Brand=baijiu-search-t-109.htm">
+                                            兼香型</a> <a href="/Home/Search?Brand=baijiu-search-t-111.htm">金门香型</a> <a href="/Home/Search?Brand=baijiu-search-t-112.htm">
+                                                老干白</a> <a href="/Home/Search?Brand=baijiu-search-t-113.htm">绵柔型</a> <a href="/Home/Search?Brand=baijiu-search-t-118.htm">
+                                                    柔和型</a> <a href="/Home/Search?Brand=baijiu-search-t-728.htm">小曲型</a>
+                                        <a href="/Home/Search?Brand=baijiu-search-t-869.htm">生态竹香型</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=putaojiu">葡萄酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=putaojiu-zhongguo">中国</a> <a href="/Home/Search?Brand=putaojiu-faguo">
+                                        法国</a> <a href="/Home/Search?Brand=putaojiu-zhili">智利</a> <a href="/Home/Search?Brand=putaojiu-putaoya">
+                                            葡萄牙</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=putaojiu-yidali">意大利</a> <a href="/Home/Search?Brand=putaojiu-aodaliya">
+                                        澳大利亚</a> <a href="/Home/Search?Brand=putaojiu-deguo">德国</a> <a href="/Home/Search?Brand=putaojiu-nanfei">
+                                            南非</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=putaojiu-meiguo">美国</a> <a href="/Home/Search?Brand=putaojiu-agenting">
+                                        阿根廷</a> <a href="/Home/Search?Brand=putaojiu-xibanya">西班牙</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>产区</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=putaojiu-aodaliya">澳大利亚</a> <a href="/Home/Search?Brand=putaojiu-deguo">
+                                            德国</a> <a href="/Home/Search?Brand=putaojiu-faguo">法国</a> <a href="/Home/Search?Brand=putaojiu-jianada">
+                                                加拿大</a> <a href="/Home/Search?Brand=putaojiu-meiguo">美国</a> <a href="/Home/Search?Brand=putaojiu-xibanya">
+                                                    西班牙</a> <a href="/Home/Search?Brand=putaojiu-zhili">智利</a> <a href="/Home/Search?Brand=putaojiu-putaoya">
+                                                        葡萄牙</a> <a href="/Home/Search?Brand=putaojiu-eluosi">俄罗斯</a> <a href="/Home/Search?Brand=putaojiu-agenting">
+                                                            阿根廷</a> <a href="/Home/Search?Brand=putaojiu-xinxilan">新西兰</a>
+                                        <a href="/Home/Search?Brand=putaojiu-nanfei">南非</a> <a href="/Home/Search?Brand=putaojiu-yidali">
+                                            意大利</a> <a href="/Home/Search?Brand=putaojiu-zhongguo">中国</a> <a href="/Home/Search?Brand=putaojiu-xila">
+                                                希腊</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>类型</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=putaojiu-search-t-211.htm">红葡萄酒</a> <a href="/Home/Search?Brand=putaojiu-search-t-212.htm">
+                                            白葡萄酒</a> <a href="/Home/Search?Brand=putaojiu-search-t-213.htm">桃红葡萄酒</a> <a href="/Home/Search?Brand=putaojiu-search-t-214.htm">
+                                                起泡酒/香槟</a> <a href="/Home/Search?Brand=putaojiu-search-t-215.htm">冰酒/贵腐/甜酒</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>品种</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=putaojiu-search-g-168.htm">芭贝拉</a> <a href="/Home/Search?Brand=putaojiu-search-g-170.htm">
+                                            长相思</a> <a href="/Home/Search?Brand=putaojiu-search-g-173.htm">解百纳</a> <a href="/Home/Search?Brand=putaojiu-search-g-176.htm">
+                                                玛尔维萨</a> <a href="/Home/Search?Brand=putaojiu-search-g-177.htm">梅洛</a>
+                                        <a href="/Home/Search?Brand=putaojiu-search-g-182.htm">西拉子</a> <a href="/Home/Search?Brand=putaojiu-search-g-184.htm">
+                                            综合佳酿</a> <a href="/Home/Search?Brand=putaojiu-search-g-749.htm">美乐</a> <a href="/Home/Search?Brand=putaojiu-search-g-872.htm">
+                                                莫斯卡托</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=yangjiu">洋酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=yangjiu-gelanweite">格兰威特</a> <a href="/Home/Search?Brand=yangjiu-jiekedanni">
+                                        杰克丹尼</a> <a href="/Home/Search?Brand=yangjiu-xuannishi">轩尼诗</a></p>
+                                <p>
+                                    <a href="/Home/Search?Brand=yangjiu-zunnihuojia">尊尼获加</a> <a href="/Home/Search?Brand=yangjiu-huangjialuyi">
+                                        皇家路易</a> <a href="/Home/Search?Brand=yangjiu-bailingtan">百龄坛</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px; display: none;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=yangjiu-diwang">帝王</a> <a href="/Home/Search?Brand=yangjiu-zhihuashi">
+                                            芝华士</a> <a href="/Home/Search?Brand=yangjiu-bailingtan">百龄坛</a> <a href="/Home/Search?Brand=yangjiu-madieli">
+                                                马爹利</a> <a href="/Home/Search?Brand=yangjiu-zunnihuojia">尊尼获加</a> <a href="/Home/Search?Brand=yangjiu-weique">
+                                                    威雀</a> <a href="/Home/Search?Brand=yangjiu-gelanfeidi">格兰菲迪</a> <a href="/Home/Search?Brand=yangjiu-lanchong">
+                                                        懒虫</a> <a href="/Home/Search?Brand=yangjiu-haoshuai">豪帅</a> <a href="/Home/Search?Brand=yangjiu-ruidianjuedui">
+                                                            瑞典绝对</a> <a href="/Home/Search?Brand=yangjiu-xuannishi">轩尼诗</a>
+                                        <a href="/Home/Search?Brand=yangjiu-sandeli">三得利</a> <a href="/Home/Search?Brand=yangjiu-zhanbian">
+                                            占边</a> <a href="/Home/Search?Brand=yangjiu-yiwan">伊万</a> <a href="/Home/Search?Brand=yangjiu-rentouma">
+                                                人头马</a> <a href="/Home/Search?Brand=yangjiu-napolun">拿破仑</a> <a href="/Home/Search?Brand=yangjiu-jiekedanni">
+                                                    杰克丹尼</a> <a href="/Home/Search?Brand=yangjiu-maikalun">麦卡伦</a> <a href="/Home/Search?Brand=yangjiu-gelanweite">
+                                                        格兰威特</a> <a href="/Home/Search?Brand=yangjiu-huangjialipao">皇家礼炮</a>
+                                        <a href="/Home/Search?Brand=yangjiu-diwang">帝王</a> <a href="/Home/Search?Brand=yangjiu-zhenbaowei">
+                                            珍宝威</a> <a href="/Home/Search?Brand=yangjiu-jianadaCC">加拿大CC</a> <a href="/Home/Search?Brand=yangjiu-shunfeng">
+                                                顺风</a> <a href="/Home/Search?Brand=yangjiu-laobowei">老伯威</a> <a href="/Home/Search?Brand=yangjiu-mengmailanbaoshi">
+                                                    孟买蓝宝石</a> <a href="/Home/Search?Brand=yangjiu-bifuda">必富达</a> <a href="/Home/Search?Brand=yangjiu-gedun">
+                                                        歌顿</a> <a href="/Home/Search?Brand=yangjiu-shigelanjinjiu">施格兰金酒</a>
+                                        <a href="/Home/Search?Brand=yangjiu-zuanshi">钻石</a> <a href="/Home/Search?Brand=yangjiu-baijiade">
+                                            百加得</a> <a href="/Home/Search?Brand=yangjiu-baijinwushi">白金武士</a> <a href="/Home/Search?Brand=yangjiu-weiboluowa">
+                                                维波罗瓦</a> <a href="/Home/Search?Brand=yangjiu-xueshu">雪树</a> <a href="/Home/Search?Brand=yangjiu-faguohuiyan">
+                                                    法国灰雁</a> <a href="/Home/Search?Brand=yangjiu-shigelan">施格兰</a> <a href="/Home/Search?Brand=yangjiu-siminuo">
+                                                        斯米诺</a> <a href="/Home/Search?Brand=yangjiu-fenlan">芬兰</a> <a href="/Home/Search?Brand=yangjiu-sulian">
+                                                            苏连</a> <a href="/Home/Search?Brand=yangjiu-boshi">波士</a> <a href="/Home/Search?Brand=yangjiu-huluzuo">
+                                                                葫芦樽</a> <a href="/Home/Search?Brand=yangjiu-sandeliyangjiu">三得利洋酒</a>
+                                        <a href="/Home/Search?Brand=yangjiu-lijia">力加</a> <a href="/Home/Search?Brand=yangjiu-bailitian">
+                                            百利甜</a> <a href="/Home/Search?Brand=yangjiu-ganlukafei">甘露咖啡</a> <a href="/Home/Search?Brand=yangjiu-malibao">
+                                                马利宝</a> <a href="/Home/Search?Brand=yangjiu-jundu">君度</a> <a href="/Home/Search?Brand=yangjiu-senbojia">
+                                                    森伯加</a> <a href="/Home/Search?Brand=yangjiu-bideli">必得利</a> <a href="/Home/Search?Brand=yangjiu-matianni">
+                                                        马天尼</a> <a href="/Home/Search?Brand=yangjiu-xianshanlu">仙山露</a>
+                                        <a href="/Home/Search?Brand=yangjiu-aomeijia">奥美加</a> <a href="/Home/Search?Brand=yangjiu-hawana">
+                                            哈瓦那</a> <a href="/Home/Search?Brand=yangjiu-meiyashi">美雅士</a> <a href="/Home/Search?Brand=yangjiu-taluo">
+                                                塔罗</a> <a href="/Home/Search?Brand=yangjiu-futejia">伏特加</a> <a href="/Home/Search?Brand=yangjiu-huangjialuyi">
+                                                    皇家路易</a> <a href="/Home/Search?Brand=yangjiu-tianbao">添宝</a> <a href="/Home/Search?Brand=yangjiu-leiboshi">
+                                                        雷博士</a> <a href="/Home/Search?Brand=yangjiu-hana">哈拿</a> <a href="/Home/Search?Brand=yangjiu-wukelanchunmai">
+                                                            乌克兰纯麦</a> <a href="/Home/Search?Brand=yangjiu-jueshi">爵士</a>
+                                        <a href="/Home/Search?Brand=yangjiu-madingmile">马丁米勒</a> <a href="/Home/Search?Brand=yangjiu-tianjiali">
+                                            添加利</a> <a href="/Home/Search?Brand=yangjiu-simeigui">四玫瑰</a> <a href="/Home/Search?Brand=yangjiu-bomo">
+                                                波摩</a> <a href="/Home/Search?Brand=yangjiu-gelanjie">格兰杰</a> <a href="/Home/Search?Brand=yangjiu-wensha">
+                                                    温莎</a> <a href="/Home/Search?Brand=yangjiu-qishi">骑士</a> <a href="/Home/Search?Brand=yangjiu-mazuoshi">
+                                                        马谛氏</a> <a href="/Home/Search?Brand=yangjiu-shenlan">深蓝</a> <a href="/Home/Search?Brand=yangjiu-bulangchuanchang">
+                                                            布朗船长</a> <a href="/Home/Search?Brand=yangjiu-heizun">黑樽</a>
+                                        <a href="/Home/Search?Brand=yangjiu-fukeni">福克尼</a> <a href="/Home/Search?Brand=yangjiu-zunmeichun">
+                                            尊美醇</a> <a href="/Home/Search?Brand=yangjiu-mengtebojue">蒙特伯爵</a> <a href="/Home/Search?Brand=yangjiu-disanuo">
+                                                帝萨诺</a> <a href="/Home/Search?Brand=yangjiu-saigetiba">赛格提芭</a> <a href="/Home/Search?Brand=yangjiu-dikaibao">
+                                                    迪凯堡</a> <a href="/Home/Search?Brand=yangjiu-meige">美格</a> <a href="/Home/Search?Brand=yangjiu-shengteleisha">
+                                                        圣特雷莎</a> <a href="/Home/Search?Brand=yangjiu-dilinke">第林可</a> <a href="/Home/Search?Brand=yangjiu-benniweisi">
+                                                            本尼维斯</a> <a href="/Home/Search?Brand=yangjiu-qizi">奇滋</a> <a href="/Home/Search?Brand=yangjiu-aokai">
+                                                                奥凯</a> <a href="/Home/Search?Brand=yangjiu-jianwei">剑威</a>
+                                        <a href="/Home/Search?Brand=yangjiu-pafulijisi">帕夫利季斯</a> <a href="/Home/Search?Brand=yangjiu-peiteleichengbao">
+                                            佩特雷城堡</a> <a href="/Home/Search?Brand=yangjiu-siduoke">斯多克</a> <a href="/Home/Search?Brand=yangjiu-aidehua">
+                                                爱德华</a> <a href="/Home/Search?Brand=yangjiu-gelanyulu">格兰御鹿</a> <a href="/Home/Search?Brand=yangjiu-salonggongjue">
+                                                    萨隆公爵</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>酒种</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=yangjiu-search-t-326.htm">白兰地</a> <a href="/Home/Search?Brand=yangjiu-search-t-327.htm">
+                                            伏特加</a> <a href="/Home/Search?Brand=yangjiu-search-t-328.htm">朗姆酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-329.htm">
+                                                力娇酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-331.htm">墨西哥烈酒</a>
+                                        <a href="/Home/Search?Brand=yangjiu-search-t-334.htm">甜酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-335.htm">
+                                            威士忌</a> <a href="/Home/Search?Brand=yangjiu-search-t-539.htm">金酒</a> <a href="/Home/Search?Brand=yangjiu-search-t-888.htm">
+                                                利口酒</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=huangjiu">黄酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=huangjiu-shikumen">石库门</a> <a href="/Home/Search?Brand=huangjiu-nverhong">
+                                        女儿红</a> <a href="/Home/Search?Brand=huangjiu-guyuelongshan">古越龙山</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px; display: none;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=huangjiu-shikumen">石库门</a> <a href="/Home/Search?Brand=huangjiu-hejiu">
+                                            和酒</a> <a href="/Home/Search?Brand=huangjiu-guyuelongshan">古越龙山</a> <a href="/Home/Search?Brand=huangjiu-nverhong">
+                                                女儿红</a> <a href="/Home/Search?Brand=huangjiu-shazhouyouhuang">沙洲优黄</a>
+                                        <a href="/Home/Search?Brand=huangjiu-huijishan">会稽山</a> <a href="/Home/Search?Brand=huangjiu-tapai">
+                                            塔牌</a> <a href="/Home/Search?Brand=huangjiu-wuzhanmao">乌毡帽</a> <a href="/Home/Search?Brand=huangjiu-tangsonghuangjiu">
+                                                唐宋黄酒</a> <a href="/Home/Search?Brand=huangjiu-qiantangrenjia">钱塘人家</a>
+                                        <a href="/Home/Search?Brand=huangjiu-xianhenghuangjiu">咸亨黄酒</a> <a href="/Home/Search?Brand=huangjiu-jiashanhuangjiu">
+                                            嘉善黄酒</a> <a href="/Home/Search?Brand=huangjiu-shaoxingshiye">绍兴师爷</a> <a href="/Home/Search?Brand=huangjiu-liangzhu">
+                                                梁祝</a> <a href="/Home/Search?Brand=huangjiu-zuhezhuang">组合装</a>
+                                    </dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>年份</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=huangjiu-search-y-407.htm">100年</a> <a href="/Home/Search?Brand=huangjiu-search-y-408.htm">
+                                            10年</a> <a href="/Home/Search?Brand=huangjiu-search-y-409.htm">12年</a> <a href="/Home/Search?Brand=huangjiu-search-y-410.htm">
+                                                15年</a> <a href="/Home/Search?Brand=huangjiu-search-y-411.htm">18年</a>
+                                        <a href="/Home/Search?Brand=huangjiu-search-y-412.htm">20年</a> <a href="/Home/Search?Brand=huangjiu-search-y-413.htm">
+                                            25年</a> <a href="/Home/Search?Brand=huangjiu-search-y-414.htm">30年</a> <a href="/Home/Search?Brand=huangjiu-search-y-415.htm">
+                                                3年</a> <a href="/Home/Search?Brand=huangjiu-search-y-418.htm">5年</a> <a href="/Home/Search?Brand=huangjiu-search-y-419.htm">
+                                                    6年</a> <a href="/Home/Search?Brand=huangjiu-search-y-420.htm">8年</a>
+                                        <a href="/Home/Search?Brand=huangjiu-search-y-421.htm">9年</a> <a href="/Home/Search?Brand=huangjiu-search-y-422.htm">
+                                            常规年份</a>
+                                    </dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/Home/Search?Brand=baojianjiuyupijiu">保健酒与啤酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/Home/Search?Brand=baojianjiuyupijiu-baiwei">百威</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-qingdao">
+                                        青岛</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-xili">喜力</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-jinjiu">
+                                            劲酒</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-baiwei">百威</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-xili">
+                                            喜力</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-qingdao">青岛</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-jinjiu">
+                                                劲酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-huangjinjiu">黄金酒</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-lanzuojiu">蓝莓酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-yinxing">
+                                            银杏</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-chunshengtang">春生堂</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-zhangyujiu">张裕酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-danli">
+                                            丹力</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-guihuajiu">桂花酒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-senlindamao">
+                                                森林大猫</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-kalite">卡力特</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-qilin">麒麟</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-kaisa">
+                                            凯撒</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-xiushi">修士</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-heisenmati">
+                                                黑森马蹄</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-weilanshi">威兰仕</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-keluona">科罗娜</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-landai">
+                                            蓝带</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-bugefusi">布格福斯</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-boruike">
+                                                博瑞克</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-lizibao">力兹堡</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-jiashibo">嘉士伯</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-meimingge">
+                                            美名格</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-adengbao">阿登堡</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-bode">
+                                                博德</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-defubao">德福堡</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-delishi">
+                                                    德力士</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-langke">朗克</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-maideaohei">麦德奥黑</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-weiou">
+                                            威欧</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-weisima">威斯玛</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-zhaori">
+                                                朝日</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-bile">彼乐</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-baiguan">
+                                                    白鹳</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-debo">德博</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-zhuangyuanzhu">
+                                                        庄园主</a> <a href="/Home/Search?Brand=baojianjiuyupijiu-delake">德拉克</a>
+                                        <a href="/Home/Search?Brand=baojianjiuyupijiu-xicangqingzuo">西藏青稞</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="float-list-dnav">
+                            <a href="/Utility/announcement">新品</a> <a href="/Utility/announcement/">清仓</a> <a
+                                href="/Utility/announcement">多买优惠</a>
+                        </div>
+                    </li>
+                    <li class="ppg"><a href="/Utility/announcement">
+                        <img src="/images/pinpaiguan.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 系统菜单 -->
+        <div class="navCon-menu fl">
+            <ul>
+                <li><a class="curMenu" href="/Home/Index">首页</a></li>
+                <li><a href="/Home/Tuan">购酒团</a></li>
+                <li><a href="/Utility/announcement">我爱小酒版</a></li>
+                <li><a href="/Utility/announcement">名家鉴赏</a></li>
+                <li><a href="/Utility/announcement">名庄酒窖</a></li>
+                <li><a href="/Utility/announcement">VIP专场</a></li>
+            </ul>
+        </div>
+        <!-- 我的购物车 -->
+        <div class="cart fr">
+            <a href="/Utility/announcement">我的购物车</a>
+        </div>
+    </div>
+</div>
+
+  <div id="body">
+    
+    
+<link href="/Content/goods/goods.css" rel="stylesheet"/>
+
+<link href="/Content/cloud.extend.css" rel="stylesheet"/>
+
+<script src="/Scripts/goods/jquery.js"></script>
+
+<script src="/Scripts/AjaxOverride.js"></script>
+
+<script src="/Scripts/goods/jquery_002.js"></script>
+
+<script src="/Scripts/goods/goods.js"></script>
+
+<script src="/Scripts/product.comment.js"></script>
+
+<script src="/Scripts/product.consult.js"></script>
+    
+<script src="/Scripts/product.info.js"></script>
+
+<style type="text/css">
+    .navCon {width:1020px !important; margin:0 auto;}
+    .topBarCon {width:1020px !important; margin:0 auto;}
+    .content {width:1020px !important; margin:0 auto;}    
+    .header .searchArea { margin-left: 25px !important; }
+    .header { width: 1020px !important; }
+    .headNav .navCon .navCon-menu li { width: 100px !important; }
+    .headNav .navCon .navCon-menu li a { width: 100px !important; }
+</style>
+
+<script type="text/javascript">
+    $(function() {
+        $(".cateMenu").hide();
+        $(".navCon_on").hover(function() {
+            $(".cateMenu").show();
+            $(".navCon-cate-title").addClass("hover");
+        },
+            function() {
+                $(".cateMenu").hide();
+                $(".navCon-cate-title").removeClass("hover");
+            });
+        $("img.lazy").lazyload({ effect: "fadeIn" });
+        Cat.LoadCatPop();
+        
+        var option = {};
+        // 评论
+        option.productID = 3708;
+        option.showCount = "commentCount";
+        option.container = "divComment";
+        option.pageUrl = "/Product/GetProductComment";
+        comment.Init(option);
+        // 咨询
+        option.showCount = "consultCount";
+        option.container = "divConsult";
+        option.pageUrl = "/Product/GetProductConsult";
+        consult.Init(option);
+        // 商品信息
+        var productobj = {};
+        productobj.container = "divProductInfo";
+        productobj.id = 3708;
+        productobj.name = "澳大利亚 奔富酒园蔻兰山 西拉赤霞珠干红葡萄酒 750ml";
+        productobj.brandname = "奔富";
+        productobj.parentbrandname = "澳大利亚";
+        productobj.barcode = "9310297010905";
+        productobj.marketprice = "236";
+        productobj.goujiuprice = "198";
+        productobj.inventory = 270;
+        productinfo.Init(productobj);
+    });
+</script>
+
+<div id="body">
+    <div class="content fix">
+        <!--当前位置 s-->
+        <div class="conCrumb">
+            您当前的位置： <a href="/Home/Index">首页</a>&nbsp;&gt;&nbsp;<a href="/Home/Search?Brand=putaojiu">葡萄酒</a>&nbsp;&gt;&nbsp;<a href="/Home/Search?Brand=putaojiu-aodaliya">澳大利亚</a>&nbsp;&gt;&nbsp;<a href="/Home/Search?Brand=putaojiu-aodaliya-benfu">putaojiu-aodaliya-benfu</a>&nbsp;&gt;&nbsp;<span class="red">澳大利亚 奔富酒园蔻兰山 西拉赤霞珠干红葡萄酒 750ml</span>
+        </div>
+        <!--当前位置 e-->
+
+        <!--商品详情 begin-->
+        <div class="goodsDetail fix">
+            <!--左侧 begin-->
+            <div class="colLeft">
+                <!--放大镜 begin-->
+                <div class="magnifier_bimg"><img alt="" src="2013/0701/14b71444251d46abb761a4f1df475ca9_3.jpg" bimg="2013/0701/14b71444251d46abb761a4f1df475ca9_3.jpg" limg="2013/0701/14b71444251d46abb761a4f1df475ca9_4.jpg" id="mBigImg"><div id="divShowFlash" style="display:none"><a id="aShowPic" class="detailShow" target="_blank" href="#"></a></div></div><a href="javascript:" class="magnifier_larrow"></a><div class="magnifier_simgbox"><ul style="width: 248px;" class="magnifier_simglist fix"><li class="magnifier_simg"><a href="javascript:"><img src="2013/0701/14b71444251d46abb761a4f1df475ca9_0.jpg" bimg="2013/0701/14b71444251d46abb761a4f1df475ca9_3.jpg" limg="2013/0701/14b71444251d46abb761a4f1df475ca9_4.jpg" id="mSmallImg0"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/0701/69a2e9fd187e465a85e1403d844afc96_0.jpg" bimg="2013/0701/69a2e9fd187e465a85e1403d844afc96_3.jpg" limg="2013/0701/69a2e9fd187e465a85e1403d844afc96_4.jpg" id="mSmallImg1"></a></li><li class="magnifier_simg"><a href="javascript:"><img src="2013/0701/14b71444251d46abb761a4f1df475ca9_0.jpg" bimg="2013/0701/14b71444251d46abb761a4f1df475ca9_3.jpg" limg="2013/0701/14b71444251d46abb761a4f1df475ca9_4.jpg" id="mSmallImg2"></a></li></ul></div><a href="javascript:" class="magnifier_rarrow"></a>
+                <!--放大镜 end-->
+            </div>
+            <!--左侧 end-->
+
+            <!--右侧 begin-->
+            <div class="colRight">
+                <div id="divProductInfo"></div>
+                
+            </div>
+            <!--右侧 end-->
+        </div>
+        <!--商品详情 end-->
+
+    <!--买了此商品的用户还买了-->        
+    <div id="bought_goods_div" class="shop_other">
+        <div class="ml_box mt10">
+            <dl class="ofh"><dd>买了此商品的用户还买了</dd></dl>
+            <div class="ml_sandow"></div>
+            <div class="p15">
+                <ul class="ml_box_1">   <div><a href="/Home/Item/1977.html" target="_blank" title=""><img alt="" class="lazyload" src="2013/0222/fd812af220d34ba799081aa522a513a3_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1977.html" target="_blank" title="53° 茅台 五星 不带杯（2008年产） 500ml--">53° 茅台 五星 不带杯（2008年产） 500ml--</a></dt>   <dt><strong class="c_red">¥3680</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/253.html" target="_blank" title=""><img alt="" class="lazyload" src="2011/1110/d9fa092febad4f8fa109e50e79ad3066_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/253.html" target="_blank" title="52° 酒鬼 精品酒鬼酒 500ml">52° 酒鬼 精品酒鬼酒 500ml</a></dt>   <dt><strong class="c_red">¥458</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/2251.html" target="_blank" title=""><img alt="" class="lazyload" src="2012/0322/1781b9662be543e5abed33b81b0f9272_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/2251.html" target="_blank" title="53° 国台 十年 500ml">53° 国台 十年 500ml</a></dt>   <dt><strong class="c_red">¥429</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/3958.html" target="_blank" title=""><img alt="" class="lazyload" src="2013/0929/c58a6400f0814acfbf7b691bd03caf7d_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3958.html" target="_blank" title="52度 茅台 富贵万年 青瓷韵 500ml">52度 茅台 富贵万年 青瓷韵 500ml</a></dt>   <dt><strong class="c_red">¥196</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/3144.html" target="_blank" title=""><img alt="" class="lazyload" src="2012/1221/c603d9e745e4428da17ff503ffcb4495_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3144.html" target="_blank" title="52° 酒鬼酒 红坛 小酒版 50ml">52° 酒鬼酒 红坛 小酒版 50ml</a></dt>   <dt><strong class="c_red">¥69</strong></dt></ul><ul class="ml_box_1">   <div><a href="/Home/Item/2097.html" target="_blank" title=""><img alt="" class="lazyload" src="2011/1228/6bba93613dc040fcaf695f4e0be9e8ef_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/2097.html" target="_blank" title="53° 茅台 五星 不带杯（1990年） 500mlx3瓶">53° 茅台 五星 不带杯（1990年） 500mlx3瓶</a></dt>   <dt><strong class="c_red">¥47700</strong></dt></ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!--买了此商品的用户还买了 end-->
+
+    <!--左侧 s-->
+    <div class="colLeft">
+        <!--同类推荐 s-->
+        <div class="mt10 fl" id="sidebar">
+            <div id="similar_goods_div">
+                <div class="tj_box">
+                    <dl class="ofh">
+                        <dd> 同类推荐</dd>
+                    </dl>
+                    <div class="ml_sandow"></div>
+                    <ul class="tj_box_1">   <div><a href="/Home/Item/3055.html" target="_blank" title="法国 拉汗斯庄园干红葡萄酒 2008 750ml"><img alt="法国 拉汗斯庄园干红葡萄酒 2008 750ml" class="lazyload" src="2013/0124/1dbd1f3a1e83481a9d4889335973ea70_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3055.html" target="_blank" title="法国 拉汗斯庄园干红葡萄酒 2008 750ml">法国 拉汗斯庄园干红葡萄酒 2008 750ml</a></dt>   <dt><strong class="c_red">¥1480</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/1071.html" target="_blank" title="威雀（威凤凰） 12年波本威士忌 700ml"><img alt="威雀（威凤凰） 12年波本威士忌 700ml" class="lazyload" src="2012/0711/bba3e4cd05a546f28e7b1973cfe16a79_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1071.html" target="_blank" title="威雀（威凤凰） 12年波本威士忌 700ml">威雀（威凤凰） 12年波本威士忌 700ml</a></dt>   <dt><strong class="c_red">¥169</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/732.html" target="_blank" title="52° 五粮液 人民大会堂 国宴专用酒 水晶装 500ml"><img alt="52° 五粮液 人民大会堂 国宴专用酒 水晶装 500ml" class="lazyload" src="2011/0707/0a37dbf4acb74e4788dd7dc66f580582_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/732.html" target="_blank" title="52° 五粮液 人民大会堂 国宴专用酒 水晶装 500ml">52° 五粮液 人民大会堂 国宴专用酒 水晶装 500ml</a></dt>   <dt><strong class="c_red">¥788</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/2963.html" target="_blank" title="45° 西凤 国花瓷 12年 小酒版 100ml"><img alt="45° 西凤 国花瓷 12年 小酒版 100ml" class="lazyload" src="2012/1206/352a53a99a694d4c8aca1b7758c79a18_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/2963.html" target="_blank" title="45° 西凤 国花瓷 12年 小酒版 100ml">45° 西凤 国花瓷 12年 小酒版 100ml</a></dt>   <dt><strong class="c_red">¥49</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3007.html" target="_blank" title="法国 拉菲罗希尔古堡卡罗德干红葡萄酒 2007 750ml"><img alt="法国 拉菲罗希尔古堡卡罗德干红葡萄酒 2007 750ml" class="lazyload" src="2013/0123/0af024a8ebda4ddd82896c0ea2d2fe69_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3007.html" target="_blank" title="法国 拉菲罗希尔古堡卡罗德干红葡萄酒 2007 750ml">法国 拉菲罗希尔古堡卡罗德干红葡萄酒 2007 750ml</a></dt>   <dt><strong class="c_red">¥6680</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/1851.html" target="_blank" title="法国 莱伯瑞庄园 有机干红葡萄酒（2005年） 750ml"><img alt="法国 莱伯瑞庄园 有机干红葡萄酒（2005年） 750ml" class="lazyload" src="2012/0424/56fa987d1bc04ff2a6d3344bdd7376bd_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1851.html" target="_blank" title="法国 莱伯瑞庄园 有机干红葡萄酒（2005年） 750ml">法国 莱伯瑞庄园 有机干红葡萄酒（2005年） 750ml</a></dt>   <dt><strong class="c_red">¥298</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/3424.html" target="_blank" title="52° 剑南春 金剑南 K9 500ml"><img alt="52° 剑南春 金剑南 K9 500ml" class="lazyload" src="2013/0423/de50f7dacd86436586039de875f62617_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/3424.html" target="_blank" title="52° 剑南春 金剑南 K9 500ml">52° 剑南春 金剑南 K9 500ml</a></dt>   <dt><strong class="c_red">¥496</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/2322.html" target="_blank" title="50° 西凤 幸福人家酒 500ml"><img alt="50° 西凤 幸福人家酒 500ml" class="lazyload" src="2013/1209/46ca5d9b2db24821b07bf24d529cee42_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/2322.html" target="_blank" title="50° 西凤 幸福人家酒 500ml">50° 西凤 幸福人家酒 500ml</a></dt>   <dt><strong class="c_red">¥69</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/1363.html" target="_blank" title="45° 茅台醇 福酒 小酒版 125ml"><img alt="45° 茅台醇 福酒 小酒版 125ml" class="lazyload" src="2013/1031/7f303e55c0a54dc99940d4bb2129318c_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1363.html" target="_blank" title="45° 茅台醇 福酒 小酒版 125ml">45° 茅台醇 福酒 小酒版 125ml</a></dt>   <dt><strong class="c_red">¥9</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/1226.html" target="_blank" title="48° 梅兰春 20年 陈酿 500ml"><img alt="48° 梅兰春 20年 陈酿 500ml" class="lazyload" src="2011/0121/cf907b37cfa048f5b825aeedbadfd4a1_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/1226.html" target="_blank" title="48° 梅兰春 20年 陈酿 500ml">48° 梅兰春 20年 陈酿 500ml</a></dt>   <dt><strong class="c_red">¥348</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/239.html" target="_blank" title="52° 剑南春 15年 年份酒 500ml"><img alt="52° 剑南春 15年 年份酒 500ml" class="lazyload" src="2012/0626/3efaf5bfeb52421b82d8e44f7ccc909a_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/239.html" target="_blank" title="52° 剑南春 15年 年份酒 500ml">52° 剑南春 15年 年份酒 500ml</a></dt>   <dt><strong class="c_red">¥1850</strong></dt></ul><ul class="tj_box_1">   <div><a href="/Home/Item/2969.html" target="_blank" title="46° 伊力 特曲 500ml"><img alt="46° 伊力 特曲 500ml" class="lazyload" src="2012/1206/369af685e1614c5ca4eeceec6e4a4a2f_1.jpg") height="140" width="140"></a></div>   <dt><a href="/Home/Item/2969.html" target="_blank" title="46° 伊力 特曲 500ml">46° 伊力 特曲 500ml</a></dt>   <dt><strong class="c_red">¥50</strong></dt></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--左侧 e-->
+
+    <!--右侧 s-->
+    <div class="colRight">
+        <div class="mt10 fl" id="main_l">
+            <div id="scrip_lin" style="width: 790px; background: none repeat scroll 0% 0% rgb(255, 255, 255); position: static; top: 973px;">
+                <div class="scrip_lin">
+                    <div class="scrip_bar">
+                        <ul>
+                            <li style="background-position: 0 -205px;" class="scrip_1">商品详情</li>
+                            <li class="scrip_2">买家评价(<span id="commentCount"></span>)</li>
+                            <li class="scrip_3">商品咨询(<span id="consultCount"></span>)</li>
+                            <li class="scrip_4">质量保障</li>                                
+                        </ul>
+                    </div>
+                </div>
+                <div class="bb1s">
+                </div>
+            </div>
+
+            <!--商品详情 s-->
+            <div class="details1">
+                <div class=" mt10 cs_box fix">
+                    <table class="lineHeight30" border="0" width="100%">
+                        <tbody><tr>
+                                   <td colspan="3">单位：瓶</td>
+                               </tr>
+                            <tr class="bg_white">
+                                <td>
+                                条码：9310297010905
+                                </td>
+                                <td>规格：1箱=6瓶</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    净含量：500ml
+                                </td>
+                                <td>                                    
+                                    酒精度：52°(vol)
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody></table>
+                </div>
+                <div class=" mt15">
+                    <div class="gs_box">
+                        <p></p>
+                        <div><img alt="" style="margin: 10px 0px" src=/images/goods/title_0.jpg>
+                        </div>
+                        <div>
+                            <div>
+<p><a href="http://www.gjw.com/product/Item-ID-823.htm" target="_blank"><img width="390" height="260" src="/upload@@/editor/image/2013/0722/64dac8380c89460ebeb05266b084ee72.jpg" alt="" /></a><a href="http://www.gjw.com/product/item-id-3709.htm" target="_blank"><img width="389" height="259" src="/upload@@/editor/image/2013/0719/d9b7a3620ff648fd9864b4a943b4dcce.jpg" style="margin-left: 10px" alt="" /></a></p>
+<p style="margin-top: 10px"><a href="http://www.gjw.com/product/item-id-838.htm" target="_blank"><img width="389" height="259" src="/upload@@/editor/image/2013/0719/7cf9483a1d9d4b7486416f8daeb64300.jpg" alt="" /></a><a href="http://www.gjw.com/product/item-id-3498.htm" target="_blank"><img width="389" height="259" src="/upload@@/editor/image/2013/0719/51233e36461a42bbba6819774962dc58.jpg" style="margin-left: 10px" alt="" /></a></p>
+<p style="margin-top: 10px">&nbsp;<input width="790" type="image" height="469" src="http://www.gjw.com/upload@@/editor/image/2013/0806/4dbd4c4aa8804b77863486a76a9ccba1.jpg" /></p>
+<p style="margin-top: 10px">
+<table width="790" cellspacing="0" cellpadding="0" border="0" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+    <tbody>
+        <tr>
+            <td width="30" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">&nbsp;</td>
+            <td width="760" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+            <table width="760" cellspacing="0" cellpadding="0" border="0" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                <tbody>
+                    <tr>
+                        <td height="73" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                        <div align="center"><img src="http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif" style="border-bottom: 0px; border-left: 0px; display: block; height: 1px; clear: both; vertical-align: top; border-top: 0px; border-right: 0px" alt="" name="ids-tag-m-34938" class="ke_anchor" id="ids-tag-m-34938" />&nbsp;
+                        <table width="760" height="32" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="700" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="760" height="23" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="22" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img01.taobaocdn.com/imgextra/i1/217103012/T24JydXfhbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /><br />
+                                                &nbsp;</td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px"><strong style="font-weight: 700">名 称:</strong></span></span></td>
+                                                <td width="633" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">澳大利亚 奔富酒园蔻兰山 西拉赤霞珠干红葡萄酒</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="42" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="588" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="760" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img03.taobaocdn.com/imgextra/i3/217103012/T2dJx9XeXbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">葡萄酒产地:</span></strong></span></td>
+                                                <td width="633" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">澳洲</span></span>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="40" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="700" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="760" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img01.taobaocdn.com/imgextra/i1/217103012/T2Xh9cXk0bXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">葡萄品种:</span></strong></span></td>
+                                                <td width="633" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">西拉 赤霞珠</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="40" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="380" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img02.taobaocdn.com/imgextra/i2/217103012/T2pZF9XgBbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">级 别:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                    <td width="380" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img02.taobaocdn.com/imgextra/i2/217103012/T2vJ89XiVbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">参考年份:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">10&nbsp;11</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="40" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="389" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img03.taobaocdn.com/imgextra/i3/217103012/T2_UB9XdtbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">葡萄酒种类:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">干红</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                    <td width="361" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img src="http://img01.taobaocdn.com/imgextra/i1/217103012/T2a5l9XbNbXXXXXXXX_%21%21217103012.jpg" style="border-bottom: 0px; border-left: 0px; margin: 0px; width: 16px; float: none; height: 16px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /><br />
+                                                &nbsp;</td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">香 味:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px"><span>散透着成熟黑李子, 黑莓和红莓的果香，以及紫罗兰的..</span></span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="40" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="389" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img01.taobaocdn.com/imgextra/i1/217103012/T2cZl9XiFbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">酒 体:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">中</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                    <td width="361" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img01.taobaocdn.com/imgextra/i1/217103012/T2QH09XhRbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /><br />
+                                                &nbsp;</td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">口 感:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">甘甜柔美</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="40" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="389" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img04.taobaocdn.com/imgextra/i4/217103012/T2mlXxXdhNXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 13px">酒精度:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">13%</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                    <td width="361" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img04.taobaocdn.com/imgextra/i4/217103012/T2iYV9Xi4bXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">容 量:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">750ML</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="39" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="389" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img02.taobaocdn.com/imgextra/i2/217103012/T2qt09XeVbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">醒酒时间:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">20分钟</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                    <td width="361" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img04.taobaocdn.com/imgextra/i4/217103012/T2WWt9XhlbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">最佳饮用温度:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">16-18℃</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="40" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="389" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img04.taobaocdn.com/imgextra/i4/217103012/T2Cfh9XdXbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">色 泽:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px">深红</span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                    <td width="361" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="380" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="36" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img02.taobaocdn.com/imgextra/i2/217103012/T2PDhxXXNNXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /></td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">配餐建议:</span></strong></span></td>
+                                                <td width="253" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px"><span>
+                                                <p>牛排 传统烤羊肉 粤菜 ...</p>
+                                                </span></span></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="760" height="58" cellspacing="0" cellpadding="0" border="0" align="center" style="border-bottom-color: black; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                            <tbody>
+                                <tr>
+                                    <td width="700" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                    <table width="760" cellspacing="0" cellpadding="0" border="0" align="left" style="border-bottom: rgb(204,204,204) 1pt solid; text-align: left; border-top-color: black; margin: 0px; border-spacing: 0px; border-collapse: separate; border-right-color: black; border-left-color: black">
+                                        <tbody>
+                                            <tr>
+                                                <td width="32" height="49" align="center" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><img width="16" height="16" src="http://img03.taobaocdn.com/imgextra/i3/217103012/T2R9qeXfJbXXXXXXXX_!!217103012.jpg" style="border-bottom: 0px; border-left: 0px; vertical-align: top; border-top: 0px; border-right: 0px" alt="" /><br />
+                                                &nbsp;</td>
+                                                <td width="95" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px"><span style="color: rgb(102,102,102)"><strong style="font-weight: 700"><span style="font-size: 12px">介绍:</span></strong></span></td>
+                                                <td width="633" style="border-bottom-color: black; padding-bottom: 0px; border-top-color: black; margin: 0px; padding-left: 0px; padding-right: 0px; border-right-color: black; border-left-color: black; padding-top: 0px">
+                                                <div style="padding-bottom: 0px; line-height: 1.4; margin: 1.12em 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px"><span style="color: rgb(102,102,102)"><span style="font-size: 12px"><font color="#777777">奔富Penfolds是澳大利亚最著名，也是最大的葡萄酒庄，它被人们看作是澳洲红酒的象征，被称为澳洲葡萄酒业的贵族。在澳洲，这是一个无人不知，无人不晓的品牌。奔富酒庄的发展史充满传奇，有人说，它其实是欧洲殖民者在澳洲开拓，发展，定居繁衍演变史的一个缩影。 </font></span></span></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<input width="790" type="image" height="629" src="http://www.gjw.com/upload@@/editor/image/2013/0806/85143f45f5154b0eb1d5bbb0693501d2.jpg" /><input width="789" type="image" height="577" src="http://www.gjw.com/upload@@/editor/image/2013/0806/7de82da3d46742558ea1ecde12a11674.jpg" /><input width="790" type="image" height="577" src="http://www.gjw.com/upload@@/editor/image/2013/0806/c2ff21545b4a4307b7048d3001b5a484.jpg" /><input width="790" type="image" height="766" src="http://www.gjw.com/upload@@/editor/image/2013/0806/7b0b076c5e8441da8f01070c6079eb32.jpg" /><input width="790" type="image" height="648" src="http://www.gjw.com/upload@@/editor/image/2013/0806/b0913debba9949fda74f55f9af3e400f.jpg" /><input width="790" type="image" height="965" src="http://www.gjw.com/upload@@/editor/image/2013/0806/d0cea75ea0a14a41b4a0485da1ad29cf.jpg" /><input width="790" type="image" height="63" src="http://www.gjw.com/upload@@/editor/image/2013/0806/d2a1927a64744ada88d204171c1a9f00.jpg" /></p>
+<table width="750" cellspacing="0" cellpadding="0" border="0" align="center">
+    <tbody>
+        <tr>
+            <td>
+            <table width="750" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <td>
+                        <p>红酒的功效与作用：有助于消化：日常饮食中，猪、牛、羊、鸡、鸭、鹅、鱼等呈酸性食物。葡萄酒是酒精性饮料中惟一的碱性食品，适量饮葡萄酒，可以中和每天食入的大量酸性食物，促进消化。</p>
+                        <p>有助于延缓衰老：红葡萄酒中含有较多的抗氧化剂，如酚化物、鞣酸、黄酮类物质、维生素C、维生素E，微量元素硒、锌、锰等，能消除或对抗氧自由基，有助于抗老防病。</p>
+                        <p>有助于预防心脑血管病：红葡萄酒能使血中的高密度脂蛋白（HDL）升高，能有效降低血胆固醇，防止动脉粥样硬化。红葡萄酒中的多酚物质，还能抑制血小板的凝集，防止血栓形成，预防中风。</p>
+                        <p>有助于预防癌症：葡萄皮中含有的白藜芦醇，可使癌细胞丧失活动能力，可以防止正常细胞癌变，并能抑制癌细胞的扩散。</p>
+                        <p>有助于美容养颜：有人说，法国女子皮肤细腻、润泽而富于弹性，与经常饮用红葡萄酒有关。红葡萄酒能使皮肤少生皱纹。还有不少人喜欢将红葡萄酒外搽于面部及体表，低浓度的果酸有抗皱洁肤的作用。</p>
+                        <p><input width="754" type="image" height="597" src="http://www.gjw.com/upload@@/editor/image/2013/0806/e4a763621ca64b80b3ab09278d01070f.jpg" /></p>
+                        <p>红酒 减肥私房法：红酒配合饮食可达到减肥目的。红酒被认为有减肥效果是因为其抗氧化力，能提高原本随着年龄而降低的新陈代谢。养成用餐时品尝红酒的习惯，并且给自己一个舒畅宽裕的时间来享受用餐乐趣，能够提早刺激脑的饱腹中枢，让自己不会吃得过量。当然，血中酒精浓度也会缓慢升高，对解除压力也有效果，因此也能抑制压力性的暴食暴饮。</p>
+                        <p>睡前饮用法：每日的3餐要正常吃，在睡前30分内，吃 1-2片起司或一小快乳酪，再喝1杯的红酒，能够加速新陈代谢。</p>
+                        <p>很多人可能都认为高热量的起司、奶酪不可能起到减肥的作用，但根据研究显示，每天摄取固定的钙质可有效的减肥，所以含高热量的起司，也变成减肥圣品。由于起司成份与母乳比例接近，外加不含乳糖而且钙质易被人体吸收，且蛋白质经过发酵而产生的短链胺基酸，可提升代谢率。而红酒含酒精、酪胺酸等成份，产热效果好，能促进新陈代谢，且热量不会被人体储存。</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<p>&nbsp;</p>
+                        </div>
+                        <div><img alt="" style="margin: 10px 0px"  src=/images/goods/title_1.jpg></div>
+                        <div class="pro_detail_pic">
+                            <p>
+                                <img alt="" src="2013/0701/14b71444251d46abb761a4f1df475ca9.jpg"><img alt="" src="2013/0701/69a2e9fd187e465a85e1403d844afc96.jpg"><img alt="" src="2013/0701/14b71444251d46abb761a4f1df475ca9.jpg">
+                            </p>
+                        </div> 
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <!--商品详情 e-->
+
+            <!--质量保障 s-->
+            <div class="zl_box mt10 details6">
+                <dl class="ofh"><dd>质量保障</dd></dl>
+                <div class="ml_sandow"></div>
+                <div class="p10"><img src=/images/goods/sv.jpg></div>
+            </div>
+            <!--质量保障 e-->
+
+            <!--看了此商品的用户还看了-->
+            <dl id="see_goods_div">
+                <div class="kl_box mt10  details5  ">
+                    <dl class="ofh"><dd>看了此商品的用户还看了</dd></dl>
+                    <div class="ml_sandow"></div>
+                    <div class=" w718 p15">
+                        <div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/2086.html" target="_blank" title="嘉善 米船黄酒 468ml*6瓶"><img alt="嘉善 米船黄酒 468ml*6瓶" class="lazyload" src="2011/1226/728e5e48e2d84b44a17a3cc21916b2bf.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/2086.html" target="_blank" title="嘉善 米船黄酒 468ml*6瓶">嘉善 米船黄酒 468ml*6瓶</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3520.html" target="_blank" title="德国原装进口啤酒 德福堡 白啤 5L桶装"><img alt="德国原装进口啤酒 德福堡 白啤 5L桶装" class="lazyload" src="2013/0522/7c79c5a63e304dbabde7a709c33889ce.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3520.html" target="_blank" title="德国原装进口啤酒 德福堡 白啤 5L桶装">德国原装进口啤酒 德福堡 白啤 5L桶装</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/1569.html" target="_blank" title="58° 貔貅财库高粱酒 750ml"><img alt="58° 貔貅财库高粱酒 750ml" class="lazyload" src="2011/0628/6871c135b4964243be8b576aa53b13ef.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/1569.html" target="_blank" title="58° 貔貅财库高粱酒 750ml">58° 貔貅财库高粱酒 750ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/4159.html" target="_blank" title="高级酒具"><img alt="高级酒具" class="lazyload" src="2014/0106/9fa63e47c715421ebe44fff27bca8c91.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/4159.html" target="_blank" title="高级酒具">高级酒具</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="kl_box_1 ">   <div><a href="/Home/Item/2671.html" target="_blank" title="长城 华夏94 圆桶珍藏品葡萄酒 750ml*2瓶"><img alt="长城 华夏94 圆桶珍藏品葡萄酒 750ml*2瓶" class="lazyload" src="2012/0917/bbbed090bc8f4887a0581e3300a601d6.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/2671.html" target="_blank" title="长城 华夏94 圆桶珍藏品葡萄酒 750ml*2瓶">长城 华夏94 圆桶珍藏品葡萄酒 750ml*2瓶</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3836.html" target="_blank" title="50° 郎牌 特曲 T9 500ml（残次品）"><img alt="50° 郎牌 特曲 T9 500ml（残次品）" class="lazyload" src="2012/1030/8b1a9d6d29484ad8a24f128ce9a4a2b5.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3836.html" target="_blank" title="50° 郎牌 特曲 T9 500ml（残次品）">50° 郎牌 特曲 T9 500ml（残次品）</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3901.html" target="_blank" title="53° 茅台王子 南京军区 500ml（残次品）"><img alt="53° 茅台王子 南京军区 500ml（残次品）" class="lazyload" src="2012/0917/ae9ada22ec354f0d91d7f9d794590bac.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3901.html" target="_blank" title="53° 茅台王子 南京军区 500ml（残次品）">53° 茅台王子 南京军区 500ml（残次品）</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/1136.html" target="_blank" title="塔牌    金丽春 350ml"><img alt="塔牌    金丽春 350ml" class="lazyload" src="2011/0111/c92ae0cd0c6a48fb8ebbe22df39b3450.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/1136.html" target="_blank" title="塔牌    金丽春 350ml">塔牌    金丽春 350ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div><div class="kl_box_1 mr17 ">   <div><a href="/Home/Item/3736.html" target="_blank" title="52° 洋河 天之蓝 480ml（残次品）"><img alt="52° 洋河 天之蓝 480ml（残次品）" class="lazyload" src="2012/1009/51ead40ecf264fd0a42f9472b7b50e39.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/3736.html" target="_blank" title="52° 洋河 天之蓝 480ml（残次品）">52° 洋河 天之蓝 480ml（残次品）</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="kl_box_1 ">   <div><a href="/Home/Item/546.html" target="_blank" title="女儿红 18年佳酿【青铜】1000ml"><img alt="女儿红 18年佳酿【青铜】1000ml" class="lazyload" src="2012/0905/594930f935a04f8ca1e71ebffd2eb0c1.jpg" height="130" width="125"></a></div>   <dt><a href="/Home/Item/546.html" target="_blank" title="女儿红 18年佳酿【青铜】1000ml">女儿红 18年佳酿【青铜】1000ml</a></dt>   <dt><strong class="c_red">¥179</strong></dt></div>
+                        <div class="clear bb1s h10 mb10"></div>                                
+                        <div class="clear"></div>     
+                    </div>
+                </div>
+            </dl>
+            <!--看了此商品的用户还看了END-->
+           
+            <!--买家评论-->
+            <div class="p10 mt10 pl_box details2">
+                <a name="Comment" id="Comment"></a>
+                    <ul class=" bb1s db h35 ofh fix">
+                        <li class=" pl_box_title db" style="float:left;"></li>
+                        <li class="db fr">
+                            <a class="pl_btn fr" onclick="javascript:comment.CommentShow();">写评论</a>
+                        </li>
+                    </ul>
+                <div id="s1">
+                    <div style="display: none" id="add_pro_com">
+                        <a name="add_com" id="add_com"></a>
+                        <!--回复评论-->
+                        <dl class="pl_pingfen">
+                            <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 评分 </dt>
+                            <dd>
+                                <ul class="fix">
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="1" />
+                                        <span class="s_2 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="2" />
+                                        <span class="s_4 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="3" />
+                                        <span class="s_6 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" value="4" />
+                                        <span class="s_8 star db fl"></span></li>
+                                    <li>
+                                        <input type="radio" name="Score" class="fl" checked="checked" value="5" />
+                                        <span class="s_10 star db fl"></span></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl class="pl_con">
+                            <dt class="fs14 fwb mb15"><span class="red_weight">*</span> 内容 </dt>
+                            <dd>
+                                <textarea name="txtContent" proID="3708" class="txtCon" id="txtContent" rows="3" cols="50" style="resize: none"></textarea>
+                            </dd>
+                        </dl>
+                        <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:comment.SubmitComment();" />
+                        <!--回复评论-->
+                    </div>
+                    <div id="divComment"></div>
+                </div>
+            </div>
+            <!--买家评论-->
+
+            <!--商品咨询-->
+            <div class="mt10 p10 sp_box w718 details3">
+                <a id="Consult" name="Consult"></a>
+                <ul class=" bb1s db h35">
+                    <li class=" sp_box_title"></li>
+                </ul>
+                <div id="divConsult">                    
+                   
+                </div>
+
+                <div class="qa_tishi">
+                    <ul>
+                        <li class="sp_box_alt"><span class="fl">没有您需要的答案？您可以提问，客服将在1个工作日内回复您。</span>
+                            <a  class="sp_btn" onclick="javascript:consult.ConsultShow();" >提交问题</a>
+                            <div class="clear">
+                            </div>
+                        </li>
+                        <li class="mt10 sp_box_alt">订单查询、物流配送、退换货、商品损坏等售后问题，您可以拨打7x12小时客服电话：400-722-1919 。</li>
+                    </ul>
+                </div>
+                <div id="add_pro_con" style="display: none">
+                    <dl class="pl_con bt1s">
+                        <dt class="fs14 fwb mb15"><span class="red">*</span> 咨询内容 </dt>
+                        <dd>
+                            <textarea name="txtContent" proID="3708" id="txtConsult" class="txtCon"></textarea>
+                        </dd>
+                    </dl>
+                    <input class="pl_btn btnText" type="button" value="提交" onclick="javascript:consult.SubmitConsult();" />
+                    <!--咨询内容-->
+                </div>
+            </div>            
+        </div>
+        <!--商品咨询-->
+    </div>
+    <!--右侧 s-->
+    </div>
+    </div>
+
+  </div>
+  <div class="footer">
+  <div class="foot_up w1200">
+    <div class="phone">10000平方米仓储体验店<br />上海松江区茂盛路202弄18号<br />客服邮箱：service@lafaso.com</div>
+    <div class="help">
+      <dl>
+        <dt>新手指南</dt>
+        <dd><a href="/Home/Help/6.html">用户协议</a></dd>
+        <dd><a href="/Home/Help/7.html">常见问题</a></dd>
+        <dd><a href="/Home/Help/8.html">网站购物流程</a></dd>
+        <dd><a href="/Home/Help/9.html">会员制度</a></dd>
+        <dd><a href="/Home/Help/10.html">VIP客户与合作</a></dd>
+      </dl>
+      <dl>
+        <dt>如何付款</dt>
+        <dd><a href="/Home/Help/11.html">如何付款</a></dd>
+        <dd><a href="/Home/Help/12.html">发票制度说明</a></dd>
+        <dd><a href="/Home/Help/13.html">电子券说明</a></dd>
+        <dd><a href="/Home/Help/14.html">虚拟账户支付</a></dd>
+        <dd><a href="/Home/Help/15.html">商品优惠代码说明</a></dd>
+      </dl>
+      <dl>
+        <dt>配送方式</dt>
+        <dd><a href="/Home/Help/22.html">配送收费标准</a></dd>
+        <dd><a href="/Home/Help/21.html">配送时间</a></dd>
+        <dd><a href="/Home/Help/23.html">货到付款支持城市</a></dd>
+      </dl>
+      <dl>
+        <dt>售后服务</dt>
+        <dd><a href="/Home/Help/16.html">如何办理退换货</a></dd>
+        <dd><a href="/Home/Help/17.html">如何退款</a></dd>
+        <dd><a href="/Home/Help/18.html">联系客服</a></dd>
+      </dl>
+      <dl>
+        <dt>关于我们</dt>
+        <dd><a href="/Home/Help/24.html">了解购酒网</a></dd>
+        <dd><a href="/Home/Help/25.html">招兵买马</a></dd>
+        <dd><a href="/Home/Help/26.html">联系我们</a></dd>
+        <dd><a href="/Home/Help/27.html">隐私声明</a></dd>
+        <dd><a href="/Home/Help/28.html">友情链接</a></dd>
+      </dl>
+    </div>
+    <div class="clear"></div>
+    <div class="guarantee">
+      <span><img class="lazy" data-original="/images/foot-zhibao1.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao2.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao3.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao4.jpg" alt="" /></span>
+      <span><img class="lazy" data-original="/images/foot-zhibao5.jpg" alt="" /></span>
+    </div>
+  </div>
+
+  <div class="foot_down w1200">
+    <div class="scrollDiv">
+      <p class="youlian">友情链接：</p>
+      <ul>
+        <li><a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店</a> <a href="#">酒水招商</a> <a href="#">58特产网</a><a href="#">名酒品牌</a> <a href="#">品茶汇</a> <a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店</a> <a href="#">酒水招商</a> <a href="#">58特产网</a><a href="#">名酒品牌</a> <a href="#">品茶汇</a></li>
+      </ul>
+    </div>
+    <p class="copy">Copyright? 2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</p>
+    <div class="authentication">
+      <a class="beian" href="http://www.miibeian.gov.cn"></a> <a class="depart" href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=20120216155829987" rel="nofollow"></a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

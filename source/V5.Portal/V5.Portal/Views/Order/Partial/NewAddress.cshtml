@@ -1,0 +1,18 @@
+﻿@model V5.Portal.Models.UserReceiveAddressModel
+@{
+    Layout = null;
+}
+
+@{
+    if (Model != null)
+    {
+        <p class="defaultPath selected" id="@Html.Raw("addreess_" + Model.ID)">
+            <em class="remove address-remove" index="@Html.Raw(Model.ID)" style="cursor: pointer">删除</em>
+            <em class="edit address-edit" index="@Html.Raw(Model.ID)" style="cursor: pointer">编辑</em>
+            <em class="defualt address-default" index="@Html.Raw(Model.ID)" style="color: #666; cursor: pointer">默认收货人</em>
+            <input type="radio" autocomplete="off" id="@Html.Raw("ship_" + Model.ID)" checked="checked" index="@Html.Raw(Model.ID)" class="radio" name="shipId" id="shipId8131007712" value="@Html.Raw(Model.ID)" inremotearea="false" ispos="1">
+            <input type="hidden" province="@Html.Raw(Model.ProvinceID)" city="@Html.Raw(Model.CityID)" county="@Html.Raw(Model.CountyID)" name="ship_info" id="@Html.Raw("shipinfo_" + Model.ID)" consignee="@Html.Raw(Model.Consignee)" address="@Html.Raw(Model.Address)" zipcode="@Html.Raw(Model.PostCode)" mobile="@Html.Raw(Model.Mobile ?? Model.Tel)" countyid="@Html.Raw(Model.CountyID)" countyInfo="@Html.Raw(Model.CountyName("-"))" defaultaddrstate="@Html.Raw(Model.IsDefault ? 1 : 0)">
+            <label style="cursor: pointer" for="@Html.Raw("ship_" + Model.ID)">@Html.Raw(Model.Consignee + "," + Model.CountyName("") + Model.Address + "," + Model.Mobile ?? Model.Tel)</label>
+        </p>
+    }
+}

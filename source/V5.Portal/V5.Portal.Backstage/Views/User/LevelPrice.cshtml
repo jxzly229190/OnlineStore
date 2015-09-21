@@ -1,0 +1,75 @@
+﻿@using V5.Portal.Backstage.Models.User
+@using V5.Portal.Backstage.Utils
+@model UserLevelPriceSearchModel
+@Html.ValidationSummary(true)
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+<div class="search-box">
+    <form>
+    <div>
+        <span>商品名称：</span> <span>@Html.EditorFor(userLevelPriceSearch => userLevelPriceSearch.ProductName)</span>
+        <span>创建人：</span> <span>@Html.EditorFor(userLevelPriceSearch => userLevelPriceSearch.EmployeeName)</span>
+        <span>创建时间： </span><span>
+            @(Html.Kendo().DateTimePickerFor(userLevelPriceSearch => userLevelPriceSearch.StartTime).Name("starttime"))
+            至
+            @(Html.Kendo().DateTimePickerFor(userLevelPriceSearch => userLevelPriceSearch.EndTime).Name("endtime"))
+        </span>
+    </div>
+    <div style="margin-top: 3px; margin-bottom: 5px;">
+        <span>会员级别：</span> <span>@Html.Kendo().DropDownListFor(userLevelPriceSearch => userLevelPriceSearch.UserLevelID).OptionLabel(" 全部 ").Name("userLevelID").DataSource(ds => ds.Read("QueryLevelSelectListItems", "User")).DataTextField("Name").DataValueField("ID")</span>
+        <span style="margin-left: 10px;">状态：</span> <span>@Html.Kendo().DropDownListFor(userLevelPriceSearchModel => userLevelPriceSearchModel.Status).Name("searchStatus").BindTo(new List<SelectListItem>() {
+                                       new SelectListItem() {
+                                           Text = "请选择",
+                                           Value = "0"
+                                       },
+                                       new SelectListItem() {
+                                           Text = "正常",
+                                           Value = "2"
+                                       },
+                                       new SelectListItem() {
+                                           Text = "停止",
+                                           Value = "1"
+                                       }
+                                   })</span> <span style="margin-left: 70px;">
+                                       <input class="k-button" style="cursor: pointer; height: 30px; width: 50px" onclick="SearchUserLevelPrice()"
+                                           type="button" value="查 询" />
+                                       <input type="reset" id="clean" value="重 置" class="k-button" style="cursor: pointer;
+                                           height: 30px; width: 50px" />
+                                   </span>
+    </div>
+    </form>
+</div>
+@(Html.Kendo().Grid<UserLevelPriceModel>()
+    .Name("userLevelPriceGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.UserLevelName).Title("会员等级").Width(50);
+        columns.Bound(u => u.ProductName).Title("商品名称").Width(250);
+        columns.Bound(u => u.Price).Title("价格").Width(50);
+        columns.Bound(u => u.EmployeeName).Title("创建人").Width(50);
+        columns.Bound(u => u.CreateTime).Title("创建时间").Format("{0:yyyy-MM-dd HH:mm:ss}").Width(150);
+        columns.Bound(u => u.StatusName).Title("状态").Width(50);
+        columns.Command(command =>
+            {
+                command.Edit().Text("修改").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyUserLevelPrice", "User", "POST"));
+                command.Custom("删除").Click("deleteLevelPrice").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveUserLevelPrice", "User", "POST"));
+            }).Width(140).Title("操作").Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("添加会员等级价格").HtmlAttributes(permissionObj.GetDisplayAttribute("AddUserLevelPrice", "User", "POST", false)))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("User_Level_Price_Template"))
+    .Pageable()
+    .Scrollable()
+        .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(u => u.ID))
+        .Create(update => update.Action("AddUserLevelPrice", "User"))
+        .Read(read => read.Action("QueryUserLevelPrice", "User").Data("UserLevelPriceSearchData"))
+        .Update(update => update.Action("ModifyUserLevelPrice", "User"))
+        .Destroy(update => update.Action("RemoveLevelPrice", "User"))
+    )
+)

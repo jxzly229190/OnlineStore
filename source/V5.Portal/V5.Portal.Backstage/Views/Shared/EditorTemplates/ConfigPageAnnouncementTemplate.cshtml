@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+@model V5.DataContract.Configuration.Config_Page
+@Html.HiddenFor(model => model.ID, new { @id = "annId" })
+<script type="text/javascript">
+    CKEDITOR.replace("Ckeditannouncement");
+</script>
+<div id="newContent" style="width: 780px; height: 50px;">
+    <div style="margin-left: 20px; float: left">
+        标题：
+        @Html.TextBoxFor(model => model.Name, new { @style = "width: 320px;margin-top: 5px;", @class = "k-textbox", @id = "annName" })
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+    <div style="margin-left: 20px; float: right">
+        位置：
+        <input type="text" class="k-textbox" style="width: 320px; margin-top: 5px;" value="最新公告" />
+    </div>
+</div>
+<div style="width: 780px; margin-bottom: 10px;">
+    <input type="text" id="Ckeditannouncement" />
+</div>
+<script type="text/javascript">
+ 
+</script>

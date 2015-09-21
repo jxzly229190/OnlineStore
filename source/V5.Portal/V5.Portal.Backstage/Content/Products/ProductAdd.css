@@ -1,0 +1,93 @@
+﻿.category-list
+{
+    position: relative;
+    overflow: hidden;
+    zoom: 1;
+    padding-bottom: 25px;
+    padding-top: 15px;
+    width: 950px;
+}
+.category-list .item
+{
+    background: #fff;
+    border: 1px solid #cecece;
+    float: left;
+    width: 222px;
+    height: 330px;
+    overflow: auto;
+    margin-right: 12px;
+}
+.category-list li
+{
+    width: 212px;
+    height: 25px;
+    line-height: 24px;
+    cursor: pointer;
+    padding-left: 10px;
+    font-size: 12px;
+}
+.category-list li.parent
+{
+    background: url(~/Images/arrowicon.gif) right center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+.category-list li.curr
+{
+    background-color: #DCE6F0;
+    color: #206ebc;
+    font-weight: bold;
+}
+table img
+{
+    border: 1px solid #dedede;
+    width: 160px;
+    height: 160px;
+}
+table
+{
+    padding: 12px 20px;
+    width: 100%;
+}
+table tr
+{
+    height: 36px;
+}
+table caption
+{
+    text-align: left;
+    font-weight: bold;
+    padding: 6px 3px;
+    margin: 6px 0;
+    border-bottom: 1px solid #ccc;
+}
+table caption em
+{
+    position: absolute;
+    right: 10px;
+    bottom: 3px;
+}
+table td
+{
+    padding: 3px 12px;
+}
+table .pname
+{
+    width: 12%;
+}
+.product_main
+{
+    background: none repeat scroll 0 0 #F4F6F9;
+    border: 1px solid #DDDDDD;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+.k-autocomplete, .k-combobox, .k-datepicker, .k-timepicker, .k-datetimepicker, .k-colorpicker, .k-numerictextbox, .k-dropdown, .k-selectbox, .k-textbox
+{
+    width: 26.2em !important;
+}
+.productItem { height: 175px; width: 160px; float: left; position: relative; margin:3px 12px;}
+.productItem .master { border-color:#ff0000 !important; }
+.productItem .productItemImg { border:1px solid #ccc; }
+.productItem .productItemBar { background-color: #BDDFEE; height: 22px; left: -3px; line-height: 22px; margin-left: 4px; opacity: 0.7; position: absolute; bottom: 15px; width: 160px; text-align:center;}
+.productItem .productItemBar a { padding:3px 6px; cursor:pointer; }

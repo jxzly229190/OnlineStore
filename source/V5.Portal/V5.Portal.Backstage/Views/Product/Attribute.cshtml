@@ -1,0 +1,133 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionObj2 = new PermissionUtility(Context.Session.SessionID);
+}
+@(Html.Kendo().Grid<ProductAttributeModel>()
+    .Name("attributeGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.ID).Visible(false);
+        columns.Bound(p => p.AttributeName).Title("属性名称");
+        columns.Bound(p => p.DataLength).Title("数据长度");
+        columns.Bound(p => p.DataTypeDisply).Title("数据类型");
+        columns.Bound(p => p.InputTypeDisplay).Title("输入类型");
+        columns.Command(command =>
+        {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.ModifyAttribute.Post"));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.RemoveAttribute.Post"));
+        }).Width(160).Hidden(permissionObj.Hidden);
+    })
+            .ToolBar(toolbar =>
+                          toolbar.Template(
+                            "<div style='padding: 2px;'>"
+                    + "商品类别："
+                    + Html.Kendo().DropDownList().Name("CategoryParent").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value")
+                    + Html.Kendo().DropDownList().Name("SubCategory").DataSource(source => source.Read(read => read.Action("QueryCategorySelectListItemsByParentID", "Product").Data("getSubCategory")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).Events(e => e.Change("subCategoryChange")).CascadeFrom("CategoryParent")
+                        + "<input id='addAttributeBtn' type='button' value='添加属性项' class='k-button' onclick='ShowWindow()' style=' "
+                    + permissionObj.GetDisplayAttributeInfo("Product.AddAttributeValue.Post", false)
+                    + "' />"
+                    + "</div>"
+                          ))
+                .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Product_Attribute_Template"))
+                .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+                .Events(e => e.Edit("onEdit"))
+                .ClientDetailTemplateId("template")
+                .Pageable()
+                .Scrollable()
+                .HtmlAttributes(new { style = "height:457px;" })
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .Model(model => model.Id(p => p.ID))
+                .Read(read => read.Action("QueryAttribute", "Product").Data("getProductCategoryID"))
+                .Update(update => update.Action("ModifyAttribute", "Product"))
+                .Destroy(update => update.Action("RemoveAttribute", "Product"))
+                )
+                )
+<script id="template" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ProductAttributeValueModel>()
+          .Name("attributeGrid_#=ID#")
+          .Columns(columns =>
+          {
+              columns.Bound(p => p.AttributeValue).Title("属性值");
+              columns.Bound(p => p.IsDefaultDisPlay).Title("是否为默认");
+              columns.Command(command =>
+              {
+                  command.Edit().Text("编辑").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.ModifyAttribute.Post"));
+                  command.Destroy().Text("删除").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.RemoveAttribute.Post"));
+              }).Width(160).Hidden(permissionObj2.Hidden);
+          })
+          .ToolBar(tool => tool.Create().Text("添加属性值").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.AddAttributeValue.Post", false)))
+          .Editable(edit => edit.Mode(GridEditMode.PopUp).TemplateName("Product_AttrValue_Template"))
+          .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+          .Events(e =>
+          {
+              e.Edit("onEdit");
+              e.Save("saveChnages");
+          })
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(5)
+              .Model(model => model.Id(m => m.ID))
+                      .Create(update => update.Action("AddAttributeValue", "Product", new { productAttrID = "#=ID#" }).Data("GetsDefault"))
+              .Read(read => read.Action("QueryAttributeValue", "Product", new { productAttrID = "#=ID#" }))
+                       .Update(update => update.Action("ModifyAttributeValue", "Product"))
+              .Destroy(update => update.Action("RemoveAttributeValue", "Product"))
+          )
+          .Pageable()
+          .Sortable()
+          .ToClientTemplate()
+          )
+</script>
+<style type="text/css">
+    
+</style>
+<div id="attributeWindow" style="display: none">
+    <div class="k-edit-form-container">
+        <div class="editor-label">
+            属性:
+        </div>
+        <div class="editor-field">
+            <input type="text" value="" class="k-textbox" id="attrSelected" />
+        </div>
+        <div class="editor-label">
+            排序:
+        </div>
+        <div class="editor-field">
+            @(Html.Kendo().IntegerTextBox().Name("sort"))
+        </div>
+        <div class="editor-label">
+            输入类型:
+        </div>
+        <div class="editor-field">
+            @(Html.Kendo().DropDownList().Name("InputType").OptionLabel("选择输入类型").BindTo(new List<SelectListItem> { 
+            new SelectListItem() { Text = "下拉", Value = "select" },
+            new SelectListItem() { Text = "文本", Value = "text" },
+            new SelectListItem() { Text = "数字", Value = "number" },
+            new SelectListItem() { Text = "单选", Value = "radio" }, 
+            new SelectListItem() { Text = "复选", Value = "checkbox" } }))
+        </div>
+        <div class="editor-label">
+            数据类型:
+        </div>
+        <div class="editor-field">
+            @(Html.Kendo().DropDownList().Name("DataType").OptionLabel("选择数据类型").BindTo(new List<SelectListItem> { 
+            new SelectListItem { Text = "整数", Value = "int" }, 
+            new SelectListItem { Text = "浮点数", Value = "float" }, 
+            new SelectListItem { Text = "字符串", Value = "string" } }))
+        </div>
+        <div class="editor-label">
+            长度:
+        </div>
+        <div class="editor-field">
+            @(Html.Kendo().IntegerTextBox().Name("DataLength"))
+        </div>
+    </div>
+    <div style="padding-top: 190px;">
+        <hr />
+        <input type="button" value="确定" class="k-button" onclick="onClose()" style="margin-left: 150px;" />
+        <input type="button" value="取消" class="k-button" onclick="onCancel()" style="margin-left: 10px;" />
+    </div>
+</div>

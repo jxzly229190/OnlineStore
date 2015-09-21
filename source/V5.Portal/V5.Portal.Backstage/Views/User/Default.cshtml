@@ -1,0 +1,157 @@
+﻿@using V5.Portal.Backstage.Models.User
+@using V5.Portal.Backstage.Utils
+@model UserSearchModel
+@Html.ValidationSummary(true)
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+<script src="../../Scripts/User/Email.js" type="text/javascript"></script>
+@Scripts.Render("~/Scripts/User/Email.js")
+<div class="search-box">
+    <form>
+    <div>
+        <span>会员名称：</span> <span>@Html.EditorFor(userSearch => userSearch.UserName)</span>
+        <span style="margin-left: 20px;">手机号码：</span> <span style="margin-left: 3px;">@Html.EditorFor(userSearch => userSearch.Mobile, new { @id = "Mobile" })
+            @Html.ValidationMessageFor(userSearch => userSearch.Mobile)</span> <span style="margin-left: 20px;">
+                注册时间： </span><span style="margin-left: 5px;">
+                    @(Html.Kendo().DateTimePickerFor(model => model.StartTime).Name("createStartTime"))
+                    至
+                    @(Html.Kendo().DateTimePickerFor(model => model.EndTime).Name("createEndTime"))
+                </span>
+    </div>
+    <div style="margin: 3px 0px;">
+        <span>电子邮箱：</span> <span>@Html.EditorFor(userSearch => userSearch.Email, new { @id = "Email" })</span>
+         <span>有无成功订单： </span><span>
+            @Html.Kendo().DropDownListFor(userSearchModel => userSearchModel.IsHasOrder).Name("ishasorder").Events(e => e.Change("ShowOrderTime")).BindTo(new List<SelectListItem>() {
+                                     new SelectListItem() {
+                                         Text = "全部",
+                                         Value = "0"
+                                     },
+                                     new SelectListItem() {
+                                         Text = "有",
+                                         Value = "1"
+                                     },
+                                     new SelectListItem() {
+                                         Text = "无",
+                                         Value = "2"
+                                     }
+                                 })
+        </span>
+        <span>上次交易时间： </span><span>
+            @(Html.Kendo().DateTimePicker().Name("orderStarTime").Enable(false))
+            至
+            @(Html.Kendo().DateTimePicker().Name("orderEndTime").Enable(false))
+        </span>
+    </div>
+    <div style="margin-bottom: 5px;">
+        <span>会员级别：</span> <span>@Html.Kendo().DropDownListFor(userSearch => userSearch.UserLevelID).OptionLabel(" 全部 ").Name("userlevelID").DataSource(ds => ds.Read("QueryLevelSelectListItems", "User")).DataTextField("Name").DataValueField("ID")</span>
+         <span style="margin-left: 20px;">会员状态： </span><span style="margin-left: 3px;">
+            @Html.Kendo().DropDownListFor(userSearchModel => userSearchModel.Status).Name("status").BindTo(new List<SelectListItem>() {
+                                       new SelectListItem() {
+                                           Text = "全部",
+                                           Value = "0"
+                                       },
+                                       new SelectListItem() {
+                                           Text = "正常",
+                                           Value = "2"
+                                       },
+                                       new SelectListItem() {
+                                           Text = "锁定",
+                                           Value = "1"
+                                       }
+                                   })
+        </span>
+       <span style="margin-left: 90px;">
+            <input class="k-button" style="cursor: pointer; height: 30px; width: 50px" onclick="SearchUser()"
+                type="button" value="查 询" />
+            <input type="reset" id="clean" value="重 置" class="k-button" style="cursor: pointer;
+                height: 30px; width: 50px" />
+        </span>
+    </div>
+    </form>
+</div>
+@(Html.Kendo().Grid<UserModel>()
+    .Name("userGrid")
+    .EnableCustomBinding(true)
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.LoginName).Title("会员名称").Width(120);
+        columns.Bound(u => u.Name).Title("会员姓名").Width(70);
+        columns.Bound(u => u.UserLevelName).Title("会员等级").Width(70);
+        columns.Bound(u => u.Mobile).Title("手机号码").Width(110);
+        columns.Bound(u => u.Email).Title("电子邮箱").Width(160);
+        columns.Bound(u => u.CreateTime).Title("注册时间").Format("{0:yyyy-MM-dd HH:mm:ss}").Width(160);
+        columns.Bound(u => u.Status).Title("操作").ClientTemplate(
+            "<input type='button' class='k-button k-grid-edit' name='#= ID#' value='#= StateName #' onclick='userLock(this)' id='Lock_#= ID #' style='" + permissionObj.GetDisplayAttribute("UserLock", "User", "POST")["style"] + "'/>&nbsp;" +
+            "<input type='button' class='k-button k-grid-edit' name='#= ID#' value='重置密码' onclick='resetpwd(this)' id='Reset_#= ID #' style='" + permissionObj.GetDisplayAttribute("ResetPassword", "User", "POST")["style"] + "'/>&nbsp;" +
+            "<input type='button' class='k-button k-grid-edit' name='#= ID#' value='查看详情' onclick='detail(this)' id='detail_#= ID #' style='" + permissionObj.GetDisplayAttribute("Detail", "User", "GET")["style"] + "'/>"
+            ).Width(260).Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("添加新会员").HtmlAttributes(permissionObj.GetDisplayAttribute("AddUser", "User", "POST", false));
+        toolbar.Custom().Name("导出结果列表").Action("ExportUser", "User").Url("#").HtmlAttributes(permissionObj.GetDisplayAttribute("ExportUser", "User", "GET", false));
+        toolbar.Custom().Name("发送邮件").Url("#").HtmlAttributes(new { @id = "btnSendEmail", @onclick = "showSendEmailWindow()" }).HtmlAttributes(permissionObj.GetDisplayAttribute("SendEmail", "User", "POST", false));
+        toolbar.Custom().Name("发送短信").Url("#").HtmlAttributes(new { @id = "btnSendSms", @onclick = "showSendSmsWindow()" }).HtmlAttributes(permissionObj.GetDisplayAttribute("SendSms", "User", "POST", false));
+    })
+    .Pageable(pageable => pageable.ButtonCount(5))
+    .Resizable(re=>re.Columns(true))
+    .Scrollable()
+    .Events(e => e.Edit("onEdit"))
+    .Editable(edit => edit.Mode(GridEditMode.PopUp).TemplateName("User_Template"))
+    .HtmlAttributes(new { style = "height:445px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(u => u.ID))
+        .Create(update => update.Action("AddUser", "User"))
+        .Read(read => read.Action("Query", "User").Data("SearchData"))
+    )
+)
+<div class="k-overlay" style="display: none; z-index: 10002; opacity: 0.5;">
+</div>
+<div style="display: none;">
+    @Html.Kendo().Window().Name("sendEmailWindow").Draggable(true).Title("发送邮件").Height(100).Width(425).Content(@<text>
+    <div class="k-edit-form-container" style="z-index: 10003;">
+        <div style="height: 40px">
+            <div class="editor-label">
+                选择邮件：</div>
+            <div class="editor-field">
+                @(Html.Kendo().DropDownList().Name("MessageEmail")
+                     .DataSource(ds => ds.Read("QuerySelectEmailListItems", "User"))
+                    .DataTextField("Text").DataValueField("Value"))
+            </div>
+        </div>
+        <div class="k-edit-buttons k-state-default" style="clear: both; text-align: right;
+            border-width: 1px 0 0; border-style: solid; position: relative; bottom: -1em;
+            padding: .6em;">
+            <a class="k-button k-button-icontext k-grid-update" onclick="sendEmail()" href="#">发送</a>
+            <a class="k-button k-button-icontext k-grid-cancel" onclick="closeSendEmailWindow()"
+                href="#">取消</a>
+        </div>
+    </div>
+    </text>).Events(events => events.Close("CloseEditorWindow"));
+</div>
+<div style="display: none;">
+    @Html.Kendo().Window().Name("sendSmsWindow").Draggable(true).Title("发送短信").Height(100).Width(425).Content(@<text>
+    <div class="k-edit-form-container" style="z-index: 10003;">
+        <div style="height: 40px">
+            <div class="editor-label">
+                选择短信：</div>
+            <div class="editor-field">
+                @(Html.Kendo().DropDownList().Name("MessageSms")
+                    .DataSource(ds => ds.Read("QuerySelectSmsListItems", "User"))
+                    .DataTextField("Text").DataValueField("Value"))
+            </div>
+        </div>
+        <div class="k-edit-buttons k-state-default" style="clear: both; text-align: right;
+            border-width: 1px 0 0; border-style: solid; position: relative; bottom: -1em;
+            padding: .6em;">
+            <a class="k-button k-button-icontext k-grid-update" onclick="sendSms()" href="#">发送</a>
+            <a class="k-button k-button-icontext k-grid-cancel" onclick="closeSendSmsWindow()"
+                href="#">取消</a>
+        </div>
+    </div>
+    </text>).Events(events => events.Close("close"));
+</div>

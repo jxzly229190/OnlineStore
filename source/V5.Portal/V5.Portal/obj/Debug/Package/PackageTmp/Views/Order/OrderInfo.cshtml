@@ -1,0 +1,44 @@
+﻿@using V5.Portal.Common
+@model V5.Portal.Models.OrderInfoViewModel
+@{
+    ViewBag.Title = "订单提交 - 购酒网";
+    Layout = "../Shared/_OrderLayout.cshtml";
+    var productUrl = ConstantParams.ProductUrl+"?ID=";
+    var totalMoney = 0.0;
+}
+@Scripts.Render("~/Scripts/Order/PostOrder.js")
+@Scripts.Render("~/Scripts/validator.js")
+<div class="main">
+	<h2>填写并核对订单信息</h2>
+    <!-- 收货地址信息 start -->
+    @Html.Partial("Partial/UserReceiveAddress", Model.UserReceiveAddressList)
+    <!-- 收货地址信息 end -->
+    <!-- 选择配送方式 s -->
+    @Html.Partial("Partial/PayInfo")
+	<!-- 选择配送方式 e-->
+    <!-- 发票信息 s-->
+    <div class="invoice-info" style="display:block;">
+        <b class="tit">发票信息<a class="alter-invoice" href="###">[更改]</a></b>
+        <p class="info" id="txtInvoiceInfo">不开发票</p>
+    </div>
+    <div class="invoice-fill" style="display: none">
+    	<b class="tit">发票信息<a href="###" class="save-invoice" onclick="">[保存]</a></b>
+        <p class="selected" ><label><input type="radio" id="" name="invoice" autocomplete="off" checked="checked" class="radio invoiceRadio" value="0" />不开发票</label></p>
+        <p ><label><input type="radio" id="" name="invoice" autocomplete="off" class="radio invoiceRadio" value="1" />需要发票</label>
+        </p>
+        <div class="invoice-cont" style="display:none;">
+            <ul>
+                <li><b>发票抬头：</b> <label><input autocomplete="off" checked="checked" name="invoiceType" type="radio" class="radio" value="0" /> 个人</label> &nbsp; <label><input name="invoiceType" autocomplete="off" type="radio" class="radio" value="1" /> 单位</label> &nbsp;  
+                    <input name="" id="txtInvoiceTitle" type="text" class="fp-input" style="visibility: hidden"/><span id="invoiceError" class="error" style="display: none">发票抬头不能为空</span></li>
+                <li><b>发票内容：</b> <label><input name="invoiceContent" type="radio" class="radio" value="0" /> 酒水</label> &nbsp;  <label><input name="invoiceContent" type="radio" class="radio" value="1" />食品</label> </li>
+            </ul>
+        </div>
+         <p class="btn"><a class="enter save-invoice" href="###">保存发票信息</a></p>	
+         
+    </div>
+    <!-- 发票信息 e-->
+    <!-- 购物清单 s-->
+   @Html.Partial("Partial/ShoppingList", Model.Products)
+    <!-- 购物清单 e-->
+   <div class="clear"></div> 
+</div>

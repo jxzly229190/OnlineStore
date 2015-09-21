@@ -1,0 +1,5 @@
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.Library.Storage.dll
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.Library.Storage.pdb
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.Storage\obj\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.Storage\obj\Debug\V5.Library.Storage.dll
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.Storage\obj\Debug\V5.Library.Storage.pdb

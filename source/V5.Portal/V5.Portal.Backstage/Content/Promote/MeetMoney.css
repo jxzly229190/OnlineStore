@@ -1,0 +1,992 @@
+﻿table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset,img {
+    border: none;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+li {
+    list-style: none;
+}
+
+q:before,q:after {
+    content: '';
+}
+
+abbr,acronym {
+    border: none;
+    font-variant: normal;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+input,button,textarea,select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+input,button,textarea,select {
+    *font-size: 100%;
+}
+
+select,input,button,textarea {
+    font: 100% Tahoma,Helvetica,Arial,sans-serif;
+}
+
+table {
+    font-size: inherit;
+    font: 100%;
+}
+
+pre,code,kbd,samp,tt {
+    font-family: 'Courier New',Courier,monospace;
+}
+
+small {
+    font-size: 100%;
+}
+
+a {
+    color: #36c;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #f60;
+    text-decoration: underline;
+}
+
+abbr,acronym {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+hr {
+    color: #D1D7DC;
+    background-color: #D1D7DC;
+    border: none;
+    height: 1px;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+#page,#page3 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.soft-hidden {
+    visibility: hidden;
+}
+
+.hi-orange {
+    color: #f60;
+}
+
+em.hi-orange {
+    font-weight: 700;
+}
+
+.ui-btn-graygrade {
+    display: inline-block;
+    background-position: 0 -131px;
+}
+
+.ui-btn-graygrade button,.ui-btn-graygrade a {
+    margin-left: 3px;
+    padding: 0 10px 0 7px;
+    height: 26px;
+}
+
+.ui-btn-graygrade button,.ui-btn-graygrade a,.ui-btn-graygrade span {
+    display: inline-block;
+    line-height: 26px;
+    color: #404040;
+    background-position: 100% -131px;
+}
+
+.ui-thead-grade th {
+    height: 29px;
+    border-width: 1px 0;
+    border-color: #aed2ff;
+    border-style: solid;
+    background-position: 0 -102px;
+    background-repeat: repeat-x;
+}
+
+.weaken-gray {
+    color: #808080;
+}
+
+.fix-select select {
+    visibility: hidden!important;
+}
+
+.fix-select .ui-dialog-window select {
+    visibility: visible!important;
+}
+
+.skin-gray .small-btn-disabled,.skin-gray .small-btn-disabled:hover {
+    color: #a0a0a0;
+    text-decoration: none;
+    cursor: not-allowed;
+}
+
+.tbl-filter table {
+    width: 100%;
+}
+
+.tbl-filter th {
+    text-align: right;
+}
+
+.tbl-filter .input-text {
+    padding: 3px;
+    width: 13em;
+    height: 15px;
+    border: 1px solid #a0a0a0;
+    color: #404040;
+}
+
+.tbl-filter .input-date {
+    width: 6em;
+}
+
+.form-elem li,.form-elem .form-item {
+    margin-bottom: 10px;
+    *min-height: 1px;
+    _height: 1%;
+    overflow: hidden;
+}
+
+.form-elem .label-like {
+    float: left;
+    text-align: right;
+}
+
+.form-elem .field-required {
+    position: absolute;
+    color: #f00;
+}
+
+.form-elem .input-text,.form-elem textarea {
+    border: 1px solid #a0a0a0;
+    color: #404040;
+}
+
+.form-elem .input-error {
+    border-color: #f00;
+}
+
+.form-elem .input-text {
+    padding: 3px;
+    width: 18em;
+    height: 15px;
+}
+
+.form-elem .input-long {
+    width: 35em;
+}
+
+.form-elem .input-date {
+    width: 6em;
+}
+
+.form-elem .input-price,.form-elem .input-short {
+    width: 8em;
+}
+
+.form-elem .input-cash,.form-elem .input-num {
+    width: 4em;
+}
+
+.form-elem textarea {
+    padding: 3px 0 0 3px;
+}
+
+.form-elem .field-elem {
+    margin-right: 5px;
+}
+
+.form-elem .msg .error,.form-elem .msg .stop,.elem-form .msg .alert,.elem-form .msg .attention,.elem-form .msg .tips,.elem-form .msg .ok,.elem-form .msg .notice,.elem-form .msg .question,.elem-form .msg .help,.elem-form .msg .small-help {
+    float: none;
+    display: inline-block;
+}
+
+.form-elem span.msg {
+    margin-left: 5px;
+}
+
+.form-elem p.msg {
+    margin-top: 5px;
+}
+
+.form-elem .field-note {
+    color: #808080;
+}
+
+.form-elem span.field-note {
+    margin-left: 10px;
+}
+
+.form-elem p.field-note {
+    margin-top: 5px;
+}
+
+.m-tab {
+    height: 30px;
+}
+
+.m-tab ul {
+    padding-left: 20px;
+    height: 30px;
+    border-bottom: 1px solid #aed2fe;
+    background-color: #fff;
+}
+
+.m-tab li {
+    float: left;
+    margin-right: 5px;
+}
+
+.m-tab li span {
+    margin-top: 7px;
+    display: inline-block;
+    background-position: 0 0;
+}
+
+.m-tab li a {
+    padding: 0 10px;
+    display: inline-block;
+    height: 23px;
+    line-height: 23px;
+    background-position: 100% -24px;
+    color: #404040;
+}
+
+.m-tab li.current span {
+    position: relative;
+    top: 4px;
+    margin-top: 0;
+    background-position: 0 -48px;
+}
+
+.m-tab li.current a {
+    height: 27px;
+    line-height: 27px;
+    font-weight: 700;
+    background-position: 100% -75px;
+}
+
+.pagination {
+    height: 22px;
+    font-size: 12px;
+    font-family: Tahoma;
+    margin-top: 3px;
+}
+
+.page-top:after,.page-bottom:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.page-mini {
+    padding-top: 3px;
+}
+
+.pagination a,.page-info,.page-prev,.page-cur,.page-start,.page-end,.page-break {
+    float: left;
+    margin: 0 3px 0 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.pagination a {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.pagination .page-cur {
+    font-weight: 700;
+    border: 1px solid #91aaed;
+    color: #fff;
+    background-color: #09f;
+}
+
+.page-break {
+    width: 22px;
+    height: 22px;
+    border-width: 0;
+    font-family: SimSun;
+}
+
+.pagination .page-trigger {
+    background-position: -300px 0;
+}
+
+.pagination .page-trigger:hover,.pagination .page-trigger:active {
+    background-position: -300px 0;
+}
+
+.page-prev,.page-next,.page-start,.page-end,.page-trigger {
+    background-image: url(http://img06.taobaocdn.com/tps/i6/T13TXmXe0wXXXXXXXX-300-1500.png);
+    background-color: #fff;
+    background-repeat: no-repeat;
+}
+
+.page-mini .page-prev,.page-mini .page-next {
+    background-color: #fff;
+}
+
+.page-info,.page-mini .page-info {
+    width: auto;
+    color: #a0a0a4;
+    letter-spacing: 1px;
+}
+
+.pagination .page-prev {
+    border: 1px solid #ccc;
+    background-position: 6px -244px;
+}
+
+.page-mini .page-prev {
+    padding: 0;
+    width: 14px;
+    background-position: 4px -246px;
+}
+
+.pagination .page-start {
+    border: 1px solid #ccc;
+    background-position: 6px -260px;
+}
+
+.page-mini .page-start {
+    padding: 0;
+    width: 14px;
+    background-position: 4px -262px;
+}
+
+.pagination .page-next,.pagination .page-end {
+    padding: 0 12px 0 5px;
+    width: auto;
+    border: 1px solid #ccc;
+    background-position: -252px -244px;
+}
+
+.page-mini .page-next,.page-mini .page-end {
+    padding: 0;
+    width: 42px;
+    border: 1px solid #ccc;
+    background-position: -198px -278px;
+}
+
+.pagination .page-end {
+    background-position: -252px -260px;
+}
+
+.page-skip {
+    float: left;
+    padding: 0 8px 0 8px;
+}
+
+.page-skip input {
+    margin: 0 2px;
+    padding: 2px;
+    width: 24px;
+    height: 13px;
+    font-size: 10px;
+    vertical-align: middle;
+}
+
+.page-skip button {
+    margin: 0 0 0 8px;
+    cursor: pointer;
+}
+
+.page-skip em {
+    font-weight: 700;
+    color: #f70;
+}
+
+.page-prev span,.page-start span,.page-mini .page-next span,.page-mini .page-end span {
+    display: none;
+}
+
+.ui-dialog-window {
+    position: absolute;
+    padding: 1px;
+    border: 1px solid #c4d5df;
+    background-color: #fff;
+    z-index: 100001;
+    visibility: hidden;
+}
+
+.ui-dialog-entity {
+    position: relative;
+}
+
+.ui-dialog-head {
+    padding-left: 10px;
+    height: 21px;
+    line-height: 21px;
+    font-weight: 700;
+    border-bottom: 1px solid #c4d5df;
+    background-color: #e9f1f4;
+    overflow: hidden;
+}
+
+.ui-dialog-window .btn-close {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px;
+    overflow: hidden;
+    background-position: -186px -157px;
+}
+
+.ui-dialog-mask,.mask-transparent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100000;
+    visibility: hidden;
+}
+
+.ui-dialog-mask {
+    background-color: #000;
+    opacity: .5;
+    filter: alpha(opacity=50);
+}
+
+.mask-transparent {
+    background-color: #fff;
+    opacity: .3;
+    filter: alpha(opacity=30);
+}
+
+.ui-dialog-entity .loading {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.present-list h3 {
+    margin: 5px 0;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #e4edf6;
+}
+
+.present-list .success-tips {
+    margin: 10px 0;
+}
+
+.present-list .form-elem li {
+    padding-left: 6em;
+}
+
+.present-list .form-elem .label-like {
+    width: 6em;
+    margin-left: -6em;
+}
+
+.present-list .form-elem .stop {
+    float: none;
+    display: inline-block;
+}
+
+.present-list .cp-tips .trigger {
+    float: right;
+}
+
+.present-list .container-btn button {
+    padding: 0 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.present-list .multi-tips {
+    margin: 10px 0;
+}
+
+.present-list .combo-pormotext textarea {
+    width: 670px;
+}
+
+.present-list .link-copy {
+    padding: 5px 0;
+    text-align: right;
+}
+.present-setting h2 {
+    margin: 10px 0 0;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #e4edf6;
+}
+
+.present-setting h3 {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.present-setting .form-elem li {
+    padding-left: 8em;
+}
+
+.present-setting .form-elem .label-like {
+    margin-left: -8em;
+    width: 8em;
+}
+
+.present-setting .form-elem label {
+    margin-left: 3px;
+}
+
+.present-setting .form-elem .field-elem {
+    margin-left: 5px;
+}
+
+.present-setting .promo-grade p {
+    margin-bottom: 3px;
+    line-height: 24px;
+}
+
+.present-setting .promo-grade .form-elem {
+    padding: 10px 0;
+}
+
+.present-setting .promo-grade .input-text {
+    vertical-align: middle;
+}
+
+.present-setting .container-btn button {
+    margin-right: 5px;
+}
+
+.present-setting .section-grade {
+    position: relative;
+    border-bottom: 1px solid #cbdffe;
+}
+
+.present-setting .first {
+    border-top: 1px solid #cbdffe;
+}
+
+.present-setting .even {
+    background-color: #f2f2f2;
+}
+
+.present-setting .ui-btn-del {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.present-setting .form-elem span.msg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.present-setting .container-btn {
+    margin-bottom: 80px;
+}
+
+.present-setting .icon-faq {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: transparent url(http://img04.taobaocdn.com/tps/i4/T1hhCbXhlyXXXXXXXX-16-16.png) no-repeat scroll 0 0;
+    text-indent: -9999px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.present-setting .gift-list {
+    margin: 8px 0 8px 20px;
+    padding: 10px;
+    width: 350px;
+    border: 1px solid #c4d5df;
+    background-color: #fff;
+}
+
+.present-setting .item-meta,.present-setting .form-elem .gift-list li {
+    padding-left: 70px;
+    height: 65px;
+    line-height: 20px;
+}
+
+.present-setting .form-elem .gift-list p {
+    margin-bottom: 0;
+}
+
+.present-setting .item-meta .img {
+    float: left;
+    margin-left: -65px;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    _display: inline;
+}
+
+.present-setting .item-meta .meta {
+    margin-right: 60px;
+}
+
+.present-setting .item-meta .action {
+    float: right;
+    width: 60px;
+}
+
+.present-setting .item-meta .action p {
+    margin-bottom: 5px;
+}
+
+.present-setting .item-meta em {
+    color: #f60;
+}
+
+.present-setting .item-list {
+    margin: 10px 0 10px 20px;
+    border: 1px solid #c4d5df;
+    background-color: #fff;
+}
+
+.present-setting .item-list .item-meta {
+    height: auto;
+}
+
+.present-setting .item-list .item-meta .meta {
+    margin-right: 5px;
+}
+
+.present-setting .section-grade .item-list {
+    margin: 10px 10px 10px 20px;
+}
+
+.present-setting .item-list .loading {
+    height: 30px;
+    border-top: 1px solid #c4d5df;
+    line-height: 30px;
+    text-align: center;
+}
+
+.present-setting .item-list .filter {
+    padding: 10px;
+}
+
+.present-setting .item-list table {
+    width: 100%;
+}
+
+.present-setting .item-list th {
+    height: 29px;
+    border-width: 1px 0;
+    border-color: #aed2ff;
+    border-style: solid;
+    text-align: center;
+}
+
+.present-setting .item-list td {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.present-setting .item-list .col-title {
+    width: 260px;
+}
+
+.present-setting .section-grade .item-list .col-title {
+    width: 255px;
+}
+
+.present-setting .item-list .col-action {
+    width: 60px;
+}
+
+.present .item-list .tbl-attach {
+    margin: 3px 0 10px;
+    height: 26px;
+    overflow: hidden;
+}
+
+.present .item-list .pagination {
+    float: right;
+}
+
+.J_ExtraWrap {
+    position: relative;
+}
+
+.J_Extra .msg {
+    height: 25px;
+}
+
+.present-setting .extra-container {
+    border: 1px solid #afd1ff;
+    background: #fff;
+    width: 630px;
+    margin: 5px 0 5px 20px;
+}
+
+.present-setting .extra-hd {
+    background: #e7f0ff;
+    padding-left: 10px;
+    border-bottom: 1px solid #afd1ff;
+    height: 27px;
+}
+
+.present-setting .extra-hd .extra-sub-title em {
+    color: #f60;
+}
+
+.present-setting .extra-fold-btn {
+    display: none;
+    background: url(http://img04.taobaocdn.com/tps/i4/T17f6DXj4nXXb8Znrq-90-55.png) no-repeat 27px 3px;
+    padding-right: 15px;
+    color: #36c;
+    cursor: pointer;
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    line-height: 1.3;
+}
+
+.present-setting .extra-title {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 27px;
+}
+
+.present-setting .extra-search {
+    padding: 10px;
+    border-bottom: 1px solid #afd1ff;
+}
+
+.present-setting .extra-search select {
+    width: 90px;
+}
+
+.present-setting .extra-search * {
+    vertical-align: middle;
+}
+
+.present-setting .extra-search .extra-count-notice {
+    float: right;
+    *margin-top: -36px;
+    *margin-right: 10px;
+}
+
+.present-setting .extra-search .extra-count-notice em {
+    color: #f60;
+}
+
+.present-setting .extra-item {
+    overflow: hidden;
+    height: 60px;
+    padding: 10px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.present-setting .extra-item-pic,.present-setting .extra-item-title,.present-setting .extra-item-price-stock,.present-setting .extra-item-name-setting,.present-setting .extra-item-price-setting,.present-setting .extra-item-action {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.present-setting .extra-item-pic,.present-setting .extra-item-title,.present-setting .extra-item-price-stock,.present-setting .extra-item-name-setting,.present-setting .extra-item-price-setting,.present-setting .extra-item-action {
+    *display: inline;
+}
+
+.present-setting .extra-item-pic {
+    margin-right: 5px;
+}
+
+.present-setting .extra-item-title {
+    width: 300px;
+    word-wrap: break-word;
+}
+
+.present-setting .extra-item-price-stock {
+    width: 120px;
+    text-align: center;
+    padding-right: 40px;
+}
+
+.present-setting .extra-item-price-stock em {
+    color: #f60;
+    margin-right: 5px;
+}
+
+.present-setting .extra-item-action {
+    width: 70px;
+    text-align: center;
+}
+
+.present-setting .extra-item-action .extra-join:link,.present-setting .extra-item-action .extra-join:visited,.present-setting .extra-item-action .extra-join:hover {
+    display: inline-block;
+    background: url(http://img04.taobaocdn.com/tps/i4/T17f6DXj4nXXb8Znrq-90-55.png) no-repeat -20px -30px;
+    width: 70px;
+    height: 25px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 25px;
+    vertical-align: middle;
+    color: #444;
+}
+
+.present-setting .extra-choose-error {
+    float: right;
+    margin-top: -17px;
+    margin-right: 3px;
+    *margin-right: 15px;
+    *display: inline;
+}
+
+.present-setting .extra-page {
+    height: 30px;
+    padding: 10px;
+}
+
+.present-setting .extra-page-action {
+    float: left;
+    width: 400px;
+    height: 30px;
+}
+
+.present-setting .extra-finish {
+    display: inline-block;
+    background: url(http://img04.taobaocdn.com/tps/i4/T17f6DXj4nXXb8Znrq-90-55.png) no-repeat -20px 0;
+    width: 70px;
+    height: 24px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 24px;
+    vertical-align: middle;
+    color: #fff;
+}
+
+.present-setting .extra-page .pagination {
+    float: right;
+}
+
+.present-setting .extra-item-name-setting {
+    width: 190px;
+}
+
+.present-setting .extra-item-name-setting .input-text {
+    width: 122px;
+}
+
+.present-setting .extra-item-price-setting {
+    width: 120px;
+}
+
+.present-setting .extra-item-price-setting .input-text {
+    width: 45px;
+}
+
+.present-setting .extra-setting {
+    margin-top: -6px;
+}
+
+.present-setting .extra-setting .extra-item-title {
+    width: 160px;
+}
+
+.present-setting .extra-setting .extra-item-price-stock {
+    padding: 0;
+    text-align: left;
+}
+
+.present-setting .extra-setting .extra-item-action {
+    width: 50px;
+}
+
+.present-setting .extra-setting .no-extra {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.present-setting .extra-name-error {
+    float: left;
+    margin-top: -17px;
+    margin-left: 283px;
+    *margin-left: 275px;
+    *display: inline;
+}
+
+.present-setting .extra-price-error {
+    float: right;
+    margin-top: -17px;
+    margin-right: 25px;
+    *margin-right: 33px;
+    *display: inline;
+}
+
+.left
+{
+    float:left;
+    width:250px;
+    height:450px;
+    overflow:auto;
+    margin-right:20px; 
+}
+
+.right
+{
+    float:left;
+    width:780px;
+}
+
+.baseinfo tr
+{
+    line-height:28px;
+}
+.baseinfo td
+{
+    padding-left:5px;
+}

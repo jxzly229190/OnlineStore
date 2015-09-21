@@ -1,0 +1,77 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>使用快钱支付</title>
+	<meta http-equiv="content-type" content="text/html; charset=gb2312" />
+    <script src="../../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<div align="center">
+		<table width="259" border="0" cellpadding="1" cellspacing="1" bgcolor="#CCCCCC" style="visibility: hidden;display: none;">
+			<tr bgcolor="#FFFFFF">
+				<td width="80">支付方式:</td>
+				<td >快钱[99bill]</td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td >订单编号:</td>
+				<td >@ViewBag.orderId</td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td>订单金额:</td>
+				<td>@ViewBag.orderAmount</td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td>支付人:</td>
+				<td>@ViewBag.payerName</td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td>商品名称:</td>
+				<td>@ViewBag.productName</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+	  </table>
+	</div>
+
+	<div align="center" style="font-size:12px;font-weight: bold;color:red; display:none;">
+		<form id="kqPay" name="kqPay" method="post" action="https://www.99bill.com/gateway/recvMerchantInfoAction.htm">
+			<input type="hidden" name="inputCharset"  value="@Html.Raw(ViewBag.inputCharset)"/>
+			<input type="hidden" name="bgUrl"  value="@Html.Raw(ViewBag.bgUrl)"/>
+			<input type="hidden" name="pageUrl"  value="@Html.Raw(ViewBag.pageUrl)"/>
+			<input type="hidden" name="version"  value="@Html.Raw(ViewBag.version)"/>
+			<input type="hidden" name="language"  value="@Html.Raw(ViewBag.language)"/>
+			<input type="hidden" name="signType"  value="@Html.Raw(ViewBag.signType)"/>
+			<input type="hidden" name="signMsg"  value="@Html.Raw(ViewBag.signMsg)"/>
+			<input type="hidden" name="merchantAcctId"  value="@Html.Raw(ViewBag.merchantAcctId)"/>
+			<input type="hidden" name="payerName"  value="@Html.Raw(ViewBag.payerName)"/>
+			<input type="hidden" name="payerContactType"  value="@Html.Raw(ViewBag.payerContactType)"/>
+			<input type="hidden" name="payerContact"  value="@Html.Raw(ViewBag.payerContact)"/>
+			<input type="hidden" name="orderId"  value="@Html.Raw(ViewBag.orderId)"/>
+			<input type="hidden" name="orderAmount"  value="@Html.Raw(ViewBag.orderAmount)"/>
+			<input type="hidden" name="orderTime"  value="@Html.Raw(ViewBag.orderTime)"/>
+			<input type="hidden" name="productName"  value="@Html.Raw(ViewBag.productName)"/>
+			<input type="hidden" name="productNum"  value="@Html.Raw(ViewBag.productNum)"/>
+			<input type="hidden" name="productId"  value="@Html.Raw(ViewBag.productId)"/>
+			<input type="hidden" name="productDesc"  value="@Html.Raw(ViewBag.productDesc)"/>
+			<input type="hidden" name="ext1"  value="@Html.Raw(ViewBag.ext1)"/>
+			<input type="hidden" name="ext2"  value="@Html.Raw(ViewBag.ext2)"/>
+			<input type="hidden" name="payType"  value="@Html.Raw(ViewBag.payType)"/>
+			<input type="hidden" name="bankId"  value="@Html.Raw(ViewBag.bankId)"/>
+			<input type="hidden" name="redoFlag"  value="@Html.Raw(ViewBag.redoFlag)"/>	
+			<input type="hidden" name="pid"  value="@Html.Raw(ViewBag.pid)"/>	
+			<input type="submit" id="submit" value="提交" />	
+        </form>	
+	</div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#submit").click();
+        });      
+    </script>
+</body>
+</html>

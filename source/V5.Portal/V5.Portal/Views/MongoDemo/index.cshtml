@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "MongoDemo";
+}
+
+@model IEnumerable<V5.Portal.Models.PageModel>
+
+<h2>MongoDemo</h2>
+
+<ol>
+    @foreach (var item in Model)
+    {
+        <li>PageKey: @item.PageKey &nbsp;PageContent:@item.PageContent &nbsp; LastUpdate:@item.LastUpdateTime.ToLocalTime()</li>
+    }
+</ol>
+
+@using (Html.BeginForm("Update", "MongoDemo"))
+{
+    <fieldset>
+        indexContent: <input type = "text" name = "indexContent" /> 
+        productContent: <input type = "text"name = "productContent" />
+        <input type = "submit" value = "Update" />
+    </fieldset>
+}

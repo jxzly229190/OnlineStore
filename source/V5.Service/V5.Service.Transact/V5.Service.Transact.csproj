@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8743EFC-14B0-48B0-BD20-CB5330592ECF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.Service.Transact</RootNamespace>
+    <AssemblyName>V5.Service.Transact</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HwRest">
+      <HintPath>..\..\..\libraries\HwRest.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CpsCommissionRatioService.cs" />
+    <Compile Include="CpsLinkRecordService.cs" />
+    <Compile Include="CpsService.cs" />
+    <Compile Include="OrderBillServices.cs" />
+    <Compile Include="OrderCancelCauseService.cs" />
+    <Compile Include="OrderCancelService.cs" />
+    <Compile Include="OrderDeliveryTrackDetailService.cs" />
+    <Compile Include="OrderDeliveryTrackService.cs" />
+    <Compile Include="OrderERPLogService.cs" />
+    <Compile Include="OrderInvoiceService.cs" />
+    <Compile Include="OrderPaymentService.cs" />
+    <Compile Include="OrderProductPromoteService.cs" />
+    <Compile Include="OrderProductService.cs" />
+    <Compile Include="OrderService.cs" />
+    <Compile Include="OrderStatusLogService.cs" />
+    <Compile Include="OrderStatusTrackingService.cs" />
+    <Compile Include="ProductCommentReplyService.cs" />
+    <Compile Include="ProductCommentService.cs" />
+    <Compile Include="ProductConsultService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess.Transact\V5.DataAccess.Transact.csproj">
+      <Project>{2139D830-8918-4D28-914B-B05951B3D666}</Project>
+      <Name>V5.DataAccess.Transact</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess\V5.DataAccess.csproj">
+      <Project>{D59FA7AD-67E5-459D-97D3-DD92689E43D5}</Project>
+      <Name>V5.DataAccess</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Product\V5.DataContract.Product.csproj">
+      <Project>{8A6D374A-1AF2-4AA8-8C71-E91724E1D7B1}</Project>
+      <Name>V5.DataContract.Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Promote\V5.DataContract.Promote.csproj">
+      <Project>{3CEAB9B8-873B-4215-AF37-8DDAB50DC3C9}</Project>
+      <Name>V5.DataContract.Promote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.System\V5.DataContract.System.csproj">
+      <Project>{6FC20914-1D9F-4824-8F8B-22C183AAD524}</Project>
+      <Name>V5.DataContract.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Transact\V5.DataContract.Transact.csproj">
+      <Project>{7A795796-E69B-4780-987B-EF026F0AA136}</Project>
+      <Name>V5.DataContract.Transact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.User\V5.DataContract.User.csproj">
+      <Project>{06F0B648-8FE0-4D8D-9BBA-F0BB81CBE60B}</Project>
+      <Name>V5.DataContract.User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Log\V5.Library.Logger.csproj">
+      <Project>{500C79FB-CFEB-45DB-BE5A-7D4FA0B62F7D}</Project>
+      <Name>V5.Library.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Storage\V5.Library.Storage.csproj">
+      <Project>{8ABCE18E-100C-4714-8D8D-55D95ADBED94}</Project>
+      <Name>V5.Library.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library\V5.Library.csproj">
+      <Project>{0A8000BD-A860-4BD8-96F3-415A61EB5098}</Project>
+      <Name>V5.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\V5.Service.Promote\V5.Service.Promote.csproj">
+      <Project>{438B6299-9570-454B-A24B-83B6B1081129}</Project>
+      <Name>V5.Service.Promote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\V5.Service.User\V5.Service.User.csproj">
+      <Project>{C652F7D9-7136-4699-B329-A11B24F47A4E}</Project>
+      <Name>V5.Service.User</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

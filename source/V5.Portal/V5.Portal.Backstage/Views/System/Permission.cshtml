@@ -1,0 +1,61 @@
+﻿@using V5.Portal.Backstage.Models.System
+@Styles.Render("~/Content/zTree/css/zTreeStyle/zTreeStyle.css")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.all-3.5.min.js")
+@Scripts.Render("~/Scripts/Backstage/Backstage.Primission.js")
+<style type="text/css">
+    html,body{font-size:12px; margin:0px; padding:0px;}
+    .container {
+        padding:6px;
+    }
+    .group {
+        float:left;
+        overflow:auto;        
+        min-width:240px;
+        height:425px;
+    }
+    .group02 {
+        border-left:1px solid #f7f7f7;
+        border-right:1px solid #f7f7f7;
+    }
+    .clear {
+        clear:both;
+    }
+    .menu {
+        background-color:#f7f7f7;
+        padding:0 12px;  
+    }
+    .menu01, .menu02, .menu03 {
+        float:left;
+        width:240px;
+    }
+    .menu .button {
+        display:inline-block;
+        padding:6px 12px;
+        cursor:pointer;
+        background-color:#66ccff;
+        color:#fff;
+    }
+</style>
+<script type="text/javascript">
+	$(document).ready(function () {
+	    primission.Init();	    
+	});
+</script>
+<div class="container">
+    <div class="menu">
+        <div class="menu01"><span class="button role_view">角色</span></div>
+        <div class="menu02"><span class="button save_right">授权</span></div>
+        <div class="menu03"><span class="button volidate_right">验证</span></div>
+        <div class="clear"></div>
+    </div>
+    <div class="group group01">
+        <ul id="treeRole" class="ztree"></ul>
+    </div>
+    <div class="group group02">
+        <ul id="treeRes" class="ztree"></ul>
+    </div>
+    <div class="group group03">
+        <ul id="treeRights" class="ztree"></ul>
+    </div>
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,135 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@model ProductModifyModel
+@Styles.Render("~/Content/Products/ProductAdd.css?t=2")
+@Scripts.Render("~/Scripts/Backstage/Product/Backstage.Product.Add.js")
+<script type="text/javascript">
+    $(function () {
+        var attributesValue = $("#ProductAttributes").val();
+        var option = {};
+        option.categoryId = $("#ProductCategoryID").val();
+        option.container = "product_attr";
+        try {
+            option.attributesValue = attributesValue == "" ? [] : $.parseJSON(attributesValue);
+        } catch (ex) {
+            option.attributesValue = [];
+        }
+        Attribute.Init(option);
+    });
+</script>
+
+@(Html.HiddenFor(model => model.Product.ProductCategoryID, new { @id = "ProductCategoryID" }))
+@(Html.HiddenFor(model => model.Product.ID, new { @id = "ProductID" }))
+@(Html.HiddenFor(model => model.Product.Status, new { @id = "ProductStatus" }))
+@(Html.HiddenFor(model => model.Product.Attributes, new { @id = "ProductAttributes" }))
+
+<div class="product_main">
+    <!-- 基础属性 -->
+    <table>
+        <caption>基础属性</caption>
+        <tbody>
+            <tr>
+                <td class="pname">商品名称：</td><td>@(Html.TextBoxFor(model => model.Product.Name, new { @id = "ProductName", @class = "k-textbox"}))</td>
+                <td class="pname">广告词：</td><td>@(Html.TextBoxFor(model => model.Product.Advertisement, new { @id = "Advertisement", @class = "k-textbox"}))</td>
+            </tr>
+            <tr>
+                <td class="pname">条形码：</td><td>@(Html.TextBoxFor(model => model.Product.Barcode, new { @id = "Barcode", @class = "k-textbox"}))</td>
+                <td class="pname">官网价格：</td><td>@(Html.Kendo().NumericTextBoxFor(model => model.Product.GoujiuPrice))</td>
+            </tr>
+            <tr>
+                <td class="pname">库存数量：</td><td>@(Html.Kendo().IntegerTextBoxFor(model => model.Product.InventoryNumber))</td>
+                <td class="pname">市场价格：</td><td>@(Html.Kendo().NumericTextBoxFor(model => model.Product.MarketPrice))</td>
+            </tr>
+            <tr>
+                <td class="pname">赠送积分：</td><td>@(Html.Kendo().IntegerTextBoxFor(model => model.Product.Integral).Min(0))</td>
+                <td class="pname">虚拟销量：</td><td>@(Html.Kendo().IntegerTextBoxFor(model => model.Product.SoldOfVirtual).Min(0))</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table id="product_attr">
+        <caption>关联属性</caption>
+    </table>
+    
+    <!-- 搜索引擎优化（SEO） -->
+    <table>
+        <caption>搜索引擎优化（SEO）</caption>
+        <tbody>
+            <tr>
+                <td class="pname">SEO 标题：</td><td>@(Html.TextBoxFor(model => model.Product.SEOTitle, new { @id = "SEOTitle", @class = "k-textbox"}))</td>
+                <td class="pname">SEO 描述：</td><td>@(Html.TextBoxFor(model => model.Product.SEODescription, new { @id = "SEODescription", @class = "k-textbox"}))</td>
+            </tr>
+            <tr>
+                <td class="pname">SEO 关键字：</td><td>@(Html.TextBoxFor(model => model.Product.SEOKeywords, new { @id = "SEOKeywords", @class = "k-textbox"}))</td>
+                <td class="pname"></td><td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 商品图片 -->
+    <table>
+        <caption>商品图片</caption>
+        <tbody>
+            <tr>
+                <td colspan="4">
+                    <div id="productImgsDiv"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><input type="button" id="selectPictureBtn" onclick="selectProductPictureBtnClick()" class="k-button" value="选取图片"/></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- 商品描述 -->
+    <table>
+        <caption>商品描述</caption>
+        <tbody>
+            <tr>
+                <td colspan="4">
+                    <div id="productDescriptionDiv">
+                        <script type="text/javascript">
+                            CKEDITOR.replace('Introduce');
+                        </script>
+                        @(Html.TextAreaFor(model => model.Product.Introduce, new { @id = "Introduce", @name = "Introduce" }))
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <!-- 按钮 -->
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <input type="button" class="k-button" value="保 存" onclick="product.Modify()"/><input type="button" class="k-button" value="预 览"/>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div style="display: none">
+    @(Html.Kendo().Window()
+          .Name("pictureSelectorWindow")
+          .Title("修改商品 > 选取图片")
+          .Width(1290)
+          .Height(590)
+          .Content(@<text>
+                        <div id="pictureSelectorWindowDiv" style="margin-top: -10px;"></div>
+                    </text>)
+          .Resizable()
+          .Draggable()
+          .Events(e => e.Close("closeCustomWindow"))
+          .Actions(actions => actions.Pin().Minimize().Maximize().Close()))
+</div>
+
+<script type="text/x-kendo-tmpl" id="imageListViewTemplate">
+    <div class="product" title="Hiddle#:ID#"">
+        <img src='@Url.Content("#:Path#")' onclick="FillImg(this)" name="#:ID#" />
+    </div>
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var id = $("#ProductID").val() || "";
+        ProductPicture.Init(id);
+    });
+</script>

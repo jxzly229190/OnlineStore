@@ -1,0 +1,99 @@
+﻿<script>
+    // 当商品类别下拉框选择项改变时，刷新品牌 Grid
+    function CategoryChange() {
+        var filter = new Array();
+        var grid = $("#categoryGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+    // 商品类别下拉框联动参数获取函数
+    function GetCategoryID() {
+        return { categoryParentID: $("#Category").val() || "11" };
+    }
+</script>
+
+@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionObj2 = new PermissionUtility(Context.Session.SessionID);
+}
+@(Html.Kendo().Grid<ProductCategoryModel>()
+    .Name("categoryGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.CategoryName).Title("类别名称");
+        columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd}").Title("创建时间");
+    })           
+    .ToolBar(toolbar => toolbar.Template("商品类别："+ Html.Kendo().DropDownList().Name("Category").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value").Events(e => e.Change("CategoryChange"))))
+    .Pageable()
+    .Scrollable()
+    .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+    .ClientDetailTemplateId("brandTemplate1")
+    .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(p => p.ID))
+    .Read(read => read.Action("QueryBrandCategory", "Product").Data("GetCategoryID")))
+)
+<script id="brandTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ProductBrandModel>()
+          .Name("brandGrid_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.BrandName).Title("一级品牌");
+                  columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd}").Title("创建时间");
+                  columns.Command(command =>
+                      {
+                          command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.ModifyBrand.Post"));
+                          command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.RemoveBrand.Post"));
+                      }).Width(160).Hidden(permissionObj.Hidden);
+              })
+          .ToolBar(tool => tool.Create().Text("添加一级品牌").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.AddBrand.Post",false)))
+          .Editable(edit => edit.Mode(GridEditMode.PopUp).TemplateName("Product_Brand_Template"))
+          .Pageable()
+          .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+          .Events(e => e.Edit("onEdit"))
+          .ClientDetailTemplateId("brandTemplate2")
+          .DataSource(dataSource => dataSource
+         .Ajax()
+         .PageSize(10)
+         .Model(model => model.Id(m => m.ID))
+         .Events(events => events.Error("error_handler"))
+         .Create(update => update.Action("AddBrand", "Product", new { categoryID = "#=ID#", parentBrandID = 0, brandLayer = 1 }))
+         .Read(read => read.Action("QuerySubBrand", "Product", new { categoryID = "#=ID#", parentBrandID = 0, brandLayer = 1 }))
+         .Update(update => update.Action("ModifyBrand", "Product"))
+         .Destroy(update => update.Action("RemoveBrand", "Product")))
+         .ToClientTemplate())
+</script>
+<script id="brandTemplate2" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ProductBrandModel>()
+          .Name("brandGrid_#=ID#")
+          .Columns(columns =>
+            {
+                columns.Bound(p => p.BrandName).Title("二级品牌");
+                columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd}").Title("创建时间");
+                columns.Command(command =>
+                {
+                    command.Edit().Text("编辑").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.ModifyBrand.Post")); 
+                    command.Destroy().Text("删除").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.RemoveBrand.Post"));
+                }).Width(160).Hidden(permissionObj2.Hidden);
+            })
+          .ToolBar(tool => tool.Create().Text("添加二级品牌").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.AddBrand.Post",false)))
+          .Editable(edit => edit.Mode(GridEditMode.PopUp).TemplateName("Product_Brand_Template"))
+          .Pageable()
+          .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+          .Events(e => e.Edit("onEdit"))
+          .DataSource(dataSource => dataSource
+         .Ajax()
+         .PageSize(5)
+         .Model(model => model.Id(m => m.ID))
+         .Events(events => events.Error("error_handler"))
+         .Create(update => update.Action("AddBrand", "Product", new { categoryID = "#=ProductCategoryID#", parentBrandID = "#=ID#", brandLayer = 2 }))
+         .Read(read => read.Action("QuerySubBrand", "Product", new { categoryID = "#=ProductCategoryID#", parentBrandID = "#=ID#", brandLayer = 2 }))
+         .Update(update => update.Action("ModifyBrand", "Product"))
+         .Destroy(update => update.Action("RemoveBrand", "Product")))
+         .ToClientTemplate())
+</script>

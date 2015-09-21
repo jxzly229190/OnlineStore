@@ -1,0 +1,5 @@
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.Library.Serializer.dll
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.Library.Serializer.pdb
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.Serializer\obj\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.Serializer\obj\Debug\V5.Library.Serializer.dll
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.Serializer\obj\Debug\V5.Library.Serializer.pdb

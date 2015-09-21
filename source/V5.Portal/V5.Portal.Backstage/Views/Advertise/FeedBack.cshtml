@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "FeedBack";
+}
+@using V5.DataAccess.Advertise
+@model IEnumerable<V5.Portal.Backstage.Models.User.FeedBackModel>
+@(Html.Kendo().Grid(Model)
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("用户姓名");
+        columns.Bound(p => p.Type).Title("类型").Width(130);
+        columns.Bound(p => p.Gender).Title("性别").Width(130);
+        columns.Bound(p => p.TelPhone).Title("联系电话").Width(130);
+        columns.Bound(p => p.GjwNumber).Title("购酒网账号").Width(130);
+        columns.Bound(p => p.Email).Title("电子邮箱").Width(130);
+
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable(scr => scr.Height(430))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(p => p.ID))
+            .Read(read => read.Action("GetFeedBack", "Advertise"))
+
+     )
+)

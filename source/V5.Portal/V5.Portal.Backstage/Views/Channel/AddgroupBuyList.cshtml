@@ -1,0 +1,310 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@{
+    ViewBag.Title = "AddgroupBuyList";
+}
+<div class="search-box">
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td width="10%" align="right">
+                        <label>
+                            条形码：</label>
+                    </td>
+                    <td>
+                        <input name="txtMark" type="text" class="k-textbox" value="" id="ProductBarCode" />
+                    </td>
+                    <td width="10%" align="right">
+                        <label>
+                            商品编码：</label>
+                    </td>
+                    <td>
+                        <input name="Number" class="k-textbox" type="text" id="ProductNumber" />
+                    </td>
+                    <td width="10%" align="right">
+                        <label>
+                            商品名称：</label>
+                    </td>
+                    <td align="left">
+                        <input name="ProductName" class="k-textbox" type="text" id="ProductName" />
+                    </td>
+                    <td width="60%">
+                        <input type="button" class="km-button" value="搜索" id="btnSearch" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <div>
+                @(Html.Kendo().Grid<ProductModel>()
+                      .Name("productGrid")
+                      .Columns(columns =>
+                          {
+                              columns.Template(e =>
+                              {
+                              }).ClientTemplate("<input type='checkbox' name='chkproduct' onclick='reverseSelect()' id='chkproduct' value='#=ID#'/>").Width(70).Title("<input type='checkbox' id='SelectAllProduct' onclick='SelectAllProduct()'/>全选");
+                              columns.Bound(p => p.Barcode).Title("条形码");
+                              columns.Bound(p => p.Name).Width(200).Title("商品名称").Width(300);
+                              columns.Bound(p => p.InventoryNumber).Width(100).Title("库存量");
+                              columns.Bound(p => p.Status).Title("商品状态").Width(100);
+                              columns.Bound(p => p.MarketPrice).Title("市场价");
+                              columns.Bound(p => p.GoujiuPrice).Title("购酒网价格");
+                          })
+                      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                      .Pageable()
+                      .Sortable()
+                      .Scrollable()
+                      .HtmlAttributes(new
+                                          {
+                                              style = "height:280px;"
+                                          })
+                      .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .PageSize(7)
+                                                    .Events(events => events.Error("error_handler"))
+                                                    .Model(model => model.Id(p => p.ID))
+                                                    .Read(read => read.Action("QueryProduct", "Channel").Data("productSearchData"))
+
+                      )
+                      )
+            </div>
+        </div>
+        <input type="button" value="设定" onclick="settingProuct()" id="setting" />
+    </div>
+</div>
+<div>
+    @(Html.Kendo().Grid<ProductModel>()
+          .Name("SettingGrid")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.Barcode).Title("条形码");
+                  columns.Bound(p => p.Name).Width(200).Title("商品名称").Width(300);
+                  columns.Bound(p => p.InventoryNumber).Width(100).Title("库存量");
+                  columns.Bound(p => p.Status).Title("商品状态").Width(100);
+                  columns.Bound(p => p.MarketPrice).Title("市场价");
+                  columns.Bound(p => p.GoujiuPrice).Title("购酒网价格");
+                  columns.Command(command =>
+                      {
+                          command.Edit().Text("设为团购").UpdateText("设置").CancelText("取消");
+                          command.Destroy().Text("删除");
+
+                      }).Width(200).Title("操作");
+              })
+              .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("GroupBuy_Setting_Template").Window(w => w.Width(800)).Window(w => w.Title("添加团购")))
+          .Pageable()
+          .Sortable()
+          .Scrollable()
+          .HtmlAttributes(new
+                              {
+                                  style = "height:350px;"
+                              })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Model(model => model.Id(p => p.ID))
+                                        .Read(read => read.Action("QueryGroupProduct", "Channel").Data("settingProductData"))
+                                        .Update(update => update.Action("AddGroupBuy", "Channel").Data("addGroupBuyData"))
+                                        .Destroy(update => update.Action("EditingInline_Destroy", "Grid"))
+          )
+          )
+</div>
+<script type="text/javascript">
+
+    function addGroupBuyData() {
+        var StartTime = $("#StartTime").val();
+        var EndTime = $("#EndTime").val();
+        var IsShowTime = $("#chkIsTime").is(":checked") == true ? "true" : "false";
+        var UserLevelID = $("#userlevelID").val();
+        //var Introduce = $("#activityRemark").val();
+        var IsOnlinePayMent = $("#chkPayOnline").is(":checked") == true ? "true" : "false";
+        var ShowLevel = $("#ShowLevel").val();
+        var beizhu = $("#beizhu").val();
+        var groupName = $("#GroupName").val();
+        var totalCount = $("#TotalNumber").val();
+        var GBPrice = $("#GBPrice").val();
+        var soldOfReality = $("#OfReality").val();
+        var soldOfvirtual = $("#OfVirtual").val();
+        if (groupName == "") {
+            alert("团购名称不能为空", function () { $("#GroupName").focus() });
+            return;
+        } if (ShowLevel == "") {
+            alert("请选择团购级别");
+            return;
+        } if (UserLevelID == "") {
+            alert("请选择客户级别");
+            return;
+        } if (StartTime == "") {
+            alert("请选择开始时间");
+            return;
+        } if (EndTime == "") {
+            alert("请选择结束时间");
+            return;
+        } if (totalCount == "") {
+            alert("请确认团购数量");
+            return;
+        } if (PageView == "") {
+            alert("请设置页面浏览人数");
+            return;
+        } if (GBPrice == "") {
+            alert("请设置团购价格");
+            return;
+        }
+
+        return {
+            isShowTime: IsShowTime,
+            levelID: UserLevelID,
+            isOnlinePayment: IsOnlinePayMent,
+            Level: ShowLevel,
+            beizhu: beizhu,
+            GroupBuyName: groupName,
+            SoldOfReality: soldOfReality,
+            SoldOfvirtual: soldOfvirtual
+        };
+
+    }
+
+    $(function () {
+        $("#btnSearch").click(function () {
+            var data = { txtMark: $("#txtMark").val(), productName: $("#ProductName").val() };
+            productSearch();
+        });
+    });
+    ///商品详细
+
+    function queryProductId(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var pId = dataItem.ID;
+        if (pId > 0) {
+            $.ajax({
+                type: "GET",
+                url: "/Channel/ProductByIdDetail",
+                data: { productId: pId },
+                datatype: "html",
+                async: false,
+                success: function (callback) {
+                    $('#detailDiv').html(callback);
+                    $('#detailDiv').css("display", "block");
+                    $('#defaultDiv').css("display", "none");
+                },
+                error: function () {
+                    alert("处理失败");
+                }
+            });
+        }
+    }
+
+    function settingProuct() {
+        var filter = new Array();
+        var grid = $("#SettingGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+    //选定商品
+
+    function settingProductData() {
+        var arr = new Array();
+        var arrChk = $("input[name='chkproduct']:checked");
+        for (var i = 0; i < arrChk.length; i++) {
+            arr.push(arrChk[i].value);
+        }
+        return {
+            setting: arr.toString()
+        };
+    }
+
+    //商品搜索条件
+
+    function productSearchData() {
+        return {
+            ProductBarCode: $("#ProductBarCode").val(),
+            ProductName: $("#ProductName").val()
+        };
+    }
+
+    //搜索商品，加到Grid
+
+    function productSearch() {
+        var filter = new Array();
+        var grid = $("#productGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+    }
+
+    function PostAjax(url, data) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            async: false,
+            data: data,
+            success: function (callbackdata) {
+                alert(callbackdata);
+            }
+        });
+    }
+
+    function reverseSelect() {
+        if ($("#SelectAllProduct").attr("checked", null)) {
+            $("#SelectAllProduct").checked = false;
+        }
+    }
+    function SelectAllProduct() {
+        if ($("#SelectAllProduct")[0].checked) {
+            $("#SelectAllProduct").attr("checked", "checked");
+            $("input[name='chkproduct']").each(function () {
+                this.checked = true;
+            });
+        } else {
+            $("#SelectAllProduct").attr("checked", null);
+            $("input[name='chkproduct']").each(function () {
+                this.checked = false;
+            });
+        }
+    }
+
+    //图片上传
+
+    function onLoad(e) {
+        var productId = $('#ID').val();
+        e.data = { productId: productId };
+    }
+
+    //返回商品列表
+
+    function backList() {
+        $('#detailDiv').css("display", "none");
+        $('#defaultDiv').css("display", "block");
+    }
+
+    // 判断开始时间小于结束时间
+
+    //    function CheckStarEndtTime() {
+    //        var startTime = $("#StartTime").data("kendoDateTimePicker").value();
+    //        var endTime = $("#EndTime").data("kendoDateTimePicker").value();
+    //        if (endTime - startTime < 0) {
+    //            alert("结束时间必须大于开始时间");
+    //            return false;
+    //        }
+    //    }
+
+    function change() {
+        var value = $("#ShowLevel").val();
+        if (value == 1) {
+            $("#cap").text("请选择图片分辨率1280*720");
+        } else if (value == 2) {
+            $("#cap").text("请选择图片分辨率1080*640");
+        } else if (value == 3) {
+            $("#cap").text("请选择图片分辨率640*320");
+        }
+
+    };
+
+    $(document).ready(function () {
+        $("#get").click(function () {
+            var color = $("#color").data("kendoDropDownList"),
+                size = $("#size").data("kendoDropDownList");
+
+            alert('Thank you! Your Choice is:\n\nColor ID: ' + color.value() + ' and Size: ' + size.value());
+        });
+    });
+</script>

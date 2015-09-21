@@ -1,0 +1,90 @@
+﻿@using System.Diagnostics
+@using V5.Portal.Backstage.Controllers
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>购酒网后台管理系统</title>
+        @*引入 javascript 打包压缩功能*@
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/modernizr")
+        @*引入 javascript*@
+        @Scripts.Render("~/Scripts/Backstage/Backstage.Common.js")
+        @Scripts.Render("~/Scripts/Backstage/Backstage.Common.KendoUI.js")
+        @Scripts.Render("~/Scripts/Backstage/Picture/Backstage.Picture.js")
+        @Scripts.Render("~/Scripts/fresco.js")
+        @Scripts.Render("~/Scripts/kendo/jquery.min.js")
+        @Scripts.Render("~/Scripts/kendo/kendo.all.min.js")
+        @Scripts.Render("~/Scripts/kendo/kendo.aspnetmvc.min.js")
+        @Scripts.Render("~/Scripts/kendo.modernizr.custom.js")
+        @*引入自定义Ajax请求JS*@
+        @Scripts.Render("~/Scripts/AjaxOverride.js")
+        @*引入 css*@
+        @Styles.Render("~/Content/Common.css")
+        @Styles.Render("~/Content/fresco.css")
+        @Styles.Render("~/Content/Products/PictureSpace.css")
+        @Styles.Render("~/Content/kendo/kendo.common.min.css")
+        @Styles.Render("~/Content/kendo/kendo.dataviz.min.css")
+        @Styles.Render("~/Content/kendo/kendo.uniform.min.css")
+        @Styles.Render("~/Content/kendo/kendo.dataviz.uniform.min.css")
+    </head>
+    <body class="page-header">
+        <header>
+            <div class="header-box">
+                <div class="top-logo"><img src="../../Images/logo.jpg" /></div>
+                <div class="top-nav">
+                    <ul>
+                        @{
+                            var baseController = ViewContext.Controller as BaseController;
+                            if (baseController != null)
+                            {
+                                foreach (var topMenu in baseController.SystemUserSession.TopMenus)
+                                {
+                                    if (topMenu == null)
+                                    {
+                                        continue;
+                                    }
+
+                                    var href = "/" + topMenu.URL;
+                                    var id = "top_" + topMenu.URL;
+
+                                    var className = string.Empty;
+                                    if (topMenu.Name == "首页")
+                                    {
+                                        className = "select";
+                                    }
+
+                                    <li class="@className" id="@id"><a href="@href">@topMenu.Name</a></li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="top-info">
+                    <div class="left-info"><span id="datetime">time</span></div>
+                    <div class="right-info"><span><a href="#" style="font-weight: bold; font-size: 14px;">&nbsp;
+                                                      @{
+                                                          Debug.Assert(baseController != null, "baseController != null");
+                                                      }
+                                                      @baseController.SystemUserSession.Name</a>，欢迎您来到购酒网后台管理系统！&nbsp;[<a onclick="exit()" style="cursor:pointer; ">退出</a>] </span></div>
+                </div>
+            </div>
+        </header>
+        <div id="body" class="main-box">
+            <div class="treeviewDiv">
+                @(Html.Kendo().TreeView().Name("treeview")
+                              .HtmlAttributes(new { @class = "demo-section", style = "font-size: 14px; font-weight: bold;" })
+                      .DataTextField("Name")
+                      .DataSource(dataSource => dataSource.Read(read => read.Action("QueryPictureTreeView", "Picture")))
+                      .Events(events => events.Select("onTreeviewSelect")))
+            </div>
+            <div class="main-right">
+                @RenderSection("featured", false)
+                <section class="content-wrapper main-content clear-fix">
+                    @RenderBody()
+                </section>
+            </div>
+        </div>
+        @RenderSection("scripts", false)
+    </body>
+</html>

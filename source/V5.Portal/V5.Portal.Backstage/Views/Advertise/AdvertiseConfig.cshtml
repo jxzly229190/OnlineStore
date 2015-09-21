@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "AdvertiseConfig";
+}
+@using V5.Portal.Backstage.Models.Advertise
+<style type="text/css">
+    .container
+    {
+        position: relative;
+        padding-left: 255px;
+    }
+    .zTreeDemoBackground
+    {
+        width: 250px;
+        height: 460px;
+        overflow: scroll;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .k-button
+    {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    #AdvertiseConfig
+    {
+        margin-top: 5px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        advertiseConfig.Init();
+    });
+    function getHdParent() {
+        var PID = $("#hdTreeParent").val() == "" ? 2 : $("#hdTreeParent").val();
+        return {
+            pid: PID
+        };
+    }
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+<div class="container">
+    <div class="zTreeDemoBackground">
+        <input type="hidden" id="hdTreeParent" value="" />
+        <input type="hidden" id="hdparentcode" value="" />
+        <ul id="treeDemo" class="ztree">
+        </ul>
+    </div>
+    <div id="advertisevector">
+        <div id="advertiseList">
+            <div>
+                <input type="button" class="k-button" value="添加" onclick="advertiseConfig.LoadPage('Advertise/AddLP');" />
+                <input type="button" class="k-button" value="删除" onclick="advertiseConfig.RemoveRecord();" />
+                @* <input type="button" class="k-button" value="导入LP" onclick="advertiseConfig.LoadPage('Advertise/BatchLeadLp');" />
+                <input type="button" class="k-button" value="导入产品" onclick="advertiseConfig.LoadPage('Advertise/BatchLeadProduct');" />*@
+            </div>
+            <div id="AdvertiseConfig">
+                @(Html.Kendo().Grid<AdvertiseConfigModel>()
+                    .Name("AdvertiseGradView")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.ID).Hidden(true);
+                        columns.Bound(p => p.ImagePath).Hidden(true);
+                        columns.Template(e => { }).ClientTemplate("<input type='checkbox' value='#=ID#' name='chkproduct' onclick='advertiseConfig.UnSelectAll();'/>").Title("<input type='checkbox' onclick='advertiseConfig.SelectAll();' id='selectAll'/>").Width(50);
+                        columns.Template(p => { }).ClientTemplate("<img src='#=ImagePath#' alt='' style='width:80px; height:80px;' />").Width(100).Title("图片");
+                        columns.Bound(p => p.Name).Title("名称");
+                        columns.Bound(p => p.SourceName).Width(80).Title("来源");
+                        columns.Bound(p => p.URL).Width(180).Title("路径");
+                        columns.Template(e => { }).ClientTemplate("<input type='button' class='k-button' onclick='advertiseConfig.IsUpOrder(#=ID#,#=PID#)' value='向上'/><input type='button' class='k-button' onclick='advertiseConfig.LoadPage(\"Advertise/ModifiyConfig\", #=ID#)' value='修改' style='margin-bottom:3px;'/><input type='button' class='k-button' onclick='advertiseConfig.RemoveRecord(#=ID#,#=filter#,#=isParent#)' value='删除'/>").Title("<span style=\"margin-left:35px;\">操作</span>").Width(100);
+                    })
+                    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                    .Pageable()
+                    .Scrollable()
+                    .HtmlAttributes(new { style = "height:425px;" })
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Model(model => model.Id(m => m.ID))
+                        .PageSize(8)
+                        .Read(read => read.Action("GetNodeByPId", "Advertise").Data("getHdParent"))
+                        .Create(create => create.Action("EditingCustom_Create", "Grid"))
+                        .Update(update => update.Action("UpdateConfig", "Advertise"))
+                    )
+                )
+            </div>
+        </div>
+        <div id="advertiseEdit">
+        </div>
+    </div>
+</div>
+<div style="display: none">
+    @(Html.Kendo().Window().Name("ShowUpdateWindow").Title("选择产品").Width(430).Height(300).Content(@<text>选择产品</text>))
+</div>

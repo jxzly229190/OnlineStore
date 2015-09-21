@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "AddLP";
+}
+<link href="../../Content/Uploader/ImagePreview.css" rel="stylesheet" type="text/css" />
+<script src="../../Content/Uploader/CJL.0.1.min.js" type="text/javascript"></script>
+<script src="../../Content/Uploader/QuickUpload.js" type="text/javascript"></script>
+<script src="../../Content/Uploader/ImagePreview.js" type="text/javascript"></script>
+<script src="../../Content/Uploader/ImagePreviewEx.js" type="text/javascript"></script>
+<script src="../../Content/jsColor/jscolor.js" type="text/javascript"></script>
+<style type="text/css">
+    .form
+    {
+        padding: 15px;
+        margin: 12px;
+    }
+    .form .form_head td
+    {
+        line-height: 36px;
+    }
+    .form .form_item td
+    {
+        height: 36px;
+    }
+    .form #advertisDescription
+    {
+        width: 420px;
+        height: 120px;
+        border: 1px solid #ccc;
+    }
+    .form .perview
+    {
+        width: 420px !important;
+        margin: 6px 0;
+    }
+    .form .k-textbox
+    {
+        width: 210px !important;
+    }
+    .form .form_item td
+    {
+        height: 36px;
+    }
+    .form .perview
+    {
+        width: 445px !important;
+        margin: 6px 0;
+    }
+    .form .k-textbox
+    {
+        width: 445px !important;
+    }
+    .form .k-button
+    {
+        margin-left: 6px;
+    }
+    
+    #lpTree
+    {
+        height: 320px;
+        width: 300px;
+        overflow: auto;
+    }
+    .ztreeBar
+    {
+        float: right;
+        width: 120px;
+    }
+</style>
+<div id="lpContent">
+    <table class="form">
+        <thead class="form_head">
+            <tr>
+                <td style="width: 100px;">
+                </td>
+                <td>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <input type="hidden" id="advertiseIndexID" />
+            <input type="hidden" id="advertiseWebSiteUrl" value="@Html.Raw(System.Configuration.ConfigurationManager.AppSettings["WebSiteUrl"].ToString())"/>
+            <tr class="form_item">
+                <td>
+                    名称：
+                </td>
+                <td>
+                    <input type="text" class="k-textbox" id="advertiseName" />
+                </td>
+            </tr>
+            <tr class="form_item">
+                <td>
+                    来源：
+                </td>
+                <td>
+                    <input type="text" class="k-dropdown" id="dropdownlistSource" /><a id="pro_ID" target="_blank"></a>
+                </td>
+            </tr>
+            <tr class="form_item">
+                <td>
+                    地址：
+                </td>
+                <td>
+                    <input type="text" class="k-textbox" id="advertiseUrl" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    图片上传：
+                </td>
+                <td>
+                    <table class="perview">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tbody id="idPicList">
+                                        <tr>
+                                            <td align="center" class="pic" cid="imgMaster">
+                                                <div id="imgMaster">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height: 36px;">
+                <td>
+                    属性：
+                </td>
+                <td>
+                    宽：@(Html.Kendo().IntegerTextBox().Name("advertiseWidth").Value(0).HtmlAttributes(new { @style = "width: 100px;", @id = "advertiseWidth" }))
+                    高：@(Html.Kendo().IntegerTextBox().Name("advertiseHeight").Value(0).HtmlAttributes(new { @style = "width: 100px;", @id = "advertiseHeight" }))
+                    背景颜色：<input type="text" class="k-textbox color {hash:true}" id="advertiseBackgroundColor"
+                        value="#ffffff" style="width: 100px !important;" />
+                </td>
+            </tr>
+            <tr class="form_item">
+                <td>
+                    描述：
+                </td>
+                <td>
+                    <input type="text" class="k-textbox" id="advertiseDescription" />
+                </td>
+            </tr>
+            <tr class="form_item">
+                <td>
+                    设置：
+                </td>
+                <td>
+                    <input type="checkbox" id="MenuSetting" />目录节点，<input type="checkbox" id="filter" />不可删除节点
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                </td>
+                <td style="text-align: right;">
+                    <input type="button" value="返回" class="k-button" id="comeback" onclick="advertiseConfig.LoadTable()" /><input
+                        type="button" class="k-button" id="btnSureAdvertiseConfig" value="保存" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div id="undolp" style="display: none">
+        @(Html.Kendo().Window().Name("selectLpWindow").Title("选 择LP").Width(330).Content(@<text>
+        <ul id="lpTree" class="ztree">
+        </ul>
+        <div class="ztreeBar">
+            <input type="button" class="k-button" value="确定" id="btnSureLp" /><input type="button"
+                class="k-button" value="取消" id="btnCancelLp" /></div>
+        </text>).Animation(p => p.Open(o => o.Expand())).Modal(true))
+    </div>
+    <div style="display: none">
+        @(Html.Kendo().Window().Name("SelectProduct").Title("选择产品").Width(830).Content(@<text>选择产品</text>).LoadContentFrom("SelectProduct", "Advertise").Draggable().Resizable())
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        jscolor.init();
+        advertiseLp.Init();
+        ImagePreviewEx.Init({ img: ["imgMaster"], type: "1" });
+    });
+</script>

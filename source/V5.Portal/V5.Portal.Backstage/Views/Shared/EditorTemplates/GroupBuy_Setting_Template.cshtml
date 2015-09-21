@@ -1,0 +1,95 @@
+﻿@model V5.Portal.Backstage.Models.Product.ProductModel
+<table><tr><td>
+               
+           </td></tr></table>
+<div>
+    @Html.HiddenFor(model => model.ID)
+    <div>
+    </div>
+    <div class="editor-label">
+        活动名称：
+    </div>
+    <div class="editor-field">
+        @Html.TextBox("GroupName")
+    </div>
+    <div class="editor-label">
+        开始时间：
+    </div>
+    <div class="editor-field">
+        @(Html.Kendo().DatePicker().Name("StartTime"))
+    </div>
+    <div class="editor-label">
+        结束时间：
+    </div>
+    <div class="editor-field">
+        @(Html.Kendo().DatePicker().Name("EndTime"))
+    </div>
+    <div class="editor-label">
+        最低会员限制：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().DropDownList().Name("userlevelID").OptionLabel("全部会员").BindTo(new List<SelectListItem>() { new SelectListItem() { Text = "普通会员", Value = "1" }, new SelectListItem() { Text = "铜牌会员", Value = "2" }, new SelectListItem() { Text = "银牌会员", Value = "3" }, new SelectListItem() { Text = "金牌会员", Value = "4" }, new SelectListItem() { Text = "VIP", Value = "5" } })
+    </div>
+    <div class="editor-label">
+        活动备注：
+    </div>
+    <div class="editor-field">
+        @Html.TextBox("beizhu")
+    </div>
+    <div class="editor-label">
+        数量：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().NumericTextBox().Name("TotalNumber").Min(0)
+    </div>
+    <div class="editor-label">
+        团购价格：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().NumericTextBox().Name("GBPrice").Min(0)
+    </div>
+    <div class="editor-label">
+        虚拟价格：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().NumericTextBox().Name("OfReality").Min(0)
+    </div>
+    <div class="editor-label">
+        真实价格：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().NumericTextBox().Name("OfVirtual").Min(0)
+    </div>
+    <div class="editor-label">
+        商品浏览数量：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().NumericTextBox().Name("PageView").Min(0)
+    </div>
+    <div class="editor-label">
+        显示级别：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().DropDownList().Name("ShowLevel").Events(e => e.Change("change")).DataTextField("Text").DataValueField("Value").BindTo(new List<SelectListItem>() { new SelectListItem() { Text = "第一级别", Value = "1" }, new SelectListItem() { Text = "第二级别", Value = "2" }, new SelectListItem() { Text = "第三级别", Value = "3" } })
+        <div id="cap" style="height: 60px; width: 150px; border: 1px solid red">
+            请选择图片分辨率1280*720;
+        </div>
+    </div>
+    <div class="editor-label">
+        上传图片：
+    </div>
+    <div class="editor-field">
+        @Html.Kendo().Upload().Name("pictureUpload").Events(p => p.Success("onSuccess").Upload("onLoad")).Async(a =>
+            {
+                a.Save("UploadPicture", "Channel");
+                a.Remove("RemovePicture", "Channel");
+                a.AutoUpload(false);
+            })
+    </div>
+    <div class="editor-field">
+        <input type="checkbox" id="chkIsTime" name="chkIsTime" />
+        是否显示时间
+        <input type="checkbox" id="chkBuyOne" name="chkBuyOne" />限购一个
+        <input type="checkbox" id="chkPayOnline" name="chkPayOnline" />仅限在线支付
+    </div>
+</div>

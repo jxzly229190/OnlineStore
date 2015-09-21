@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3CEAB9B8-873B-4215-AF37-8DDAB50DC3C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.DataContract.Promote</RootNamespace>
+    <AssemblyName>V5.DataContract.Promote</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Coupon_Cash_Binding.cs" />
+    <Compile Include="Coupon_Decrease_Binding.cs" />
+    <Compile Include="Coupon_Query.cs" />
+    <Compile Include="Coupon_Scope.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount_Rule.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount_Rule_Brand.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount_Rule_Category.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount_Rule_Full.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount_Rule_Product.cs" />
+    <Compile Include="MeetAmount\Promote_MeetAmount_Scope.cs" />
+    <Compile Include="MeetAmount\Promote_Meet_Discount.cs" />
+    <Compile Include="MeetMoney\Promote_MeetMoney_Scope.cs" />
+    <Compile Include="MeetMoney\Promote_Meet_DecreaseCash.cs" />
+    <Compile Include="MeetMoney\Promote_Meet_GiveCoupon.cs" />
+    <Compile Include="MeetMoney\Promote_Meet_GiveGift.cs" />
+    <Compile Include="MeetMoney\Promote_Meet_GiveIntegral.cs" />
+    <Compile Include="Promote_LandingPage.cs" />
+    <Compile Include="Promote_Limited_Discount.cs" />
+    <Compile Include="MeetMoney\Promote_MeetMoney.cs" />
+    <Compile Include="MeetMoney\Promote_MeetMoney_Rule.cs" />
+    <Compile Include="Promote_MuchBottled.cs" />
+    <Compile Include="Promote_MuchBottled_Rule.cs" />
+    <Compile Include="Promote_Vip.cs" />
+    <Compile Include="Promote_Vip_Scope.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Coupon_Cash.cs" />
+    <Compile Include="Coupon_Decrease.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

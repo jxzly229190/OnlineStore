@@ -1,0 +1,30 @@
+﻿.html,body{ background-color:#f2f2f2; }
+.container{width:910px; margin:120px auto 0px;}
+.shadow{-webkit-box-shadow: 1px 1px 3px 1px #ccc; -moz-box-shadow: 1px 1px 3px 1px #ccc; -ms-box-shadow: 1px 1px 3px 1px #ccc; -o-box-shadow: 1px 1px 3px 1px #ccc; box-shadow: 1px 1px 3px 1px #ccc;}
+.logo{height:50px; background:url(../images/login_logo.jpg) left center no-repeat;}
+.main{padding:3px; margin:10px 0px 0px; height:375px; background:#fff url(../images/login_adv.jpg) left center no-repeat; clear:both;}
+.login{float:right; width:300px; padding:15px 40px 25px 40px;}
+.login li{margin:8px 0px; position:relative;}  
+.login .cur{border-color:#aaa !important;}      
+.login label{display:block; line-height:24px; font-size:12px; color:#666; letter-spacing:1px;}
+.login .txt{height:36px; width:300px; border:1px solid #dedede; text-indent:40px;} 
+.login .uname #uname { background:url(../images/login_uname.jpg) 8px center no-repeat; letter-spacing:1px; color:#999;}
+.login .upwd #upwd { background:url(../images/login_upwd.jpg) 8px center no-repeat; letter-spacing:1px; color:#999;}
+.login .validate .txt{height:28px; width:100px; border:1px solid #dedede; text-indent:10px;}
+.login .validate img{width:113px; height:27px; position:relative; top:8px;}
+.login .validate a{color:#005AA0;}
+.login .auto label{padding-left:5px; display:inline-block !important; font-size:12px !important;}
+.login .auto a{position:absolute; right:0; color:#666;}
+.login .button{line-height:36px; margin:12px 0px;}
+.login .button input{background:url(../images/login.png) -2px -2px no-repeat; width:285px; height:38px; border:none; cursor:pointer; display:block; margin:0 auto;}            
+.foot {text-align:center; line-height:21px; color:#6c6c6c; letter-spacing:1px;}
+.foot a{ text-decoration:none; color:#6c6c6c; padding:0px 6px; display:inline-block;}
+.other a{ text-decoration:none; color:#6c6c6c; padding: 0 20px 0 20px; display:inline-block; line-height: 28px; margin-right: 4px; background: url(../images/other_login.png) no-repeat;}
+.other .a_taobao{background-position: 0 -56px; }
+.other .a_qq{background-position: 0 -32px;}
+.other .a_sina{background-position: 0 -7px;}
+.other .a_163{background-position: 0 -83px;}
+.other .a_kaixin{background-position: 0 -99px;}
+.other .a_renren{background-position: 0 -121px;}
+.register {position:relative; margin-bottom:25px; height:40px;}
+.register a{ display:inline-block; position:absolute; right:30px; top:0px; width:103px; height:40px; background:url(../images/login.png) -1px -42px no-repeat;}

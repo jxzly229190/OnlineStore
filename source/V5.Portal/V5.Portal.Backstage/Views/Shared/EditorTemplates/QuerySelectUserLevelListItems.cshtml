@@ -1,0 +1,7 @@
+﻿@model List<SelectListItem>
+
+@foreach (var item in Model)
+{
+    <input type="checkbox" name="ck_level" value="@item.Value" title="@item.Text" />
+    @item.Text
+}

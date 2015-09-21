@@ -1,0 +1,51 @@
+﻿@using V5.Portal.Common
+@model V5.DataContract.Transact.ShoppingCart.Order_Bill
+@{
+    Layout = "../Shared/_OrderLayout.cshtml";
+    ViewBag.Title = "购物车";
+    var total = 0.00;
+    var count = 0;
+}
+
+<script src="../../Scripts/Order/cmValidator.js" type="text/javascript"></script>
+<script src="../../Scripts/Order/cart.js" type="text/javascript"></script>
+<div class="cart">
+    <h2><b>我的购物车</b> <span>单笔订单满100元免运费（香港、澳门、台湾、钓鱼岛地区和拆分订单除外）</span></h2>
+    <div class="cart-inner">
+        <div class="cart-thead clearfix">
+            <div class="column t-checkbox form"><input autocomplete="off" id="toggle-checkboxes" type="checkbox" class="toggle-checkboxes checkbox" checked="" value=""><label for="toggle-checkboxes">全选</label></div>
+            <div class="column t-goods">商品</div>
+            <div class="column t-price">单价</div>
+            <div class="column t-promotion">优惠</div>
+            
+            <div class="column t-quantity">数量</div>
+            <div class="column t-subtotal">小计</div>
+            <div class="column t-action">操作</div>
+        </div>
+        <div class="cart-tbody" id="cartbody">
+            @{
+                    if (Model != null)
+                    {
+                        Html.RenderPartial("CartProduct", Model);
+                    }
+                }
+        </div>
+    </div>
+    <div class="cart-button clearfix">
+        <a class="btn continue" href="javascript:Back();"><span class="btn-text">继续购物</span></a>
+        <a class="checkout" href="javascript:;" id="toSettlement"><b></b></a>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="jiagou">
+	<h4><b class="on" name="jiagou">加价购</b></h4>
+    <div class="jg-cont">
+    	@Html.Action("Trinket","Cart",new{count=5})
+    </div>
+</div>
+<div class="jiagou">
+    <h4><b class="on" name="jiagou">猜您喜欢</b></h4>
+    <div class="jg-cont">
+        @Html.Action("Trinket","Cart",new{count=5})
+    </div>
+</div>

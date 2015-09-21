@@ -1,0 +1,5 @@
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.DataContract.Channel.dll
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.DataContract.Channel.pdb
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Channel\obj\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Channel\obj\Debug\V5.DataContract.Channel.dll
+F:\GJW_V5\source\V5.DataContract\V5.DataContract.Channel\obj\Debug\V5.DataContract.Channel.pdb

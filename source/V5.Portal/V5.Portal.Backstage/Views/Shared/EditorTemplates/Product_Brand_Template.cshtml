@@ -1,0 +1,51 @@
+﻿@model V5.Portal.Backstage.Models.Product.ProductBrandModel
+@Html.HiddenFor(model => model.ID)
+<div class="editor-label">
+    品牌名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.BrandName)
+    @Html.ValidationMessageFor(model => model.BrandName)
+</div>
+<div class="editor-label">
+    品牌名称拼音：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.BrandNameSpell)
+    @Html.ValidationMessageFor(model => model.BrandNameSpell)
+</div>
+<div class="editor-label">
+    品牌名称英文：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.BrandNameEnglish)
+    @Html.ValidationMessageFor(model => model.BrandNameEnglish)
+</div>
+<div class="editor-label">
+    排序：
+</div>
+<div class="editor-field">
+    @Html.Kendo().IntegerTextBoxFor(model => model.Sorting)
+    @Html.ValidationMessageFor(model => model.Sorting)
+</div>
+<div class="editor-label">
+    SEO 关键字：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.SEOKeywords)
+    @Html.ValidationMessageFor(model => model.SEOKeywords)
+</div>
+<div class="editor-label">
+    SEO 标题：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.SEOTitle)
+    @Html.ValidationMessageFor(model => model.SEOTitle)
+</div>
+<div class="editor-label">
+    SEO 描述：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.SEODescription)
+    @Html.ValidationMessageFor(model => model.SEODescription)
+</div>

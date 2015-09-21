@@ -1,0 +1,108 @@
+﻿@using V5.Portal.Backstage.Models.User
+@using V5.Portal.Backstage.Utils
+@model UserMessageEmailModel
+@Scripts.Render("~/Content/ckeditor/ckeditor.js")
+@Scripts.Render("~/Scripts/User/Email.js")
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+<div class="k-overlay" style="display: none; z-index: 10002; opacity: 0.5;"></div>
+@(Html.Kendo().Grid<UserMessageEmailModel>()
+    .Name("EmailGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.Name).Title("名称").Width(150);
+        columns.Bound(u => u.Title).Title("主题").Width(150);
+        columns.Bound(u => u.StatusName).Title("状态").Width(60);
+        columns.Bound(u => u.CreateTime).Title("创建时间").Format("{0:yyyy-MM-dd HH:mm:ss}").Width(150);
+        columns.Bound(u => u.Status).Title("操作").ClientTemplate(
+            "<input type='button' class='k-button k-grid-edit' name='#= ID#' value='编辑' onclick='OpenModifyEmailWindow(this)' style='" + permissionObj.GetDisplayAttribute("ModifyMessageEmail", "User", "post")["style"] + "'/>&nbsp;" +
+            "<input type='button' class='k-button k-grid-delete' name='#= ID#' value='删除' onclick='deleteEmail(this)' style='" + permissionObj.GetDisplayAttribute("RemoveEmail", "User", "post")["style"] + "'/>&nbsp;"
+            ).Width(150).Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(toolbar => toolbar.Template("<a class='k-button' onclick='OpenAddEmail()' style='" + permissionObj.GetDisplayAttribute("AddMessageEmail", "User", "POST", false)["style"] + "'>添加电子邮件</a>"))
+    .Pageable()
+    .Scrollable()
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Read(read => read.Action("QueryMessageEmail", "User"))
+    )
+)
+<div style="display: none">
+    @(Html.Kendo().Window()
+          .Name("editorEmailWindow")
+          .Title("编辑邮件")
+          .Content(@<text>
+                        <div>
+                            <div class="editor-label">
+                                名称：
+                            </div>
+                            <div class="editor-field">
+                                <input  id="emailID" type="hidden"/>
+                                <input id="emailName" type="text" class="k-textbox " value=""/>
+                            </div>
+
+                            <div class="editor-label">
+                                主题：
+                            </div>
+                            <div class="editor-field">
+                                <input id="emailTitle" type="text" class="k-textbox" value=""/>
+                            </div>
+
+                            <div class="editor-label">
+                                内容：
+                            </div>
+                            <div class="editor-field">
+                                <script type="text/javascript">
+                                    CKEDITOR.replace('Content')
+                                </script>
+                                <input id="Content" type="text" class="k-textbox" value=""/>
+                            </div>
+
+                            <div class="editor-label">
+                                状态：
+                            </div>
+                            <div class="editor-field">
+                                @Html.Kendo().DropDownList().Name("emailStatus").BindTo(new List<SelectListItem>() {
+                                                                                                                  new SelectListItem() {
+                                                                                                                                           Text = "正常",
+                                                                                                                                           Value = "0"
+                                                                                                                                       },
+                                                                                                                  new SelectListItem() {
+                                                                                                                                           Text = "停止",
+                                                                                                                                           Value = "1"
+                                                                                                                                       }
+                                                                                                              })
+                            </div>
+                        </div>
+                        <hr style="color:gainsboro"/>
+                        <div style="text-align: right">
+                            <div id="AddBtnDiv">
+                                <input type="button" class="k-button" value="确定" onclick="ConfirmAddEmail()"/>
+                            </div>
+                            <div id="UpdateBtnDiv" style="display: none">
+                                <input type="button" class="k-button" value="更改" onclick="ConfirmUpdateEmail()"/>
+                            </div>
+                            <input type="button" class="k-button" value="取消" onclick="CloseEditorEmail()"/>  
+                        </div>
+                  
+                    </text>)
+          .Draggable()
+          .Resizable()
+          .Width(1000)
+          .Events(e => e.Close("CloseEditorWindow"))
+          .Actions(actions => actions.Close())
+          )
+</div>
+<style type="text/css">
+    .k-edit-form-container{ width: 100%;}
+    .k-edit-label, .k-edit-form-container .editor-label {width: 5%;}
+    .k-edit-field, .k-edit-form-container .editor-field {width: 91%;}
+</style>
+                                                                                                                                                        
+                                                                                                                                                         

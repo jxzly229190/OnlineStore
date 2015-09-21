@@ -1,0 +1,358 @@
+﻿@using V5.Portal.Backstage.Controllers.Home
+@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var productDown = permissionObj.GetDisplayAttributeInfo("Product.DownShelf.Post");
+    var productModify = permissionObj.GetDisplayAttributeInfo("Product.Modify.Get");
+    var productLimitArea = permissionObj.GetDisplayAttributeInfo("Product.GetLimitedBuyArea.Get");
+    var hidden = permissionObj.Hidden ? "style=\"display:none\"" : "";
+    var productDownBatch = permissionObj.GetDisplayAttributeInfo("Product.DownShelf.Post", false);
+    var productLimitAreaBatch = permissionObj.GetDisplayAttributeInfo("Product.GetLimitedBuyArea.Get", false);
+    var siteUrl = new HomeController().GetSiteUrl();
+}
+<script src="../../Scripts/Backstage/Product/Backstage.Product.LimitedBuyArea.js"
+    type="text/javascript"></script>
+@{
+    Layout = null;
+}
+<div id="OnSaleDiv" style="font-size: 14px;">
+    <div id="SearchDiv">
+        <div style="height: 35px;">
+            <span>商品类别：</span> <span>
+                @(Html.Kendo().DropDownList().Name("ParentCategory").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value").HtmlAttributes(new { @style = "width: 100px;" }))
+                @(Html.Kendo().DropDownList().Name("ProductCategory").DataSource(source => source.Read(read => read.Action("QuerySubCategorySelectListItems", "Product").Data("GetParentCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategory").HtmlAttributes(new { @style = "width: 100px;" }))
+                @(Html.Kendo().DropDownList().Name("ParentBrand").DataSource(source => source.Read(read => read.Action("QueryBrandSelectListItems", "Product").Data("GetProductCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ProductCategory").HtmlAttributes(new { @style = "width: 100px;" }))
+                @(Html.Kendo().DropDownList().Name("ProductBrand").DataSource(source => source.Read(read => read.Action("QuerySubBrandSelectListItems", "Product").Data("GetParentBrandID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentBrand").HtmlAttributes(new { @style = "width: 100px;" }))
+            </span><span style="padding-left: 30px;">商品名称：</span> <span>
+                <input type="text" id="ProductName" name="ProductName" class="k-textbox" style="width: 330px;" />
+                <input type="button" class="k-button" style="width: 60px; padding-left: 10px;" id="OnSaleSearchBtn"
+                    onclick="SearchOnSaleProduct()" value="查 询" />
+            </span>
+        </div>
+        <div style="height: 25px;">
+            <span>价格区间：</span> <span>
+                @(Html.Kendo().NumericTextBox().Name("MinPrice").Min(0).HtmlAttributes(new { style = "width:195px" }))
+                至
+                @(Html.Kendo().NumericTextBox().Name("MaxPrice").Min(0).HtmlAttributes(new { style = "width:195px" }))
+            </span><span style="padding-left: 30px;">条形编码：</span> <span>
+                <input type="text" id="Barcode" name="Barcode" class="k-textbox" style="width: 330px;" />
+                <input type="button" class="k-button" style="width: 60px; padding-left: 10px;" id="OnSaleResetBtn"
+                    value="重 置" />
+            </span>
+        </div>
+    </div>
+    <br />
+    <div id="GridDiv">
+        @(Html.Kendo().Grid<ProductSearchResultModel>()
+              .Name("ProductOnSaleGrid")
+              .Columns(columns =>
+              {
+                  columns.Template(e => { }).ClientTemplate(" ").Width(20);
+                  columns.Template(e => { }).ClientTemplate(" ").Title("商品名称").Width(150);
+                  columns.Bound(p => p.Barcode).Title("条形码").Width(90);
+                  columns.Bound(p => p.GoujiuPrice).Title("价格").Width(50);
+                  columns.Bound(p => p.InventoryNumber).Title("库存").Width(50);
+                  columns.Bound(p => p.InventoryNumber).Title("状态").Width(50);
+                  columns.Bound(p => p.ID).Width(160).Title("操作").Hidden(permissionObj.Hidden);
+              })
+              .ToolBar(toolbar =>
+              {
+                  toolbar.Template("<div>" +
+                                   "    <input type='checkbox' name='SelectAll' id='SelectAll' style='width: 20px; height: 25px; '/>" +
+                                   "    <input type='button' class='k-button' value='批量下架' style='margin-top: -16px; " + productDownBatch + "' onclick='ProductDownShelfBatch()' />" +
+                                   "    <input type='button' class='k-button' value='批量设置限购区域' style='margin-top: -16px; " + productLimitAreaBatch + "' onclick='limitedBuyAreaBtnClick()'  />" +
+                                   "</div>");
+                  toolbar.Template("<div><input type='checkbox' name='SelectAll' id='SelectAll' style='width: 20px; height: 25px; '/>"
+                                   + "<input type='button' class='k-button' value='批量下架' style='margin-top: -16px; " + permissionObj.GetDisplayAttributeInfo("Product.DownShelf.Post", false) + "' onclick='ProductDownShelfBatch()' />"
+                                   + "<input type='button' class='k-button' value='批量设置限购区域' style='margin-top: -16px; " + permissionObj.GetDisplayAttributeInfo("Product.GetLimitedBuyArea.Get", false) + "' onclick='limitedBuyAreaBtnClick()'  />"
+                                   + "</div>"
+                      );
+              })
+              .ClientRowTemplate("<tr>" +
+                                 "<td>" +
+                                 "<input type='checkbox' style='top: 30px;' name='productCheckBox' onchange='ProductCheckBoxChanged()' value='#:ID#' />" +
+                                 "</td>" +
+                                 "<td>" +
+                                 "<div style='font-size: 13px;'>" +
+                                 "<a href=\"" + siteUrl + "/Product/Item-id-#=ID#.htm\" target=\"_blank\" title=#=Name# target=\"_blank\" imgSrc='#:Path#' class='imgLink'>#=Name#</a>" +
+                                 "</div>" +
+                                 "</td>" +
+                                 "<td>" +
+                                 "<strong>#:Barcode#</strong>" +
+                                 "</td>" +
+                                 "<td>" +
+                                 "#:GoujiuPrice#" +
+                                 "</td>" +
+                                 "<td>" +
+                                 "#:InventoryNumber#" +
+                                 "</td>" +
+                                 "<td>" +
+                                 "#:StatusName#" +
+                                 "</td>" +
+                                 "<td " + hidden + ">" +
+                                 "<div>" +
+                                 "<input type='button' class='k-button' name='#:ID#' onclick='ProductDownShelf(this)' value='下架' style='" + productDown + "'/>" +
+                                 "<input type='button' class='k-button' name='#:ID#' onclick='ModifyProduct(this)' value='修改' style='" + productModify + "'/>" +
+                                 "<input type='button' class='k-button' name='#:ID#' onclick='limitedBuyAreaBtnClick(#:ID#)' value='限购区域' style='" + productLimitArea + "'/>" +
+                                 "</div>" +
+                                 "</td>" +
+                                 "</tr>")
+              .ClientAltRowTemplate("<tr class='k-alt'>" +
+                                    "<td>" +
+                                    "<input type='checkbox' style='top: 30px;' name='productCheckBox' onchange='ProductCheckBoxChanged()' value='#:ID#' />" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "<div style='font-size: 13px;'>" +
+                                    "<a href=\"" + siteUrl + "/Product/Item-id-#=ID#.htm\" target=\"_blank\" title=#=Name# target=\"_blank\" imgSrc='#:Path#' class='imgLink'>#=Name#</a>" +
+                                    "</div>" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "<strong>#:Barcode#</strong>" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "#:GoujiuPrice#" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "#:InventoryNumber#" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "#:StatusName#" +
+                                    "</td>" +
+                                    "<td " + hidden + ">" +
+                                    "<div >" +
+                                    "<input type='button' class='k-button' name='#:ID#' onclick='ProductDownShelf(this)' value='下架' style='" + productDown + "'/>" +
+                                    "<input type='button' class='k-button' name='#:ID#' onclick='ModifyProduct(this)' value='修改' style='" + productModify + "'/>" +
+                                    "<input type='button' class='k-button' name='#:ID#' onclick='limitedBuyAreaBtnClick(#:ID#)' value='限购区域' style='" + productLimitArea + "'/>" +
+                                    "</div>" +
+                                    "</td>" +
+                                    "</tr>")
+              .Pageable()
+              .Scrollable()
+              .HtmlAttributes(new { style = "height:505px;" })
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(10)
+                  .Model(model => model.Id(p => p.ID))
+                  .Create(update => update.Action("Add", "Product"))
+                  .Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData"))
+                  .Update(update => update.Action("Modify", "Product"))
+                  .Destroy(update => update.Action("Remove", "Product"))
+              ))
+    </div>
+</div>
+<div style="display: none">
+    @(Html.Kendo().Window()
+          .Name("limitedBuyAreaWindow")
+          .Title("限购区域")
+          .Width(640)
+          .Height(380)
+          .Content(@<text>
+    <div id="limitedBuyAreaWindowDiv" style="margin-top: -10px;">
+    </div>
+    <input type="hidden" id="hdproductlimitId" value="" />
+    <div>
+        <input type="button" class="k-button" id="savelimitedArea" value="保存" style="width: 100px;
+            margin-left: 200px;" />
+        <input type="button" class="k-button" id="btnCancel" value="取消" style="width: 100px;" />
+    </div>
+    </text>)
+          .Resizable()
+          .Draggable()
+          .Events(e => e.Close("closeCustomWindow"))
+          .Actions(actions => actions.Pin().Minimize().Maximize().Close()))
+</div>
+<script type="text/javascript">
+    $(function () {
+        var onSaleGrid = $("#ProductOnSaleGrid").data("kendoGrid");
+        onSaleGrid.dataSource.bind("change", showProductImg);
+
+        $("#SelectAll").click(
+            function () {
+                if (this.checked) {
+                    $("#SelectAll").attr("checked", "checked");
+                    $("input[name='productCheckBox']").each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $("#SelectAll").attr("checked", null);
+                    $("input[name='productCheckBox']").each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+    });
+    $("#btnCancel").click(function () {
+        var dialog = $("#limitedBuyAreaWindow").data("kendoWindow");
+        dialog.close();
+    });
+
+    function limitedBuyAreaBtnClick(id) {
+        $("#hdproductlimitId").val(id);
+        $.get(
+            "/Product/LimitedBuyArea",
+            null,
+            function call(data) {
+                $("#limitedBuyAreaWindowDiv").html(data);
+            },
+            "text"
+        );
+        $.get("/Product/LoadLimitedArea?productId=" + id + "", function (res) {
+            setTimeout(function () {
+                var data = eval(res);
+                areaPrice.setLimitedArea(data);
+            }, 500);
+
+        });
+        $("#limitedBuyAreaWindow").data("kendoWindow").open();
+        $("#limitedBuyAreaWindow").data("kendoWindow").center();
+        $(".k-overlay").css('display', 'block');
+    }
+
+
+    function ProductCheckBoxChanged() {
+        var checkboxes = $("input[name='productCheckBox']:checked");
+        var selectAll = document.getElementById("SelectAll");
+        if (checkboxes.length == $("input[name='productCheckBox']").length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+    function showProductImg() {
+        return;
+        $(".imgLink").mouseover(function () {
+            var imgSrc = $(this).attr("imgSrc") || "";
+            if (imgSrc != "") {
+                var img = document.createElement("img");
+                img.className = "imgPreview";
+                img.style.left = $(this).offset().left + $(this).width() + 5 + "px";
+                img.style.top = $(this).offset().top + 5 + "px";
+                img.style.opacity = 0.3;
+
+                var imgId = "img_" + new Date().getUTCMilliseconds();
+                img.id = imgId;
+                img.src = imgSrc;
+
+                document.body.appendChild(img);
+
+                $(this).attr("imgId", imgId);
+            }
+        });
+
+        $(".imgLink").mouseout(function () {
+            var imgId = $(this).attr("imgId");
+            if (imgId && imgId != "") {
+                document.body.removeChild(document.getElementById(imgId));
+            }
+        });
+    }
+
+    function SearchOnSaleProduct() {
+        var filter = new Array();
+        var grid = $("#ProductOnSaleGrid").data("kendoGrid");
+        grid.dataSource.filter(filter);
+        return true;
+    }
+
+    function ModifyProduct(e) {
+        $.ajax({
+            type: "GET",
+            url: "/Product/Modify",
+            data: { productID: e.name },
+            datatype: "html",
+            success: function (data) {
+                $('.right-box').html(data);
+                return true;
+            },
+            error: function () {
+                errorMessage();
+            }
+        });
+    }
+
+    function ProductDownShelf(e) {
+        if (confirm("是否确认下架？")) {
+            $.post("/Product/DownShelf", { "productID": e.name }, function (data) {
+                if (data.State == 1) {
+                    alert("下架成功！");
+
+                    $("#ProductOnSaleGrid").data("kendoGrid").dataSource.read();
+                    $("#ProductOnSaleGrid").data("kendoGrid").dataSource.refresh();
+                } else {
+                    errorMessage();
+                }
+            });
+        }
+    }
+
+    function ProductDownShelfBatch() {
+        if (confirm("是否确认批量下架？批量下架成功后，商品将进入到待售商品中！")) {
+            var productCheckBoxs = $("input[name='productCheckBox']:checked");
+            if (productCheckBoxs.length < 1) {
+                alert("请选择商品后，再进行操作！");
+                return;
+            }
+
+            var tag = 0;
+            for (var i = 0; i < productCheckBoxs.length; i++) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/DownShelf",
+                    data: { "productID": productCheckBoxs[i].value },
+                    async: false,
+                    success: function (data) {
+                        if (data.State == 1) {
+                            tag = 1;
+                        } else {
+                            tag = 0;
+                        }
+                    }
+                });
+            }
+
+            if (tag == 1) {
+                alert("批量下架成功！");
+
+                $("#ProductOnSaleGrid").data("kendoGrid").dataSource.read();
+                $("#ProductOnSaleGrid").data("kendoGrid").dataSource.refresh();
+            }
+            else if (tag == 0) {
+                errorMessage();
+            }
+        }
+    }
+
+    function StartChange() {
+        var endPicker = $("#EndTime").data("kendoDateTimePicker"),
+            startDate = this.value();
+
+        if (startDate) {
+            startDate = new Date(startDate);
+            startDate.setDate(startDate.getDate() + 1);
+            endPicker.min(startDate);
+        }
+    }
+
+    function EndChange() {
+        var startPicker = $("#StartTime").data("kendoDateTimePicker"),
+            endDate = this.value();
+
+        if (endDate) {
+            endDate = new Date(endDate);
+            endDate.setDate(endDate.getDate() - 1);
+            startPicker.max(endDate);
+        }
+    }
+
+</script>
+<style type="text/css">
+    .imgPreview
+    {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        border: 1px solid #ccc;
+    }
+</style>

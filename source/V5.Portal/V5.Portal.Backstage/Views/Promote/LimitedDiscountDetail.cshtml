@@ -1,0 +1,61 @@
+﻿@using V5.Portal.Backstage.Models.Promote
+@model PromoteLimitedDiscountModel
+
+@Html.HiddenFor(l => l.ID)
+@Html.HiddenFor(l => l.ProductID)
+<table>
+    <tr>
+        <td>活动名称：</td>
+        <td>@Html.DisplayFor(l => l.Name)</td>
+    </tr>
+    <tr>
+        <td>活动时间：</td>
+        <td>
+            @Html.DisplayFor(l => l.StartTime)
+            至
+            @Html.DisplayFor(l => l.StartTime)
+        </td>
+    </tr>
+    <tr>
+        <td>活动状态：</td>
+        <td>@switch (@Model.Status)
+            {
+                case 1:
+                    <span>正常</span>
+                    break;
+                case 2:
+                    <span>暂停</span>
+                    break;
+                case 3:
+                    <span>停止</span>
+                    break;
+            }
+            </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td>商品名称：</td>
+        <td>@Html.DisplayFor(l => l.ProductName)</td>
+    </tr>
+    <tr>
+        <td>购酒网价格：</td>
+        <td>@Html.DisplayFor(l => l.GoujiuPrice)</td>
+    </tr>
+    <tr>
+        <td>折后价：</td> 
+        <td>@Html.DisplayFor(l => l.DiscountPrice)</td>
+    </tr>
+    <tr>
+        <td>限购数量：</td>
+        <td>@Html.DisplayFor(l => l.LimitedBuyQuantity)</td>
+    </tr>
+    <tr>
+        <td>活动库存：</td> 
+        <td>@Html.DisplayFor(l => l.TotalQuantity)</td>
+    </tr>
+    <tr>
+        <td>活动剩余库存：</td>
+        <td>@Html.DisplayFor(l => l.RemainQuantity)</td>
+    </tr>
+</table>

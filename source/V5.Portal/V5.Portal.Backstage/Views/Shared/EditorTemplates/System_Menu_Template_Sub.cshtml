@@ -1,0 +1,23 @@
+﻿@model V5.Portal.Backstage.Models.System.MenuModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    对应权限：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.PermissionID).Name("PermissionID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QuerySubPermissionSelectListItems", "System").Data("GetPermission"))).DataTextField("Name").DataValueField("ID"))
+</div>
+<div class="editor-label">
+    菜单名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    链接地址：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.URL)
+    @Html.ValidationMessageFor(model => model.URL)
+</div>

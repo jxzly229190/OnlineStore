@@ -1,0 +1,2688 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2873E46E-0FDA-452F-8DA8-4C48B6836DCA}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.Portal.Backstage</RootNamespace>
+    <AssemblyName>V5.Portal.Backstage</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.EMPPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\libraries\Interop.EMPPLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\libraries\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>..\..\..\libraries\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\libraries\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="Sms">
+      <HintPath>..\..\..\libraries\Sms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="V5.DataAccess.Channel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\V5.DataAccess.Channel.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.20710.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\DotNetOpenAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\DotNetOpenAuth.OAuth.Consumer.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\DotNetOpenAuth.OAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\DotNetOpenAuth.OpenId.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\Advertise\Advertise.Config.cs" />
+    <Compile Include="Controllers\Advertise\AdvertiseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Channel\Channel.AddGroupBuy.cs" />
+    <Compile Include="Controllers\Channel\Channel.GroupBuylist.cs" />
+    <Compile Include="Controllers\Channel\Channel.Subscibe.cs" />
+    <Compile Include="Controllers\Channel\ChannelController.cs" />
+    <Compile Include="Controllers\Configuration\Config.Delivery.cs" />
+    <Compile Include="Controllers\Configuration\Config.FeedBack.cs" />
+    <Compile Include="Controllers\Configuration\Config.Invoice.cs" />
+    <Compile Include="Controllers\Configuration\Config.Page.cs" />
+    <Compile Include="Controllers\Configuration\Config.Payment.cs" />
+    <Compile Include="Controllers\Configuration\ConfigController.cs" />
+    <Compile Include="Controllers\Home\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\Picture\PictureController.cs" />
+    <Compile Include="Controllers\Product\Product.Attribute.cs" />
+    <Compile Include="Controllers\Product\Product.Brand.cs" />
+    <Compile Include="Controllers\Product\Product.BrandInformation.cs" />
+    <Compile Include="Controllers\Product\Product.Category.cs" />
+    <Compile Include="Controllers\Product\Product.OnSale.cs" />
+    <Compile Include="Controllers\Product\Product.Picture.cs" />
+    <Compile Include="Controllers\Product\Product.Recycled.cs" />
+    <Compile Include="Controllers\Product\Product.SoldOut.cs" />
+    <Compile Include="Controllers\Product\ProductController.cs" />
+    <Compile Include="Controllers\Promote\Promote.Coupon.cs" />
+    <Compile Include="Controllers\Promote\Promote.LandingPage.cs" />
+    <Compile Include="Controllers\Promote\Promote.LimitedDiscount.cs" />
+    <Compile Include="Controllers\Promote\Promote.MeetAmount.cs" />
+    <Compile Include="Controllers\Promote\Promote.MeetMoney.cs" />
+    <Compile Include="Controllers\Promote\Promote.MuchBottled.cs" />
+    <Compile Include="Controllers\Promote\Promote.Vip.cs" />
+    <Compile Include="Controllers\Promote\PromoteController.cs" />
+    <Compile Include="Controllers\System\System.Department.cs" />
+    <Compile Include="Controllers\System\System.Employee.cs" />
+    <Compile Include="Controllers\System\System.Log.cs" />
+    <Compile Include="Controllers\System\System.Menu.cs" />
+    <Compile Include="Controllers\System\system.ModifyPasswd.cs" />
+    <Compile Include="Controllers\System\System.Permission.cs" />
+    <Compile Include="Controllers\System\System.Resources.cs" />
+    <Compile Include="Controllers\System\System.Rights.cs" />
+    <Compile Include="Controllers\System\System.Role.cs" />
+    <Compile Include="Controllers\System\System.Tools.cs" />
+    <Compile Include="Controllers\System\System.User.cs" />
+    <Compile Include="Controllers\System\SystemController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Controllers\Transact\Transact.Order.Add.cs" />
+    <Compile Include="Controllers\Transact\Transact.ProductComment.cs" />
+    <Compile Include="Controllers\Transact\Transact.ProductConsult.cs" />
+    <Compile Include="Controllers\Transact\Transact.Cps.cs" />
+    <Compile Include="Controllers\Transact\TransactController.cs" />
+    <Compile Include="Controllers\User\User.Default.cs" />
+    <Compile Include="Controllers\User\User.Level.cs" />
+    <Compile Include="Controllers\User\User.LevelPrice.cs" />
+    <Compile Include="Controllers\User\User.MessageSms.cs" />
+    <Compile Include="Controllers\User\UserController.cs" />
+    <Compile Include="Controllers\User\User.MessageEmail.cs" />
+    <Compile Include="Controllers\Utility\Utility.Code.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Utility\Utility.Error.cs" />
+    <Compile Include="Controllers\Utility\Utility.SystemVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Utility\UtilityApiController.cs" />
+    <Compile Include="Controllers\Utility\UtilityController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\V5AuthenticationFilterAttribute.cs" />
+    <Compile Include="Filters\V5ExceptionFilterAttribute.cs" />
+    <Compile Include="Models\Advertise\AdvertiseConfigModel.cs" />
+    <Compile Include="Models\Channel\ChannelGroupBuyModel.cs" />
+    <Compile Include="Models\Channel\ViewGroupBuyProductModel.cs" />
+    <Compile Include="Models\Configuration\ConfigDeliveryCorporationModel.cs" />
+    <Compile Include="Models\Configuration\ConfigDeliveryCostModel.cs" />
+    <Compile Include="Models\Configuration\ConfigDeliveryMethodModel.cs" />
+    <Compile Include="Models\Configuration\ConfigInvoiceContentModel.cs" />
+    <Compile Include="Models\Configuration\ConfigInvoiceTypeModel.cs" />
+    <Compile Include="Models\Configuration\ConfigPaymentOrganizationModel.cs" />
+    <Compile Include="Models\Configuration\ConfigPaymentTypeModel.cs" />
+    <Compile Include="Models\Configuration\PaymentMethodModel.cs" />
+    <Compile Include="Models\Login\LoginModel.cs" />
+    <Compile Include="Models\Product\ProductModifyModel.cs" />
+    <Compile Include="Models\Product\PictureCategory.cs" />
+    <Compile Include="Models\Product\PictureModel.cs" />
+    <Compile Include="Models\Product\PicturePreviewModel.cs" />
+    <Compile Include="Models\Product\ProductAttributeModel.cs" />
+    <Compile Include="Models\Product\ProductAttributeValueModel.cs" />
+    <Compile Include="Models\Product\ProductAttributeValueSetModel.cs" />
+    <Compile Include="Models\Product\ProductBrandModel.cs" />
+    <Compile Include="Models\Product\ProductCategoryModel.cs" />
+    <Compile Include="Models\Product\ProductModel.cs" />
+    <Compile Include="Models\Product\ProductPictureModel.cs" />
+    <Compile Include="Models\Product\ProductSearchResultModel.cs" />
+    <Compile Include="Models\Product\ProvinceModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountRuleBrandModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountRuleCategoryModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountRuleFullModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountRuleProductModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountScopeModel.cs" />
+    <Compile Include="Models\Promote\CouponCashBindingModel.cs" />
+    <Compile Include="Models\Promote\CouponCashModel.cs" />
+    <Compile Include="Models\Promote\CouponDecreaseBindingModel.cs" />
+    <Compile Include="Models\Promote\CouponDecreaseModel.cs" />
+    <Compile Include="Models\Promote\CouponScopeModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountRuleModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetDiscountModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetDecreaseCashModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetGiveCouponModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetGiveGiftModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetGiveIntegralModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetMoneyScopeModel.cs" />
+    <Compile Include="Models\Promote\PromoteLandingPageModel.cs" />
+    <Compile Include="Models\Promote\PromoteLimitedDiscountModel.cs" />
+    <Compile Include="Models\Promote\MeetAmount\PromoteMeetAmountModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetMoneyModel.cs" />
+    <Compile Include="Models\Promote\MeetMoney\PromoteMeetMoneyRuleModel.cs" />
+    <Compile Include="Models\Promote\PromoteMuchBottledModel.cs" />
+    <Compile Include="Models\Promote\PromoteMuchBottledRuleModel.cs" />
+    <Compile Include="Models\Promote\PromoteVipModel.cs" />
+    <Compile Include="Models\Promote\PromoteVipScopeModel.cs" />
+    <Compile Include="Models\System\DepartmentModel.cs" />
+    <Compile Include="Models\System\EmployeeModel.cs" />
+    <Compile Include="Models\System\LogModel.cs" />
+    <Compile Include="Models\System\MenuModel.cs" />
+    <Compile Include="Models\System\PermissionModel.cs" />
+    <Compile Include="Models\System\RoleModel.cs" />
+    <Compile Include="Models\System\UserModel.cs" />
+    <Compile Include="Models\Transact\CpsCommissionRatioModel.cs" />
+    <Compile Include="Models\Transact\CpsModel.cs" />
+    <Compile Include="Models\Transact\Order\AftersaleRefundModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderCancalCauseModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderCancelModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderTrackDetailModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderDetailModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderInvoiceModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderProductModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderProductSearchModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderSearchModel.cs" />
+    <Compile Include="Models\Transact\Order\OrderState.cs" />
+    <Compile Include="Models\Transact\PaymentInfoModel.cs" />
+    <Compile Include="Models\Transact\ProductCommentModel.cs" />
+    <Compile Include="Models\Transact\ProductCommentReplyModel.cs" />
+    <Compile Include="Models\Transact\ProductCommentSearchModel.cs" />
+    <Compile Include="Models\Transact\ProductConsultModel.cs" />
+    <Compile Include="Models\Transact\ProductConsultSearchModel.cs" />
+    <Compile Include="Models\User\FeedBackModel.cs" />
+    <Compile Include="Models\User\UserAccountModel.cs" />
+    <Compile Include="Models\User\UserLevelModel.cs" />
+    <Compile Include="Models\User\UserLevelPriceModel.cs" />
+    <Compile Include="Models\User\UserLevelPriceSearchModel.cs" />
+    <Compile Include="Models\User\UserMessageEmailModel.cs" />
+    <Compile Include="Models\User\UserMessageSendRecordModel.cs" />
+    <Compile Include="Models\User\UserMessageSmsModel.cs" />
+    <Compile Include="Models\User\UserModel.cs" />
+    <Compile Include="Models\User\UserReceiveAddressModel.cs" />
+    <Compile Include="Models\User\UserSearchModel.cs" />
+    <Compile Include="Models\Utility\DropListMonth.cs" />
+    <Compile Include="Models\Utility\SystemVisitor.cs" />
+    <Compile Include="Models\Utility\SystemVisitorChartJson.cs" />
+    <Compile Include="Models\Utility\SystemVisitorColumn2D.cs" />
+    <Compile Include="Models\Utility\SystemVisitorColumnMulti3D.cs" />
+    <Compile Include="Models\Utility\SystemVisitorLineDay.cs" />
+    <Compile Include="Models\Utility\SystemVisitorLineMonth.cs" />
+    <Compile Include="Models\Utility\SystemVisitorLineSeason.cs" />
+    <Compile Include="Models\Utility\SystemVisitorLineYear.cs" />
+    <Compile Include="Models\Utility\SystemVisitorPie3D.cs" />
+    <Compile Include="MongoDBHelper.cs" />
+    <Compile Include="SystemUserSession.cs" />
+    <Compile Include="Utils\CustomHandleErrorAttribute.cs" />
+    <Compile Include="Utils\PermissionUtility.cs" />
+    <Compile Include="Utils\SessionUtility.cs" />
+    <Compile Include="V5RazorViewEngine.cs" />
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\Transact\Transact.Order.Cancel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\404\body_bg.jpg" />
+    <Content Include="Content\404\error404.jpg" />
+    <Content Include="Content\AddProduct.css" />
+    <Content Include="Content\artDialog\artDialog.js" />
+    <Content Include="Content\artDialog\artDialog.source.js" />
+    <Content Include="Content\artDialog\index.html" />
+    <Content Include="Content\artDialog\jquery.artDialog.js" />
+    <Content Include="Content\artDialog\jquery.artDialog.source.js" />
+    <Content Include="Content\artDialog\license.txt" />
+    <Content Include="Content\artDialog\plugins\iframeTools.js" />
+    <Content Include="Content\artDialog\plugins\iframeTools.source.js" />
+    <Content Include="Content\artDialog\skins\aero.css" />
+    <Content Include="Content\artDialog\skins\aero\aero_s.png" />
+    <Content Include="Content\artDialog\skins\aero\aero_s2.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_close.hover.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_close.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_e.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_n.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_ne.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_nw.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_s.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_se.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_sw.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_title_icon.png" />
+    <Content Include="Content\artDialog\skins\aero\ie6\aui_w.png" />
+    <Content Include="Content\artDialog\skins\black.css" />
+    <Content Include="Content\artDialog\skins\black\bg.png" />
+    <Content Include="Content\artDialog\skins\black\bg2.png" />
+    <Content Include="Content\artDialog\skins\black\bg_css3.png" />
+    <Content Include="Content\artDialog\skins\black\bg_css3_2.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\close.hover.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\close.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\e.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\n.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\ne.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\nw.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\s.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\se.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\sw.png" />
+    <Content Include="Content\artDialog\skins\black\ie6\w.png" />
+    <Content Include="Content\artDialog\skins\blue.css" />
+    <Content Include="Content\artDialog\skins\blue\bg.png" />
+    <Content Include="Content\artDialog\skins\blue\bg2.png" />
+    <Content Include="Content\artDialog\skins\blue\bg_css3.png" />
+    <Content Include="Content\artDialog\skins\blue\bg_css3_2.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\close.hover.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\close.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\e.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\n.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\ne.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\nw.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\s.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\se.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\sw.png" />
+    <Content Include="Content\artDialog\skins\blue\ie6\w.png" />
+    <Content Include="Content\artDialog\skins\chrome.css" />
+    <Content Include="Content\artDialog\skins\chrome\border.png" />
+    <Content Include="Content\artDialog\skins\chrome\chrome_s.png" />
+    <Content Include="Content\artDialog\skins\default.css" />
+    <Content Include="Content\artDialog\skins\green.css" />
+    <Content Include="Content\artDialog\skins\green\bg.png" />
+    <Content Include="Content\artDialog\skins\green\bg2.png" />
+    <Content Include="Content\artDialog\skins\green\bg_css3.png" />
+    <Content Include="Content\artDialog\skins\green\bg_css3_2.png" />
+    <Content Include="Content\artDialog\skins\green\color_bg.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\close.hover.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\close.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\e.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\n.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\ne.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\nw.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\s.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\se.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\sw.png" />
+    <Content Include="Content\artDialog\skins\green\ie6\w.png" />
+    <Content Include="Content\artDialog\skins\icons\error.png" />
+    <Content Include="Content\artDialog\skins\icons\face-sad.png" />
+    <Content Include="Content\artDialog\skins\icons\face-smile.png" />
+    <Content Include="Content\artDialog\skins\icons\loading.gif" />
+    <Content Include="Content\artDialog\skins\icons\question.png" />
+    <Content Include="Content\artDialog\skins\icons\succeed.png" />
+    <Content Include="Content\artDialog\skins\icons\warning.png" />
+    <Content Include="Content\artDialog\skins\idialog.css" />
+    <Content Include="Content\artDialog\skins\idialog\idialog_s.png" />
+    <Content Include="Content\artDialog\skins\idialog\idialog_s2.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_close.hover.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_close.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_e.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_n.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_ne.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_nw.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_s.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_se.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_sw.png" />
+    <Content Include="Content\artDialog\skins\idialog\ie6\aui_w.png" />
+    <Content Include="Content\artDialog\skins\opera.css" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_close.hover.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_close.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_e.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_n.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_ne.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_nw.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_s.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_se.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_sw.png" />
+    <Content Include="Content\artDialog\skins\opera\ie6\aui_w.png" />
+    <Content Include="Content\artDialog\skins\opera\s1.png" />
+    <Content Include="Content\artDialog\skins\opera\s2.png" />
+    <Content Include="Content\artDialog\skins\simple.css" />
+    <Content Include="Content\artDialog\skins\twitter.css" />
+    <Content Include="Content\artDialog\_doc\ajaxContent\content.html" />
+    <Content Include="Content\artDialog\_doc\ajaxContent\googleMaps.html" />
+    <Content Include="Content\artDialog\_doc\ajaxContent\login.html" />
+    <Content Include="Content\artDialog\_doc\API.html" />
+    <Content Include="Content\artDialog\_doc\demo.css" />
+    <Content Include="Content\artDialog\_doc\demo.js" />
+    <Content Include="Content\artDialog\_doc\down.html" />
+    <Content Include="Content\artDialog\_doc\frameset.html" />
+    <Content Include="Content\artDialog\_doc\googleMaps.html" />
+    <Content Include="Content\artDialog\_doc\helloWorld.html" />
+    <Content Include="Content\artDialog\_doc\highlight\AUTHORS.en.txt" />
+    <Content Include="Content\artDialog\_doc\highlight\export.html" />
+    <Content Include="Content\artDialog\_doc\highlight\highlight.js" />
+    <Content Include="Content\artDialog\_doc\highlight\highlight.pack.js" />
+    <Content Include="Content\artDialog\_doc\highlight\languages\javascript.js" />
+    <Content Include="Content\artDialog\_doc\highlight\readme.eng.txt" />
+    <Content Include="Content\artDialog\_doc\highlight\styles\magula.css" />
+    <Content Include="Content\artDialog\_doc\highlight\test.html" />
+    <Content Include="Content\artDialog\_doc\iframe.html" />
+    <Content Include="Content\artDialog\_doc\iframeA.html" />
+    <Content Include="Content\artDialog\_doc\iframeB.html" />
+    <Content Include="Content\artDialog\_doc\iframeTop.html" />
+    <Content Include="Content\artDialog\_doc\iframe_frameset.html" />
+    <Content Include="Content\artDialog\_doc\images\alipay.jpg" />
+    <Content Include="Content\artDialog\_doc\images\bg.png" />
+    <Content Include="Content\artDialog\_doc\images\bottom.png" />
+    <Content Include="Content\artDialog\_doc\images\doc.png" />
+    <Content Include="Content\artDialog\_doc\images\lixiaolong.png" />
+    <Content Include="Content\artDialog\_doc\images\logo.png" />
+    <Content Include="Content\artDialog\_doc\images\opensource.gif" />
+    <Content Include="Content\artDialog\_doc\images\photo.jpg" />
+    <Content Include="Content\artDialog\_doc\images\text.png" />
+    <Content Include="Content\artDialog\_doc\labs.html" />
+    <Content Include="Content\artDialog\_doc\license.html" />
+    <Content Include="Content\artDialog\_doc\log.html" />
+    <Content Include="Content\artDialog\_doc\login_iframe.html" />
+    <Content Include="Content\artDialog\_doc\login_iframe_2.html" />
+    <Content Include="Content\artDialog\_doc\new.html" />
+    <Content Include="Content\artDialog\_doc\plugin.iframe.html" />
+    <Content Include="Content\artDialog\_doc\topFrame.html" />
+    <Content Include="Content\artDialog\_doc\upd.txt" />
+    <Content Include="Content\ckeditor\adapters\jquery.js" />
+    <Content Include="Content\ckeditor\build-config.js" />
+    <Content Include="Content\ckeditor\ckeditor.js" />
+    <Content Include="Content\ckeditor\config.js" />
+    <Content Include="Content\ckeditor\contents.css" />
+    <Content Include="Content\ckeditor\lang\af.js" />
+    <Content Include="Content\ckeditor\lang\ar.js" />
+    <Content Include="Content\ckeditor\lang\bg.js" />
+    <Content Include="Content\ckeditor\lang\bn.js" />
+    <Content Include="Content\ckeditor\lang\bs.js" />
+    <Content Include="Content\ckeditor\lang\ca.js" />
+    <Content Include="Content\ckeditor\lang\cs.js" />
+    <Content Include="Content\ckeditor\lang\cy.js" />
+    <Content Include="Content\ckeditor\lang\da.js" />
+    <Content Include="Content\ckeditor\lang\de.js" />
+    <Content Include="Content\ckeditor\lang\el.js" />
+    <Content Include="Content\ckeditor\lang\en-au.js" />
+    <Content Include="Content\ckeditor\lang\en-ca.js" />
+    <Content Include="Content\ckeditor\lang\en-gb.js" />
+    <Content Include="Content\ckeditor\lang\en.js" />
+    <Content Include="Content\ckeditor\lang\eo.js" />
+    <Content Include="Content\ckeditor\lang\es.js" />
+    <Content Include="Content\ckeditor\lang\et.js" />
+    <Content Include="Content\ckeditor\lang\eu.js" />
+    <Content Include="Content\ckeditor\lang\fa.js" />
+    <Content Include="Content\ckeditor\lang\fi.js" />
+    <Content Include="Content\ckeditor\lang\fo.js" />
+    <Content Include="Content\ckeditor\lang\fr-ca.js" />
+    <Content Include="Content\ckeditor\lang\fr.js" />
+    <Content Include="Content\ckeditor\lang\gl.js" />
+    <Content Include="Content\ckeditor\lang\gu.js" />
+    <Content Include="Content\ckeditor\lang\he.js" />
+    <Content Include="Content\ckeditor\lang\hi.js" />
+    <Content Include="Content\ckeditor\lang\hr.js" />
+    <Content Include="Content\ckeditor\lang\hu.js" />
+    <Content Include="Content\ckeditor\lang\id.js" />
+    <Content Include="Content\ckeditor\lang\is.js" />
+    <Content Include="Content\ckeditor\lang\it.js" />
+    <Content Include="Content\ckeditor\lang\ja.js" />
+    <Content Include="Content\ckeditor\lang\ka.js" />
+    <Content Include="Content\ckeditor\lang\km.js" />
+    <Content Include="Content\ckeditor\lang\ko.js" />
+    <Content Include="Content\ckeditor\lang\ku.js" />
+    <Content Include="Content\ckeditor\lang\lt.js" />
+    <Content Include="Content\ckeditor\lang\lv.js" />
+    <Content Include="Content\ckeditor\lang\mk.js" />
+    <Content Include="Content\ckeditor\lang\mn.js" />
+    <Content Include="Content\ckeditor\lang\ms.js" />
+    <Content Include="Content\ckeditor\lang\nb.js" />
+    <Content Include="Content\ckeditor\lang\nl.js" />
+    <Content Include="Content\ckeditor\lang\no.js" />
+    <Content Include="Content\ckeditor\lang\pl.js" />
+    <Content Include="Content\ckeditor\lang\pt-br.js" />
+    <Content Include="Content\ckeditor\lang\pt.js" />
+    <Content Include="Content\ckeditor\lang\ro.js" />
+    <Content Include="Content\ckeditor\lang\ru.js" />
+    <Content Include="Content\ckeditor\lang\si.js" />
+    <Content Include="Content\ckeditor\lang\sk.js" />
+    <Content Include="Content\ckeditor\lang\sl.js" />
+    <Content Include="Content\ckeditor\lang\sq.js" />
+    <Content Include="Content\ckeditor\lang\sr-latn.js" />
+    <Content Include="Content\ckeditor\lang\sr.js" />
+    <Content Include="Content\ckeditor\lang\sv.js" />
+    <Content Include="Content\ckeditor\lang\th.js" />
+    <Content Include="Content\ckeditor\lang\tr.js" />
+    <Content Include="Content\ckeditor\lang\ug.js" />
+    <Content Include="Content\ckeditor\lang\uk.js" />
+    <Content Include="Content\ckeditor\lang\vi.js" />
+    <Content Include="Content\ckeditor\lang\zh-cn.js" />
+    <Content Include="Content\ckeditor\lang\zh.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Content\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Content\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Content\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Content\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Content\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="Content\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Content\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="Content\ckeditor\plugins\fakeobjects\images\spacer.gif" />
+    <Content Include="Content\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="Content\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="Content\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="Content\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="Content\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="Content\ckeditor\plugins\icons.png" />
+    <Content Include="Content\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Content\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="Content\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Content\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Content\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Content\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Content\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Content\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Content\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Content\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="Content\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Content\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Content\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="Content\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Content\ckeditor\plugins\picturespace\picturespace.png" />
+    <Content Include="Content\ckeditor\plugins\picturespace\plugin.js" />
+    <Content Include="Content\ckeditor\plugins\preview\preview.html" />
+    <Content Include="Content\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Content\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="Content\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="Content\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Content\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Content\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Content\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Content\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="Content\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="Content\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="Content\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="Content\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="Content\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="Content\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Content\ckeditor\plugins\wsc\dialogs\tmp.html" />
+    <Content Include="Content\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Content\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Content\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Content\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Content\ckeditor\samples\ajax.html" />
+    <Content Include="Content\ckeditor\samples\api.html" />
+    <Content Include="Content\ckeditor\samples\appendto.html" />
+    <Content Include="Content\ckeditor\samples\assets\inlineall\logo.png" />
+    <Content Include="Content\ckeditor\samples\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Content\ckeditor\samples\assets\sample.css" />
+    <Content Include="Content\ckeditor\samples\assets\sample.jpg" />
+    <Content Include="Content\ckeditor\samples\assets\uilanguages\languages.js" />
+    <Content Include="Content\ckeditor\samples\datafiltering.html" />
+    <Content Include="Content\ckeditor\samples\divreplace.html" />
+    <Content Include="Content\ckeditor\samples\index.html" />
+    <Content Include="Content\ckeditor\samples\inlineall.html" />
+    <Content Include="Content\ckeditor\samples\inlinebycode.html" />
+    <Content Include="Content\ckeditor\samples\inlinetextarea.html" />
+    <Content Include="Content\ckeditor\samples\jquery.html" />
+    <Content Include="Content\ckeditor\samples\plugins\dialog\assets\my_dialog.js" />
+    <Content Include="Content\ckeditor\samples\plugins\dialog\dialog.html" />
+    <Content Include="Content\ckeditor\samples\plugins\enterkey\enterkey.html" />
+    <Content Include="Content\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="Content\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="Content\ckeditor\samples\plugins\htmlwriter\outputforflash.html" />
+    <Content Include="Content\ckeditor\samples\plugins\htmlwriter\outputhtml.html" />
+    <Content Include="Content\ckeditor\samples\plugins\magicline\magicline.html" />
+    <Content Include="Content\ckeditor\samples\plugins\toolbar\toolbar.html" />
+    <Content Include="Content\ckeditor\samples\plugins\wysiwygarea\fullpage.html" />
+    <Content Include="Content\ckeditor\samples\readonly.html" />
+    <Content Include="Content\ckeditor\samples\replacebyclass.html" />
+    <Content Include="Content\ckeditor\samples\replacebycode.html" />
+    <Content Include="Content\ckeditor\samples\sample.css" />
+    <Content Include="Content\ckeditor\samples\sample.js" />
+    <Content Include="Content\ckeditor\samples\tabindex.html" />
+    <Content Include="Content\ckeditor\samples\uicolor.html" />
+    <Content Include="Content\ckeditor\samples\uilanguages.html" />
+    <Content Include="Content\ckeditor\samples\xhtmlstyle.html" />
+    <Content Include="Content\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Content\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Content\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Content\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Content\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Content\ckeditor\skins\moono\dialog_opera.css" />
+    <Content Include="Content\ckeditor\skins\moono\editor.css" />
+    <Content Include="Content\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Content\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Content\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Content\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Content\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Content\ckeditor\skins\moono\icons.png" />
+    <Content Include="Content\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\close.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="Content\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="Content\ckeditor\styles.js" />
+    <Content Include="Content\Common.css" />
+    <Content Include="Content\fresco.css" />
+    <Content Include="Content\HomeLayout.css" />
+    <Content Include="Content\jsColor\arrow.gif" />
+    <Content Include="Content\jsColor\cross.gif" />
+    <Content Include="Content\jsColor\hs.png" />
+    <Content Include="Content\jsColor\hv.png" />
+    <Content Include="Content\jsColor\jscolor.js" />
+    <Content Include="Content\kendo\Black\editor.png" />
+    <Content Include="Content\kendo\Black\imagebrowser.png" />
+    <Content Include="Content\kendo\Black\loading-image.gif" />
+    <Content Include="Content\kendo\Black\loading.gif" />
+    <Content Include="Content\kendo\Black\loading_2x.gif" />
+    <Content Include="Content\kendo\Black\slider-h.gif" />
+    <Content Include="Content\kendo\Black\slider-v.gif" />
+    <Content Include="Content\kendo\Black\sprite.png" />
+    <Content Include="Content\kendo\Black\sprite_2x.png" />
+    <Content Include="Content\kendo\BlueOpal\editor.png" />
+    <Content Include="Content\kendo\BlueOpal\imagebrowser.png" />
+    <Content Include="Content\kendo\BlueOpal\loading-image.gif" />
+    <Content Include="Content\kendo\BlueOpal\loading.gif" />
+    <Content Include="Content\kendo\BlueOpal\loading_2x.gif" />
+    <Content Include="Content\kendo\BlueOpal\slider-h.gif" />
+    <Content Include="Content\kendo\BlueOpal\slider-v.gif" />
+    <Content Include="Content\kendo\BlueOpal\sprite.png" />
+    <Content Include="Content\kendo\BlueOpal\sprite_2x.png" />
+    <Content Include="Content\kendo\Bootstrap\editor.png" />
+    <Content Include="Content\kendo\Bootstrap\imagebrowser.png" />
+    <Content Include="Content\kendo\Bootstrap\loading-image.gif" />
+    <Content Include="Content\kendo\Bootstrap\loading.gif" />
+    <Content Include="Content\kendo\Bootstrap\loading_2x.gif" />
+    <Content Include="Content\kendo\Bootstrap\slider-h.gif" />
+    <Content Include="Content\kendo\Bootstrap\slider-v.gif" />
+    <Content Include="Content\kendo\Bootstrap\sprite.png" />
+    <Content Include="Content\kendo\Bootstrap\sprite_2x.png" />
+    <Content Include="Content\kendo\Default\editor.png" />
+    <Content Include="Content\kendo\Default\imagebrowser.png" />
+    <Content Include="Content\kendo\Default\loading-image.gif" />
+    <Content Include="Content\kendo\Default\loading.gif" />
+    <Content Include="Content\kendo\Default\loading_2x.gif" />
+    <Content Include="Content\kendo\Default\slider-h.gif" />
+    <Content Include="Content\kendo\Default\slider-v.gif" />
+    <Content Include="Content\kendo\Default\sprite.png" />
+    <Content Include="Content\kendo\Default\sprite_2x.png" />
+    <Content Include="Content\kendo\Flat\editor.png" />
+    <Content Include="Content\kendo\Flat\imagebrowser.png" />
+    <Content Include="Content\kendo\Flat\loading-image.gif" />
+    <Content Include="Content\kendo\Flat\loading.gif" />
+    <Content Include="Content\kendo\Flat\loading_2x.gif" />
+    <Content Include="Content\kendo\Flat\slider-h.gif" />
+    <Content Include="Content\kendo\Flat\slider-v.gif" />
+    <Content Include="Content\kendo\Flat\sprite.png" />
+    <Content Include="Content\kendo\Flat\sprite_2x.png" />
+    <Content Include="Content\kendo\HighContrast\editor.png" />
+    <Content Include="Content\kendo\HighContrast\imagebrowser.png" />
+    <Content Include="Content\kendo\HighContrast\loading-image.gif" />
+    <Content Include="Content\kendo\HighContrast\loading.gif" />
+    <Content Include="Content\kendo\HighContrast\loading_2x.gif" />
+    <Content Include="Content\kendo\HighContrast\slider-h.gif" />
+    <Content Include="Content\kendo\HighContrast\slider-v.gif" />
+    <Content Include="Content\kendo\HighContrast\sprite.png" />
+    <Content Include="Content\kendo\HighContrast\sprite_2x.png" />
+    <Content Include="Content\kendo\images\back.png" />
+    <Content Include="Content\kendo\images\wp8_icons.png" />
+    <Content Include="Content\kendo\images\wp8_inverseicons.png" />
+    <Content Include="Content\kendo\kendo.black.min.css" />
+    <Content Include="Content\kendo\kendo.blueopal.min.css" />
+    <Content Include="Content\kendo\kendo.bootstrap.min.css" />
+    <Content Include="Content\kendo\kendo.common.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.black.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.blueopal.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.default.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.flat.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.highcontrast.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.metro.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.metroblack.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.moonlight.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.silver.min.css" />
+    <Content Include="Content\kendo\kendo.dataviz.uniform.min.css" />
+    <Content Include="Content\kendo\kendo.default.min.css" />
+    <Content Include="Content\kendo\kendo.flat.min.css" />
+    <Content Include="Content\kendo\kendo.highcontrast.min.css" />
+    <Content Include="Content\kendo\kendo.icenium.min.css" />
+    <Content Include="Content\kendo\kendo.metro.min.css" />
+    <Content Include="Content\kendo\kendo.metroblack.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.all.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.android4.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.blackberry.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.common.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.flat.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.icenium.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.ios.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.meego.min.css" />
+    <Content Include="Content\kendo\kendo.mobile.wp8.min.css" />
+    <Content Include="Content\kendo\kendo.moonlight.min.css" />
+    <Content Include="Content\kendo\kendo.rtl.min.css" />
+    <Content Include="Content\kendo\kendo.silver.min.css" />
+    <Content Include="Content\kendo\kendo.uniform.min.css" />
+    <Content Include="Content\kendo\MetroBlack\editor.png" />
+    <Content Include="Content\kendo\MetroBlack\imagebrowser.png" />
+    <Content Include="Content\kendo\MetroBlack\loading-image.gif" />
+    <Content Include="Content\kendo\MetroBlack\loading.gif" />
+    <Content Include="Content\kendo\MetroBlack\loading_2x.gif" />
+    <Content Include="Content\kendo\MetroBlack\slider-h.gif" />
+    <Content Include="Content\kendo\MetroBlack\slider-v.gif" />
+    <Content Include="Content\kendo\MetroBlack\sprite.png" />
+    <Content Include="Content\kendo\MetroBlack\sprite_2x.png" />
+    <Content Include="Content\kendo\Metro\editor.png" />
+    <Content Include="Content\kendo\Metro\imagebrowser.png" />
+    <Content Include="Content\kendo\Metro\loading-image.gif" />
+    <Content Include="Content\kendo\Metro\loading.gif" />
+    <Content Include="Content\kendo\Metro\loading_2x.gif" />
+    <Content Include="Content\kendo\Metro\slider-h.gif" />
+    <Content Include="Content\kendo\Metro\slider-v.gif" />
+    <Content Include="Content\kendo\Metro\sprite.png" />
+    <Content Include="Content\kendo\Metro\sprite_2x.png" />
+    <Content Include="Content\kendo\Moonlight\editor.png" />
+    <Content Include="Content\kendo\Moonlight\imagebrowser.png" />
+    <Content Include="Content\kendo\Moonlight\loading-image.gif" />
+    <Content Include="Content\kendo\Moonlight\loading.gif" />
+    <Content Include="Content\kendo\Moonlight\loading_2x.gif" />
+    <Content Include="Content\kendo\Moonlight\slider-h.gif" />
+    <Content Include="Content\kendo\Moonlight\slider-v.gif" />
+    <Content Include="Content\kendo\Moonlight\sprite.png" />
+    <Content Include="Content\kendo\Moonlight\sprite_2x.png" />
+    <Content Include="Content\kendo\Silver\editor.png" />
+    <Content Include="Content\kendo\Silver\imagebrowser.png" />
+    <Content Include="Content\kendo\Silver\loading-image.gif" />
+    <Content Include="Content\kendo\Silver\loading.gif" />
+    <Content Include="Content\kendo\Silver\loading_2x.gif" />
+    <Content Include="Content\kendo\Silver\slider-h.gif" />
+    <Content Include="Content\kendo\Silver\slider-v.gif" />
+    <Content Include="Content\kendo\Silver\sprite.png" />
+    <Content Include="Content\kendo\Silver\sprite_2x.png" />
+    <Content Include="Content\kendo\textures\brushed-metal.png" />
+    <Content Include="Content\kendo\textures\dots1.png" />
+    <Content Include="Content\kendo\textures\dots10.png" />
+    <Content Include="Content\kendo\textures\dots11.png" />
+    <Content Include="Content\kendo\textures\dots12.png" />
+    <Content Include="Content\kendo\textures\dots13.png" />
+    <Content Include="Content\kendo\textures\dots2.png" />
+    <Content Include="Content\kendo\textures\dots3.png" />
+    <Content Include="Content\kendo\textures\dots4.png" />
+    <Content Include="Content\kendo\textures\dots5.png" />
+    <Content Include="Content\kendo\textures\dots6.png" />
+    <Content Include="Content\kendo\textures\dots7.png" />
+    <Content Include="Content\kendo\textures\dots8.png" />
+    <Content Include="Content\kendo\textures\dots9.png" />
+    <Content Include="Content\kendo\textures\glass-lighter.png" />
+    <Content Include="Content\kendo\textures\glass.png" />
+    <Content Include="Content\kendo\textures\highlight.png" />
+    <Content Include="Content\kendo\textures\hsv-gradient.png" />
+    <Content Include="Content\kendo\textures\hue.png" />
+    <Content Include="Content\kendo\textures\leather1.png" />
+    <Content Include="Content\kendo\textures\leather2.png" />
+    <Content Include="Content\kendo\textures\noise.png" />
+    <Content Include="Content\kendo\textures\stripe1.png" />
+    <Content Include="Content\kendo\textures\stripe2.png" />
+    <Content Include="Content\kendo\textures\stripe3.png" />
+    <Content Include="Content\kendo\textures\stripe4.png" />
+    <Content Include="Content\kendo\textures\stripe5.png" />
+    <Content Include="Content\kendo\textures\stripe6.png" />
+    <Content Include="Content\kendo\textures\transparency.png" />
+    <Content Include="Content\kendo\textures\transtexture.png" />
+    <Content Include="Content\kendo\Uniform\editor.png" />
+    <Content Include="Content\kendo\Uniform\imagebrowser.png" />
+    <Content Include="Content\kendo\Uniform\loading-image.gif" />
+    <Content Include="Content\kendo\Uniform\loading.gif" />
+    <Content Include="Content\kendo\Uniform\loading_2x.gif" />
+    <Content Include="Content\kendo\Uniform\slider-h.gif" />
+    <Content Include="Content\kendo\Uniform\slider-v.gif" />
+    <Content Include="Content\kendo\Uniform\sprite.png" />
+    <Content Include="Content\kendo\Uniform\sprite_2x.png" />
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\Main.css" />
+    <Content Include="Content\msgbox.css" />
+    <Content Include="Content\Navigate.css" />
+    <Content Include="Content\Order.css" />
+    <Content Include="Content\Order\Cloud.base.css" />
+    <Content Include="Content\Order\Cloud.comm.css" />
+    <Content Include="Content\OrderState\orderState.css" />
+    <Content Include="Content\OrderState\orderState.js" />
+    <Content Include="Content\Order\GridTemplate.css" />
+    <Content Include="Content\Order\struct.ddgl.css" />
+    <Content Include="Content\Product.css" />
+    <Content Include="Content\Products\LimitedBuyArea.css" />
+    <Content Include="Content\Products\PictureSpace.css" />
+    <Content Include="Content\Products\ProductAdd.css" />
+    <Content Include="Content\Promote\choose.css" />
+    <Content Include="Content\Promote\MeetMoney.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\Uploader\CJL.0.1.min.js" />
+    <Content Include="Content\Uploader\ImagePreview.css" />
+    <Content Include="Content\Uploader\ImagePreview.htm" />
+    <Content Include="Content\Uploader\ImagePreview.js" />
+    <Content Include="Content\Uploader\ImagePreviewEx.js" />
+    <Content Include="Content\Uploader\o_addfile.jpg" />
+    <Content Include="Content\Uploader\QuickUpload.js" />
+    <Content Include="Content\zTree\api\apiCss\api.js" />
+    <Content Include="Content\zTree\api\apiCss\common.css" />
+    <Content Include="Content\zTree\api\apiCss\common_ie6.css" />
+    <Content Include="Content\zTree\api\apiCss\img\apiMenu.gif" />
+    <Content Include="Content\zTree\api\apiCss\img\apiMenu.png" />
+    <Content Include="Content\zTree\api\apiCss\img\background.jpg" />
+    <Content Include="Content\zTree\api\apiCss\img\chinese.png" />
+    <Content Include="Content\zTree\api\apiCss\img\close.png" />
+    <Content Include="Content\zTree\api\apiCss\img\contact-bg.png" />
+    <Content Include="Content\zTree\api\apiCss\img\english.png" />
+    <Content Include="Content\zTree\api\apiCss\img\header-bg.png" />
+    <Content Include="Content\zTree\api\apiCss\img\lightbulb.png" />
+    <Content Include="Content\zTree\api\apiCss\img\overlay_arrow.gif" />
+    <Content Include="Content\zTree\api\apiCss\img\overlay_arrow.png" />
+    <Content Include="Content\zTree\api\apiCss\img\overlay_bg.png" />
+    <Content Include="Content\zTree\api\apiCss\img\overlay_close_IE6.gif" />
+    <Content Include="Content\zTree\api\apiCss\img\zTreeStandard.gif" />
+    <Content Include="Content\zTree\api\apiCss\img\zTreeStandard.png" />
+    <Content Include="Content\zTree\api\apiCss\jquery-1.6.2.min.js" />
+    <Content Include="Content\zTree\api\apiCss\jquery.ztree.core-3.5.js" />
+    <Content Include="Content\zTree\api\apiCss\zTreeStyleForApi.css" />
+    <Content Include="Content\zTree\api\API_cn.html" />
+    <Content Include="Content\zTree\api\API_en.html" />
+    <Content Include="Content\zTree\api\cn\fn.zTree.destroy.html" />
+    <Content Include="Content\zTree\api\cn\fn.zTree.getZTreeObj.html" />
+    <Content Include="Content\zTree\api\cn\fn.zTree.init.html" />
+    <Content Include="Content\zTree\api\cn\fn.zTree._z.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.autoParam.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.contentType.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.dataFilter.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.dataType.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.enable.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.otherParam.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.type.html" />
+    <Content Include="Content\zTree\api\cn\setting.async.url.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeAsync.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeCheck.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeClick.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeCollapse.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeDblClick.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeDrag.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeDragOpen.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeDrop.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeEditName.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeExpand.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeMouseDown.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeMouseUp.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeRemove.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeRename.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.beforeRightClick.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onAsyncError.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onAsyncSuccess.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onCheck.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onClick.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onCollapse.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onDblClick.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onDrag.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onDrop.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onExpand.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onMouseDown.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onMouseUp.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onNodeCreated.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onRemove.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onRename.html" />
+    <Content Include="Content\zTree\api\cn\setting.callback.onRightClick.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.autoCheckTrigger.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.chkboxType.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.chkDisabledInherit.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.chkStyle.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.enable.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.nocheckInherit.html" />
+    <Content Include="Content\zTree\api\cn\setting.check.radioType.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.keep.leaf.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.keep.parent.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.key.checked.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.key.children.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.key.name.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.key.title.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.key.url.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.simpleData.enable.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.simpleData.idKey.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.simpleData.pIdKey.html" />
+    <Content Include="Content\zTree\api\cn\setting.data.simpleData.rootPId.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.autoExpandTrigger.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.autoOpenTime.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.borderMax.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.borderMin.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.inner.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.isCopy.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.isMove.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.maxShowNodeNum.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.minMoveSize.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.next.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.drag.prev.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.editNameSelectAll.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.enable.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.removeTitle.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.renameTitle.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.showRemoveBtn.html" />
+    <Content Include="Content\zTree\api\cn\setting.edit.showRenameBtn.html" />
+    <Content Include="Content\zTree\api\cn\setting.treeId.html" />
+    <Content Include="Content\zTree\api\cn\setting.treeObj.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.addDiyDom.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.addHoverDom.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.autoCancelSelected.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.dblClickExpand.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.expandSpeed.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.fontCss.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.nameIsHTML.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.removeHoverDom.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.selectedMulti.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.showIcon.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.showLine.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.showTitle.html" />
+    <Content Include="Content\zTree\api\cn\setting.view.txtSelectedEnable.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.checked.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.checkedOld.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.check_Child_State.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.check_Focus.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.children.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.chkDisabled.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.click.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.diy.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.editNameFlag.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.getCheckStatus.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.getNextNode.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.getParentNode.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.getPreNode.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.halfCheck.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.icon.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.iconClose.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.iconOpen.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.iconSkin.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.isAjaxing.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.isFirstNode.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.isHidden.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.isHover.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.isLastNode.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.isParent.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.level.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.name.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.nocheck.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.open.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.parentTId.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.target.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.tId.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.url.html" />
+    <Content Include="Content\zTree\api\cn\treeNode.zAsync.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.addNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.cancelEditName.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.cancelSelectedNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.checkAllNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.checkNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.copyNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.destroy.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.editName.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.expandAll.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.expandNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getChangeCheckedNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getCheckedNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodeByParam.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodeByTId.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodeIndex.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodesByFilter.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodesByParam.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getNodesByParamFuzzy.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.getSelectedNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.hideNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.hideNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.moveNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.reAsyncChildNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.refresh.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.removeChildNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.removeNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.selectNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.setChkDisabled.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.setEditable.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.setting.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.showNode.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.showNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.transformToArray.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.transformTozTreeNodes.html" />
+    <Content Include="Content\zTree\api\cn\zTreeObj.updateNode.html" />
+    <Content Include="Content\zTree\api\en\fn.zTree.destroy.html" />
+    <Content Include="Content\zTree\api\en\fn.zTree.getZTreeObj.html" />
+    <Content Include="Content\zTree\api\en\fn.zTree.init.html" />
+    <Content Include="Content\zTree\api\en\fn.zTree._z.html" />
+    <Content Include="Content\zTree\api\en\setting.async.autoParam.html" />
+    <Content Include="Content\zTree\api\en\setting.async.contentType.html" />
+    <Content Include="Content\zTree\api\en\setting.async.dataFilter.html" />
+    <Content Include="Content\zTree\api\en\setting.async.dataType.html" />
+    <Content Include="Content\zTree\api\en\setting.async.enable.html" />
+    <Content Include="Content\zTree\api\en\setting.async.otherParam.html" />
+    <Content Include="Content\zTree\api\en\setting.async.type.html" />
+    <Content Include="Content\zTree\api\en\setting.async.url.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeAsync.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeCheck.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeClick.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeCollapse.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeDblClick.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeDrag.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeDragOpen.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeDrop.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeEditName.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeExpand.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeMouseDown.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeMouseUp.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeRemove.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeRename.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.beforeRightClick.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onAsyncError.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onAsyncSuccess.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onCheck.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onClick.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onCollapse.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onDblClick.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onDrag.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onDrop.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onExpand.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onMouseDown.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onMouseUp.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onNodeCreated.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onRemove.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onRename.html" />
+    <Content Include="Content\zTree\api\en\setting.callback.onRightClick.html" />
+    <Content Include="Content\zTree\api\en\setting.check.autoCheckTrigger.html" />
+    <Content Include="Content\zTree\api\en\setting.check.chkboxType.html" />
+    <Content Include="Content\zTree\api\en\setting.check.chkDisabledInherit.html" />
+    <Content Include="Content\zTree\api\en\setting.check.chkStyle.html" />
+    <Content Include="Content\zTree\api\en\setting.check.enable.html" />
+    <Content Include="Content\zTree\api\en\setting.check.nocheckInherit.html" />
+    <Content Include="Content\zTree\api\en\setting.check.radioType.html" />
+    <Content Include="Content\zTree\api\en\setting.data.keep.leaf.html" />
+    <Content Include="Content\zTree\api\en\setting.data.keep.parent.html" />
+    <Content Include="Content\zTree\api\en\setting.data.key.checked.html" />
+    <Content Include="Content\zTree\api\en\setting.data.key.children.html" />
+    <Content Include="Content\zTree\api\en\setting.data.key.name.html" />
+    <Content Include="Content\zTree\api\en\setting.data.key.title.html" />
+    <Content Include="Content\zTree\api\en\setting.data.key.url.html" />
+    <Content Include="Content\zTree\api\en\setting.data.simpleData.enable.html" />
+    <Content Include="Content\zTree\api\en\setting.data.simpleData.idKey.html" />
+    <Content Include="Content\zTree\api\en\setting.data.simpleData.pIdKey.html" />
+    <Content Include="Content\zTree\api\en\setting.data.simpleData.rootPId.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.autoExpandTrigger.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.autoOpenTime.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.borderMax.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.borderMin.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.inner.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.isCopy.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.isMove.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.maxShowNodeNum.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.minMoveSize.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.next.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.drag.prev.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.editNameSelectAll.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.enable.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.removeTitle.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.renameTitle.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.showRemoveBtn.html" />
+    <Content Include="Content\zTree\api\en\setting.edit.showRenameBtn.html" />
+    <Content Include="Content\zTree\api\en\setting.treeId.html" />
+    <Content Include="Content\zTree\api\en\setting.treeObj.html" />
+    <Content Include="Content\zTree\api\en\setting.view.addDiyDom.html" />
+    <Content Include="Content\zTree\api\en\setting.view.addHoverDom.html" />
+    <Content Include="Content\zTree\api\en\setting.view.autoCancelSelected.html" />
+    <Content Include="Content\zTree\api\en\setting.view.dblClickExpand.html" />
+    <Content Include="Content\zTree\api\en\setting.view.expandSpeed.html" />
+    <Content Include="Content\zTree\api\en\setting.view.fontCss.html" />
+    <Content Include="Content\zTree\api\en\setting.view.nameIsHTML.html" />
+    <Content Include="Content\zTree\api\en\setting.view.removeHoverDom.html" />
+    <Content Include="Content\zTree\api\en\setting.view.selectedMulti.html" />
+    <Content Include="Content\zTree\api\en\setting.view.showIcon.html" />
+    <Content Include="Content\zTree\api\en\setting.view.showLine.html" />
+    <Content Include="Content\zTree\api\en\setting.view.showTitle.html" />
+    <Content Include="Content\zTree\api\en\setting.view.txtSelectedEnable.html" />
+    <Content Include="Content\zTree\api\en\treeNode.checked.html" />
+    <Content Include="Content\zTree\api\en\treeNode.checkedOld.html" />
+    <Content Include="Content\zTree\api\en\treeNode.check_Child_State.html" />
+    <Content Include="Content\zTree\api\en\treeNode.check_Focus.html" />
+    <Content Include="Content\zTree\api\en\treeNode.children.html" />
+    <Content Include="Content\zTree\api\en\treeNode.chkDisabled.html" />
+    <Content Include="Content\zTree\api\en\treeNode.click.html" />
+    <Content Include="Content\zTree\api\en\treeNode.diy.html" />
+    <Content Include="Content\zTree\api\en\treeNode.editNameFlag.html" />
+    <Content Include="Content\zTree\api\en\treeNode.getCheckStatus.html" />
+    <Content Include="Content\zTree\api\en\treeNode.getNextNode.html" />
+    <Content Include="Content\zTree\api\en\treeNode.getParentNode.html" />
+    <Content Include="Content\zTree\api\en\treeNode.getPreNode.html" />
+    <Content Include="Content\zTree\api\en\treeNode.halfCheck.html" />
+    <Content Include="Content\zTree\api\en\treeNode.icon.html" />
+    <Content Include="Content\zTree\api\en\treeNode.iconClose.html" />
+    <Content Include="Content\zTree\api\en\treeNode.iconOpen.html" />
+    <Content Include="Content\zTree\api\en\treeNode.iconSkin.html" />
+    <Content Include="Content\zTree\api\en\treeNode.isAjaxing.html" />
+    <Content Include="Content\zTree\api\en\treeNode.isFirstNode.html" />
+    <Content Include="Content\zTree\api\en\treeNode.isHidden.html" />
+    <Content Include="Content\zTree\api\en\treeNode.isHover.html" />
+    <Content Include="Content\zTree\api\en\treeNode.isLastNode.html" />
+    <Content Include="Content\zTree\api\en\treeNode.isParent.html" />
+    <Content Include="Content\zTree\api\en\treeNode.level.html" />
+    <Content Include="Content\zTree\api\en\treeNode.name.html" />
+    <Content Include="Content\zTree\api\en\treeNode.nocheck.html" />
+    <Content Include="Content\zTree\api\en\treeNode.open.html" />
+    <Content Include="Content\zTree\api\en\treeNode.parentTId.html" />
+    <Content Include="Content\zTree\api\en\treeNode.target.html" />
+    <Content Include="Content\zTree\api\en\treeNode.tId.html" />
+    <Content Include="Content\zTree\api\en\treeNode.url.html" />
+    <Content Include="Content\zTree\api\en\treeNode.zAsync.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.addNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.cancelEditName.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.cancelSelectedNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.checkAllNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.checkNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.copyNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.destroy.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.editName.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.expandAll.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.expandNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getChangeCheckedNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getCheckedNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodeByParam.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodeByTId.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodeIndex.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodesByFilter.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodesByParam.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getNodesByParamFuzzy.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.getSelectedNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.hideNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.hideNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.moveNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.reAsyncChildNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.refresh.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.removeChildNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.removeNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.selectNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.setChkDisabled.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.setEditable.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.setting.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.showNode.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.showNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.transformToArray.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.transformTozTreeNodes.html" />
+    <Content Include="Content\zTree\api\en\zTreeObj.updateNode.html" />
+    <Content Include="Content\zTree\css\demo.css" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Content\zTree\demo\cn\bigdata\common.html" />
+    <Content Include="Content\zTree\demo\cn\bigdata\diy_async.html" />
+    <Content Include="Content\zTree\demo\cn\bigdata\page.html" />
+    <Content Include="Content\zTree\demo\cn\core\async.html" />
+    <Content Include="Content\zTree\demo\cn\core\async_fun.html" />
+    <Content Include="Content\zTree\demo\cn\core\click.html" />
+    <Content Include="Content\zTree\demo\cn\core\custom_font.html" />
+    <Content Include="Content\zTree\demo\cn\core\custom_icon.html" />
+    <Content Include="Content\zTree\demo\cn\core\custom_iconSkin.html" />
+    <Content Include="Content\zTree\demo\cn\core\expand.html" />
+    <Content Include="Content\zTree\demo\cn\core\noicon.html" />
+    <Content Include="Content\zTree\demo\cn\core\noline.html" />
+    <Content Include="Content\zTree\demo\cn\core\otherMouse.html" />
+    <Content Include="Content\zTree\demo\cn\core\searchNodes.html" />
+    <Content Include="Content\zTree\demo\cn\core\simpleData.html" />
+    <Content Include="Content\zTree\demo\cn\core\standardData.html" />
+    <Content Include="Content\zTree\demo\cn\core\update_fun.html" />
+    <Content Include="Content\zTree\demo\cn\core\url.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\checkbox.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\checkbox_chkDisabled.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\checkbox_count.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\checkbox_fun.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\checkbox_halfCheck.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\checkbox_nocheck.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\radio.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\radio_chkDisabled.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\radio_fun.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\radio_halfCheck.html" />
+    <Content Include="Content\zTree\demo\cn\excheck\radio_nocheck.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\async_edit.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\drag.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\drag_fun.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\drag_super.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\edit.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\edit_fun.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\edit_super.html" />
+    <Content Include="Content\zTree\demo\cn\exedit\multiTree.html" />
+    <Content Include="Content\zTree\demo\cn\exhide\checkbox.html" />
+    <Content Include="Content\zTree\demo\cn\exhide\common.html" />
+    <Content Include="Content\zTree\demo\cn\exhide\radio.html" />
+    <Content Include="Content\zTree\demo\cn\index.html" />
+    <Content Include="Content\zTree\demo\cn\super\asyncForAll.html" />
+    <Content Include="Content\zTree\demo\cn\super\checkbox_radio.html" />
+    <Content Include="Content\zTree\demo\cn\super\diydom.html" />
+    <Content Include="Content\zTree\demo\cn\super\dragWithOther.html" />
+    <Content Include="Content\zTree\demo\cn\super\left_menu.html" />
+    <Content Include="Content\zTree\demo\cn\super\left_menuForOutLook.gif" />
+    <Content Include="Content\zTree\demo\cn\super\left_menuForOutLook.html" />
+    <Content Include="Content\zTree\demo\cn\super\left_menuForOutLook.png" />
+    <Content Include="Content\zTree\demo\cn\super\oneclick.html" />
+    <Content Include="Content\zTree\demo\cn\super\oneroot.html" />
+    <Content Include="Content\zTree\demo\cn\super\rightClickMenu.html" />
+    <Content Include="Content\zTree\demo\cn\super\select_menu.html" />
+    <Content Include="Content\zTree\demo\cn\super\select_menu_checkbox.html" />
+    <Content Include="Content\zTree\demo\cn\super\select_menu_radio.html" />
+    <Content Include="Content\zTree\demo\cn\super\singlepath.html" />
+    <Content Include="Content\zTree\demo\en\bigdata\common.html" />
+    <Content Include="Content\zTree\demo\en\bigdata\diy_async.html" />
+    <Content Include="Content\zTree\demo\en\bigdata\page.html" />
+    <Content Include="Content\zTree\demo\en\core\async.html" />
+    <Content Include="Content\zTree\demo\en\core\async_fun.html" />
+    <Content Include="Content\zTree\demo\en\core\click.html" />
+    <Content Include="Content\zTree\demo\en\core\custom_font.html" />
+    <Content Include="Content\zTree\demo\en\core\custom_icon.html" />
+    <Content Include="Content\zTree\demo\en\core\custom_iconSkin.html" />
+    <Content Include="Content\zTree\demo\en\core\expand.html" />
+    <Content Include="Content\zTree\demo\en\core\noicon.html" />
+    <Content Include="Content\zTree\demo\en\core\noline.html" />
+    <Content Include="Content\zTree\demo\en\core\otherMouse.html" />
+    <Content Include="Content\zTree\demo\en\core\searchNodes.html" />
+    <Content Include="Content\zTree\demo\en\core\simpleData.html" />
+    <Content Include="Content\zTree\demo\en\core\standardData.html" />
+    <Content Include="Content\zTree\demo\en\core\update_fun.html" />
+    <Content Include="Content\zTree\demo\en\core\url.html" />
+    <Content Include="Content\zTree\demo\en\excheck\checkbox.html" />
+    <Content Include="Content\zTree\demo\en\excheck\checkbox_chkDisabled.html" />
+    <Content Include="Content\zTree\demo\en\excheck\checkbox_count.html" />
+    <Content Include="Content\zTree\demo\en\excheck\checkbox_fun.html" />
+    <Content Include="Content\zTree\demo\en\excheck\checkbox_halfCheck.html" />
+    <Content Include="Content\zTree\demo\en\excheck\checkbox_nocheck.html" />
+    <Content Include="Content\zTree\demo\en\excheck\radio.html" />
+    <Content Include="Content\zTree\demo\en\excheck\radio_chkDisabled.html" />
+    <Content Include="Content\zTree\demo\en\excheck\radio_fun.html" />
+    <Content Include="Content\zTree\demo\en\excheck\radio_halfCheck.html" />
+    <Content Include="Content\zTree\demo\en\excheck\radio_nocheck.html" />
+    <Content Include="Content\zTree\demo\en\exedit\async_edit.html" />
+    <Content Include="Content\zTree\demo\en\exedit\drag.html" />
+    <Content Include="Content\zTree\demo\en\exedit\drag_fun.html" />
+    <Content Include="Content\zTree\demo\en\exedit\drag_super.html" />
+    <Content Include="Content\zTree\demo\en\exedit\edit.html" />
+    <Content Include="Content\zTree\demo\en\exedit\edit_fun.html" />
+    <Content Include="Content\zTree\demo\en\exedit\edit_super.html" />
+    <Content Include="Content\zTree\demo\en\exedit\multiTree.html" />
+    <Content Include="Content\zTree\demo\en\exhide\checkbox.html" />
+    <Content Include="Content\zTree\demo\en\exhide\common.html" />
+    <Content Include="Content\zTree\demo\en\exhide\radio.html" />
+    <Content Include="Content\zTree\demo\en\index.html" />
+    <Content Include="Content\zTree\demo\en\super\asyncForAll.html" />
+    <Content Include="Content\zTree\demo\en\super\checkbox_radio.html" />
+    <Content Include="Content\zTree\demo\en\super\diydom.html" />
+    <Content Include="Content\zTree\demo\en\super\dragWithOther.html" />
+    <Content Include="Content\zTree\demo\en\super\left_menu.html" />
+    <Content Include="Content\zTree\demo\en\super\left_menuForOutLook.gif" />
+    <Content Include="Content\zTree\demo\en\super\left_menuForOutLook.html" />
+    <Content Include="Content\zTree\demo\en\super\left_menuForOutLook.png" />
+    <Content Include="Content\zTree\demo\en\super\oneclick.html" />
+    <Content Include="Content\zTree\demo\en\super\oneroot.html" />
+    <Content Include="Content\zTree\demo\en\super\rightClickMenu.html" />
+    <Content Include="Content\zTree\demo\en\super\select_menu.html" />
+    <Content Include="Content\zTree\demo\en\super\select_menu_checkbox.html" />
+    <Content Include="Content\zTree\demo\en\super\select_menu_radio.html" />
+    <Content Include="Content\zTree\demo\en\super\singlepath.html" />
+    <Content Include="Content\zTree\js\jquery-1.4.4.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.all-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.all-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.core-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.core-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.excheck-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.excheck-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exedit-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exedit-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exhide-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exhide-3.5.min.js" />
+    <Content Include="Content\zTree\log v3.x.txt" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\3.png" />
+    <Content Include="Images\4.png" />
+    <Content Include="Images\add_icon.gif" />
+    <Content Include="Images\arrowicon.gif" />
+    <Content Include="Images\bg-left.jpg" />
+    <Content Include="Images\bg-left-select.jpg" />
+    <Content Include="Images\bg-login-box.jpg" />
+    <Content Include="Content\OrderState\Image\bg_state.jpg" />
+    <Content Include="Images\btn-bijia.jpg" />
+    <Content Include="Images\btn-erp.jpg" />
+    <Content Include="Images\btn-login.jpg" />
+    <Content Include="Images\fresco\skins\blank.gif" />
+    <Content Include="Images\fresco\skins\fresco\sprite%40x2.png" />
+    <Content Include="Images\fresco\skins\fresco\sprite.png" />
+    <Content Include="Images\fresco\skins\IE6\sprite.png" />
+    <Content Include="Images\fresco\skins\loading-medium.gif" />
+    <Content Include="Images\fresco\skins\loading-small.gif" />
+    <Content Include="Images\fresco\skins\loading.gif" />
+    <Content Include="Images\gb_tip_layer.png" />
+    <Content Include="Images\gb_tip_layer_ie6.png" />
+    <Content Include="Images\ico-key.jpg" />
+    <Content Include="Images\ico-lock.jpg" />
+    <Content Include="Images\jiantou.png" />
+    <Content Include="Images\left-select.jpg" />
+    <Content Include="Images\bg-login.jpg" />
+    <Content Include="Images\logo-login.jpg" />
+    <Content Include="Images\logo-text.jpg" />
+    <Content Include="Images\logo.jpg" />
+    <Content Include="Images\bg-top.jpg" />
+    <Content Include="Images\bg-navigate.jpg" />
+    <Content Include="Images\ico-time.jpg" />
+    <Content Include="kendoSummary.txt" />
+    <Content Include="Scripts\AjaxOverride.js" />
+    <Content Include="Scripts\angular-1.0.1.min.js" />
+    <Content Include="Scripts\Backstage\Advertise\Backstage.AdvertiseConfig.js" />
+    <Content Include="Scripts\Backstage\Advertise\Backstage.AdvertiseLp.js" />
+    <Content Include="Scripts\Backstage\Advertise\Backstage.AdvertiseProduct.js" />
+    <Content Include="Scripts\Backstage\Backstage.Common.js" />
+    <Content Include="Scripts\Backstage\Backstage.Common.KendoUI.js" />
+    <Content Include="Scripts\Backstage\Backstage.Home.js" />
+    <Content Include="Scripts\Backstage\Backstage.Login.js" />
+    <Content Include="Scripts\Backstage\Backstage.Primission.js" />
+    <Content Include="Scripts\Backstage\Backstage.Validate.js" />
+    <Content Include="Scripts\Backstage\Configuration\Configuration.Page.js" />
+    <Content Include="Scripts\Backstage\moment-with-langs.min.js" />
+    <Content Include="Scripts\Backstage\Picture\Backstage.Picture.js" />
+    <Content Include="Scripts\Backstage\Product\Backstage.BrandDescription.js" />
+    <Content Include="Scripts\Backstage\Product\Backstage.Product.Add.js" />
+    <Content Include="Scripts\Backstage\Product\Backstage.Product.Attribute.js" />
+    <Content Include="Scripts\Backstage\Product\Backstage.Product.js" />
+    <Content Include="Scripts\Backstage\Product\Backstage.Product.LimitedBuyArea.js" />
+    <Content Include="Scripts\Backstage\Product\Backstage.Product.Modify.js" />
+    <Content Include="Scripts\Backstage\User\FeedBack.js" />
+    <Content Include="Scripts\fresco.js" />
+    <Content Include="Scripts\ImageManage.js" />
+    <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kendo.modernizr.custom.js" />
+    <Content Include="Scripts\kendo\jquery.min.js" />
+    <Content Include="Scripts\kendo\kendo.all-vsdoc.js" />
+    <Content Include="Scripts\kendo\kendo.all.min.intellisense.js" />
+    <Content Include="Scripts\kendo\kendo.all.min.js" />
+    <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\kendo.autocomplete.min.js" />
+    <Content Include="Scripts\kendo\kendo.binder.min.js" />
+    <Content Include="Scripts\kendo\kendo.calendar.min.js" />
+    <Content Include="Scripts\kendo\kendo.colorpicker.min.js" />
+    <Content Include="Scripts\kendo\kendo.columnmenu.min.js" />
+    <Content Include="Scripts\kendo\kendo.combobox.min.js" />
+    <Content Include="Scripts\kendo\kendo.core.min.js" />
+    <Content Include="Scripts\kendo\kendo.culture.zh-CN.min.js" />
+    <Content Include="Scripts\kendo\kendo.data.min.js" />
+    <Content Include="Scripts\kendo\kendo.data.odata.min.js" />
+    <Content Include="Scripts\kendo\kendo.data.xml.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz-vsdoc.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.barcode.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.canvas.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.chart.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.chart.polar.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.core.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.gauge.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.min.intellisense.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.qrcode.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.sparkline.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.stock.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.svg.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.themes.min.js" />
+    <Content Include="Scripts\kendo\kendo.dataviz.vml.min.js" />
+    <Content Include="Scripts\kendo\kendo.datepicker.min.js" />
+    <Content Include="Scripts\kendo\kendo.datetimepicker.min.js" />
+    <Content Include="Scripts\kendo\kendo.draganddrop.min.js" />
+    <Content Include="Scripts\kendo\kendo.dropdownlist.min.js" />
+    <Content Include="Scripts\kendo\kendo.editable.min.js" />
+    <Content Include="Scripts\kendo\kendo.editor.min.js" />
+    <Content Include="Scripts\kendo\kendo.filtermenu.min.js" />
+    <Content Include="Scripts\kendo\kendo.fx.min.js" />
+    <Content Include="Scripts\kendo\kendo.grid.min.js" />
+    <Content Include="Scripts\kendo\kendo.groupable.min.js" />
+    <Content Include="Scripts\kendo\kendo.imagebrowser.min.js" />
+    <Content Include="Scripts\kendo\kendo.list.min.js" />
+    <Content Include="Scripts\kendo\kendo.listview.min.js" />
+    <Content Include="Scripts\kendo\kendo.menu.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile-vsdoc.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.actionsheet.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.application.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.button.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.buttongroup.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.drawer.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.listview.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.loader.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.min.intellisense.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.modalview.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.navbar.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.pane.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.popover.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.scroller.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.scrollview.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.shim.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.splitview.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.switch.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.tabstrip.min.js" />
+    <Content Include="Scripts\kendo\kendo.mobile.view.min.js" />
+    <Content Include="Scripts\kendo\kendo.multiselect.min.js" />
+    <Content Include="Scripts\kendo\kendo.numerictextbox.min.js" />
+    <Content Include="Scripts\kendo\kendo.pager.min.js" />
+    <Content Include="Scripts\kendo\kendo.panelbar.min.js" />
+    <Content Include="Scripts\kendo\kendo.popup.min.js" />
+    <Content Include="Scripts\kendo\kendo.reorderable.min.js" />
+    <Content Include="Scripts\kendo\kendo.resizable.min.js" />
+    <Content Include="Scripts\kendo\kendo.router.min.js" />
+    <Content Include="Scripts\kendo\kendo.scheduler.agendaview.min.js" />
+    <Content Include="Scripts\kendo\kendo.scheduler.dayview.min.js" />
+    <Content Include="Scripts\kendo\kendo.scheduler.min.js" />
+    <Content Include="Scripts\kendo\kendo.scheduler.monthview.min.js" />
+    <Content Include="Scripts\kendo\kendo.scheduler.recurrence.min.js" />
+    <Content Include="Scripts\kendo\kendo.scheduler.view.min.js" />
+    <Content Include="Scripts\kendo\kendo.selectable.min.js" />
+    <Content Include="Scripts\kendo\kendo.slider.min.js" />
+    <Content Include="Scripts\kendo\kendo.sortable.min.js" />
+    <Content Include="Scripts\kendo\kendo.splitter.min.js" />
+    <Content Include="Scripts\kendo\kendo.tabstrip.min.js" />
+    <Content Include="Scripts\kendo\kendo.timepicker.min.js" />
+    <Content Include="Scripts\kendo\kendo.timezones.min.js" />
+    <Content Include="Scripts\kendo\kendo.tooltip.min.js" />
+    <Content Include="Scripts\kendo\kendo.touch.min.js" />
+    <Content Include="Scripts\kendo\kendo.treeview.min.js" />
+    <Content Include="Scripts\kendo\kendo.upload.min.js" />
+    <Content Include="Scripts\kendo\kendo.userevents.min.js" />
+    <Content Include="Scripts\kendo\kendo.validator.min.js" />
+    <Content Include="Scripts\kendo\kendo.view.min.js" />
+    <Content Include="Scripts\kendo\kendo.web-vsdoc.js" />
+    <Content Include="Scripts\kendo\kendo.web.min.intellisense.js" />
+    <Content Include="Scripts\kendo\kendo.web.min.js" />
+    <Content Include="Scripts\kendo\kendo.window.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\miniui\boot.js" />
+    <Content Include="Scripts\miniui\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\miniui\miniui\locale\en_US.js" />
+    <Content Include="Scripts\miniui\miniui\locale\zh_CN.js" />
+    <Content Include="Scripts\miniui\miniui\miniui.js" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\buttonedit\arrowbg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\buttonedit\btn-hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\buttonedit\btn-pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\buttonedit\btn.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\buttonedit\icon3.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\buttonedit\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\button\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\button\disabled.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\button\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\button\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\calendar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\grid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\layout\east.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\layout\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\layout\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\layout\north.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\layout\south.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\layout\west.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\listbox\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\menu\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\menu\menu_bg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\menu\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\navbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\pager\first.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\pager\last.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\pager\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\pager\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\panel\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\splitter\splitter.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tabs\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tabs\tab.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\toolbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\treegrid\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\treegrid\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\treegrid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\collapseLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\expandLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\firstAndlastcollapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\firstAndlastexpand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\firstCollapseNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\firstExpandNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\lastCollapseNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\lastExpandNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\lastline.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\treeline.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\tree\treeNodeLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\images\window\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2003\skin.css" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\buttonedit\arrowbg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\buttonedit\btn-hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\buttonedit\btn-pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\buttonedit\btn.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\buttonedit\icon3.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\buttonedit\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\button\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\button\disabled.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\button\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\button\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\calendar\months.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\grid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\layout\east.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\layout\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\layout\north.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\layout\south.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\layout\west.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\listbox\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\menu\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\menu\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\menu\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\menu\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\navbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\pager\first.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\pager\last.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\pager\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\pager\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\panel\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\toolbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\treegrid\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\treegrid\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\treegrid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\tree\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\tree\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\tree\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\tree\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\images\window\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue2010\skin.css" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\arrow.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\arrow_down.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\arrow_up.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\btn-hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\btn-pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\btn.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\date.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\icon1.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\buttonedit\text-bg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\button\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\button\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\button\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\calendar\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\calendar\footer.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\calendar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\grid\footer.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\grid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\layout\east.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\layout\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\layout\north.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\layout\south.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\layout\west.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\listbox\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\menu\hmenu.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\menu\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\menu\menu-hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\menu\menu.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\menu\pressed.png" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\navbar\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\navbar\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\navbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\pager\first.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\pager\last.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\pager\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\pager\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\panel\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tabs\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tabs\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tabs\tab.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\toolbar\toolbar.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tools\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tools\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tools\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tools\max.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tools\restore.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\treegrid\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\treegrid\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\treegrid\file.png" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\treegrid\folder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\treegrid\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tree\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tree\folder-open.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tree\folder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tree\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tree\leaf.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\tree\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\images\window\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\blue\skin.css" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\button.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\date.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\down.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\error.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\hover.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\icon1.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\icon2.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\pressed.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\up.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\buttonedit\_icon3.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\button.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\disabled.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\hover.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\icons.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\menu_arrow.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\pressed.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\split-allow-bottom.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\button\split_arrow.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\calendar\button.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\calendar\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\calendar\months.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\calendar\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\calendar\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\datepicker\date.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\dragdrop\drop-add.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\dragdrop\drop-between.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\dragdrop\drop-no.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\dragdrop\drop-over.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\dragdrop\drop-under.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\dragdrop\drop-yes.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_blue_down.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_blue_left.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_blue_right.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_blue_up.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_red_down.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_red_left.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_red_right.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\arrow_red_up.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\baseline-milestone.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\constraint-finish.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\constraint-start.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\finished.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\gvdp.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\header_bg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\milestone-red.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\milestone.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\ms-task.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\notes.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\offday.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\summary-top.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\summary.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\summary2.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\taskbg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\taskbg2.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\taskstatus.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\title_bg.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\gantt\warning.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\col-move-bottom.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\col-move-top.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\dirty.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\footer.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\icons.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\no.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\ok.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\resize.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\sort_asc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\grid\sort_desc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\layout\east.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\layout\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\layout\north.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\layout\south.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\layout\west.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\listbox\error.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\listbox\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\arrow.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\bottom-arrow.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\checked.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\hallow.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\hmenubg.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\item.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\menubg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\pressed.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\menu\top-arrow.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\messagebox\icon-error.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\messagebox\icon-info.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\messagebox\icon-question.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\messagebox\icon-warning.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\messagebox\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\mygantt\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\navbar\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\pager\first.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\pager\last.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\pager\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\pager\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\pager\reload.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\panel\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\panel\resize.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\rgantt\bg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\rgantt\cancel.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\rgantt\hdbg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\rgantt\pc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\rgantt\pc_03.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\buttons.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\mini-bottom.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\mini-left.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\mini-right.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\mini-top.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\resize.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\splitter\resize_h.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\btn.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\col-move-bottom.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\col-move-top.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\datagrid_header_bg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\datagrid_row_collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\datagrid_row_expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\datagrid_sort_asc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\datagrid_sort_desc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\datagrid_title_bg.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\dirty.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\header-hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\header-pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\invalid_line.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\no.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\ok.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\rowselected.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\row_collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\row_expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\sort_asc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\sort_desc.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supergrid\title_bg.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\arrows.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\file.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\folder-open.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\folder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\supertree\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tabs\allow_left.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tabs\allow_right.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tabs\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tabs\hover.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tabs\tab.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\textboxlist\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\textboxlist\error.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\textboxlist\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\textbox\error.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\toolbar\toolbar.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\max.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\min.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\refresh.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\restore.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tools\search.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tooltip\wait.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\treegrid\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\treegrid\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\treegrid\file.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\treegrid\folder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\treegrid\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\arrows.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\button.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\collapseLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\expandLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\file.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\firstAndlastcollapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\firstAndlastexpand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\firstCollapseNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\firstExpandNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\folder-open.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\folder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\hover.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\lastCollapseNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\lastExpandNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\lastline.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\leaf.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\radio_checked.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\radio_unchecked.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\treeline.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\tree\treeNodeLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\window\footer.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\window\header.png" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\_pager\first.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\_pager\last.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\_pager\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\images\_pager\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\default\miniui.css" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\buttonedit\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\buttonedit\error.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\buttonedit\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\buttonedit\icon1.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\buttonedit\icon2.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\buttonedit\icon3.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\button\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\button\disabled.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\button\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\button\menu_arrow.png" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\button\split-allow-bottom.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\button\split_arrow.png" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\calendar\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\calendar\months.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\calendar\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\calendar\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\grid\list.png" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\grid\loading.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\menu\arrow.png" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\menu\checked.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\menu\hallow.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\menu\menubg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\images\tools\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\gray\skin.css" />
+    <Content Include="Scripts\miniui\miniui\themes\icons.css" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\add.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\addfolder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\addnew.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\cancel.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\cut.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\date.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\downgrade.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\download.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\edit.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\filter.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\find.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\folder-open.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\folder.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\goto.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\help.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\help.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\lock.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\new.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\no.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\node.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\noimage.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\nowait.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\ok.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\open.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\print.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\redo.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\reload.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\remove.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\save.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\search.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\sort.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\split.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\tip.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\undo.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\unlock.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\upgrade.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\upload.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\user.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\wait.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\warning.png" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\zoomin.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\zoomout.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\icons\_help.png" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\arrowbg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\arrow_down.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\arrow_up.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\arrow_up_hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\arrow_up_pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\btn-hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\btn-pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\btn.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\icon3.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\button\button.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\button\disabled.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\button\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\button\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\calendar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\grid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\layout\east.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\layout\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\layout\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\layout\north.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\layout\south.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\layout\west.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\listbox\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\menu\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\menu\menu_bg.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\menu\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\navbar\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\navbar\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\navbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\pager\first.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\pager\last.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\pager\next.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\pager\prev.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\panel\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\splitter\splitter.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tabs\hover.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tabs\tab.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\toolbar\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\close.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\max.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\min.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\refresh.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\resume.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tools\search.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\treegrid\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\treegrid\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\treegrid\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\collapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\collapseLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\expand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\expandLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\firstAndlastcollapse.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\firstAndlastexpand.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\firstCollapseNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\firstExpandNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\lastCollapseNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\lastExpandNode.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\lastline.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\pressed.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\treeline.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\tree\treeNodeLine.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\images\window\header.gif" />
+    <Content Include="Scripts\miniui\miniui\themes\olive2003\skin.css" />
+    <Content Include="Scripts\miniui\miniui\UserSelectWindow.js" />
+    <Content Include="Scripts\miniui\tongji.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\Order\OrderAdd.js" />
+    <Content Include="Scripts\Order\OrderCancel.js" />
+    <Content Include="Scripts\Order\OrderEdit.js" />
+    <Content Include="Scripts\Promote\Choose.js" />
+    <Content Include="Scripts\Promote\Counpon.js" />
+    <Content Include="Scripts\Promote\Vip.js" />
+    <Content Include="Scripts\Promote\LandingPage.js" />
+    <Content Include="Scripts\Promote\LimitedDiscount.js" />
+    <Content Include="Scripts\Promote\MeetAmount.js" />
+    <Content Include="Scripts\Promote\MeetMoney.js" />
+    <Content Include="Scripts\User\Email.js" />
+    <Content Include="Scripts\User\Sms.js" />
+    <Content Include="Scripts\Utility\ichart.1.2.min.js" />
+    <Content Include="Scripts\Utility\ichart.helper.js" />
+    <Content Include="Scripts\Validate.js" />
+    <Content Include="Scripts\Validator.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Utility\BussinessCode.cshtml" />
+    <Content Include="Views\Utility\Index.cshtml" />
+    <Content Include="Views\Utility\SystemVisitor.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Backstage\Channel\" />
+    <Folder Include="Scripts\Backstage\Home\" />
+    <Folder Include="Scripts\Backstage\Order\" />
+    <Folder Include="Scripts\Backstage\Promote\" />
+    <Folder Include="Scripts\miniui\miniui\themes\gray\images\layout\" />
+    <Folder Include="Scripts\miniui\miniui\themes\gray\images\panel\" />
+    <Folder Include="Scripts\miniui\miniui\themes\gray\images\splitter\" />
+    <Folder Include="Scripts\miniui\miniui\themes\gray\images\tabs\" />
+    <Folder Include="Scripts\miniui\miniui\themes\gray\images\treegrid\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\artDialog\_doc\ajaxContent\content.json" />
+    <None Include="Content\artDialog\_doc\commercial_license.doc" />
+    <None Include="Content\artDialog\_doc\highlight\LICENSE" />
+    <None Include="Content\ckeditor\CHANGES.md" />
+    <None Include="Content\ckeditor\LICENSE.md" />
+    <None Include="Content\ckeditor\plugins\scayt\LICENSE.md" />
+    <None Include="Content\ckeditor\plugins\scayt\README.md" />
+    <None Include="Content\ckeditor\plugins\wsc\LICENSE.md" />
+    <None Include="Content\ckeditor\plugins\wsc\README.md" />
+    <None Include="Content\ckeditor\README.md" />
+    <None Include="Content\ckeditor\samples\assets\posteddata.php" />
+    <None Include="Content\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <None Include="Content\ckeditor\samples\sample_posteddata.php" />
+    <None Include="Content\ckeditor\skins\moono\readme.md" />
+    <Content Include="Log.config" />
+    <Compile Include="Controllers\Transact\Transact.Order.cs" />
+    <Content Include="Content\Uploader\ImagePreview.ashx" />
+    <None Include="Content\kendo\images\kendoui.ttf" />
+    <None Include="Content\kendo\images\kendoui.woff" />
+    <None Include="Content\zTree\demo\cn\asyncData\getNodes.php" />
+    <None Include="Content\zTree\demo\cn\asyncData\getNodesForBigData.php" />
+    <None Include="Content\zTree\demo\en\asyncData\getNodes.php" />
+    <None Include="Content\zTree\demo\en\asyncData\getNodesForBigData.php" />
+    <None Include="Log\Log_Debug.log" />
+    <None Include="Log\Log_Error.log" />
+    <None Include="Log\Log_Fatal.log" />
+    <None Include="Log\Log_Info.log" />
+    <None Include="Log\Log_Warn.log" />
+    <Content Include="Views\Shared\EditorTemplates\System_Department_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\System_Employee_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Product_Category_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Product_Brand_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\System_User_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Product_AttrValue_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Product_Attribute_Template.cshtml" />
+    <Content Include="Views\User\Default.cshtml" />
+    <Content Include="Views\User\Detail.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Level.cshtml" />
+    <Content Include="Views\User\LevelPrice.cshtml" />
+    <Content Include="Views\System\Department.cshtml" />
+    <Content Include="Views\System\Index.cshtml" />
+    <Content Include="Views\System\Menu.cshtml" />
+    <Content Include="Views\System\Permission.cshtml" />
+    <Content Include="Views\System\Role.cshtml" />
+    <Content Include="Views\System\User.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Level_Price_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Level_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Transact_CpsCommissionRatio_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Transact_Cps_CommissionRatio_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Transact_Cps_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\System_Menu_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\System_Menu_Template_Sub.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\System_Permission_Template.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Config\Delivery.cshtml" />
+    <Content Include="Views\Config\DeliveryMethod.cshtml" />
+    <Content Include="Views\Config\Index.cshtml" />
+    <Content Include="Views\Config\InvoiceContent.cshtml" />
+    <Content Include="Views\Config\InvoiceType.cshtml" />
+    <Content Include="Views\Config\Payment.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Delivery_Corporation_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Delivery_Cost_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Delivery_Method_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Invoice_Content_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Invoice_Type_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Payment_Organization_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Config_Payment_Type_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Transact_CpsCommissionRatio_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Transact_Product_Comment_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Product_Consult_Reply_Template.cshtml" />
+    <Content Include="Views\Product\Attribute.cshtml" />
+    <Content Include="Views\Transact\Cps.cshtml" />
+    <Content Include="Views\Transact\Index.cshtml" />
+    <Content Include="Views\Transact\ProductComment.cshtml" />
+    <Content Include="Views\Transact\ProductConsult.cshtml" />
+    <Content Include="Views\Promote\Coupon.cshtml" />
+    <Content Include="Views\Promote\CouponCashDetail.cshtml" />
+    <Content Include="Views\Promote\CouponDecreaseDetail.cshtml" />
+    <Content Include="Views\Promote\Index.cshtml" />
+    <Content Include="Views\Transact\Order.cshtml" />
+    <Content Include="Views\Transact\Order\AddUser.cshtml" />
+    <Content Include="Views\Transact\Order\Cancelled.cshtml" />
+    <Content Include="Views\Transact\Order\Invalid.cshtml" />
+    <Content Include="Views\Transact\Order\Posted.cshtml" />
+    <Content Include="Views\Transact\Order\Received.cshtml" />
+    <Content Include="Views\Transact\Order\Unconfirmed.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Promote_Coupon_Cash_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Promote_Coupon_Decrease_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QuerySelectTypeListItems.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QuerySelectUserLevelListItems.cshtml" />
+    <Content Include="Views\User\MessageEmail.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Message_Email_Template.cshtml" />
+    <Content Include="Views\User\MessageSms.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Message_Sms_Template.cshtml" />
+    <Content Include="Views\Promote\MuchBottled.cshtml" />
+    <Content Include="Views\Promote\MeetMoney.cshtml" />
+    <Content Include="Views\Transact\Order\CartProducts.cshtml" />
+    <Content Include="Views\Transact\Order\Order.Add.cshtml" />
+    <Content Include="Views\Transact\Order\Order.Edit.cshtml" />
+    <Content Include="Views\Transact\Order\OrderDetail.cshtml" />
+    <Content Include="Views\Transact\Order\OrderEdit_AddProducts.cshtml" />
+    <Content Include="Views\Transact\Order\OrderEdit_CartProducts.cshtml" />
+    <Content Include="Views\Transact\Order\OrderProductList.cshtml" />
+    <Content Include="Views\Transact\Order\UserReceiveAddress.cshtml" />
+    <Content Include="Views\Picture\Index.cshtml" />
+    <Content Include="Views\Picture\Selector.cshtml" />
+    <Content Include="Views\Shared\_Layout_Picture.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Order_Description.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Receive_Address_Template.cshtml" />
+    <Content Include="Views\Product\OnSale.cshtml" />
+    <Content Include="Views\Product\Recycled.cshtml" />
+    <Content Include="Views\Product\SoldOut.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Receive_Address_Template.cshtml" />
+    <Content Include="Views\Product\Modify.cshtml" />
+    <Content Include="Views\Picture\SelectorForCKEditor.cshtml" />
+    <Content Include="Views\Product\LimitedBuyArea.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Promote_Limited_Discount_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User_Receive_Address_Template.cshtml" />
+    <Content Include="Views\Transact\Order\OrderCancelTemplate.cshtml" />
+    <Content Include="Views\Transact\Order\OrderCancelWithRefundTemplate.cshtml" />
+    <Content Include="Views\Transact\Order\Confirmed.cshtml" />
+    <Content Include="Views\Promote\DecreaseList.cshtml" />
+    <Content Include="Views\Channel\Index.cshtml" />
+    <Content Include="Views\Shared\Unauth.cshtml" />
+    <Content Include="Views\Transact\Order\All.cshtml" />
+    <Content Include="Views\System\Log.cshtml" />
+    <Content Include="Views\System\ModifyPasswd.cshtml" />
+    <Content Include="Views\Promote\LandingPageEdit.cshtml" />
+    <Content Include="Views\Promote\MeetMoneyEdit.cshtml" />
+    <Content Include="Views\Promote\MeetAmountEdit.cshtml" />
+    <Content Include="Views\Home\PageView.cshtml" />
+    <Content Include="Views\Channel\GroupBuylist.cshtml" />
+    <Content Include="Views\Channel\AddgroupBuyList.cshtml" />
+    <Content Include="Views\Channel\GroupSubscribe.cshtml" />
+    <Content Include="Views\Channel\ProductByIdDetail.cshtml" />
+    <Content Include="Views\Channel\QueryChannelGroupByProductId.cshtml" />
+    <Content Include="Views\Promote\LandingPage.cshtml" />
+    <Content Include="Views\Advertise\AddLP.cshtml" />
+    <Content Include="Views\Advertise\Advertise.cshtml" />
+    <Content Include="Views\Advertise\AdvertiseConfig.cshtml" />
+    <Content Include="Views\Advertise\Index.cshtml" />
+    <Content Include="Views\Advertise\ModifiyConfig.cshtml" />
+    <Content Include="Views\Advertise\SelectProduct.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\groupBuy_Edit_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GroupBuy_Setting_Template.cshtml" />
+    <Content Include="Views\Promote\LimitedDiscount.cshtml" />
+    <Content Include="Views\Product\Add.cshtml" />
+    <Content Include="Views\Product\Brand.cshtml" />
+    <Content Include="Views\Product\Category.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Promote\MeetAmount.cshtml" />
+    <None Include="Scripts\kendo\jquery.min.map" />
+    <None Include="Scripts\miniui\miniui\themes\blue2003\images\button\Thumbs.db" />
+    <None Include="Scripts\miniui\miniui\themes\blue2003\images\treegrid\Thumbs.db" />
+    <None Include="Scripts\miniui\miniui\themes\blue2003\images\tree\Thumbs.db" />
+    <None Include="Scripts\miniui\miniui\themes\blue2010\images\treegrid\Thumbs.db" />
+    <None Include="Scripts\miniui\miniui\themes\olive2003\images\buttonedit\Thumbs.db" />
+    <None Include="Scripts\miniui\miniui\themes\olive2003\images\tree\Thumbs.db" />
+    <Content Include="Views\Advertise\BatchLeadLp.cshtml" />
+    <Content Include="Views\Advertise\BatchLeadProduct.cshtml" />
+    <Content Include="Views\Config\FeedBack.cshtml" />
+    <Content Include="Views\Config\ConfigHelper.cshtml" />
+    <Content Include="Views\Config\PromoteMessageView.cshtml" />
+    <Content Include="Views\Config\NewannouncementView.cshtml" />
+    <Content Include="Views\Config\LookFeedBack.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ConfigPageAnnouncementTemplate.cshtml" />
+    <Content Include="Views\Product\BrandInformation.cshtml" />
+    <Content Include="Views\Transact\Order\Unpaid.cshtml" />
+    <Content Include="Views\Utility\Error.cshtml" />
+    <Content Include="Views\Channel\GroupBy.cshtml" />
+    <Content Include="Views\Advertise\FeedBack.cshtml" />
+    <Content Include="Views\Promote\LimitedDiscountEdit.cshtml" />
+    <Content Include="Views\Tools\SystemTools.cshtml" />
+    <Content Include="Views\Promote\LimitedDiscountDetail.cshtml" />
+    <Content Include="Views\Promote\Vip.cshtml" />
+    <Content Include="Views\Promote\VipEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Advertise\V5.DataContract.Advertise.csproj">
+      <Project>{EEFFB28E-9876-42DB-8C41-4B5E0EF5D72B}</Project>
+      <Name>V5.DataContract.Advertise</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Utility\V5.DataContract.Utility.csproj">
+      <Project>{E1C6A652-88EC-4E4A-B42A-D5F383CB33BD}</Project>
+      <Name>V5.DataContract.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess.Advertise\V5.DataAccess.Advertise.csproj">
+      <Project>{B8788CC3-AB50-4756-859B-B97613BFF720}</Project>
+      <Name>V5.DataAccess.Advertise</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess.System\V5.DataAccess.System.csproj">
+      <Project>{8E4A9029-C24C-4F8A-8E90-E8D89DDD4519}</Project>
+      <Name>V5.DataAccess.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess.Utility\V5.DataAccess.Utility.csproj">
+      <Project>{F200803E-EF75-463E-9855-C47228D1D659}</Project>
+      <Name>V5.DataAccess.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Advertise\V5.DataContract.Advertise.csproj">
+      <Project>{EEFFB28E-9876-42DB-8C41-4B5E0EF5D72B}</Project>
+      <Name>V5.DataContract.Advertise</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Channel\V5.DataContract.Channel.csproj">
+      <Project>{A8CEFCFE-89DA-4B55-9246-F2B5E00DA619}</Project>
+      <Name>V5.DataContract.Channel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Configuration\V5.DataContract.Configuration.csproj">
+      <Project>{F3E04C83-68B1-478A-9C14-D29885FD4806}</Project>
+      <Name>V5.DataContract.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Product\V5.DataContract.Product.csproj">
+      <Project>{8A6D374A-1AF2-4AA8-8C71-E91724E1D7B1}</Project>
+      <Name>V5.DataContract.Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Promote\V5.DataContract.Promote.csproj">
+      <Project>{3CEAB9B8-873B-4215-AF37-8DDAB50DC3C9}</Project>
+      <Name>V5.DataContract.Promote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.System\V5.DataContract.System.csproj">
+      <Project>{6FC20914-1D9F-4824-8F8B-22C183AAD524}</Project>
+      <Name>V5.DataContract.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Transact\V5.DataContract.Transact.csproj">
+      <Project>{7A795796-E69B-4780-987B-EF026F0AA136}</Project>
+      <Name>V5.DataContract.Transact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.User\V5.DataContract.User.csproj">
+      <Project>{06F0B648-8FE0-4D8D-9BBA-F0BB81CBE60B}</Project>
+      <Name>V5.DataContract.User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Utility\V5.DataContract.Utility.csproj">
+      <Project>{E1C6A652-88EC-4E4A-B42A-D5F383CB33BD}</Project>
+      <Name>V5.DataContract.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Automate\V5.Automate\V5.Automate.csproj">
+      <Project>{FC590E71-6CB1-4597-A069-5D5CEB44E08B}</Project>
+      <Name>V5.Automate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Log\V5.Library.Logger.csproj">
+      <Project>{500C79FB-CFEB-45DB-BE5A-7D4FA0B62F7D}</Project>
+      <Name>V5.Library.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Reflecter\V5.Library.Reflecter.csproj">
+      <Project>{9DBB3F9A-6FA0-4E5A-86BE-FBBD7B764039}</Project>
+      <Name>V5.Library.Reflecter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Security\V5.Library.Security.csproj">
+      <Project>{A096FAAD-C5A4-4969-B7C3-6436F626F2C4}</Project>
+      <Name>V5.Library.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Serializer\V5.Library.Serializer.csproj">
+      <Project>{C55644AA-829E-48F7-B14E-BC36D8C31626}</Project>
+      <Name>V5.Library.Serializer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Storage\V5.Library.Storage.csproj">
+      <Project>{8ABCE18E-100C-4714-8D8D-55D95ADBED94}</Project>
+      <Name>V5.Library.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library\V5.Library.csproj">
+      <Project>{0A8000BD-A860-4BD8-96F3-415A61EB5098}</Project>
+      <Name>V5.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Advertise\V5.Service.Advertise.csproj">
+      <Project>{305F7424-BD86-42B7-9921-452A9E154B0D}</Project>
+      <Name>V5.Service.Advertise</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Picture\V5.Service.Picture.csproj">
+      <Project>{4FD30A72-CA07-4223-A4DE-66E0A492E8EC}</Project>
+      <Name>V5.Service.Picture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Utility\V5.Service.Utility.csproj">
+      <Project>{818057F3-4191-4393-8E29-43431E5C2EBD}</Project>
+      <Name>V5.Service.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Advertise\V5.Service.Advertise.csproj">
+      <Project>{305F7424-BD86-42B7-9921-452A9E154B0D}</Project>
+      <Name>V5.Service.Advertise</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Channel\V5.Service.Channel.csproj">
+      <Project>{47DE90EB-79F5-4ED6-BCA8-84F5B266DF4C}</Project>
+      <Name>V5.Service.Channel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Configuration\V5.Service.Configuration.csproj">
+      <Project>{191CC936-5752-4597-9431-BB81F2B61E94}</Project>
+      <Name>V5.Service.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Product\V5.Service.Product.csproj">
+      <Project>{12F38FDD-304F-409B-A1D8-8BD3AA955318}</Project>
+      <Name>V5.Service.Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Promote\V5.Service.Promote.csproj">
+      <Project>{438B6299-9570-454B-A24B-83B6B1081129}</Project>
+      <Name>V5.Service.Promote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.System\V5.Service.System.csproj">
+      <Project>{5FA84E58-020E-4499-9E55-2A47134ADF53}</Project>
+      <Name>V5.Service.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Transact\V5.Service.Transact.csproj">
+      <Project>{D8743EFC-14B0-48B0-BD20-CB5330592ECF}</Project>
+      <Name>V5.Service.Transact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.User\V5.Service.User.csproj">
+      <Project>{C652F7D9-7136-4699-B329-A11B24F47A4E}</Project>
+      <Name>V5.Service.User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service.Utility\V5.Service.Utility.csproj">
+      <Project>{818057F3-4191-4393-8E29-43431E5C2EBD}</Project>
+      <Name>V5.Service.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Service\V5.Service\V5.Service.csproj">
+      <Project>{0F4405D4-CE98-4BC9-9545-6BE60ECB3884}</Project>
+      <Name>V5.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>9419</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties UseCdnSupport="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

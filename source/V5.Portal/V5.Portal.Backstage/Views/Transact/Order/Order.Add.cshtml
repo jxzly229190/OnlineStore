@@ -1,0 +1,108 @@
+﻿@using V5.Portal.Backstage.Models.Transact.Order
+@using V5.Portal.Backstage.Models.User
+@{
+    ViewBag.Title = "添加订单";
+}
+<link href="../../../Content/Order.css" rel="stylesheet" type="text/css" />
+<script src="../../../Scripts/Validate.js" type="text/javascript"></script>
+<div class="member-box">
+    <div id="hiddenRegion" class="member-info">
+        <input type="hidden" id="hiddenUserId" />
+        <input type="hidden" id="hiddenUserReceiveAddressId" />
+        <input type="hidden" id="hiddenCheckedProductIds" />
+    </div>
+    <div id="searchDiv">
+        <p>
+            请输入邮箱/手机：@Html.TextBox("txtSearch", null, new { @class = "k-textbox" }) &nbsp;&nbsp;
+            <input type="button" class="k-button" onclick="searchUserInfo()" style="width: 80px"
+                id="btnSearch" value="搜索" />
+        </p>
+        <div style="margin-top: 10px; margin-left: 10px;">
+            第一次购买，请
+            <input type="button" id="btnOpenUserWindow" class="k-button" onclick="showAddUserWindow()"
+                value="创建会员资料" />
+            。</div>
+    </div>
+    <div id="divUserReceiveAddress" style="display: none" class="member-info">
+        <h3>
+        </h3>
+        <span id="spanUserReceiveAddress"></span>
+        <input type="button" class="k-button" id="btnSelectAddress" onclick="showAddressWindow()"
+            value="选择送货地址" style="width: 80px" />
+        <p>
+        </p>
+        <p>
+            <input type="button" class="k-button" value="添加商品" style="width: 80px" onclick="showDivAddProduct()" /></p>
+    </div>
+    <div id="divSelectAddress" style="display: none;">
+        @Html.Kendo().Window().Name("receiveAddressWindow").Draggable(true).Title("选择配送地址").Modal(true).Content(
+            @<text>
+        @Html.Partial("Order/UserReceiveAddress")
+        </text>)
+    </div>
+    <div id="divAddUser" style="display: none;">
+        @Html.Kendo().Window().Name("addUserWindow").Draggable(true).Title("新建").Modal(true).Width(380).Height(420).Content(
+            @<text>
+        @Html.Action("AddUser", "Transact")
+        </text>)
+    </div>
+    <div id="divAddProduct" style="display: none">
+        <h3>
+        </h3>
+        <div id="productList">
+            @Html.Partial("Order/OrderProductList")
+        </div>
+        <div>
+            <input type="button" value="确认添加" class="k-button" onclick="addProductToCart()" id="btnAddProductToCart" /></div>
+    </div>
+    <div id="divOrderInfo" style="display: none">
+        <h3>
+        </h3>
+        <div id="divCartProductList">
+            @Html.Partial("Order/CartProducts")
+        </div>
+        <h3>
+        </h3>
+        <div style="width: 100%;">
+            <div style="width: 60%; float: left;">
+                <p>
+                    支付方式：@Html.Kendo().DropDownList().Name("PaymentMethod").OptionLabel("选择支付方式").DataSource(ds => ds.Read(action => action.Action("QueryMethodList", "Config"))).DataTextField("PaymentMethodName").DataValueField("PaymentMethodId")</p>
+                <p>
+                    订单留言：@Html.TextArea("orderDescription", null, new { @class = "k-textbox", @style = "width: 60%" })</p>
+                <div>
+                    <label>
+                        索取发票</label>
+                    <input class="k-checkbox" type="checkbox" onchange="switchRequireInvoice(this)" id="chkSwitchRequireInvoice" />
+                    <p>
+                        抬头：
+                        <input type="text" class="k-textbox" id="txtInvoiceTitle" disabled="disabled" />
+                        消费类别：
+                        @Html.Kendo().DropDownList().Name("InvoceContentType").Enable(false).OptionLabel("选择类别").DataSource(ds => ds.Read(action => action.Action("QueryInvoiceContent", "Config"))).DataTextField("Name").DataValueField("ID")
+                        开票金额：<input type="text" class="k-textbox" id="txtInvoiceMoney" disabled="disabled"
+                            onblur="checkInvoiceCost(this)" value="0" />元
+                    </p>
+                </div>
+            </div>
+            <div style="width: 30%; float: left;">
+                <div style="width: 40%; float: right">
+                    <p>
+                        商品总数：<span id="spanProductCount" class="red14">0</span>件</p>
+                    <p>
+                        商品金额：<span id="spanTotalMoney" class="red14">0</span>元</p>
+                    <p>
+                        运费：<span id="spanDeliveryCost" class="red14">0</span>元</p>
+                    <p>
+                        优惠：<span id="spanDiscountMoney" class="red14">0</span>元</p>
+                    <p>
+                        需支付：<span id="spanPaymentMoney" class="red14">0</span>元</p>
+                    <div class="member-btn" id="btnSubmit" onclick="addOrder()">
+                        <a href="javascript:;">提交下单</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h3>
+</h3>
+<h3>
+</h3>

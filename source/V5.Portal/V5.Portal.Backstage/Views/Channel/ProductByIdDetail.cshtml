@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "ProductByIdDetail";
+}
+@using V5.Portal.Backstage.Models.Product
+@model ProductModel
+<h2>
+    ProductByIdDetail</h2>
+<span>@Html.DisplayFor(model => model.Name)</span> <span>@Html.DisplayFor(model => model.Introduce)</span>
+<span>@Html.DisplayFor(model => model.MarketPrice)</span> <span>@Html.DisplayFor(model => model.GoujiuPrice)</span>

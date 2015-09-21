@@ -1,0 +1,29 @@
+﻿.html,body{ background-color:#f2f2f2; }
+.container{width:910px; margin:120px auto 0px; position:relative;}
+.shadow{-webkit-box-shadow: 1px 1px 3px 1px #ccc; -moz-box-shadow: 1px 1px 3px 1px #ccc; -ms-box-shadow: 1px 1px 3px 1px #ccc; -o-box-shadow: 1px 1px 3px 1px #ccc; box-shadow: 1px 1px 3px 1px #ccc;}
+.logo{height:50px; background:url(../images/register_logo.jpg) left center no-repeat; margin-bottom:10px;}
+.main{padding:3px; margin:0px 0px 25px; height:375px; background:#fff url(../images/register_adv.jpg) right center no-repeat; clear:both;}
+.register{padding:15px 40px 25px 40px;}
+.register li{margin:20px 0px; position:relative;}        
+.register label{line-height:24px; display:inline-block; width:100px; font-size:14px; letter-spacing:2px;}
+.register .cur{border-color:#aaa !important;}
+.register .msg{display:none; border:1px solid #ffd8af; background:rgba(255, 255, 204, 0.5); width:auto !important; font-size:12px; color:#e93a47; padding:5px 12px; margin-left:12px; letter-spacing:0px !important; }
+.register .msg span{position:relative;}
+.register .txt{height:36px; width:300px; border:1px solid #dedede; text-indent:40px;} 
+.register .uname #info{ position:absolute; left:145px; top:5px; width:auto !important; font-size:12px; color:#999;}
+.register .uname #uname { background: url(../images/login_uname.jpg) 8px center no-repeat; letter-spacing:1px; color:#333; position:relative;}
+.register .upwd input { background:#fff url(../images/login_upwd.jpg) 8px center no-repeat; letter-spacing:1px; color:#333;}
+.register .validate {margin:15px 0px !important;}
+.register .validate .txt{height:28px; width:100px; border:1px solid #dedede; text-indent:10px;}
+.register .validate img{width:113px; height:27px; position:relative; top:8px;}
+.register .validate a{color:#005AA0;}
+.register .protocol { text-indent:100px; letter-spacing:1px; }
+.register .protocol span{ position:relative; left:8px; top:-3px;}
+.register .protocol a{color:#306899;}
+.register .button{line-height:36px;}
+.register .button input{background:url(../images/register_btn.jpg); width:273px; height:38px; border:none; cursor:pointer; display:block; position:absolute; left:100px;}                 
+.foot {text-align:center; line-height:21px; color:#6c6c6c; letter-spacing:1px;}
+.foot a{ text-decoration:none; color:#6c6c6c; padding:0px 6px; display:inline-block;}
+.legend {height:36px; background-color:#f7f7f7; line-height:36px; color:#676767;}
+.legend em{ padding:0 12px; }
+.legend label{position:absolute; right:-4px; width:200px; height:38px; background:url(../images/register_login.png) right -2px no-repeat;}

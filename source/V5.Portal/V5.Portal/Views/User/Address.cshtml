@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "收货地址簿";
+}
+@Styles.Render("~/Content/user.css")
+<style type="text/css">
+    .validate_message
+    {
+        color: #ff0000;
+        font-size: 12px;
+    }
+    .uc_address
+    {
+        color: #555;
+        padding-bottom: 36px !important;
+    }
+    .uc_address .uc_address_top
+    {
+        border-bottom: 3px solid #ff5f3e;
+        line-height: 36px;
+        font-size: 16px;
+        text-indent: 12px;
+    }
+    .uc_address .uc_address_item
+    {
+        padding: 6px 12px;
+        background-color: #f8f8f8;
+        margin-top: 12px;
+        position: relative;
+    }
+    .uc_address .uc_address_item .tag
+    {
+        display: block;
+        width: 14px;
+        height: 14px;
+        background-color: #ff5f3e;
+        color: #fff;
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+        font-family: Arial;
+    }
+    .uc_address .uc_address_item .address label
+    {
+        display: block;
+        line-height: 24px;
+        text-indent: 12px;
+    }
+    .uc_address .uc_address_add
+    {
+        margin-top: 20px;
+    }
+    .uc_address .uc_address_add tr
+    {
+        height: 36px;
+    }
+    .uc_address .uc_address_add .txt
+    {
+        width: 186px !important;
+        height: 18px !important;
+        border: 0;
+        border-radius: 3px;
+        padding: 3px 2px 4px 5px;
+        color: #606566;
+        font-size: 12px;
+        background-color: #efefef;
+        display: inline-block;
+    }
+    tr td input[type=text]
+    {
+        width: 186px !important;
+        height: 18px !important;
+        border: 0;
+        border-radius: 3px;
+        padding: 3px 2px 4px 5px;
+        color: #606566;
+        font-size: 12px;
+        background-color: #efefef;
+        display: inline-block;
+    }
+</style>
+<div class="uc_container">
+    <div class="uc">
+        @Html.Partial("UserMenu")
+        <div class="uc_right">
+            <dl class="uc_right_item uc_address">
+                <dt class="uc_address_top">收货地址簿</dt>
+                <dd>
+                    <div id="userInfo">
+                    </div>
+                    <div id="addressText" class="uc_address_item uc_address_add">
+                        <table>
+                            <tr>
+                                <td>
+                                    收货人姓名：
+                                </td>
+                                <td>
+                                    <input type="text" class="validate" validate_type="chineseName" validate_length=""
+                                        validate_message="收货人姓名有误" id="Consignee" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    收货人地址：
+                                </td>
+                                <td>
+                                    <div id="addressContainer">
+                                        <select id="province">
+                                            <option selected="selected">请选择省/直辖市</option>
+                                        </select>
+                                        <select id="city">
+                                            <option selected="selected">请选择市/地区</option>
+                                        </select>
+                                        <select id="country">
+                                            <option selected="selected">请选择市区/县</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 6px;">
+                                        <input type="text" id="Address" /></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    邮编地址：
+                                </td>
+                                <td>
+                                    <input type="text" id="zipcode" class="validate" validate_type="zipcode" validate_length="6"
+                                        validate_message="邮政编码有误" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    手机号码：
+                                </td>
+                                <td>
+                                    <input type="text" class="validate" class="txt" id="Mobile" validate_type="telphone"
+                                        validate_message="请输入正确的手机号码" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    固定号码：
+                                </td>
+                                <td>
+                                    <input type="text" class="txt" value="区号，可以为空" />-<input type="text" id="tel" />-<input
+                                        type="text" class="txt" value="分机号，可以为空" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    电子邮箱：
+                                </td>
+                                <td>
+                                    <input type="text" class="validate" validate_length="50" validate_message="email有误"
+                                        validate_type="email" id="email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    设为默认：
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="defaultcheck" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <a href="##" id="btnSaveAddress" class="button">保存并提交</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/Info/Address.js")
+@Scripts.Render("~/Scripts/Validator.js")
+@Scripts.Render("~/Scripts/Info/AddressLevel.js")
+<script>
+    $(document).ready(function () {
+        Address.Init();
+    }) 
+</script>

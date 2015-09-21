@@ -1,0 +1,101 @@
+﻿@using V5.Portal.Backstage.Controllers.Home
+@using V5.Portal.Backstage.Models.Transact
+@using V5.Portal.Backstage.Utils
+@model V5.Portal.Backstage.Models.Transact.ProductCommentSearchModel
+<div class="search-box">
+    <form>
+    <div>
+        <span>商品名称：</span><span style="margin: 0 0 0 5px;">@Html.EditorFor(model => model.ProductName)</span>
+        <span style="margin-left: 15px;">开始时间：</span><span style="margin: 0 0 0 5px;"> @(Html.Kendo().DateTimePickerFor(model => model.FromDateTime).Name("FromDateTime"))</span>
+        <span style="margin: 0 0 0 15px;">审核状态： </span><span style="margin: 0 0 0 5px;">@Html.Kendo().DropDownListFor(model => model.StatusForSearch).SelectedIndex(1).Name("StatusForSearch").DataSource(ds => ds.Read("GetCommentSearchStatusItems", "Transact")).DataTextField("Text").DataValueField("Value")</span>
+    </div>
+    <div style="margin-bottom: 5px; padding-top: 3px;">
+        <span>评论用户：</span><span style="margin: 0 0 0 5px;">@Html.EditorFor(model => model.UserName)</span>
+        <span style="margin-left: 15px;">结束时间：</span><span style="margin: 0 0 0 9px;">@(Html.Kendo().DateTimePickerFor(model => model.ToDateTime).Name("ToDateTime"))</span>
+        <span style="margin: 0 0 0 35px; padding: 0 15px;">
+            <input class="k-button" style="cursor: pointer; height: 30px; margin-left: 35px;
+                width: 50px;" onclick=" SearchProductComment() " type="button" value="查 询" />
+            <input type="reset" id="clean" value="重 置" class="k-button" style="cursor: pointer;
+                height: 30px; width: 50px" />
+        </span>
+    </div>
+    </form>
+</div>
+@{
+    ViewBag.Title = "评论管理";
+}
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionReplyObj = new PermissionUtility(Context.Session.SessionID);
+    var siteUrl = new HomeController().GetSiteUrl(); 
+}
+@(Html.Kendo().Grid<ProductCommentModel>().Name("productCommentGrid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.ID).Title("选择").Width(90).ClientTemplate("<input autocomplete='off' class='k-checkbox' type='checkbox' name='commentIds'>选择</input>");
+          columns.Bound(c => c.Score).Title("评分").Width(40);
+          columns.Bound(c => c.ProductName).Title("商品名称").Width(140).ClientTemplate("<a href=\"" + siteUrl + "/Product/Item-id-#=ProductID#.htm\" target=\"_blank\" title=#=ProductName# target=\"_blank\" >#=ProductName#</a>");
+          columns.Bound(c => c.Content).Title("评价内容").Width(180);
+          columns.Bound(c => c.UserName).Title("评价用户").Width(80).ClientTemplate("#if(UserName){#<a target='_blank' href='/user/detail/#=UserID#'>#= UserName #</a>#}else{#<a target='_blank' href='/user/detail/#=UserID#'>未知</a>#}#");
+          columns.Bound(c => c.CreateTime).Title("评论时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(100);
+          columns.Bound(c => c.StatusName).Title("状态").Width(60);
+          columns.Bound(c => c.AuditDescription).Title("审核备注").Width(100);
+          columns.Bound(c => c.AuditTime).Title("审核时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(100);
+          columns.Command(command =>
+          {
+              command.Edit().Text("审核").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyProductCommentStatus", "Transact", "Post", true));
+              command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveProductComment", "Transact", "Post", true));
+          }).Title("操作").Width(160).Title("操作").Hidden(permissionObj.Hidden);
+      })
+      //.ToolBar(c =>c.Template("<a class='k-button' onclick='selectAll()'>全选</a><a class='k-button' onclick='batchOperate()'>批量审核</a>"))
+      .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Transact_Product_Comment_Template").Window(edit => edit.Title("编辑")))
+      .Scrollable()
+      .Selectable()
+      .Pageable()
+      .ClientDetailTemplateId("SubTemplate1")
+      .Events(e => e.Edit("onEdit"))
+      .HtmlAttributes(new { style = "height:450px;" })
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .PageSize(20)
+        .
+    Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+        .Model(model => model.Id(c => c.ID))
+        .Read(read => read.Action("QueryProductCommentWithPaging", "Transact").Data("GetCommentSearchData"))
+        .Update(update => update.Action("ModifyProductCommentStatus", "Transact"))
+        .Destroy(destory => destory.Action("RemoveProductComment", "Transact"))
+    )
+        )
+<script id="SubTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ProductCommentReplyModel>().Name("configDeliveryCostGird_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.ID).Width(50).Title("评论编码");
+                  columns.Bound(p => p.UserName).Width(80).Title("回复人");
+                  columns.Bound(p => p.Content).Width(150).Title("回复内容");
+                  columns.Bound(p => p.ToUserName).Width(80).Title("回复谁");
+                  columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(50).Title("创建时间");
+                  columns.Command(command => command.Destroy().Text("删除").HtmlAttributes(permissionReplyObj.GetDisplayAttribute("RemoveProductCommentReply", "Transact", "Post", true))).Width(50).Title("操作").Hidden(permissionReplyObj.Hidden);
+              })
+          .Selectable()
+          .Scrollable()
+          .HtmlAttributes(new { style = "height:450px;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+                                        .Model(model => model.Id(d => d.ID))
+                                        .Destroy(destory => destory.Action("RemoveProductCommentReply", "transact"))
+                                        .Read(read => read.Action("QueryByProductCommentID", "transact", new { pcId = "#=ID#" }))
+          ).ToClientTemplate()
+
+          )
+</script>
+
+@*<div id="batchCommmentWindow">
+    @Html.Kendo().Window().Name("batchCheck").Draggable(true).Title("批量审核").Modal(true).Width(380).Height(420).Content(
+        @<text>
+            @Html.Action("AddUser", "Transact")
+        </text>)
+</div>*@
+

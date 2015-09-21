@@ -1,0 +1,815 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LoginController.cs" company="www.gjw.com">
+//   (C) 2013 www.gjw.com. All rights reserved.
+// </copyright>
+// <summary>
+//   会员登录控制器.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace V5.Portal.Controllers
+{
+    using System;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Web.Mvc;
+
+    using V5.DataContract.User;
+    using V5.Library;
+    using V5.Library.Logger;
+    using V5.Library.OAuth2.OAuths;
+    using V5.Library.Security;
+    using V5.Library.Security.Regular;
+    using V5.Portal.Common;
+    using V5.Portal.Models;
+    using V5.Service.User;
+
+    /// <summary>
+    /// 会员登录控制器.
+    /// </summary>
+    public class LoginController : BaseController
+    {
+        #region Constants and Fields
+
+        /// <summary>
+        /// 会员数据访问服务类.
+        /// </summary>
+        private UserService userService;
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// 获取登录安全码
+        /// </summary>
+        /// <returns>
+        /// 执行方法结果
+        /// </returns>
+        [OutputCache(Duration = 0)]
+        public ActionResult GetSecurityCode()
+        {
+            string securityCode;
+            var security = SecurityCode.CreateSecurityCode(out securityCode);
+            this.Session[this.Session.SessionID] = securityCode;
+	        this.UserSession.Name = securityCode;
+	        MongoDBHelper.UpdateModel(UserSession, u => u.SessionId == UserSession.SessionId);
+            return this.File(security.ToArray(), @"image/jpeg");
+        }
+
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Index()
+        {
+            var rsa = new RSACryptoServiceProvider();
+            this.Session["private_key"] = rsa.ToXmlString(true); // 将私钥存在Session
+	        this.UserSession.ExtObject = rsa.ToXmlString(true);
+			MongoDBHelper.UpdateModel<UserSession>(this.UserSession, u => u.SessionId == this.UserSession.SessionId);
+            RSAParameters parameter = rsa.ExportParameters(true); // 把公钥适当转换，准备发往客户端
+            this.ViewBag.PublicKeyExponent = this.BytesToHexString(parameter.Exponent);
+            this.ViewBag.PublicKeyModulus = this.BytesToHexString(parameter.Modulus);
+            return this.View();
+        }
+
+        /// <summary>
+        /// 注册页面.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Register()
+        {
+            var rsa = new RSACryptoServiceProvider();
+            this.Session["private_key"] = rsa.ToXmlString(true); // 将私钥存在Session
+			this.UserSession.ExtObject = rsa.ToXmlString(true);
+            RSAParameters parameter = rsa.ExportParameters(true); // 把公钥适当转换，准备发往客户端
+            this.ViewBag.PublicKeyExponent = this.BytesToHexString(parameter.Exponent);
+            this.ViewBag.PublicKeyModulus = this.BytesToHexString(parameter.Modulus);
+
+	        MongoDBHelper.UpdateModel<UserSession>(this.UserSession, u => u.SessionId == this.UserSession.SessionId);
+            return this.View("Register");
+        }
+
+        /// <summary>
+        /// 注册页面.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult RegisterResult()
+        {
+            try
+            {
+                var userName = Request.Form["n"];
+                var nickName = Request.Form["u"];
+                var pwdToDecrypt = Request.Form["p"];
+                var verify = Request.Form["v"];
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return this.Json(new AjaxResponse(0, "用户名不能为空"));
+                }
+
+                if (string.IsNullOrEmpty(nickName))
+                {
+                    return this.Json(new AjaxResponse(0, "用户名不能为空"));
+                }
+
+                if (string.IsNullOrEmpty(pwdToDecrypt))
+                {
+                    return this.Json(new AjaxResponse(0, "密码不能为空"));
+                }
+
+                if (string.IsNullOrEmpty(verify))
+                {
+                    return this.Json(new AjaxResponse(0, "验证码不能为空"));
+                }
+
+                if (this.Session[this.Session.SessionID] == null
+                    || verify != this.Session[this.Session.SessionID].ToString())
+                {
+                    LogUtils.Log(
+                        "Session:" + this.Session.SessionID + "；Server:" + this.Session[this.Session.SessionID]
+                        + ";Clien:" + verify,
+                        "reg",
+                        Category.Error);
+                    return this.Json(new AjaxResponse(0, "验证码输入有误"));
+                }
+
+                this.userService = new UserService();
+                var user = this.userService.QueryLogin(userName);
+                if (user != null)
+                {
+                    return this.Json(new AjaxResponse(0, "用户名已存在"));
+                }
+
+                user = new User();
+                if (userName.Contains("@"))
+                {
+                    if (RegexValidate.IsEmailAddress(userName))
+                    {
+                        user.Email = userName;
+                    }
+                    else
+                    {
+                        return this.Json(new AjaxResponse(0, "邮箱格式有误"));
+                    }
+                }
+                else
+                {
+                    if (RegexValidate.IsMobilePhone(userName))
+                    {
+                        user.Mobile = userName;
+                    }
+                    else
+                    {
+                        return this.Json(new AjaxResponse(0, "手机格式有误"));
+                    }
+                }
+
+                var rsa = new RSACryptoServiceProvider();
+                //rsa.FromXmlString((string)Session["private_key"]);
+	            rsa.FromXmlString(this.UserSession.ExtObject);
+                byte[] result = rsa.Decrypt(HexStringToBytes(pwdToDecrypt), false); // 用私钥将密码解密出来
+                var enc = new ASCIIEncoding();
+                user.LoginPassword = enc.GetString(result);
+                user.NickName = nickName;
+                user.Status = 1;
+                user.CreateTime = DateTime.Now;
+                user.LastLoginTime = DateTime.Now;
+                user.ID = this.userService.AddUser(user);
+                if (user.ID > 0)
+                {
+                    return this.Json(new AjaxResponse(1, "注册成功"));
+                }
+
+                return this.Json(new AjaxResponse(0, "注册失败！"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, exception.Message));
+            }
+        }
+
+        /// <summary>
+        /// 会员登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult Login()
+        {
+            try
+            {
+                var userName = Request.Form["n"];
+                var pwdToDecrypt = Request.Form["p"]; 
+                var verify = Request.Form["v"];
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return this.Json(new AjaxResponse(0, "用户名不能为空"));
+                }
+
+                if (string.IsNullOrEmpty(pwdToDecrypt))
+                {
+                    return this.Json(new AjaxResponse(0, "密码不能为空"));
+                }
+
+                if (string.IsNullOrEmpty(verify))
+                {
+                    return this.Json(new AjaxResponse(0, "验证码不能为空"));
+                }
+                
+                if (string.IsNullOrWhiteSpace(this.UserSession.Name)
+					|| verify != this.UserSession.Name)
+                {
+
+                    LogUtils.Log(
+                        "Session:" + this.Session.SessionID + "；Server:" + this.Session[this.Session.SessionID]
+                        + ";Clien:" + verify,
+                        "reg",
+                        Category.Error);
+                    return this.Json(new AjaxResponse(0, "验证码输入有误"));
+                }
+
+                var visitorKey = this.Request.Cookies.Get(ConstantParams.VisitorKeyName);
+                var session = MongoDBHelper.GetModel<UserSession>(u => u.VisitorKey == visitorKey.Value);
+
+                if (session != null)
+                {
+                    if (session.LoginErrCount >= 5 && (DateTime.Now - session.LoginTime).TotalMilliseconds < 300000)
+                    {
+                        return this.Json(new AjaxResponse(0, "密码错误5次,5分钟后再试"));
+                    }
+                }
+
+<<<<<<< .mine
+                var rsa = new RSACryptoServiceProvider();
+                //rsa.FromXmlString((string)Session["private_key"]);
+	            rsa.FromXmlString(this.UserSession.ExtObject);
+                byte[] result = rsa.Decrypt(HexStringToBytes(pwdToDecrypt), false); // 用私钥将密码解密出来
+                var enc = new ASCIIEncoding();
+
+                //var strPwdMD5 = Encrypt.HashByMD5(enc.GetString(result)); // 将RSA解密出来的密码用MD5加密
+                var strPwdMD5 = enc.GetString(result);
+=======
+                string strPwdMD5;
+                try
+                {
+                    var rsa = new RSACryptoServiceProvider();
+                    rsa.FromXmlString((string)Session["private_key"]);
+                    byte[] result = rsa.Decrypt(HexStringToBytes(pwdToDecrypt), false); // 用私钥将密码解密出来
+                    var enc = new ASCIIEncoding();
+                    strPwdMD5 = enc.GetString(result);
+                }
+                catch
+                {
+                    return this.Json(new AjaxResponse(0, "密码错误"));
+                }
+                
+>>>>>>> .r1823
+                this.userService = new UserService();
+                var user = this.userService.QueryLogin(userName);
+
+                if (user == null)
+                {
+                    return this.Json(new AjaxResponse(0, "用户名不存在"));
+                }
+
+                session = session ?? new UserSession();
+                session.VisitorKey = visitorKey != null ? visitorKey.Value : Guid.NewGuid().ToString();
+                
+                // todo: 由于后台添加的会员密码只加密过一次，而前台注册的会员密码加密过两次，需统一
+                if (string.Compare(strPwdMD5, user.LoginPassword, StringComparison.OrdinalIgnoreCase) == 0
+                    || string.Compare(
+                        Encrypt.HashByMD5(strPwdMD5),
+                        user.LoginPassword,
+                        StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    session.UserID = user.ID;
+                    session.Name = user.Name;
+                    session.LoginName = user.LoginName;
+                    session.ShowName = user.NickName ?? (user.LoginName ?? (user.Email ?? user.Mobile));
+                    session.LastVisitTime = DateTime.Now;
+                    session.LoginTime = DateTime.Now;
+
+                    // 更新用户的会话Session
+                    MongoDBHelper.RemoveModel<UserSession>(u => u.UserID == user.ID);
+                    MongoDBHelper.UpdateModel(session, u => u.VisitorKey == session.VisitorKey);
+
+                    // 更新购物车
+					var anonyCart = MongoDBHelper.GetModel<UserCartModel>(u => u.VisitorKey == session.VisitorKey);
+
+					var userCart = MongoDBHelper.GetModel<UserCartModel>(u => u.UserId == user.ID);
+
+	                var cart = userCart != null && userCart.ProductItems.Count > 0 ? userCart : anonyCart;
+
+					if (cart != null)
+                    {
+                        // 此用户已经有购物车数据
+	                    if (cart.UserId > 0) 
+	                    {
+		                    if (anonyCart != null && anonyCart.ProductItems.Count > 0)
+		                    {
+			                    // 购物车商品合并
+			                    foreach (var productItem in anonyCart.ProductItems)
+			                    {
+				                    var product = cart.ProductItems.FirstOrDefault(p => p.ProductID == productItem.ProductID);
+				                    if (product != null)
+				                    {
+										// 若原先购物车中已有此商品，则将新数据替代老数据 
+				                        product.GoujiuPrice = productItem.GoujiuPrice;
+				                        product.Quantity = productItem.Quantity;
+				                        product.Discount = productItem.Discount;
+				                    }
+				                    else
+				                    {
+					                    cart.ProductItems.Add(productItem);
+				                    }
+			                    }
+		                    }
+
+							cart.VisitorKey = session.VisitorKey; // 更新购物车的访问标示
+	                    }
+	                    else
+	                    {
+		                    cart.UserId = user.ID; 
+	                    }
+
+	                    MongoDBHelper.RemoveModel<UserCartModel>(
+							u => u.UserId == user.ID || u.VisitorKey == session.VisitorKey);
+
+	                    MongoDBHelper.UpdateModel(cart, u => u.VisitorKey == session.VisitorKey);
+                    }
+
+                    this.userService.ModifyUserLastLoginTime(user.ID); // 更新会员的最后登录时间
+                    return this.Json(new AjaxResponse(1, "登录成功"));
+                }
+
+                session.UserID = user.ID;
+                session.LastVisitTime = DateTime.Now;
+                session.LoginTime = DateTime.Now;
+                session.LoginErrCount += 1;
+
+                // 更新用户的会话Session
+                MongoDBHelper.UpdateModel(session, u => u.VisitorKey == session.VisitorKey);
+
+                return this.Json(new AjaxResponse(0, "密码不正确"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, exception.Message));
+            }
+        }
+        
+        /// <summary>
+        /// 新浪登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult SinaLogin()
+        {
+            var sina = new Sina();
+            var url = sina.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 新浪登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult SinaReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var sina = new Sina();
+                var accredit = sina.Authorize(code);
+                if (accredit)
+                {
+                    this.SaveUserInfo(sina.openID, sina.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// QQ登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult QQLogin()
+        {
+            var qq = new QQ();
+            var url = qq.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 接收QQ登录返回结果.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult QQReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var qq = new QQ();
+                var accredit = qq.Authorize(code);
+                if (accredit)
+                {
+                    this.SaveUserInfo(qq.openID, qq.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 人人网登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult RenRenLogin()
+        {
+            var wy = new RenRen();
+            var url = wy.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 接收人人网登录返回结果.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult RenRenReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var rr = new RenRen();
+                var accredit = rr.Authorize(code);
+                if (accredit)
+                {
+                    // 保存登录信息
+                    this.SaveUserInfo(rr.openID, rr.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 网易.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult WangYiLogin()
+        {
+            var wy = new Wangyi();
+            var url = wy.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 接收网易登录返回结果.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult WangyiReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var wy = new Wangyi();
+                var accredit = wy.Authorize(code);
+                if (accredit)
+                {
+                    // 保存登录信息
+                    this.SaveUserInfo(wy.openID, wy.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 开心网登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult KaiXinLogin()
+        {
+            var kaixin = new KaiXin();
+            var url = kaixin.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 开心网登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult KaiXinReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var kx = new KaiXin();
+                var accredit = kx.Authorize(code);
+                if (accredit)
+                {
+                    // 保存登录信息
+                    this.SaveUserInfo(kx.openID, kx.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 搜狐登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult SohuLogin()
+        {
+            var sohu = new Sohu();
+            var url = sohu.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 搜狐网登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult SohuReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var sh = new Sohu();
+                var accredit = sh.Authorize(code);
+                if (accredit)
+                {
+                    // 保存登录信息
+                    this.SaveUserInfo(sh.openID, sh.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 淘宝登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult TaoBaoLogin()
+        {
+            var taobao = new TaoBao();
+            var url = taobao.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 搜狐网登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult TaoBaoReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var tb = new TaoBao();
+                var accredit = tb.Authorize(code);
+                if (accredit)
+                {
+                    // 保存登录信息
+                    this.SaveUserInfo(tb.openID, tb.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 豆瓣登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult DouBanLogin()
+        {
+            var douban = new DouBan();
+            var url = douban.OAuthUrl;
+            return this.Redirect(url);
+        }
+
+        /// <summary>
+        /// 豆瓣社区登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult DouBanReturn()
+        {
+            if (Request.QueryString["code"] != null)
+            {
+                string code = Request.QueryString["code"];
+                var douban = new DouBan();
+                var accredit = douban.Authorize(code);
+                if (accredit)
+                {
+                    // 保存登录信息
+                    this.SaveUserInfo(douban.openID, douban.nickName);
+                }
+                else
+                {
+                    return this.View("Index");
+                }
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// 退出登录.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [HttpPost]
+        public JsonResult Exit()
+        {
+            try
+            {
+                // 先获取VisitorKey
+                var visitorKey = this.Request.Cookies.Get(ConstantParams.VisitorKeyName);
+                MongoDBHelper.DeleteModel<UserSession>(u => u.VisitorKey == visitorKey.Value);
+                return this.Json(new AjaxResponse(1, "成功退出"));
+            }
+            catch (Exception exception)
+            {
+                return this.Json(new AjaxResponse(0, exception.Message));
+            }
+        }
+        #endregion
+
+        #region Method
+
+        /// <summary>
+        /// 互联登录保存会员信息.
+        /// </summary>
+        /// <param name="openId">
+        /// The open id.
+        /// </param>
+        /// <param name="nickName">
+        /// The nick name.
+        /// </param>
+        private void SaveUserInfo(string openId, string nickName)
+        {
+            this.userService = new UserService();
+            var user = this.userService.QueryByOpenID(openId);
+
+            // 查询是否是第一次登录购酒网
+            if (user == null)
+            {
+                // 保存会员信息到数据库
+                user = new User
+                           {
+                               OpenID = openId,
+                               Email = openId + "@gjw.com",
+                               NickName = nickName,
+                               Status = 1,
+                               CreateTime = DateTime.Now,
+                               LoginPassword = Encrypt.HashByMD5("123456")
+                           };
+                user.ID = this.userService.AddUser(user);
+            }
+
+            // 保存会员信息到Sesion
+            var session = new UserSession { UserID = user.ID, ShowName = nickName };
+
+            // 先获取VisitorKey
+            var visitorKey = this.Request.Cookies.Get(ConstantParams.VisitorKeyName);
+            session.VisitorKey = visitorKey != null ? visitorKey.Value : Guid.NewGuid().ToString();
+
+            // 更新用户的会话Session
+            MongoDBHelper.UpdateModel(session, u => u.VisitorKey == session.VisitorKey);
+
+            // 更新购物车
+            var userCart = MongoDBHelper.GetModel<UserCartModel>(u => u.VisitorKey == session.VisitorKey);
+            if (userCart != null)
+            {
+                userCart.UserId = session.UserID;
+                MongoDBHelper.UpdateModel(userCart, u => u.VisitorKey == session.VisitorKey);
+            }
+        }
+
+        /// <summary>
+        /// The bytes to hex string.
+        /// </summary>
+        /// <param name="input">
+        /// The input.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        private string BytesToHexString(byte[] input)
+        {
+            var hexString = new StringBuilder(64);
+
+            foreach (byte t in input)
+            {
+                hexString.Append(string.Format("{0:X2}", t));
+            }
+
+            return hexString.ToString();
+        }
+
+        /// <summary>
+        /// The hex string to bytes.
+        /// </summary>
+        /// <param name="hex">
+        /// The hex.
+        /// </param>
+        /// <returns>
+        /// byte数组.
+        /// </returns>
+        public static byte[] HexStringToBytes(string hex)
+        {
+            if (hex.Length == 0)
+            {
+                return new byte[] { 0 };
+            }
+
+            if (hex.Length % 2 == 1)
+            {
+                hex = "0" + hex;
+            }
+
+            var result = new byte[hex.Length / 2];
+
+            for (var i = 0; i < hex.Length / 2; i++)
+            {
+                result[i] = byte.Parse(hex.Substring(2 * i, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+            }
+
+            return result;
+        }
+
+        #endregion
+    }
+}

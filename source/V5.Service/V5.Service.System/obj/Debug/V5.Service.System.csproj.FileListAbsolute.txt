@@ -1,0 +1,5 @@
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.Service.System.dll
+F:\GJW_V5\source\V5.Portal\V5.Portal.Backstage\bin\V5.Service.System.pdb
+F:\GJW_V5\source\V5.Service\V5.Service.System\obj\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\V5.Service\V5.Service.System\obj\Debug\V5.Service.System.dll
+F:\GJW_V5\source\V5.Service\V5.Service.System\obj\Debug\V5.Service.System.pdb

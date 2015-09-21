@@ -1,0 +1,7 @@
+﻿@model V5.Portal.Backstage.Models.Transact.Order.OrderModel
+@Html.ValidationSummary(true)
+
+<div>
+    @Html.TextAreaFor(model => model.Description, new{@style="width: 400px; height: 120px"})
+    @Html.ValidationMessageFor(model=>model.Description)
+</div>

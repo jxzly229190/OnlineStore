@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "用户中心";
+}
+
+@using V5.Portal.Common
+@model V5.DataContract.User.User
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">    
+    .uc_right .uc_base dt{float:left;width:112px; height:112px; padding:6px; margin-right:12px;}
+    .uc_right .uc_base_list {float:left;width:800px;}
+    .uc_right .uc_base_item{line-height:38px; border-bottom:1px dashed #ccc; letter-spacing:1px; color:#353535; text-indent:12px;}
+        
+    /*
+    .uc_right .uc_base_manager a{display:inline-block; position:relative; text-indent:24px;}
+    .uc_right .uc_base_manager em{background:url(images/uc_icon.gif) no-repeat; width:22px; height:22px; display:block; position:absolute; left:0px; top:8px;}
+    .uc_right .uc_base_manager .personal{background-position:-72px 0px;}
+    .uc_right .uc_base_manager .personal{background-position:-72px 0px;}
+    .uc_right .uc_base_manager .email{background-position:-72px 0px;}
+    .uc_right .uc_base_manager .telphone{background-position:-72px -36px;}
+    */
+    .uc_right .uc_base_info {clear:both;padding-top:12px; }
+    .uc_right .uc_base_info ul{background-color:#f8f8f8; padding:6px;}
+    .uc_right .uc_base_info li{ float:left; width:45%; line-height:24px; text-decoration:none; color:#666; list-style-type:square; margin-left:32px;}        
+    .uc_right .uc_base_user{background-color:#e5e5e5; width:100%; height:100%; position:relative;}    
+    .uc_right .uc_base_user img{ width:112px; height:92px;}
+    .uc_right .uc_base_user a{position:absolute; background-color:#9e9e9e; height:20px; text-align:center; color:#fff; width:100%; bottom:0px; left:0px; text-decoration:none; padding:0px;}
+        
+    .uc_right .image { text-align: left !important;}
+    .uc_right .image a{ display:inline-block !important; }
+        
+    .uc_right .uc_order dt{line-height:36px; font-size:16px; position:relative;}
+    .uc_right .uc_order dt a{ font-size:12px; position:absolute; right:10px; top:3px;}
+</style>
+<script src="../../Scripts/table.js" type="text/javascript"></script>
+<script>
+    function GetCell(fcolumn, fdata, fvalue) {
+        var html = "";
+        switch (fcolumn.name) {
+            case "TotalMoney":
+                html += "<div class=\"amt\" onclick=\"\">&#65509;" + table.FormatCurrency(fdata.TotalMoney) + "</div><div class=\"status\">" + fdata.PaymentMethodName + "</div><a class=\"button\" href=\"/Order/Payment?ono=" + fdata.OrderCode + "\" target =\"_blank\">" + (fdata.Status == 100 ? "付款" : "") + "</a>";
+                break;
+            case "StatusName":
+                html += "<div class=\"status\" id='status_" + fdata.ID + "' > " + fvalue + "</div>";
+                break;
+            case "Products":
+                for (var i = 0; i < fvalue.length; i++) {
+                    html += "<a target='_blank' href=\"/Product/Item-id-" + fvalue[i].ProductID + ".htm\" title=\"" + fvalue[i].ProductName + "\"><img src=\"" + fvalue[i].Path + "\" alt=\"\"/></a>";
+                }
+                break;
+            case "$Button$":
+                html += "<a href=\"/Order/OrderDetail?ono=" + fdata.OrderCode + "\" class=\"button\" target =\"_blank\" >查看</a>";
+                if (fdata.Status == 100 || (fdata.Status == 0 && fdata.PaymentMethodID > 0)) {
+                    //只有未支付的订单才能取消
+                    html += "<a href=\"javascript:;\" onclick=\"cancel('" + fdata.OrderCode + "',this,$('#status_" + fdata.ID + "'))\" name='cancel_btn' index='" + fdata.OrderCode + "' class=\"button\">取消</a>";
+                }
+                //else if (fvalue.Status == 100 || fvalue.Status == 0) {
+                //    html += "<a href=\"###\" class=\"button\">申请退换货</a>";
+                //}
+
+                var params = "";
+                for (var i = 0; i < fdata.Products.length; i++) {
+                    if (fdata.Products[i].TransactPrice > 0) {
+                        params += "proIds=" + fdata.Products[i].ProductID + "&";
+                        params += "quantity=" + fdata.Products[i].Quantity + "&";
+                    }
+                }
+                if (params.length > 0) {
+                    html += "<a href=\"/Order/OrderInfo?" + params + "\" class=\"button\">还要买</a>";
+                }
+                break;
+        }
+        return html;
+    }
+
+    $(function() {
+        var columnType = table.columnType;
+        var columnAlign = table.columnAlign;
+        var option = {};
+
+        //定义列信息
+        option.columns = [
+            { name: "OrderCode", desc: "订单号", align: columnAlign.left, type: columnType.Text, width: 80 },
+            { name: "Products", desc: "商品", align: columnAlign.left, type: columnType.Custom, fn: GetCell },
+            { name: "TotalMoney", desc: "价格", align: columnAlign.center, type: columnType.Custom, fn: GetCell, width: 100 },
+            { name: "CreateTime", desc: "时间", align: columnAlign.center, type: columnType.DateTime, width: 100 },
+            { name: "StatusName", desc: "状态", align: columnAlign.center, type: columnType.Custom, fn: GetCell, width: 100 },
+            { name: "$Button$", desc: "操作", align: columnAlign.center, type: columnType.Custom, fn: GetCell, width: 100 }];
+
+        //定义表格容器
+        option.container = "uc_order_table";
+
+        //取数数据源
+        option.pageUrl = "/User/GetOrderData";
+
+        //自定义单元格
+        option.getCustomCell = GetCell;
+
+        //是否显示分页
+        option.showPage = false;
+
+        //设置分页大小
+        option.pageSize = 3;
+
+        //初始化
+        table.Init(option);
+    });
+
+    function cancel(ono, sender, sobj) {
+        //绑定操作事件
+        if (!confirm("您确定要取消此订单吗？")) {
+            return false;
+        }
+        var cancelBtn = $(sender);
+        $.post("/Order/Cancel", { ono: ono, orderCancelCauseID: 0 }, function (res) {
+            if (res.State == 1) {
+                sobj.text("已取消");
+                cancelBtn.remove();
+                alert("取消成功");
+            } else {
+                alert("操作失败，原因：" + res.Message);
+            }
+        });
+    }
+</script>
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_base">
+            <dt class="uc_shadow"><div class="uc_base_user"><img src="@Html.DisplayFor(u=>u.Head)" /><a href="/User/Info">设置头像</a></div></dt>
+            <dd class="uc_base_list">
+                <div class="uc_base_item">您好，<a href="##">@Html.DisplayFor(u=>u.NickName)</a>目前可用积分：1000 未到账积分50 进入<a href="###" class="button">积分兑换</a></div>
+                <div class="uc_base_item uc_base_manager">
+                    <a href="/User/Info" class="button" ><em class="personal"></em>修改个人资料</a>
+                    <a href="/User/Address" class="button" ><em class="address"></em>收货地址管理</a>
+                    @if (!Model.EmailValidate)
+                    {
+                        <a href="###" class="button" ><em class="email"></em>未验证邮箱</a>
+                    }
+                    @if (!Model.MobileValidate)
+                    {
+                        <a href="###" class="button" ><em class="telphone"></em>未验证手机</a>
+                    }
+                </div>
+            </dd>
+            <dd class="uc_base_info">
+                <ul>                    
+                    <li>总消费额：@Html.DisplayFor(u=>u.TotalExpenses) 元</li>
+                    <li>已完成订单：@Html.DisplayFor(u=>u.OrderCount) 笔</li>
+                    <li>未完成订单：<a href="###">@Html.DisplayFor(u=>u.UnFinishedCount) 笔</a></li>
+                    <li>咨询信息：无</li>
+                    <li>带评价商品：0个</li>
+                    <li>我的电子券：<a href="###">@Html.DisplayFor(u=>u.CouponCount) 张</a></li>
+                    <div class="clear"></div>
+                </ul>
+            </dd>
+        </dl>
+        <dl class="uc_right_item uc_order">
+            <dt>近期订单<a href="/User/MyOrder" >查看所有订单</a></dt>
+            <dd id="uc_order_table">
+                
+            </dd>            
+        </dl>
+        @Html.Action("GuessLike","Home")
+    </div>
+    <div class="clear"></div>
+</div>
+</div>

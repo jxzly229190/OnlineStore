@@ -1,0 +1,76 @@
+﻿@using V5.Portal.Backstage.Models.Transact
+@using V5.Portal.Backstage.Utils
+@{
+   var permissionObj = new PermissionUtility(Context.Session.SessionID);
+   var permissionRatioObj = new PermissionUtility(Context.Session.SessionID);
+}
+
+@(Html.Kendo().Grid<CpsModel>().Name("cpsGird")
+    .Columns(columns =>
+        {
+            columns.Bound(c => c.Name).Title("站点名称").Width(150);
+            columns.Bound(c => c.Company).Title("公司名称").Width(250);
+            columns.Bound(c => c.Linkman).Title("联系人").Width(150);
+            columns.Bound(c => c.CreateTime).Title("创建时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(160);
+            columns.Command(command =>
+            {
+                command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyCps", "Transact", "Post",true));
+                command.Custom("查看").Click("ShowDetails");
+            }).Title("操作").Width(160).Hidden(permissionObj.Hidden);
+        })
+        .ToolBar(toolbar => toolbar.Create().Text("添加CPS").HtmlAttributes(permissionObj.GetDisplayAttribute("AddCps", "Transact", "Post", false))).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Transact_Cps_Template").Window(edit => edit.Title("编辑")))
+    .Scrollable()
+    .ClientDetailTemplateId("SubTemplate1")
+    .Events(e => e.Edit("onEditCps"))
+    .Selectable(selectable => selectable
+            .Mode(GridSelectionMode.Multiple)
+            .Type(GridSelectionType.Row))
+    .HtmlAttributes(new { style = "height:450px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(c => c.ID))
+        .Read(read => read.Action("QueryCps", "Transact"))
+        .Create(create => create.Action("AddCps", "Transact"))
+        .Update(update => update.Action("ModifyCps", "Transact"))
+        .Destroy(destory => destory.Action("RemoveCps", "Transact"))
+    )
+)
+@(Html.Kendo().Window().Name("CpsDetails")
+    .Title("Cps详情")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(350)
+    .Height(400)
+)
+<script id="SubTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<CpsCommissionRatioModel>().Name("cpsGird_#=ID#")
+    .Columns(columns =>
+     {
+        columns.Bound(c => c.ProductCategoryName).Width(70).Title("商品类别");
+        columns.Bound(c => c.CommissionRatio).Width(110).Title("佣金比例");
+        columns.Bound(c => c.CreateTime).Width(200).Format("{0:yyyy/MM/dd HH:mm:ss}").Title("创建时间");
+        columns.Command(command => command.Edit().Text("编辑").HtmlAttributes(permissionRatioObj.GetDisplayAttribute("ModifyCommissionRatio", "Transact", "Post", true))).Title("操作").Width(150).Hidden(permissionRatioObj.Hidden);
+     })
+    .ToolBar(toolbar => toolbar.Create().Text("添加佣金比例信息").HtmlAttributes(permissionRatioObj.GetDisplayAttribute("AddCommissionRatio", "Transact", "Post",false))).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Transact_Cps_CommissionRatio_Template").Window(edit => edit.Title("编辑")))
+    .Scrollable()
+    .Selectable(selectable => selectable
+            .Mode(GridSelectionMode.Multiple)
+            .Type(GridSelectionType.Cell))
+    .Events(e => e.Edit("onEditCps"))
+    .HtmlAttributes(new { style = "height:450px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(d => d.ID))
+        .Create(create => create.Action("AddCommissionRatio", "Transact", new { cps_ID = "#=ID#" }))
+        .Destroy(destory => destory.Action("RemoveCommissionRatio", "Transact"))
+        .Update(update => update.Action("ModifyCommissionRatio", "Transact"))
+        .Read(read => read.Action("QueryCommissionRatio", "Transact", new { cpsID = "#=ID#" }))
+    ).ToClientTemplate()
+)
+</script>

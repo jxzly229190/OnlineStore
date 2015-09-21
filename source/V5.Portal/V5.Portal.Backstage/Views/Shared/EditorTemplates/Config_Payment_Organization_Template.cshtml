@@ -1,0 +1,31 @@
+﻿@model V5.Portal.Backstage.Models.Configuration.ConfigPaymentOrganizationModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    机构名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    支付类别：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.PaymentTypeID).Name("PaymentTypeID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryTypeSelectItems", "Config"))).DataTextField("Name").DataValueField("ID"))
+    @Html.ValidationMessageFor(model => model.PaymentTypeID)
+</div>
+<div class="editor-label">
+    网址URL：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.URL, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.URL)
+</div>
+<div class="editor-label">
+    图片URL：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.ImageURL, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.ImageURL)
+</div>

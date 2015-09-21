@@ -1,0 +1,68 @@
+﻿@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.System
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<RoleModel>()
+    .Name("roleGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.Name).Title("角色名称");
+        columns.Bound(u => u.CreateTime).Title("创建时间").Format("{0: yyyy-MM-dd hh:mm:ss}");
+        columns.Command(
+            command => command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("System.RemoveRole.Post"))
+        ).Width(300).Hidden(permissionObj.Hidden);
+    })
+            .ToolBar(toolbar => toolbar.Template("<a type='button' class='k-button k-button-icontext k-grid-add' style='" + permissionObj.GetDisplayAttribute("System.AddRole.Post") + "' onclick='showAddRoleWindow()' id='AddRoleButton'>"
+                                                    +"<span class='k-icon k-add'></span>添加角色"
+                                                    + "</a>"))
+        .Pageable()
+        .Scrollable()
+        .Selectable(seleted => seleted.Type(GridSelectionType.Row))
+        .Events(e => e.Edit("onEdit"))
+        .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(d => d.ID))
+        .Create(update => update.Action("AddRole", "System"))
+        .Destroy(update => update.Action("RemoveRole", "System"))
+        .Read(read => read.Action("QueryRole", "System"))
+        )
+              )
+<div class="k-overlay" style="display: none; z-index: 10002; opacity: 0.5;">
+</div>
+<div style="display: none;">
+    @Html.Kendo().Window().Name("addRoleWindow").Draggable(true).Title("新建").Height(350).Width(425).Content(@<text>
+                                                                                                                 <div class="k-edit-form-container" style="z-index: 10003;">
+                                                                                                                     <div style="height: 40px">
+                                                                                                                         <div class="editor-label">
+                                                                                                                             角色名称：</div>
+                                                                                                                         <div class="editor-field">
+                                                                                                                             <input type="text" class="k-textbox" name="roleName" id="roleName" /></div>
+                                                                                                                     </div>
+                                                                                                                     <div style="height: 250px; clear: both">
+                                                                                                                         <div class="editor-label">
+                                                                                                                             选择权限：</div>
+                                                                                                                         <div class="editor-field">
+                                                                                                                             @(Html.Kendo().TreeView().Name("treeview").Checkboxes(checkboxes =>
+                                                                                                                         {
+                                                                                                                             checkboxes.Name("checkedItems");
+                                                                                                                             checkboxes.CheckChildren(true);
+                                                                                                                         }).DataTextField("Name").HtmlAttributes(new { style = "font-size: 14px;" })
+                                                                                                                                   .DataSource(dataSource => dataSource.Read(read => read.Action("QueryPermissionTreeViewItems", "System"))).Events(events => events.Select("onMenuTreeViewSelect")))
+                                                                                                                         </div>
+                                                                                                                     </div>
+                                                                                                                 </div>
+                                                                                                                 <div class="k-edit-buttons k-state-default" style="clear: both; text-align: right; border-width: 1px 0 0; border-style: solid; position: relative; bottom: -1em; padding: .6em;">
+                                                                                                                     <a class="k-button k-button-icontext k-grid-update" onclick="addRole()" href="#" >添加</a>
+                                                                                                                     <a class="k-button k-button-icontext k-grid-cancel" onclick="closeAddRoleWindow()"
+                                                                                                                        href="#">取消</a>
+                                                                                                                 </div>
+                                                                                                             </text>).Events(events => events.Close("close"));
+</div>
+<style type="text/css">
+    .k-checkbox { margin-top: 2px; }
+</style>

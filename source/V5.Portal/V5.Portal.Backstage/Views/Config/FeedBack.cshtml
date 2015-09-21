@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "FeedBack";
+}
+@using System.ComponentModel
+@using V5.DataAccess.Advertise
+@model IEnumerable<V5.Portal.Backstage.Models.User.FeedBackModel>
+<style type="text/css">
+    *
+    {
+        margin: 0 auto;
+    }
+    #feedheader
+    {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    input
+    {
+        width: 100px;
+        margin-left: 5px;
+    }
+</style>
+<script src="../../Scripts/Backstage/User/FeedBack.js" type="text/javascript"></script>
+<script type="text/javascript">
+   
+
+    
+   
+</script>
+<div id="information" style="display: none">
+    <input type="button" value="返回" class="k-button" id="comeBack" />
+</div>
+<div id="feedlist">
+    <div id="feedheader">
+        类型：@Html.Kendo().DropDownList().Name("feedType").BindTo(new List<SelectListItem> { new SelectListItem { Text = "选 择类型", Value = "0" }, new SelectListItem { Text = "网站浏览", Value = "1" }, new SelectListItem { Text = "注册登陆", Value = "2" }, new SelectListItem { Text = "商品引进需求", Value = "3" }, new SelectListItem { Text = "退换货", Value = "4" }, new SelectListItem { Text = "客户服务", Value = "5" }, new SelectListItem { Text = "访问速度或故障", Value = "6" }, new SelectListItem { Text = "广告相关", Value = "7" }, new SelectListItem { Text = "其他", Value = "8" }, })
+        性别：
+        @Html.Kendo().DropDownList().Name("gender").BindTo(new List<SelectListItem> { new SelectListItem { Text = "请选择", Value = "-1" }, new SelectListItem { Text = "男", Value = "1" }, new SelectListItem { Text = "女", Value = "0" } })
+        关键词：<input type="text" class="k-textbox" id="keywords" />
+        <input type="button" class="k-button" id="feedsearch" value="查询" />
+    </div>
+    @(Html.Kendo().Grid(Model)
+    .Name("FeedBackGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("用户姓名").Width(130);
+        columns.Bound(p => p.TypeDisplay).Title("类型").Width(130);
+        columns.Bound(p => p.GenderDisplay).Title("性别").Width(130);
+        columns.Bound(p => p.TelPhone).Title("联系电话").Width(130);
+        columns.Bound(p => p.GjwNumber).Title("购酒网账号").Width(130);
+        columns.Bound(p => p.Email).Title("电子邮箱").Width(130);
+        columns.Template(e => { }).ClientTemplate("<input type='button' class='k-button'value='查看' onclick='LookView(#=ID#)' />").Title("操作 ").Width(130);
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable(scr => scr.Height(430))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(p => p.ID))
+                .Read(read => read.Action("GetFeedBack", "Config").Data("Criteria"))
+
+     )
+      )
+</div>

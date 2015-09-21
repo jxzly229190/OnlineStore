@@ -1,0 +1,199 @@
+﻿.choose
+{
+    margin:5px 0;
+}
+.choose_body
+{            
+    border: 1px solid #AFD1FF;
+    display:none;
+}
+.choose_head
+{
+    line-height:24px;
+    letter-spacing:1px;
+}
+.choose_head .choose_head_button
+{
+    cursor:pointer;  
+    color:#0000ff;
+}
+.choose_tab
+{
+    padding-left: 10px;
+    background-color: #E7F0FF;
+    overflow: hidden;
+}
+.choose_tab span
+{
+    display:inline-block;
+    background: #E7F0FF;
+    padding: 3px 10px;
+    cursor:pointer;
+}
+.choose_tab .choose_tab_active 
+{
+    background-color: #fff;
+    padding-left: 10px;
+    border: 1px solid #AFD1FF;            
+    border-bottom: none;
+    margin-top:1px;
+}
+
+.choose .choose_item_head
+{
+    padding:10px;
+}
+.choose .choose_item_head input
+{
+    height:21px;
+}
+.choose .choose_item_head select
+{
+    height:26px;
+}
+.choose .choose_item_head input[type='text']
+{
+    width:210px;
+}
+.choose .choose_item_head input[type='button']
+{
+    width:42px;
+}
+
+.choose .choose_item_body .choose_item_body_inner
+{
+    max-height:420px;
+    overflow:auto;
+    border-bottom:1px solid #AFD1FF;
+}
+.choose .choose_item_body table
+{
+    width:100%;
+}
+
+.choose .choose_item_body thead tr
+{
+    height:32px;
+    border-top:1px solid #AFD1FF;
+    border-bottom:1px solid #AFD1FF;
+}
+
+.choose .choose_item_body table td
+{
+    width:10%;
+    padding-left:3px;
+    text-align:left;
+}
+
+.choose .choose_item_body table .p_name
+{
+    width:70%;
+}
+
+.choose .choose_item_body .choose_item_body_inner .p_name
+{
+    text-align:left;
+    padding-left:10px;
+}
+
+.choose .choose_item_body .choose_item_body_inner .hide
+{
+    display:none;
+}
+
+.choose .choose_item_body .choose_item_body_inner tr
+{
+    height:36px;
+    border-bottom:1px solid #E8E8E8;
+}
+
+.choose .choose_item_body .choose_item_body_inner .selected
+{
+    background-color:#ff0000;
+    color:#fff;
+}
+
+.choose .choose_item_body .choose_item_body_inner td
+{
+    vertical-align:middle;
+    text-align:left;
+    padding-left:3px;
+}
+.choose .choose_item_body .choose_item_body_inner .p_name img
+{
+    width:60px;
+    height:60px;
+    vertical-align:middle;
+    margin:5px;
+}
+.choose .choose_item_body .choose_item_body_inner .p_name span
+{
+    width:360px;
+    display:inline-block;            
+    word-wrap: break-word;
+}        
+.choose .choose_item_body .choose_item_body_inner td em
+{
+    color:#f60;
+}
+.choose .choose_item .b_button
+{
+    display: inline-block;
+    background: url(http://img04.taobaocdn.com/tps/i4/T17f6DXj4nXXb8Znrq-90-55.png) no-repeat -20px -30px;
+    width: 70px;
+    height: 25px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 25px;
+    vertical-align: middle;
+    color: #444;
+}
+.choose .choose_item_foot .b_save_button
+{
+    display: inline-block;
+    background: url(http://img04.taobaocdn.com/tps/i4/T17f6DXj4nXXb8Znrq-90-55.png) no-repeat -20px 0;
+    width: 70px;
+    height: 24px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 24px;
+    vertical-align: middle;
+    color: white;
+    margin:6px 10px;
+}       
+.choose .choose_item_foot .choose_item_action
+{
+    position:relative;
+    height:21px;
+    margin:12px 6px;
+}
+.choose .choose_item_foot .choose_item_action input[type='checkbox']
+{
+    margin:0 5px 0 10px;
+}
+.choose .choose_item_foot .choose_item_page
+{
+    position:absolute;
+    right:10px;
+    top:0;
+}
+.choose .choose_item_foot .choose_item_page a
+{
+    background-image: url(http://img06.taobaocdn.com/tps/i6/T13TXmXe0wXXXXXXXX-300-1500.png);
+    background-color: white;
+    background-repeat: no-repeat;
+}
+.choose .choose_item_foot .choose_item_page .page_prev
+{
+    display:inline-block;
+    padding: 0 5px 0 15px;
+    border: 1px solid #CCC;
+    background-position: 6px -260px;
+}
+.choose .choose_item_foot .choose_item_page .page_next
+{
+    display:inline-block;
+    padding: 0 15px 0 5px;
+    border: 1px solid #CCC;
+    background-position: -252px -244px;
+}

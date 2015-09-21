@@ -1,0 +1,39 @@
+﻿@using V5.Portal.Backstage.Models.Configuration;
+@using V5.Portal.Backstage.Utils
+
+@{
+    ViewBag.Title = "发票类型管理";
+    var permissionObj = new PermissionUtility(this.Context.Session.SessionID);
+}
+
+
+@(Html.Kendo().Grid<ConfigInvoiceTypeModel>().Name("configDeliveryCostGird")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("类型名称").Width(80);
+        columns.Bound(p => p.Description).Width(200).Title("描述");
+        columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(160).Title("创建时间");
+        columns.Command(
+            command =>
+            {
+                command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyInvoiceType", "Config", "Post",true));
+                command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveInvoiceType", "Config", "Post",true));
+        }).Width(160);
+    })
+                .ToolBar(toolbar => toolbar.Create().Text("添加发票类别").HtmlAttributes(permissionObj.GetDisplayAttribute("AddInvoiceType", "Config", "Post",false))).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Invoice_Type_Template").Window(edit => edit.Title("编辑")))
+    .Selectable()
+    .Scrollable()
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:450px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(p => p.ID))
+        .Read(read => read.Action("QueryInvoiceType", "Config"))
+        .Create(create => create.Action("AddInvoiceType", "Config"))
+        .Update(update => update.Action("ModifyInvoiceType", "Config"))
+        .Destroy(destory => destory.Action("RemoveInvoiceType", "Config"))
+        )
+    
+)

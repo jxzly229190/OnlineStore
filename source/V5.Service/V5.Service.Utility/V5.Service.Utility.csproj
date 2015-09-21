@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{818057F3-4191-4393-8E29-43431E5C2EBD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.Service.Utility</RootNamespace>
+    <AssemblyName>V5.Service.Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeService.cs" />
+    <Compile Include="MadeCodeService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemVisitorService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess.Utility\V5.DataAccess.Utility.csproj">
+      <Project>{F200803E-EF75-463E-9855-C47228D1D659}</Project>
+      <Name>V5.DataAccess.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess\V5.DataAccess.csproj">
+      <Project>{D59FA7AD-67E5-459D-97D3-DD92689E43D5}</Project>
+      <Name>V5.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Transact\V5.DataContract.Transact.csproj">
+      <Project>{7A795796-E69B-4780-987B-EF026F0AA136}</Project>
+      <Name>V5.DataContract.Transact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.Utility\V5.DataContract.Utility.csproj">
+      <Project>{E1C6A652-88EC-4E4A-B42A-D5F383CB33BD}</Project>
+      <Name>V5.DataContract.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library\V5.Library.csproj">
+      <Project>{0A8000BD-A860-4BD8-96F3-415A61EB5098}</Project>
+      <Name>V5.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\V5.Service.Transact\V5.Service.Transact.csproj">
+      <Project>{D8743EFC-14B0-48B0-BD20-CB5330592ECF}</Project>
+      <Name>V5.Service.Transact</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,17 @@
+﻿@model V5.Portal.Backstage.Models.Configuration.ConfigInvoiceTypeModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    发票类别：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Name, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    描述：
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.Description, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model => model.Description)
+</div>

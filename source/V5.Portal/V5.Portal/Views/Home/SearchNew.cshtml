@@ -1,0 +1,173 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@using V5.DataContract.Product;
+@Styles.Render("~/Content/g.tbcdn.cn.css")
+@{ 
+    var home = new HomeController();
+    var html = home.GetHtml("<div class=\"product\">" + "  <div class=\"product-iWrap\">" + "    <div class=\"productImg-wrap\">" + "      <a target=\"_blank\" class=\"productImg\" href=\"/product/item-id-$ID$.htm\" ><img class=\"lazy\" data-original=$ThumbnailPath$ alt=$Name$ /></a> " + "    </div>" + "    <p class=\"productTitle\"><a title=\"$Name$$Advertisement$\" target=\"_blank\" href=\"/product/item-id-$ID$.htm\"  >$Name$$Advertisement$</a></p>" + "    <p class=\"productPrice\"><em title=\" $MarketPrice$ \"><b>￥</b>$GoujiuPrice$</em></p>" + "    <p class=\"productPromotions\"><em class=\"new\">新品</em><em class=\"noPostage\">包邮</em></p>" + "    <p style=\"clear:both;\"></p>" + "    <p class=\"productStatus\"><span>销量 <em>$SoldOfVirtual$笔</em></span> <span class=\"end\">评价 <a target=\"_blank\" href=\"###\" >$CommentNumber$</a></span> " + "    </p>" + "  </div>" + "</div>", 30, ProductType.BrandActivity, "", Utils.ToString(ViewData["search"]), Utils.ToString(ViewData["pageIndex"]), Utils.ToString(ViewData["pageSize"]));
+ }
+<script type="text/javascript">
+    $(function () {
+        $(".j_More").toggle(function () {
+            $(this).parent().parent().find(".av-collapse").removeClass("av-collapse").addClass("av-expand av-scroll");
+            $(this).removeClass("ui-more-drop-l").addClass("ui-more-expand-l");
+            $(this).html("收起<i class=\"ui-more-expand-l-arrow\"></i>");
+        },
+        function () {
+            $(this).parent().parent().find(".av-expand").removeClass("av-expand av-scroll").addClass("av-collapse");
+            $(this).removeClass("ui-more-expand-l").addClass("ui-more-drop-l");
+            $(this).html("更多<i class=\"ui-more-drop-l-arrow\"></i>");
+        }).html("更多<i class=\"ui-more-drop-l-arrow\"></i>");
+    });
+</script>
+<div id="content">
+    <div class="main bts-39">
+      <div class="attrs">
+        @Html.Raw(home.GetProductBrandSuggestTip(Utils.ToString(ViewData["search"])))
+        <div class="attrs-border"></div>
+        <div class="attrExtra">
+          <div class="attrExtra-border"></div>
+        </div>
+      </div>
+      
+      <div id="J_RelSearch">
+        <p class="relKeyRec">
+            <span>您是不是想找</span>
+            <a href="###">so cool</a>
+            <a href="###">g70f23cn2p-bm1 so</a>
+            <a href="###">g70f20n2l-dg so</a>
+            <a href="###">格兰仕galanz微波炉p70f23p-g5 so 23l</a>
+            <a href="###">g70f20cn3l-hp3 so</a>
+            <a href="###">sony</a>
+            <a href="###">galanz格兰仕g70f20cn3l-hp3 so</a>
+            <a href="###">galanz格兰仕g70f20n2l-dg so微波炉</a>
+        </p>
+      </div>
+      
+      <div id="J_Filter" class="filter clearfix" >
+         <a title="点击后恢复默认排序" href="" class="fSort fSort-cur" >综合<i class="f-ico-arrow-d"></i></a>
+         <a title="点击后按人气从高到低" href="" class="fSort" >人气<i class="f-ico-arrow-d"></i></a>
+         <a title="点击后按月销量从高到低" href="" class="fSort" >销量<i class="f-ico-arrow-d"></i></a>
+         <a title="点击后按价格从低到高" href="" class="fSort" >价格<i class="f-ico-triangle-mt"></i><i class="f-ico-triangle-mb"></i></a>
+         <div id="J_FDestArea" class="fArea fDestArea">
+         <s class="fA-label">收货地：</s>
+         <b class="fA-text">上海 </b>
+         <i class="f-ico-triangle-rb"></i>
+         <div class="fA-list">
+         <div class="fAl-hd clearfix">
+         <span>选择收货城市</span>
+         </div>
+         <ul data-atp="2,{text},,,spu-toloc,20,toloc," class="fAl-loc">
+         <li><a code="110000" href="">北京</a></li>
+         <li><a code="120000" href="">天津</a></li>
+         <li class="fAl-cur"><a code="310000" href="">上海</a></li>
+         <li><a code="500000" href="">重庆</a></li>
+         <li class="fAll-cities"></li>
+         </ul>
+         <ul data-atp="2,{text},,,spu-toloc,20,toloc," class="fAl-loc">
+         <li><a code="130000" href="">河北</a></li>
+         <li><a code="140000" href="">山西</a></li>
+         <li><a code="150000" href="">内蒙古</a></li>
+         <li><a code="210000" href="">辽宁</a></li>
+         <li><a code="220000" href="">吉林</a></li>
+         <li><a code="230000" href="">黑龙江</a></li>
+         <li class="fAll-cities"></li>
+         <li><a code="320000" href="">江苏</a></li>
+         <li><a code="330000" href="">浙江</a></li>
+         <li><a code="340000" href="">安徽</a></li>
+         <li><a code="350000" href="">福建</a></li>
+         <li><a code="360000" href="">江西</a></li>
+         <li><a code="370000" href="">山东</a></li>
+         <li class="fAll-cities"></li>
+         <li><a code="410000" href="">河南</a></li>
+         <li><a code="420000" href="">湖北</a></li>
+         <li><a code="430000" href="">湖南</a></li>
+         <li><a code="440000" href="">广东</a></li>
+         <li><a code="450000" href="">广西</a></li>
+         <li><a code="460000" href="">海南</a></li>
+         <li class="fAll-cities"></li>
+         <li><a code="510000" href="">四川</a></li>
+         <li><a code="520000" href="">贵州</a></li>
+         <li><a code="530000" href="">云南</a></li>
+         <li><a code="540000" href="">西藏</a></li>
+         <li><a code="610000" href="">陕西</a></li>
+         <li><a code="620000" href="">甘肃</a></li>
+         <li class="fAll-cities"></li>
+         <li><a code="630000" href="">青海</a></li>
+         <li><a code="640000" href="">宁夏</a></li>
+         <li><a code="650000" href="">新疆</a></li>
+         <li><a code="710000" href="">台湾</a></li>
+         <li><a code="810000" href="">香港</a></li>
+         <li><a code="820000" href="">澳门</a></li>
+         <li class="fAll-cities"></li>
+         </ul>
+        <form id="J_DestAreaForm">
+         <input type="hidden" name="sarea_code" value="310000">
+         <input type="hidden" value="52260001" name="cat">
+         <input type="hidden" value="1627744:29541;42722636:248572013" name="prop">
+         <input type="hidden" value="71" name="search_condition">
+         <input type="hidden" value="l" name="style">
+         <input type="hidden" value="sn_1_prop" name="from">
+         <input type="hidden" value="1" name="active"></form>
+         </div>
+        </div>
+        <form id="J_FForm">
+        <div id="J_FPrice" class="fPrice">
+         <div class="fP-box">
+         <b class="fPb-item">
+         <i class="ui-price-plain">¥</i>
+         <input type="text" class="j_FPInput" value="" maxlength="6" autocomplete="off" name="start_price">
+         </b>
+         <i class="fPb-split"></i>
+         <b class="fPb-item">
+         <i class="ui-price-plain">¥</i>
+         <input type="text" class="j_FPInput" maxlength="6" value="" autocomplete="off" name="end_price">
+         </b>
+         </div>
+         <div class="fP-expand">
+         <a id="J_FPCancel" class="ui-btn-s">清空</a>
+         <a atpanel=",,,,spu-fprice,20,fprice," id="J_FPEnter" class="ui-btn-s-primary">确定</a>
+         </div>
+        </div>
+        <!-- fMenu fMenu-expand -->
+        <div id="J_FMenu" class="fMenu">
+         <div class="fM-con">
+         <label><input type="checkbox" value="-1" name="post_fee">包邮</label>
+         <label><input type="checkbox" value="1" name="miaosha">折扣</label>
+         <label><input type="checkbox" value="1" name="pic_detail">满送</label>
+         <label><input type="checkbox" value="1" name="wwonline">满减</label>
+         <label><input type="checkbox" value="1" name="support_cod">货到付款</label>
+         </div>
+        </div>
+        </form>
+        <p class="ui-page-s">
+        @Html.Raw(home.GetPageNavS(int.Parse(Utils.ToString(ViewData["pageIndex"], "1")), int.Parse(Utils.ToString(ViewData["pageSize"], "30")), Utils.ToString(ViewData["search"])))
+        </p>
+        <div style="clear:both;"></div>
+      </div>
+      <div style="clear:both;"></div>
+      <div id="J_ItemList" class="view grid-34 bts-30 clearfix" >
+        @Html.Raw(html)
+      </div>
+      <div style="clear:both;"></div>
+      <div class="ui-page">
+       <div class="ui-page-wrap">
+         <b class="ui-page-num">
+         @Html.Raw(home.GetPageNavHtml(int.Parse(Utils.ToString(ViewData["pageIndex"], "1")), int.Parse(Utils.ToString(ViewData["pageSize"], "30")), Utils.ToString(ViewData["search"]), true))
+         </b>
+       </div>
+      </div>
+      <div id="J_Recommend">
+        <div class="recommend">
+          <h3 class="recommend-hd">热卖单品：</h3>
+          <div class="recommend-con clearfix recommend-con-7">
+            @Html.Raw(home.GetHtml("<div class=\"product\">" +
+            "<a class=\"productImg\" target=\"_blank\" href=\"/product/item-id-$ID$.htm\"><img class=\"lazy\" data-original=$ThumbnailPath$ alt=\"$Name$\" /></a>" +
+            "<p class=\"productPrice ui-price\">￥$GoujiuPrice$</p>" +
+            "<p class=\"productTitle\"><a target=\"_blank\"  href=\"/product/item-id-$ID$.htm\">$Name$$Advertisement$</a></p>" +
+            "</div>", 7, ProductType.Rand))
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

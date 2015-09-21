@@ -1,0 +1,7 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@model V5.DataContract.Promote.Promote_LandingPage
+@{
+    ViewBag.Title = Utils.ToString(Model.Name);
+}
+@Html.Raw(Model.Content)

@@ -1,0 +1,47 @@
+﻿@model V5.Portal.Backstage.Models.User.UserModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label" style="margin-left: 30px;padding-bottom: 10px;">
+    手机号码：
+    @Html.EditorFor(model => model.Mobile)
+    @Html.ValidationMessageFor(model => model.Mobile)
+</div>
+<div class="editor-label" style="margin-left: 30px;padding-bottom: 10px;">
+    电子邮箱：
+    @Html.EditorFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+</div>
+             
+<div class="editor-field" style="margin-left: 30px;padding-bottom: 10px;">
+    登录密码：默认密码(123456)
+</div>
+             
+<div class="editor-field" style="margin-left: 30px;padding-bottom: 10px;">
+    真实姓名：
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+             
+<div class="editor-field" style="margin-left: 30px;padding-bottom: 10px;">
+    电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：
+    @Html.EditorFor(model => model.Tel)
+    @Html.ValidationMessageFor(model => model.Tel)
+</div>
+
+<div class="editor-field" style="margin-left: 30px;padding-bottom: 10px;">
+    省/市/区：
+    @(Html.Kendo().DropDownListFor(model => model.ProvinceID).Name("ProvinceID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read("QueryProvinces", "Home")).DataTextField("Name").DataValueField("ID").HtmlAttributes(new { @style = "width:80px" }))
+    @(Html.Kendo().DropDownListFor(model => model.CityID).Name("CityID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCities", "Home").Data("filterCity")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("ProvinceID").HtmlAttributes(new { @style = "width:80px" }))
+    @(Html.Kendo().DropDownListFor(model => model.CountyID).Name("CountyID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCounties", "Home").Data("filterCounty")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("CityID").HtmlAttributes(new { @style = "width:80px" }))
+
+</div>
+<div class="editor-field" style="margin-left: 30px;padding-bottom: 10px;">
+    具体住址：
+    @Html.TextAreaFor(model => model.Address)
+    @Html.ValidationMessageFor(model => model.Address)
+</div>
+
+<div class="k-edit-buttons k-state-default" style="clear: both; text-align: right; border-width: 1px 0 0; border-style: solid; position: relative; bottom: -1em; padding: .6em;">
+    <input type="submit" class="k-button k-button-icontext k-grid-update" onclick="addUser()" value="添加" href="#" />
+    <a class="k-button k-button-icontext k-grid-cancel" onclick="closeAddUserWindow()" href="#">取消</a>
+</div>

@@ -1,0 +1,88 @@
+﻿@using V5.Library
+@using V5.Portal.Common
+@model IList<V5.DataContract.Transact.Order.UserCommentProduct>
+@{
+    ViewBag.Title = "商品评价";
+}
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_order">
+            <dt class="uc_order_top">商品评价
+                <form class="uc_order_search" action="Evaluate" method="POST">
+                    <input type="text" name="condition" value="@Html.Raw(ViewBag.searchText)" class="search_text animation" />
+                    <input type="submit" style="display: none"/>
+                </form>
+            </dt>
+            <dd>
+                <table>
+                    <thead>
+                        <tr>               
+                            <td>商品名称</td>         
+                            <td></td>
+                            <td>商品编号</td>
+                            <td>购买时间</td>
+                            <td>评价内容</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var userCommentProduct in Model)
+                                {
+                                    <tr>                        
+                                        <td><img src="@Html.Raw(Utils.GetProductImage(userCommentProduct.Path,"1"))" alt="@Html.Raw(userCommentProduct.ProductName)" /></td>
+                                        <td>@userCommentProduct.ProductName</td>
+                                        <td><a href="@Html.Raw(Utils.GetProductUrl(userCommentProduct.ProductID))">@userCommentProduct.Barcode</a></td>
+                                        <td><div class="date">@userCommentProduct.TransactTime.ToLocalTime()</div></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>                        
+                                    <td colspan="5" style="text-align: center">（赞无评价）</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div style="position:relative;height:56px;">
+                                    <div class="uc_page">
+                                        @{
+                                            if (Model != null && Model.Count > 0)
+                                            {
+                                                @Html.ActionLink("<", "Evaluate", "User", new { pageIndex = ViewBag.pageIndex == 1 ? 1 : ViewBag.pageIndex - 1, pageSize = 5 }, new { @class = "prev" })
+                                                for (int i = 1; i <= ViewBag.pageCount; i++)
+                                                {
+                                                    if (ViewBag.pageIndex == i)
+                                                    {
+                                                        <a href="@Html.Raw("Evaluate?pageIndex=" + i.ToString() + "&pageSize=5")" class="curr">@i.ToString()</a>
+                                                        //Html.Raw(Html.ActionLink(i.ToString(), "Advisory", "User", new { pageIndex = i, pageSize = 5 }, new { @class = "curr" }));
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Html.Raw("Evaluate?pageIndex=" + i.ToString() + "&pageSize=5")">@i.ToString()</a>
+                                                        //Html.Raw(Html.ActionLink(i.ToString(), "Advisory", "User", new { pageIndex = i, pageSize = 5 }));
+                                                    }
+                                                }
+                                                @Html.ActionLink(">", "Evaluate", "User", new { pageIndex = ViewBag.pageIndex == ViewBag.pageCount ? ViewBag.pageCount : ViewBag.pageIndex + 1, pageSize = 5 }, new { @class = "next" })
+                                            }
+                                        }
+                                    </div> 
+                                </div>                            
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </dd>
+        </dl>
+        </div>
+    <div class="clear"></div>
+</div>
+</div>

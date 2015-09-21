@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+
+@using V5.Library
+@model List<V5.DataContract.Product.ProductSearchResult>
+
+<dd>
+    @{
+        if (Model != null)
+        {
+            foreach (var product in Model)
+            {
+                @*<ul>
+                    <li class="goods_pic">
+                        <a href="@Html.Raw(ConstantParams.ProductUrl + "?Id=" +product.ID)" target="_blank" title="@Html.Raw(product.Name)"><img alt="@Html.Raw(product.Name)" src="@Html.Raw(product.ThumbnailPath)" height="100" width="100"></a></li>
+                    <li class="goods_name"><a href="@Html.Raw(ConstantParams.ProductUrl + "?Id=" + product.ID)" target="_blank" title="@Html.Raw(product.Name)">@Html.Raw(product.Name)</a>&nbsp;&nbsp;<span class="cf04"></span></li>
+                    <li class="goods_price">¥@product.GoujiuPrice</li>
+                    <li class="goods_btn"><a class="fl cbtn putin_btn AddCart" href="javascript:" index="@Html.Raw(product.ID)">加入购物车</a> </li>
+                </ul>*@
+        
+                <dl>
+                     <dt><a target="_blank" href="@Html.Raw(Utils.GetProductUrl(product.ID))"><img alt="@Html.Raw(product.Name)" src="@Html.Raw(Utils.GetProductImage(product.Path,"1"))"></a></dt>
+                     <dd>
+                     <a href="@Html.Raw(Utils.GetProductUrl(product.ID))" target="_blank">@Html.Raw(product.Name+" "+product.Advertisement)</a>
+                     <del>市场价：￥@product.MarketPrice</del>
+                     <b>特惠价：￥@product.GoujiuPrice</b>
+                     <strong class="AddCart" href="javascript:；" index="@Html.Raw(product.ID)">加入购物车</strong>
+                     </dd>
+                </dl>
+            }
+        }
+    }
+    <div class="clear"></div>
+</dd>

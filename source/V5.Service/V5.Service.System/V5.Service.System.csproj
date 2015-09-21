@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FA84E58-020E-4499-9E55-2A47134ADF53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.Service.System</RootNamespace>
+    <AssemblyName>V5.Service.System</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemDepartmentService.cs" />
+    <Compile Include="SystemEmployeeService.cs" />
+    <Compile Include="SystemHomeService.cs" />
+    <Compile Include="SystemLogService.cs" />
+    <Compile Include="SystemMenuService.cs" />
+    <Compile Include="SystemPermissionService.cs" />
+    <Compile Include="SystemResourcesService.cs" />
+    <Compile Include="SystemRightsService.cs" />
+    <Compile Include="SystemRoleService.cs" />
+    <Compile Include="SystemUserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess.System\V5.DataAccess.System.csproj">
+      <Project>{8E4A9029-C24C-4F8A-8E90-E8D89DDD4519}</Project>
+      <Name>V5.DataAccess.System</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataAccess\V5.DataAccess\V5.DataAccess.csproj">
+      <Project>{D59FA7AD-67E5-459D-97D3-DD92689E43D5}</Project>
+      <Name>V5.DataAccess</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.DataContract\V5.DataContract.System\V5.DataContract.System.csproj">
+      <Project>{6FC20914-1D9F-4824-8F8B-22C183AAD524}</Project>
+      <Name>V5.DataContract.System</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Log\V5.Library.Logger.csproj">
+      <Project>{500C79FB-CFEB-45DB-BE5A-7D4FA0B62F7D}</Project>
+      <Name>V5.Library.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\V5.Foundation\V5.Library\V5.Library.Storage\V5.Library.Storage.csproj">
+      <Project>{8ABCE18E-100C-4714-8D8D-55D95ADBED94}</Project>
+      <Name>V5.Library.Storage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

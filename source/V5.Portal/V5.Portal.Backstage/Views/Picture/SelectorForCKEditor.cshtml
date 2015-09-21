@@ -1,0 +1,152 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@{
+    Layout = null;
+}
+@*引入 javascript*@
+@Scripts.Render("~/Scripts/Backstage/Backstage.Common.js")
+@Scripts.Render("~/Scripts/Backstage/Backstage.Common.KendoUI.js")
+@Scripts.Render("~/Scripts/Backstage/Picture/Backstage.Picture.js")
+@Scripts.Render("~/Scripts/fresco.js")
+@*引入 css*@
+@Styles.Render("~/Content/Common.css")
+@Styles.Render("~/Content/fresco.css")
+@Styles.Render("~/Content/Products/PictureSpace.css")
+<div id="body" class="main-box">
+    <div class="treeviewDiv">
+        @(Html.Kendo().TreeView().Name("treeview")
+              .HtmlAttributes(new { @class = "demo-section", style = "font-size: 14px; font-weight: bold;" })
+              .DataTextField("Name")
+              .DataSource(dataSource => dataSource.Read(read => read.Action("QueryPictureTreeView", "Picture")))
+              .Events(events => events.Select("onTreeviewSelect")))
+    </div>
+    <div id="rightBoxDiv" class="main-right">
+        <input type="hidden" id="brandID"/>
+        @*type：当前树选中项是一级类别 or 二级类别 or 一级品牌 or 二级品牌*@
+        <input type="hidden" id="type"/>
+        <div class="k-overlay" style="display: none; z-index: 10002; opacity: 0.5;"></div>
+        <div id="searchPictureDiv" class="right-top">
+            上传时间：@(Html.Kendo().DateTimePicker().Name("StartTime").ParseFormats(new[] { "MM/dd/yyyy" }).Events(e => e.Change("onStartTimeChanged"))) 至 
+            @(Html.Kendo().DateTimePicker().Name("EndTime").ParseFormats(new[] { "MM/dd/yyyy" }).Events(e => e.Change("onEndTimeChanged")))
+            &nbsp;图片名称：<input type="text" id="pictureName" name="pictureName" class="k-textbox" />
+            <input type="button" id="searchBtn" value="查询" onclick="searchImg()" class="k-button"/>
+            <input type="button" id="uploadPicture" value="上传图片" onclick="uploadPictureBtnClick()" style="float: right;" class="k-button"/>
+        </div>
+        <div id="operateDiv" class="right-down">
+            <div class="down-topic">
+                <input type="checkbox" id="SelectAll" style="height: 25px; width: 25px;"/>
+                <input type="button" class="k-button" style="margin-top: -20px;" value="复制链接" id="copyImgLink" onclick="copyImgLink()" />
+                <input type="button" class="k-button" style="margin-top: -20px;" value="复制代码" id="copyImgCode" onclick="copyImgCode()" />
+                <input type="button" class="k-button" style="margin-top: -20px;" value="设置分类" id="setImgCategory" onclick="setImgCategory()" />
+                <input type="button" class="k-button" style="margin-top: -20px;" value="删除" id="deleteImg" onclick="deleteImg()" />
+                <input type="button" class="k-button" style="margin-top: 0;margin-right: 10px; float: right;" value="确认选取" id="confirmSelect" onclick="confirmSelect()" />
+            </div>
+            <div class="demo-section-ListView">
+                @(Html.Kendo().ListView<IEnumerable<PictureModel>>()
+                      .Name("picturelistView")
+                      .TagName("div")
+                      .Pageable().HtmlAttributes(new { style="width:1025px;" })
+                      .ClientTemplateId("template")
+                      .DataSource(dataSource =>
+                          {
+                              dataSource.PageSize(12);
+                              dataSource.Read(read => read.Action("Query", "Picture").Data("SearchListViewData"));
+                              dataSource.Events(events => events.Change("dataSourceChanged"));
+                          }))
+            </div>
+        </div>
+        <div style="display: none">
+            @(Html.Kendo().Window()
+                  .Name("copyImgLinkWindow")
+                  .Title("复制图片信息")
+                  .Width(730)
+                  .Height(400)
+                  .Content(@<text> <span style="font-size: 12px; font-family: 微软雅黑; font-weight:bold;">注意：请您使用 Ctrl + C 手动将图片相关信息复制到剪切板中。</span><br />
+                                <textarea id="copyImgLinkTextArea" style="font-size: 13px; font-family: 微软雅黑; width: 700px; height: 350px;" cols="100" rows="24" readonly="readonly"></textarea>
+                            </text>)
+                  .Resizable()
+                  .Draggable()
+                  .Events(e => e.Close("closeCustomWindow"))
+                  .Actions(actions => actions.Pin().Minimize().Close()))
+        </div>
+        <div style="display: none">
+            @(Html.Kendo().Window()
+                  .Name("uploadImgWindow")
+                  .Title("上传图片")
+                  .Width(730).Height(400)
+                  .Content(@<text>
+                        
+                                商品类别：@(Html.Kendo().DropDownList().Name("ParentCategory").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value"))
+                                @(Html.Kendo().DropDownList().Name("ProductCategory").DataSource(source => source.Read(read => read.Action("QuerySubCategorySelectListItems", "Product").Data("GetParentCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategory"))
+                                @(Html.Kendo().DropDownList().Name("ParentBrand").DataSource(source => source.Read(read => read.Action("QueryBrandSelectListItems", "Product").Data("GetProductCategoryID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ProductCategory"))
+                                @(Html.Kendo().DropDownList().Name("ProductBrand").DataSource(source => source.Read(read => read.Action("QuerySubBrandSelectListItems", "Product").Data("GetParentBrandID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentBrand"))
+                                <br /><br />
+                                <div style="font-weight: bold; font-size: 13px;">
+                                    &nbsp;&nbsp;* 建议的图片格式：jpg、jpeg、gif、png、bmp，单张图片大小建议不超过 1 MB，单次批量上传建议不超过 20 张！<br />
+                                    &nbsp;&nbsp;* 如果不能上传成功，建议使用谷歌浏览器进行上传，上传图片成功后，由于系统缓存原因，会有 30 秒的时间延迟！<br />
+                                    &nbsp;&nbsp;* 如果上传的图片不是 RGB 标准格式，请使用 Photoshop 或其它图形处理工具，重新打开并保存文件即可上传成功！<br />
+                                </div>
+                                <br />
+                                <div style="height: 240px;">
+                                    @(Html.Kendo().Upload().Name("pictureUpload").Events(e => e.Upload("onUpload")).Async(a =>
+                                          {
+                                              a.Save("UploadPicture", "Picture");
+                                              a.Remove("RemovePicture", "Picture");
+                                              a.AutoUpload(false);
+                                          }))
+                                </div>
+                            </text>)
+                  .Resizable()
+                  .Draggable()
+                  .Events(e => e.Close("closeCustomWindow"))
+                  .Actions(actions => actions.Pin().Minimize().Close()))
+        </div>
+        <div style="display: none">
+            @(Html.Kendo().Window()
+                  .Name("modifyImgCategoryWindow")
+                  .Title("修改图片类别")
+                  .Width(750).Height(150)
+                  .Content(@<text>
+                        
+                                图片类别：@(Html.Kendo().DropDownList().Name("ParentCategory1").DataSource(ds => ds.Read("QueryCategorySelectListItems", "Product")).DataTextField("Text").DataValueField("Value"))
+                                @(Html.Kendo().DropDownList().Name("ProductCategory1").DataSource(source => source.Read(read => read.Action("QuerySubCategorySelectListItems", "Product").Data("GetParentCategoryID1")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategory1"))
+                                @(Html.Kendo().DropDownList().Name("ParentBrand1").DataSource(source => source.Read(read => read.Action("QueryBrandSelectListItems", "Product").Data("GetProductCategoryID1")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ProductCategory1"))
+                                @(Html.Kendo().DropDownList().Name("ProductBrand1").DataSource(source => source.Read(read => read.Action("QuerySubBrandSelectListItems", "Product").Data("GetParentBrandID1")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentBrand1"))
+                                <input type="button" class="k-button" value="修改" onclick="modifyImgCategoryClick()"/>
+                            </text>)
+                  .Resizable()
+                  .Draggable()
+                  .Events(e => e.Close("closeCustomWindow"))
+                  .Actions(actions => actions.Pin().Minimize().Close()))
+        </div>
+        <script type="text/x-kendo-tmpl" id="template">
+        <div class="pictureItemDiv" name="operateBar#:ID#" onmouseover="displayOperateBar(this)" onmouseout="hiddleOperateBar(this)">
+            <input class="pictureItemCheckBox" type="checkbox" name="checkboxName" onchange="itemCheckBoxChanged(this)" id='checkBox#:ID#' title="#:ID#" value='@Url.Content("#:Path#")' />
+            <img class="pictureItemImg" onclick="itemImgClick(this)" title="#:ID#" name="checkBox#:ID#" src='@Url.Content("#:Path#")'/>
+            <div id="operateBar#:ID#" class="itemOperateBar">
+                &nbsp;&nbsp;<a name='@Url.Content("#:Path#")' onclick="viewPicture(this)">查看原图</a>
+                &nbsp;<a name="#:ID#" href='@Url.Content("#:Path#")' class="fresco" data-fresco-group="#:ProductBrandID#" data-fresco-caption="#:Name#">预览</a>
+            </div>
+            <div class="itemNameDiv"><label name="checkBox#:ID#" title="#:Name#" for="checkBox#:ID#">#:Name#</label></div>
+        </div>
+        </script>
+    </div>
+</div>
+<script type="text/javascript">
+    function confirmSelect() {
+        var jsonData = "";
+        
+        var checkboxes = $("input[name='checkboxName']:checked");
+        for (var i = 0; i < checkboxes.length; i++) {
+            var fvalue = checkboxes[i].value || "";
+            if (fvalue == "") continue;
+
+            fvalue = fvalue.replace(/\_1\./, "_4.");
+            jsonData += fvalue + ",";
+        }
+
+        window.pushPictureSpaceImage(jsonData);
+        
+        $("#pictureSelectorWindow").data("kendoWindow").close();
+        $(".k-overlay").css('display', 'none');
+    }
+</script>

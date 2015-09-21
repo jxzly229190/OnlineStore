@@ -1,0 +1,34 @@
+﻿@using V5.Library
+@using V5.Portal.Controllers
+@{
+    var home = new HomeController();
+    var html = home.GetAdvertiseHtml("<li><div class=\"pro_img\">" +
+        "<a target=\"_blank\" href=\"/product/item-id-$ID$.htm\" title=\"48度 五星 钓鱼岛醒世坊 小酒版 125ml\">" +
+        "<img width=\"200\" height=\"200\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\"></a></div>" +
+        "<div class=\"pro_txt\"><a href=\"/product/item-id-$ID$.htm\" target=\"_blank\">$Name$</a><span class=\"pro_txt_red\"></span>" +
+        "</div><div class=\"pro_price\"><span class=\"p1\"><b>¥</b>$GoujiuPrice$</span><span class=\"p2\">市场价：<b>¥</b><s>$MarketPrice$</s>" + 
+        "节省：<b>¥</b>22</span></div><div class=\"pro_btn\"><span class=\"gg\"><b></b><strong>1386</strong>人已关注</span>" +
+        "<input class=\"btn_cart AddCart\" type=\"button\" value=\"加入购物车\" onclick=\"javascript:Cat.Add($ID$)\" ></div><div class=\"b_shadow\"></div><div class=\"collect \" style=\"display: none;\"><div class=\"ACollect\" index=\"4183\"><b>收藏</b><span></span></div><div class=\"ACollect4183\" style=\"display:none\"><b>已收藏</b></div></div></li>", "pid=3", 30, AdvertiseSource.LP);
+}
+@Styles.Render("~/Content/xjb.css")
+
+<div class="xjbbanner">
+<img width="1100" height="600" src="/Quan/images/banner_2.jpg">
+</div>
+<div class="xiaojiuban">
+    <div class="select_box">
+        <dl>
+        	<dt>排序：</dt>
+            <dd><a href="/default-sort-0.htm">默认</a></dd>
+            <dd><a  href="/default-sort-1.htm">价格</a></dd>
+            <dd><a  href="/default-sort-2.htm">关注度</a></dd>
+        </dl>
+    </div>
+    <div class="pro-list">
+        <ul id="productList">
+        @Html.Raw(html)
+        </ul>
+    </div>
+    <div class="page_box">
+    </div>
+</div>

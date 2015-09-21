@@ -1,0 +1,51 @@
+﻿@using V5.Library;
+@{
+    ViewBag.Title = "帮助中心 - "+  Utils.ToString(Model.Name);
+    var home = new HomeController();
+}
+@using V5.Portal.Controllers
+@model V5.DataContract.Configuration.Config_Page
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .uc_help
+    {
+        color: #555;
+        padding-bottom: 36px !important;
+    }
+    .uc_help .uc_help_top
+    {
+        border-bottom: 3px solid #f0f0f0;
+        line-height: 36px;
+        font-size: 16px;
+        text-indent: 12px;
+    }
+    .uc_help .uc_help_conent
+    {
+        padding: 6px 12px;
+    }
+    .uc
+    {
+        width:1200px;
+    }
+    .uc_container .uc_right
+    {
+        width:970px;
+    }
+</style>
+<div class="uc_container">
+    <div class="uc">
+        <div class="uc_left">
+            <dl>
+                <dt class="uc_left_top">帮助中心</dt>
+                @Html.Raw(home.GetHelpNavHtml())
+            </dl>
+        </div>
+        <div class="uc_right">
+            <dl class="uc_right_item uc_help">
+                @Html.Raw(home.GetHelpContent(Model))
+            </dl>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>

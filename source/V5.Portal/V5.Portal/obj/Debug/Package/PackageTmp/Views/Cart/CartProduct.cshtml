@@ -1,0 +1,30 @@
+﻿@using V5.Portal.Common
+@model V5.Portal.Models.CartProduct
+@{
+    Layout = null;
+}
+@{
+    if (Model != null)
+    {
+        <div class="item_form" id="@Html.Raw("product_" + Model.ProductID)">
+            <div class="cell p-checkbox"><input class="checkbox" type="checkbox" checked="" name="proIds" value="@Html.Raw(Model.ProductID)"></div>
+            <div class="cell p-goods">
+                <div class="p-img"><a href="@Html.Raw(ConstantParams.ProductUrl + "?ID=" + Model.ProductID)" target="_blank"><img src="@Html.Raw(Model.ProductPic)" alt="@Html.Raw(Model.ProductName)"></a></div>    
+                <div class="p-name"><a href="@Html.Raw(ConstantParams.ProductUrl + "?ID=" + Model.ProductID)"  target="_blank">@Model.ProductName</a><span class="promise411" id="promise411_188078"></span></div>    
+            </div>
+            <div class="cell p-price">￥<span class="price" id="@Html.Raw("price_" + Model.ProductID)">@Model.GoujiuPrice</span></div>
+            <div class="cell p-promotion"><span class="yh_icon">￥@Model.Discount</span></div>
+                    
+            <div class="cell p-quantity">
+                <div class="quantity-form">
+                    <a href="javascript:void(0);" class="decrement" index="@Html.Raw(Model.ProductID)" >-</a>
+                    <input type="text" class="quantity-text" autocomplete="off" value="@Html.Raw(Model.Quantity)" id="@Html.Raw("quantity_" + Model.ProductID)" index="@Html.Raw(Model.ProductID)">
+                    <a href="javascript:void(0);" class="increment" index="@Html.Raw(Model.ProductID)">+</a>
+                </div>
+            </div>
+            <div class="cell p-inventory red14" >￥<span name="money" id="@Html.Raw("money_" + Model.ProductID)">@Html.Raw(Model.TotalMoney)</span></div>
+            <div class="cell p-remove"><a href="javascript:Del(@Html.Raw(Model.ProductID))">删除</a><br /><a href="javascript:Collect(@Html.Raw(Model.ProductID))">收藏</a></div>
+            <!-- modi   fy-pre end  -->
+        </div>                      
+    }
+}

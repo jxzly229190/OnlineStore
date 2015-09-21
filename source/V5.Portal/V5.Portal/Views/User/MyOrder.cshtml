@@ -1,0 +1,117 @@
+﻿@using V5.Portal.Common
+@model IList<V5.DataContract.Transact.Order.Order>
+@{
+    ViewBag.Title = "我的订单";
+}
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.uc_right .image { text-align: left !important;}
+.uc_right .image a{ display:inline-block !important; }
+</style>
+<script src="../../Scripts/table.js" type="text/javascript"></script>
+<script>
+    function GetCell(fcolumn, fdata, fvalue) {
+        var html = "";
+        switch (fcolumn.name) {
+            case "TotalMoney":
+                html += "<div class=\"amt\" onclick=\"\">&#65509;" + table.FormatCurrency(fdata.TotalMoney) + "</div><div class=\"status\">" + fdata.PaymentMethodName + "</div><a class=\"button\" href=\"/Order/Payment?ono=" + fdata.OrderCode + "\" target =\"_blank\">" + (fdata.Status == 100 ? "付款" : "") + "</a>";
+                break;
+            case "StatusName":
+                html += "<div class=\"status\" id='status_" + fdata.ID + "' > " + fvalue + "</div>";
+                break;
+            case "Products":
+                for (var i = 0; i < fvalue.length; i++) {
+                    html += "<a target='_blank' href=\"/Product/Item-id-" + fvalue[i].ProductID + ".htm\" title=\"" + fvalue[i].ProductName + "\"><img src=\"" + fvalue[i].Path + "\" alt=\"\"/></a>";
+                }
+                break;
+            case "$Button$":
+                html += "<a href=\"/Order/OrderDetail?ono=" + fdata.OrderCode + "\" class=\"button\" target =\"_blank\" >查看</a>";
+                if (fdata.Status == 100 || (fdata.Status == 0 && fdata.PaymentMethodID > 0)) {
+                    //只有未支付的订单才能取消
+                    html += "<a href=\"javascript:;\" onclick=\"cancel('" + fdata.OrderCode + "',this,$('#status_" + fdata.ID + "'))\" name='cancel_btn' index='" + fdata.OrderCode + "' class=\"button\">取消</a>";
+                }
+                //else if (fvalue.Status == 100 || fvalue.Status == 0) {
+                //    html += "<a href=\"###\" class=\"button\">申请退换货</a>";
+                //}
+
+                var params = "";
+                for (var i = 0; i < fdata.Products.length; i++) {
+                    if (fdata.Products[i].TransactPrice > 0) {
+                        params += "proIds=" + fdata.Products[i].ProductID + "&";
+                        params += "quantity=" + fdata.Products[i].Quantity + "&";
+                    }
+                }
+                if (params.length > 0) {
+                    html += "<a href=\"/Order/OrderInfo?" + params + "\" class=\"button\">还要买</a>";
+                }
+                break;
+        }
+        return html;
+    }
+
+    $(function() {
+        var columnType = table.columnType;
+        var columnAlign = table.columnAlign;
+        var option = {};
+
+        //定义列信息
+        option.columns = [
+            { name: "OrderCode", desc: "订单号", align: columnAlign.left, type: columnType.Text, width: 80 },
+            { name: "Products", desc: "商品", align: columnAlign.left, type: columnType.Custom, fn: GetCell },
+            { name: "TotalMoney", desc: "金额", align: columnAlign.center, type: columnType.Custom, fn: GetCell, width: 100 },
+            { name: "CreateTime", desc: "时间", align: columnAlign.center, type: columnType.DateTime, width: 100 },
+            { name: "StatusName", desc: "状态", align: columnAlign.center, type: columnType.Custom, fn: GetCell, width: 100 },
+            { name: "$Button$", desc: "操作", align: columnAlign.center, type: columnType.Custom, fn: GetCell, width: 100 }];
+        option.container = "uc_order_table";
+
+        //全选功能
+        option.select = { enabled: false, url: "/User/DeleteOrder", key: "ID" };
+
+        //搜索条
+        option.search = "uc_order_search_text";
+
+        //取数数据源
+        option.pageUrl = "/User/GetOrderData";
+
+        //自定义单元格
+        option.getCustomCell = GetCell;
+
+        //初始化
+        table.Init(option);
+    });
+
+    function cancel(ono, sender, sobj) {
+        //绑定操作事件
+        if (!confirm("您确定要取消此订单吗？")) {
+            return false;
+        }
+        var cancelBtn = $(sender);
+        $.post("/Order/Cancel", { ono: ono, orderCancelCauseID: 0 }, function (res) {
+            if (res.State == 1) {
+                sobj.text("已取消");
+                cancelBtn.remove();
+                alert("取消成功");
+            } else {
+                alert("操作失败，原因：" + res.Message);
+            }
+        });
+    }
+</script>
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_order">
+            <dt class="uc_order_top">近期订单
+                <div class="uc_order_search">
+                    <input type="text" class="search_text animation" id="uc_order_search_text" />
+                </div>
+            </dt>
+            <dd id="uc_order_table">
+            </dd>
+        </dl>
+        @Html.Action("GuessLike", "Home")
+    </div>
+    <div class="clear"></div>
+</div>
+</div>

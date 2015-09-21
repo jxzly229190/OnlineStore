@@ -1,0 +1,43 @@
+﻿@using V5.Portal.Common
+@{ 
+    var home = new V5.Portal.Controllers.HomeController();
+}
+<div style="background-color: #fff;">
+    <div class="header">
+        <div class="hd_logo">
+            <a class="logo" href="@Html.Raw(ConstantParams.IndexUrl)"></a>
+            <div id="top_adv"></div>
+        </div>
+        <div class="searchArea fl">
+            <div class="searchInput">
+                <ul>
+                    <li class="search_input">
+                        <input id="sch" name="key" type="text" class="text_input" value="" />
+                        <div class="search_suggest">
+                        </div>
+                    </li>
+                    <li class="search_btn">
+                        <input type="button" class="sch_btn" value="搜索" id="btnsch" /></li>
+                </ul>
+            </div>
+            <div class="search_list_box" id="search_list_box">
+            </div>
+            <div class="keyword">
+                <strong>热门搜索：</strong> 
+                <a href="/baijiu-maotai.htm" title="茅台">茅台</a>
+                <a href="/baijiu-fenjiu.htm" title="汾酒">汾酒</a> 
+                <a href="/baijiu-yanghe.htm" title="洋河">洋河</a> 
+                <a href="/baijiu-langjiu.htm" title="郎酒">郎酒</a>
+                <a href="/baijiu-wuliangye.htm" title="五粮液">五粮液</a> 
+                <a href="/baijiu-jiannanchun.htm" title="剑南春">剑南春</a> 
+                <a href="/baijiu-luzhoulaojiao.htm" title="泸州老窖">泸州老窖</a>
+            </div>
+        </div>
+        <div class="tubiao">
+            <span>
+                <img src="@Url.Content("~/images/hdxb1.jpg")" alt="" /></span> <span>
+                    <img src="@Url.Content("~/images/hdxb2.jpg")" alt="" /></span> <span>
+                        <img src="@Url.Content("~/images/hdxb3.jpg")" alt="" /></span>
+        </div>
+    </div>
+</div>

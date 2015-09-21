@@ -1,0 +1,157 @@
+﻿@using MongoDB
+@using NPOI.SS.Formula.Functions
+@using V5.Portal.Backstage.Models.Transact.Order
+@model V5.Portal.Backstage.Models.Transact.Order.OrderDetailModel
+<script src="../../../Scripts/angular-1.0.1.min.js" type="text/javascript"></script>
+<link href="../../../Content/Order.css" rel="stylesheet" type="text/css" />
+<div class="member-box" ng-app>
+    
+    <h3 style="width: 200px; float: left">订单商品 </h3>
+    <div class="member-btn"><a onclick="showAddProductDiv() " style="cursor: pointer;">新增商品</a></div>
+    <div id="divAddProduct" style="display: none; padding-left: 10px; padding-right: 10px">
+        <div style="height: 470px">@Html.Action("OrderEdit_AddProducts")</div>
+        <div class="member-btn"><a onclick="orderEdit_AddProduct() " style="cursor: pointer;">确认添加</a></div>   
+    </div>
+    <div class="member-order">
+        <div id="divCartProductList">
+            @Html.Partial("Order/OrderEdit_CartProducts")
+        </div>
+    </div>
+    
+    <div ng-controller="getOrderInfoCtrl">
+        <h3>订单信息</h3>
+        <div class="member-info">
+            <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#dddddd">
+                <tr>
+                    <td width="13%" height="30" align="right" bgcolor="#FFFFFF">订单编号：</td>
+                    <td width="36%" bgcolor="#FFFFFF">{{orderInfo.OrderCode}}</td>
+                    <td width="12%" align="right" bgcolor="#FFFFFF">下单时间：</td>
+                    <td width="39%" bgcolor="#FFFFFF">{{orderInfo.CreateTimeString}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF"> 订单来源：</td>
+                    <td bgcolor="#FFFFFF">
+                         <select ng-controller="getCpsListCtrl" id="selectOrderCpsID">
+                            <option selected="selected" value="0">官网</option>
+                        </select>
+                    </td>
+                    <td align="right" bgcolor="#FFFFFF">商品总金额：</td>
+                    <td bgcolor="#FFFFFF" ><span name="orderTotalMoney" id="spanOrderTotalMoney" class="red14"> {{orderInfo.TotalMoney}}</span>元 </td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">配送方式：</td>
+                    <td bgcolor="#FFFFFF"></td>
+                    <td align="right" bgcolor="#FFFFFF">配送费用：</td>
+                    <td bgcolor="#FFFFFF" class="red14"><input style='ime-mode:Disabled' type="text" onkeydown='checkNumeric(this.value,event);' ng-model="orderInfo.DeliveryCost" value="{{orderInfo.DeliveryCost}}"/> 元</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">支付方式：</td>
+                    <td bgcolor="#FFFFFF">
+                        {{orderInfo.PaymentMethodName}}
+                    </td>
+                    <td align="right" bgcolor="#FFFFFF">支付状态：</td>
+                    <td bgcolor="#FFFFFF">{{orderInfo.PaymentStatusName}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">发票：</td>
+                    <td bgcolor="#FFFFFF">是否开发票<input id="chkIsRequireInvoice" ng-model="orderInfo.IsRequireInvoice" onchange="switchInvoice(this)" type="checkbox"/> &nbsp;&nbsp;抬头：<input type="text" id="txtInvoiceTitle" disabled="disabled" value="{{invoiceInfo.InvoiceTitle}}"/></td>
+                    <td align="right" bgcolor="#FFFFFF">内容：</td>
+                    <td bgcolor="#FFFFFF"> <select id="selectInvoiceContent" disabled="disabled" ng-controller="getInvoiceContentCtrl">
+                                               <option ng-repeat="content in invoiceContents" value="{{content.ID}}">{{content.Name}}</option>           
+                                           </select> 开票金额：<input style='ime-mode:Disabled' onkeydown='checkNumeric(this.value,event);' type="number" id="txtInvoiceMoney" value="{{orderInfo.TotalCost}}" disabled="disabled"/>元</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">需支付金额： </td>
+                    <td bgcolor="#FFFFFF" ><span name="orderTotalMoney" class="red14">{{orderInfo.TotalMoney}} </span>元 <span>（积分抵扣：0/满额立减：0/现金券抵扣：0/虚拟账户抵扣：0）</span></td>
+                    <td align="right" bgcolor="#FFFFFF">积分总计：</td>
+                    <td bgcolor="#FFFFFF" class="green"><span name='orderTotalMoney'>{{orderInfo.TotalIntegral}}</span></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">客户备注：</td>
+                    <td bgcolor="#FFFFFF">{{orderInfo.Remark}}</td>
+                    <td align="right" bgcolor="#FFFFFF">客服备注：</td>
+                    <td bgcolor="#FFFFFF" class="red14"><textarea cols="35" ng-model="orderInfo.Description" rows="2">{{orderInfo.Description}}</textarea></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <h3>购买人信息</h3>
+        <div class="member-info">
+            <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#dddddd">
+                <tr>
+                    <td width="13%" height="30" align="right" bgcolor="#FFFFFF">会员用户名：</td>
+                    <td width="36%" bgcolor="#FFFFFF">{{userInfo.Name}}</td>
+                    <td width="12%" align="right" bgcolor="#FFFFFF">Email地址：</td>
+                    <td width="39%" bgcolor="#FFFFFF">{{userInfo.Email}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF"> 手&nbsp;&nbsp;机：</td>
+                    <td bgcolor="#FFFFFF">{{userInfo.Mobile}}</td>
+                    <td align="right" bgcolor="#FFFFFF">电&nbsp;&nbsp;话：</td>
+                    <td bgcolor="#FFFFFF">{{userInfo.Tel}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">地&nbsp;&nbsp;区：</td>
+                    <td bgcolor="#FFFFFF">{{userInfo.CountyName}}</td>
+                    <td align="right" bgcolor="#FFFFFF">地&nbsp;&nbsp;址：</td>
+                    <td bgcolor="#FFFFFF" >{{userInfo.Address}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">邮&nbsp;&nbsp;编：</td>
+                    <td bgcolor="#FFFFFF">{{userInfo.PostCode}}</td>
+                    <td align="right" bgcolor="#FFFFFF"></td>
+                    <td bgcolor="#FFFFFF"></td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>收货人信息</h3>
+        <div class="member-info" >
+            <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#dddddd">
+                <tr>
+                    <td width="13%" height="30" align="right" bgcolor="#FFFFFF">收货人姓名：</td>
+                    <td width="36%" bgcolor="#FFFFFF"> <input type="text" ng-model="addressInfo.Consignee" id="txtReceiveConsignee" /> </td>
+                    <td width="12%" align="right" bgcolor="#FFFFFF">联系手机：</td>
+                    <td width="39%" bgcolor="#FFFFFF"> <input style='ime-mode:Disabled' type="text" onkeydown='checkKeyForInt(this.value,event);' ng-model="addressInfo.Mobile" id="txtReceiveMobile" value="{{addressInfo.Mobile}}" /></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF"> 联系电话：</td>
+                    <td bgcolor="#FFFFFF"><input style='ime-mode:Disabled' type="text" id="txtReceiveTel" ng-model="addressInfo.Tel" value="{{addressInfo.Tel}}" /><br/><span style="color:red;">请用“-”分割区号，如：026-12345678</span></td>
+                    <td align="right" bgcolor="#FFFFFF">邮政编码：</td>
+                    <td bgcolor="#FFFFFF"><input style='ime-mode:Disabled' onkeydown='checkKeyForInt(this.value,event);' type="text" ng-model="addressInfo.PostCode" id="txtReceivePostCode" value="{{addressInfo.PostCode}}" /></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" bgcolor="#FFFFFF">收货地区：</td>
+                    <td bgcolor="#FFFFFF">
+                        <select id="addressProvince" onchange="SetCities(this.value)"></select>
+                        <select id="addressCity" onchange="SetCounties(this.value)"></select>
+                        <select id="addressCounty"  onchange="SetPostCode(this.value)" ng-model="addressInfo.CountyID"></select>
+                    </td>
+                    <td align="right" bgcolor="#FFFFFF">收货地址：</td>
+                    <td bgcolor="#FFFFFF"><textarea id="txtReceiveAddress" cols="35" rows="2" ng-model="addressInfo.Address" >{{addressInfo.Address}}</textarea></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="divOperation">
+        <div class="member-btn"><a href="javascript:;" onclick="orderConfirmAndBack()">确认订单</a></div>
+        <div class="member-btn"><a href="javascript:;" onclick="editOrderDetail()">应用修改</a></div>
+        <div class="member-btn"><a href="javascript:;" onclick="goBackOrderList()">返回订单列表</a></div>
+        <div class="member-btn"><a href="javascript:;" onclick="showSetInvalidOrderWindow()">设为废单</a></div>
+    </div>
+</div>
+
+<div id="divSetInvalidOrderWindow" style="display: none;">
+    @Html.Kendo().Window().Name("orderInvalidDesecription").Width(300).Height(180).Draggable(true).Title("设为废单原因").Modal(true).Content(
+        @<text>
+             <div>
+                <textarea cols="40" rows="5" id="divInvalidOrderDescription"></textarea>
+             </div>
+            <div class="k-edit-buttons k-state-default" style="clear: both; text-align: right; border-width: 1px 0 0; border-style: solid; position: relative; bottom: -1em; padding: .6em;">
+                <input type="submit" class="k-button k-button-icontext k-grid-update" onclick="setInvalidOrder()" value="确定" href="#" />
+                <a class="k-button k-button-icontext k-grid-cancel" onclick="closeSetInvalidOrderWindow()" href="#">取消</a>
+            </div>
+        </text>)
+</div>

@@ -1,0 +1,33 @@
+﻿@using V5.Portal.Backstage.Models.User
+@using V5.Portal.Backstage.Utils
+
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+}
+
+@(Html.Kendo().Grid<UserReceiveAddressModel>().Name("receiveAddressGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.ID).Hidden();
+            columns.Bound(c => c.Consignee).Title("收货人").Width(80);
+            columns.Bound(c => c.Mobile).Title("手机号码").Width(100);
+            columns.Bound(c => c.Tel).Title("电  话").Width(100);
+            columns.Bound(c => c.CountyName).Title("省/市/区").Width(150);
+            columns.Bound(c => c.Address).Title("详细地址").Width(120);
+            columns.Command(command => command.Custom("selectAddress").Click("onSelectAddress").Text("配送至此地址")).Title("操作").Width(100);
+        })
+                    .ToolBar(toolbar => toolbar.Create().Text("添加配送地址").HtmlAttributes(permissionObj.GetDisplayAttribute("AddUserReceiveAddress", "Transact", "Post",false)))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("User_Receive_Address_Template").Window(edit => edit.Title("添加配送地址")))
+        .Scrollable()
+        .Selectable()
+        .Events(e => e.Edit("onEdit"))
+        .HtmlAttributes(new { style = "height:500px; width: 800px" })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(20)
+            .Events(events => events.Error("error_handler"))
+            .Model(model => model.Id(c => c.ID))
+            .Read(read => read.Action("QueryUserReceiveAddress", "Transact").Data("getUserID"))
+            .Create(create => create.Action("AddUserReceiveAddress", "Transact").Data("returnReceiveAddress"))
+            )
+)

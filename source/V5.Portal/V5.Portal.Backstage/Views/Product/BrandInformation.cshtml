@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "BrandInformation";
+}
+@using V5.DataContract.Configuration
+<link href="../../Content/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
+<script src="../../Content/zTree/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+<script src="../../Content/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="../../Scripts/Backstage/Product/Backstage.BrandDescription.js" type="text/javascript"></script>
+<link href="../../Content/Promote/choose.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/Promote/Choose.js" type="text/javascript"></script>
+<script src="../../Content/Uploader/CJL.0.1.min.js" type="text/javascript"></script>
+<link href="../../Content/Uploader/ImagePreview.css" rel="stylesheet" type="text/css" />
+<script src="../../Content/Uploader/ImagePreview.js" type="text/javascript"></script>
+<script src="../../Content/Uploader/ImagePreviewEx.js" type="text/javascript"></script>
+<script src="../../Content/Uploader/QuickUpload.js" type="text/javascript"></script>
+<style type="text/css">
+    .filed_desc
+    {
+        vertical-align: top;
+    }
+    .tdh
+    {
+        height: 200px;
+    }
+</style>
+<div style="width: 200px; position: absolute; overflow: auto">
+    <ul id="brandTree" class="ztree">
+    </ul>
+</div>
+<div id="tabstrip" style="padding-left: 210px;">
+    <ul>
+        <li class="k-state-active">品牌信息</li>
+        <li>选择商品</li>
+        <li>吕牌链接</li>
+    </ul>
+    <div>
+        <!-----------商品详细介绍---------------->
+        <input type="hidden" value="" id="hdbrandId" />
+        <table>
+            <tr>
+                <td>
+                    品牌LOGO
+                </td>
+                <td>
+                    解说词：
+                </td>
+            </tr>
+            <tr>
+                <td class="tdh">
+                    <table class="perview" style="width: 150px; padding-top: 0px;">
+                        <tr>
+                            <td>
+                                <table style="height: 200px; width: 150px;">
+                                    <tbody id="idPicList">
+                                        <tr>
+                                            <td align="center" class="pic" cid="imgMaster">
+                                                <img src="" title="双击移除" id="imgpre">
+                                                <div id="imgMaster" style="display: none">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="tdh">
+                    <input type="text" id="TitleCkedit" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    内容:
+                    <input type="text" id="IntroduceCkedit" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="filed_desc">
+                </td>
+                <td colspan="3">
+                    <input type="button" value="提交保存" class="k-button" id="postSave" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!------------------->
+    <div style="min-height: 700px;">
+        <div id="container">
+        </div>
+    </div>
+    <div>
+        <script type="text/javascript">
+          
+        </script>
+        @(Html.Kendo().Grid<Config_Page>()
+              .Name("ProductLinkTable")
+              .Columns(columns =>
+              {
+                  columns.Bound(p => p.Name).Title("名称");
+                  columns.Bound(p => p.Source).Title("链接");
+                  columns.Command(command => { command.Edit().Text("编辑").CancelText("取消").UpdateText("确认"); command.Destroy().Text("删除"); }).Width(172).Title("操作");
+              })
+              .ToolBar(toolbar => toolbar.Create().Text("添加"))
+              .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("BrandLinkTemplate").Window(w => w.Title("内容页面")))
+              .Pageable()
+              .Sortable()
+              .Scrollable()
+              .HtmlAttributes(new { style = "height:430px;" })
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(20)
+                  .Events(events => events.Error("error_handler"))
+                  .Model(model => model.Id(p => p.ID))
+                          .Create(update => update.Action("InsertLink", "Product").Data("CreateData"))
+                                  .Read(read => read.Action("QueryBrandLinkSource", "Product").Data("BrandCateRead"))
+                  .Update(update => update.Action("ModifyLink", "Product"))
+                  .Destroy(update => update.Action("Destroy", "Product"))
+              )
+              )
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        BrandCategory.Init();
+        ImagePreviewEx.Init({ img: ["imgMaster"], type: "1" });
+    });
+    CKEDITOR.replace("TitleCkedit");
+    CKEDITOR.replace("IntroduceCkedit");
+
+   
+
+</script>
+<script type="text/javascript">
+
+    function GetSelected() {
+        var selected = Choose.GetSelect();
+        alert(selected.join(","));
+    }
+    $("#tabstrip").kendoTabStrip({
+        animation: {
+            close: {
+                duration: 600,
+                effects: "fadeOut"
+            },
+            open: {
+                duration: 500,
+                effects: "fadeIn"
+            }
+        }
+    }).data("kendoTabStrip");
+</script>

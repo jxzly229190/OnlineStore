@@ -1,0 +1,111 @@
+﻿@using System.Web.Mvc.Html
+@using V5.Library
+@using V5.Portal.Common
+@model IList<V5.DataContract.Transact.Product_Consult>
+@{
+    ViewBag.Title = "我的咨询";
+}
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">        
+    .uc_order .uc_order_top {border-bottom:3px solid #ff5f3e;}
+    .uc_order thead td{font-size:14px; text-align:left; text-indent:12px;}
+    .uc_order tbody td{vertical-align:middle;height:60px;}
+    .uc_order tbody .question{ text-indent:6px; }
+    .uc_order tbody .question a{ text-align:left !important; color:#555;}
+    .uc_order tbody .answer{background-color:#f8f8f8; color:#ff5f3e; }
+    .uc_order tbody .answer td{padding-left:50px; background:url(../images/uc_head_normal.png) 10px center no-repeat; cursor:pointer; }
+    .uc_order tbody .answer td:hover{ background-image:url(../images/uc_head_active.png);}
+</style>
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+    <div class="uc_right">
+        <dl class="uc_right_item uc_order">
+            <dt class="uc_order_top">我的咨询
+                <form action="Advisory" class="uc_order_search" method="POST">
+                    <input type="text" name="condition" value="@Html.Raw(ViewBag.searchText)" class="search_text animation" id="uc_advisory_search_text" />
+                    <input type="submit" style="display: none"/>
+                </form>
+            </dt>
+            <dd>
+                <table id="uc_advisory_table">
+                    <thead>
+                        <tr>
+                            <td style="width:10%;">商品名称</td>
+                            <td style="width:30%;"></td>
+                            <td style="width:60%;">咨询问题</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr class="question">
+                                        <td><img src="@Html.Raw(Utils.GetProductImage(item.ProductPicPath,"1"))" /></td>
+                                        <td><a href="@Html.Raw(Utils.GetProductUrl(item.ProductID))">@item.ProductName</a></td>
+                                        <td>@item.ConsultContent</td>
+                                    </tr>
+                                    if (!string.IsNullOrWhiteSpace(item.Content))
+                                    {
+                                        <tr class="answer">
+                                            <td colspan="3">
+                                                @item.Content
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="answer">
+                                            <td colspan="3">
+                                                对不起，客服还没有回复，请耐心等待~~
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <tr class="question"><td colspan="3" style="text-align:center">（暂无咨询）</td></tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div style="position:relative;height:56px;">
+                                    <div class="uc_page">
+                                        
+                                        @{
+                                            if (Model != null && Model.Count > 0)
+                                            {
+                                                @Html.ActionLink("<", "Advisory", "User", new { pageIndex = ViewBag.pageIndex == 1 ? 1 : ViewBag.pageIndex - 1, pageSize = 5 }, new { @class = "prev" })
+                                                for (int i = 1; i <= ViewBag.pageCount; i++)
+                                                {
+                                                    if (ViewBag.pageIndex == i)
+                                                    {
+                                                        <a href="@Html.Raw("Advisory?pageIndex=" + i.ToString() + "&pageSize=5")" class="curr">@i.ToString()</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Html.Raw("Advisory?pageIndex=" + i.ToString() + "&pageSize=5")">@i.ToString()</a>
+                                                    }
+                                                }
+                                                @Html.ActionLink(">", "Advisory", "User", new { pageIndex = ViewBag.pageIndex == ViewBag.pageCount ? ViewBag.pageCount : ViewBag.pageIndex + 1, pageSize = 5 }, new { @class = "next" })
+                                            }
+                                        }
+                                        
+                                    </div>    
+                                </div>                            
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </dd>
+        </dl>
+        @Html.Action("GuessLike", "Home")
+        </div>
+    <div class="clear"></div>
+</div>
+</div>

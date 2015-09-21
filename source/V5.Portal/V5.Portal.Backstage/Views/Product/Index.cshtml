@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;商品管理&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div class="right-box"></div>
+
+@Scripts.Render("~/Scripts/Backstage/Product/Backstage.Product.js")
+@Scripts.Render("~/Scripts/Backstage/Product/Backstage.Product.Add.js")
+@Scripts.Render("~/Scripts/Backstage/Product/Backstage.Product.Attribute.js")
+@Scripts.Render("~/Content/ckeditor/ckeditor.js")

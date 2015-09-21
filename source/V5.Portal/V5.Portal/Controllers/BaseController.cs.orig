@@ -1,0 +1,143 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BaseController.cs" company="www.gjw.com">
+//  (C) 2013 www.gjw.com. All rights reserved. 
+// </copyright>
+// <summary>
+//   The base controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace V5.Portal.Controllers
+{
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+
+    using V5.Library.Storage.DB.NoSql;
+    using V5.Portal.Common;
+    using V5.Portal.Models;
+
+    /// <summary>
+    /// The base controller.
+    /// </summary>
+    public class BaseController : Controller
+    {
+        protected UserSession UserSession { get; set; }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            /**
+             * 流程：
+             * 1. 检查是否存在VisitorKey
+             *      1.1 若存在，则证明此用户不是第一访问，MNDB中有可能存在会话信息
+             *          1.1.1 根据Visitorkey查找UserSession信息
+             *              1.1.1.1 若有，则检查会话是否过期，若过期，则删除原会话并创建新的会话。
+             *              1.1.1.2 若无，则为过期会话，则创建新的会话
+             *       1.2 VisitorKey不存在，则证明此用户为第一访问，创建新会话。             * 
+             * **/
+
+            var httpSessionStateBase = this.HttpContext.Session;
+            if (httpSessionStateBase != null)
+            {
+                var visitorKey = this.Request.Cookies.Get(ConstantParams.VisitorKeyName);
+                if (visitorKey != null)
+                {
+                    this.UserSession = MongoDBHelper.GetModel<UserSession>(u => u.VisitorKey == visitorKey.Value);
+                    
+                    if (this.UserSession == null)
+                    {
+                        // 过期，更新会话
+                        this.UserSession = new UserSession
+                                               {
+                                                   SessionId = httpSessionStateBase.SessionID,
+                                                   VisitorKey = visitorKey.Value
+                                               };
+                    }
+
+                    var timeSpan = (DateTime.Now - this.UserSession.LastVisitTime).TotalMilliseconds;
+
+                    // 过期，更新会话会
+                    if (timeSpan > this.UserSession.ValidTime)
+                    {
+                        this.UserSession = new UserSession
+                                               {
+                                                   SessionId = httpSessionStateBase.SessionID,
+                                                   VisitorKey = visitorKey.Value
+                                               };
+                    }
+
+                    this.UserSession.LastVisitTime = DateTime.Now;
+                    MongoDBHelper.UpdateModel(this.UserSession, u => u.VisitorKey == this.UserSession.VisitorKey);
+                }
+                else
+                {
+                    // 第一次访问用户，设置VisitorKey
+                    this.UserSession = new UserSession
+                                           {
+                                               SessionId = httpSessionStateBase.SessionID,
+                                               VisitorKey = Guid.NewGuid().ToString(),
+                                               LastVisitTime = DateTime.Now
+                                           };
+                    MongoDBHelper.UpdateModel(this.UserSession, u => u.VisitorKey == this.UserSession.VisitorKey);
+                    this.Response.AppendCookie(
+                        new HttpCookie(ConstantParams.VisitorKeyName, this.UserSession.VisitorKey));
+                }
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
+
+        /// <summary>
+        /// The is login.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public string GetLoginHtml()
+        {
+            var visitorkey = this.Request.Cookies.Get(ConstantParams.VisitorKeyName);
+            if (visitorkey != null)
+            {
+                var userSession = MongoDBHelper.GetModel<UserSession>(u => u.VisitorKey == visitorkey.Value);
+                if (userSession != null)
+                {
+                    var timeSpan = (DateTime.Now - userSession.LastVisitTime).TotalMilliseconds;
+                    if (timeSpan < userSession.ValidTime)
+                    {
+                        if (userSession.ShowName != null)
+                        {
+                            return "<a href='#' class='login-name'>" + userSession.ShowName + "</a><a id='loginout' href='javascript:loginout();'>退出</a>";
+                        }
+                    }
+                }
+            }
+
+            return "<a class='login-btn' href='/Login/index' target='_self'>登录</a><a class='reg-btn' href='/Login/register' target='_self'>快速注册</a>";
+        }
+
+        /// <summary>
+        ///  获取登录会员的编号.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="int"/>.
+        /// </returns>
+        protected int GetUserID()
+        {
+            var visitorkey = this.Request.Cookies.Get(ConstantParams.VisitorKeyName);
+            if (visitorkey != null)
+            {
+                var userSession = MongoDBHelper.GetModel<UserSession>(u => u.VisitorKey == visitorkey.Value);
+                if (userSession != null)
+                {
+                    var timeSpan = (DateTime.Now - userSession.LastVisitTime).TotalMilliseconds;
+                    if (timeSpan < userSession.ValidTime)
+                    {
+                        return userSession.UserID;
+                    }
+                }
+            }
+
+            return 0;
+        }
+    }
+}

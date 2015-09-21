@@ -1,0 +1,44 @@
+﻿@model V5.Portal.Backstage.Models.User.UserReceiveAddressModel
+@Html.ValidationSummary(true)
+<div class="editor-label">
+    收货人：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Consignee, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Consignee)
+</div>
+
+<div class="editor-label">
+    手机：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Mobile, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Mobile)
+</div>
+
+<div class="editor-label">
+   电话：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Tel, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Tel)
+</div>
+
+<div class="editor-label">
+    省/市/区:
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.ProvinceID).Name("AddressProvinceID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read("QueryProvinces", "Home")).DataTextField("Name").DataValueField("ID").HtmlAttributes(new { @style = "width:80px" }))
+    @(Html.Kendo().DropDownListFor(model => model.CityID).Name("AddressCityID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCities", "Home").Data("filterCityAddress")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("AddressProvinceID").HtmlAttributes(new { @style = "width:80px" }))
+    @(Html.Kendo().DropDownListFor(model => model.CountyID).Name("AddressCountyID").OptionLabel(" 请 选 择 ").DataSource(ds => ds.Read(action => action.Action("QueryCounties", "Home").Data("filterCountyAddress")).ServerFiltering(true)).DataTextField("Name").DataValueField("ID").Enable(false).AutoBind(false).CascadeFrom("AddressCityID").HtmlAttributes(new { @style = "width:80px" }))
+</div>
+
+<div class="editor-label">
+    详细地址：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Address, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Address)
+</div>
+
+

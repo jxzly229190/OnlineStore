@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p class="weizhi">
+    当前位置&nbsp;>&nbsp;配置管理&nbsp;>&nbsp;<label id="current"></label>
+</p>
+<div class="right-box">
+</div>
+
+<script type="text/javascript">
+
+    // 默认选中左边菜单的第一个
+    $(function () {
+        $("#top_config").addClass("select");
+        $('.left-f ul li:first a').trigger("click");
+    });
+
+
+    function error_handler(e) {
+        if (e) {
+            alert(e.xhr.statusText + ":" + e.xhr.responseText);
+        }
+    }
+
+    $(function () {
+        $("#config").addClass("select");
+        $('.left-f ul li:first a').trigger("click");
+    });
+
+    function ShowPartialView(a) {
+        var current = $(a).attr("name");
+        var href = "/" + $(a).attr("parent") + "/" + current + "/";
+        
+        var currentLabel = $("#current");
+        currentLabel.text($(a).text());
+
+        $.ajax({
+            type: "GET",
+            url: href,
+            data: null,
+            dataType: "html",
+            success: function (data) {
+                if (data.State == -401) {
+                    onSessionLost();
+                } else if (data.State == -403) {
+                    alert("对不起，您无此操作权限！");
+                } else {
+                    if (data.indexOf("loginBtn") > 0) {
+                        location.href = "/login";
+                        return false;
+                    }
+                    $('.right-box').html(data);
+                }
+            },
+            error: function () {
+                alert("处理失败!");
+            }
+        });
+
+        $(a).parent().addClass("left-s").siblings().removeClass("left-s");
+    }
+
+    function showDeleteConfirm(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var userLevelID = dataItem.ID;
+        var result = confirm("提示：刪除支付类别将导致此类别下的所有支付机构信息被删除。\r\n您确定删除吗?");
+        if (result != false) {
+            if (userLevelID != null) {
+                $.post("/Config/RemovePaymentType", { "id": userLevelID },
+                    function (data) {
+                        alert(data);
+                        $("#configPaymentTypeGird").data("kendoGrid").dataSource.read();
+                        $("#configPaymentTypeGird").data("kendoGrid").dataSource.refresh();
+                    });
+            }
+        }
+    }
+
+    var expandedRow;
+
+    //支付类别自动选中JS 处理方法
+    function onEditOrg(e) {
+
+        var dropdownlist = $("#PaymentTypeID").data("kendoDropDownList");
+        dropdownlist.value($("#paymentTypeIDHidden").val());
+        e.model.PaymentTypeID = $("#paymentTypeIDHidden").val();
+        onEdit(e);
+    }
+
+    function onDetailPaymentExpand(e) {
+        if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+            var grid = $("#configPaymentTypeGird").data("kendoGrid");
+            grid.collapseRow(expandedRow);
+        }
+        expandedRow = e.masterRow;
+        expandedRow.next().css("display", "");
+
+        $.each(e.sender._data, function (key, value) {
+            if (value.uid == e.masterRow[0].attributes["data-uid"].value) {
+                var parentID = value.ID;
+                $("#paymentTypeIDHidden").val(parentID);
+            }
+        });
+    }
+
+    //配送公司自动选中JS 处理方法
+    function onEditDelivery(e) {
+
+        var dropdownlist = $("#DeliveryCorporationID").data("kendoDropDownList");
+        dropdownlist.value($("#deliveryCorpIDHidden").val());
+        e.model.PaymentTypeID = $("#deliveryCorpIDHidden").val();
+
+        onEdit(e);
+    }
+
+    function onDetailDeliveryExpand(e) {
+        if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+            var grid = $("#configDeliveryCorporationGird").data("kendoGrid");
+            grid.collapseRow(expandedRow);
+        }
+        expandedRow = e.masterRow;
+        expandedRow.next().css("display", "");
+
+        $.each(e.sender._data, function (key, value) {
+            if (value.uid == e.masterRow[0].attributes["data-uid"].value) {
+                var parentID = value.ID;
+                $("#deliveryCorpIDHidden").val(parentID);
+            }
+        });
+    }
+
+</script>

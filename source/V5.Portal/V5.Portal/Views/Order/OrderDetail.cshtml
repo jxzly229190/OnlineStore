@@ -1,0 +1,167 @@
+﻿@using V5.Portal.Common
+@using V5.Library;
+@model V5.Portal.Models.OrderDetailModel
+@{
+    ViewBag.Title = "订单详情 - 购酒网";
+}
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .uc_order_top {border-bottom:3px solid #ff5e3e;}
+    .uc_order_body{padding:15px 6px;}
+    .uc_order_item_top { font-size:14px; position:relative; text-indent:12px; color:#333; line-height:36px; border-bottom:1px dashed #ccc; margin-bottom:6px; }
+    .uc_order_item_top em{ display:block; position:absolute; width:6px; height:6px; left:0; top:16px; background-color:#ff5e3e; }
+    .uc_order_item {margin:0px 0px 25px; padding:6px 12px; background-color:#f8f8f8; color:#555;}
+    .uc_order_item tbody tr{ line-height:36px !important; }
+    .uc_order_item tbody td{ text-align:center; }
+    .uc_order_item tbody .summary{ text-indent:12px; text-align:left !important; }
+    .uc_order_item label{display:block; line-height:32px; }
+    .background-white {background-color:#fff;}
+    .order_summary{ text-align:right !important; text-indent:6px; line-height:24px;}
+</style>
+<div class="uc_container">
+    <div class="uc">
+        @Html.Partial("UserMenu")
+        <div class="uc_right">
+            <dl class="uc_right_item uc_order">
+                    @{
+                        if (Model != null)
+                        {
+                            <dt class="uc_order_top">订单详情<a href="###">@Model.OrderInfo.OrderCode</a></dt>
+                            <dd class="uc_order_body">
+                                <dl>
+                                    <dt class="uc_order_item_top"><em></em>订单跟踪</dt>
+                                    <dd class="uc_order_item background-white">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 60%;">操作内容</td>
+                                                    <td style="width: 20%;">操作时间</td>
+                                                    <td style="width: 20%;">操作人员</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (Model != null && Model.OrderTrackDetails != null)
+                                                    {
+                                                        foreach (var tracking in Model.OrderTrackDetails)
+                                                        {
+                                                            <tr>                                            
+                                                                <td class="summary">@Utils.ToString(tracking.OperateSummary, "没有填写")</td>
+                                                                <td class="date">@Utils.ToString(tracking.OperateTime.ToString("yyyy-MM-dd HH:mm:ss"), "没有填写")</td>
+                                                                <td class="oper">@Utils.ToString(tracking.Operator, "没有填写")</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3">对不起，系统目前没有您的订单相关跟踪信息。</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                    <dt class="uc_order_item_top"><em></em>收货人信息</dt>
+                                    <dd class="uc_order_item">
+                                        @{
+                                            if (Model != null && Model.ReceiverInfo != null)
+                                            {
+                                                <label>收货人姓名：@Utils.ToString(Model.ReceiverInfo.Consignee, "没有填写")</label>
+                                                <label>所在城市：@Utils.ToString(Model.ReceiverInfo.CountyName("-"), "没有填写")</label>
+                                                <label>详细地址：@Utils.ToString(Model.ReceiverInfo.Address, "没有填写")</label>
+                                                <label>手机号码：@Utils.ToString(Model.ReceiverInfo.Mobile, "没有填写")</label>
+                                                <label>电话号码：@Utils.ToString(Model.ReceiverInfo.Tel, "没有填写")</label>
+                                            }
+                                        }
+                                    </dd>
+                                    <dt class="uc_order_item_top"><em></em>配送与付款方式</dt>
+                                    <dd class="uc_order_item">
+                                        @{
+                                            if (Model != null && Model.OrderInfo != null)
+                                            {
+                                                <label>付款方式：@Utils.ToString(Model.OrderInfo.PaymentMethodName, "没有填写")</label>
+                                            }
+                                        }                           
+                                    </dd>
+                                    <dt class="uc_order_item_top"><em></em>留言和发票信息</dt>
+                                    <dd class="uc_order_item">
+                                        <label>留言信息：</label>
+                                        <label>@Utils.ToString(Model.OrderInfo.Remark)</label>
+                                        <label>发票信息：</label>
+                                        @{
+                                            if (Model != null && Model.InvoiceInfo != null)
+                                            {
+                                                <label>发票抬头：@Utils.ToString(Model.InvoiceInfo.InvoiceTitle, "不开发票")</label>
+                                            }
+                                            else
+                                            {
+                                                <label>不开发票</label>
+                                            }
+                                        }                        
+                                    </dd>
+                                    <dt class="uc_order_item_top"><em></em>商品清单</dt>
+                                    <dd class="uc_order_item background-white">
+                                        @{
+                                            if (Model != null && Model.OrderProducts != null)
+                                            {
+                                                var total = 0.0;
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td>商品</td>
+                                                            <td>单价</td>
+                                                            <td>数量</td>
+                                                            <td>小计</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{
+                                                            foreach (var product in Model.OrderProducts)
+                                                            {
+                                                                <tr>
+                                                                    <td style="text-align: left; padding-left: 12px;">
+                                                                        <a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))" target="_blank"><img class="productImg" src="@Html.Raw(Utils.GetProductImage(product.Path, "1"))" alt=@Utils.ToString(product.ProductName) /></a>
+                                                                        <a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))" target="_blank">@Utils.ToString(product.ProductName)</a></td>
+                                                                    <td>¥@Utils.ToString(Math.Round(product.TransactPrice, 2))</td>
+                                                                    <td>@Utils.ToString(product.Quantity)</td>
+                                                                    <td>¥@Utils.ToString(Math.Round(product.TransactPrice * product.Quantity, 2))</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            @{
+                                                                if (Model != null && Model.OrderInfo != null)
+                                                                {
+                                                                    <td colspan="4" class="order_summary" > 商品总金额：¥@Utils.ToString(Math.Round(Model.OrderInfo.TotalMoney, 2))  + 运费：¥@Utils.ToString(Math.Round(Model.OrderInfo.DeliveryCost, 2)) - 已优惠金额：¥@Math.Round(Model.OrderInfo.Discount) </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td colspan="4" class="order_summary" > 商品总金额：¥0  运费：¥0 已优惠金额：¥0</td>
+                                                                }
+                                                            }
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" class="order_summary" >合计：¥@Utils.ToString(Math.Round(Model.OrderInfo.TotalMoney + Model.OrderInfo.DeliveryCost, 2))</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            }
+                                        }
+                                    </dd>
+                                </dl>
+                            </dd>
+                        }
+                        else
+                        {
+                            <dl>对不起，此订单不存在。</dl>
+                        }
+                    }
+                    
+                            </dl >
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

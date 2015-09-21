@@ -1,0 +1,51 @@
+﻿@model V5.Portal.Backstage.Models.Transact.Order.AftersaleRefundModel
+
+@Html.ValidationSummary(true)
+@using (Html.BeginForm("CancelOrderRefund", "Transact"))
+{
+    
+<div class="editor-label">
+    @Html.HiddenFor(model => model.OrderID)
+</div>
+
+<div class="editor-field"  style="margin-left: 30px;padding-bottom: 10px;">
+    订单编号：
+    @Html.DisplayFor(model => model.OrderCode)
+</div>
+    
+    <div class="editor-field"  style="margin-left: 30px;padding-bottom: 10px;">
+        取消原因：@Html.Kendo().DropDownList().Name("OrderCancelCauseID").OptionLabel(" 请选择 ").DataSource(ds => ds.Read("QueryCancelCauses", "Transact")).DataValueField("ID").DataTextField("Cause")
+    </div>
+    
+    <div class="editor-label"  style="margin-left: 30px;padding-bottom: 10px;">
+        取消备注：@Html.TextArea("cancelDescription")
+    </div>
+
+    <div class="editor-field"  style="margin-left: 30px;padding-bottom: 10px;">
+        退款方式：@Html.Kendo().DropDownListFor(model => model.RefundMethodID).OptionLabel(" 请选择 ").DataSource(ds => ds.Read("GetRefundMethod", "Transact")).DataValueField("Value").DataTextField("Text")
+    </div>
+    
+    <div class="editor-field"  style="margin-left: 30px;padding-bottom: 10px;">
+        订单金额：@Html.DisplayFor(m=>m.TotalMoney)
+    </div>
+
+    <div class="editor-field"  style="margin-left: 30px;padding-bottom: 10px;">
+        已付金额：@Html.DisplayFor(m => m.PaymentMoney)
+        @Html.HiddenFor(m=>m.PaymentMoney)
+    </div>
+    
+    <div class="editor-field"  style="margin-left: 30px;padding-bottom: 10px;">
+        退款金额：@Html.Kendo().NumericTextBoxFor(m => m.ActualRefundMoney)
+    </div>
+    
+    <div class="editor-label"  style="margin-left: 30px;padding-bottom: 10px;">
+        退款备注：@Html.TextAreaFor(model => model.RefundDescription,2)
+    </div>
+
+    <hr/>
+    
+    <div  style="margin-left: 30px;padding-bottom: 10px; float: right">
+        <input class="k-button" type="button" value="提交" onclick="submitOrderCancel(1)" />
+        <input class="k-button" type="button" value="关闭" onclick="closeOrderCancelWindow()" />
+    </div>
+}

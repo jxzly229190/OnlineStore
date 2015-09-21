@@ -1,0 +1,78 @@
+﻿@model V5.Portal.Backstage.Models.Login.LoginModel
+@{
+    // 布局页面设置为 Null，不然会使用默认布局页面，切勿删除
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>登录 - 购酒网后台管理系统</title>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/Scripts/AjaxOverride.js")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/Scripts/Backstage/Backstage.Login.js")
+        
+        @Styles.Render("~/Content/Login.css")
+        @Styles.Render("~/Content/Common.css")
+        @Styles.Render("~/Content/kendo/kendo.common.min.css")
+        @Styles.Render("~/Content/kendo/kendo.uniform.min.css")
+    </head>
+
+<body class="login-bg">
+    <div class="login-box">
+       <div class="login-logo">
+            <div class="logo-contain">
+                <a href="http://www.gjw.com"><img src="../../../Images/logo-login.jpg" /></a></div>
+            <div class="logo-contain2">
+                <a href=""><img src="../../../Images/logo-text.jpg" alt=""/></a></div>
+            <div class="left-btn">
+                <a href="#"><img src="../../../Images/btn-erp.jpg" alt=""/></a>
+                <a href="#"><img src="../../../Images/btn-bijia.jpg" alt=""/></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="inputArea">
+                <ul>
+                    <li>
+                        <label style="font-size: 14px; font-weight: bold; color: gray;">
+                            用户名：</label>
+                        @Html.TextBoxFor(model => model.LoginName, new { id = "loginName", @class = "k-textbox" })
+                    </li>
+                    <li>
+                        <label style="font-size: 14px; font-weight: bold; color: gray;">
+                            密&nbsp;&nbsp;&nbsp;码：</label>
+                        @Html.PasswordFor(model => model.LoginPassword, new { id = "loginPassword", @class = "k-textbox" })
+                    </li>
+                    <li>
+                        <label style="font-size: 14px; font-weight: bold; color: gray;">
+                            验证码：</label>
+                        @Html.TextBoxFor(model => model.SecurityCode, new { id = "securityCode", @class = "k-textbox", style = "width:50px;" })
+                        <span class="Security">
+                            <img id="SecurityCodeImg" src="@Url.Action("GetSecurityCode", "Login")" alt="">
+                        </span></li>
+
+                </ul>
+                <div class="area-bg">
+                </div>
+            </div>
+            <div class="textArea">
+                <span>
+                    <input type="checkbox" id="remember"/>
+                    <label for="remember" style="font-size: 12px; ">
+                        在此计算机上保留我的信息
+                    </label>
+                </span><span>
+                           <input id="loginBtn" class="k-button" type="button" onclick="login()" value=" 登 录 ">
+                       </span>
+                <div class="note">
+                    <dt>注意：</dt>
+                    <dd>1、不要在公共场合保存登录信息</dd>
+                    <dd>2、尽量避免多人使用同一账号</dd>
+                    <dd>3、为了保证您的账号安全，退出系统时请注销登录</dd>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

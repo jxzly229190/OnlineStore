@@ -1,0 +1,12 @@
+﻿@model V5.DataContract.Configuration.Config_Page
+@using V5.Library;
+@{
+    ViewBag.Title = Utils.ToString(Model.Name);
+}
+@Styles.Render("~/Content/article.css")
+<dl class="article">
+    <dt class="article_title">@Html.DisplayFor(m=>m.Name)<span>@Html.DisplayFor(m=>m.CreateTime)</span></dt>
+    <dd class="article_content">
+        @Html.Raw(Model.Content)
+    </dd>    
+</dl>

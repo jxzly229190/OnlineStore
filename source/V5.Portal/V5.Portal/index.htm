@@ -1,0 +1,996 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="购酒网,网上买酒专卖店,最好的买酒网" />
+    <meta name="description" content="购酒网作为国内第一网上买酒网官方专卖店，提供白酒、葡萄酒、洋酒、进口红酒、黄酒等10万种以上正品酒类商品，经过茅台、五粮液、洋河、王朝等数百种品牌授权，立志成为最好的买酒网。" />
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+    <body>
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+        <link href="/Content/base.css" rel="stylesheet"/>
+
+        <link href="/Content/head.css" rel="stylesheet"/>
+
+        <link href="/Content/public.css" rel="stylesheet"/>
+
+        <script src="/Scripts/jquery.cookie.js"></script>
+
+        <script src="/Scripts/AjaxOverride.js"></script>
+
+        <script src="/Scripts/jquery.lazyload.min.js"></script>
+
+        <script src="/Scripts/global.js"></script>
+
+        <script src="/Scripts/public.js"></script>
+
+        <div class="topBar" id="topBar">
+  <div class="topBarCon">
+    <!-- 左侧栏目 -->
+    <div class="topBarFl fl">
+      <ul>
+        <li><span>欢迎来到购酒网！</span></li>
+        <li>
+          <!-- 登录 -->
+          <div class="login">
+            <div id="top_login" name="loginPlain">
+                
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 右侧栏目 -->
+    <div class="miniMenu fr">
+      <ul>
+        <!-- 购物车 -->
+        <li class="m1">
+          <a class="cart-a" href="/Cart">购物车<strong id="head_cart_no">0</strong>件</a>
+          <div class="mini-cart hide">
+            <div class="no-list hide">
+              您的购物车中暂时没有商品。
+            </div>
+            <div class="cart-list" id="head_cart"></div>
+          </div>
+        </li>
+
+        <!-- 我的订单 -->
+        <li class="m2"><a href="/User/MyOrder">我的订单</a></li>
+        
+        <!-- 用户中心 -->
+        <li class="m3">
+          <a class="user-a" href="/User/Index">用户中心</a>
+          <div class="miniMenu-child hide">
+            <dl>
+              <dd><a href="/User/Evaluate">商品评论</a></dd>
+              <dd><a href="/User/Collect">收藏夹</a></dd>
+            </dl>
+          </div>
+        </li>
+        <li class="m4"><a href="/Home/Help/6.html">帮助中心</a></li>
+        <li class="m55"><a href="/Home/FeedBack">提建议</a></li>
+        <li class="m66"><a href="http://tieba.baidu.com/f?tp=0&amp;kw=%B9%BA%BE%C6%CD%F8" rel="nofollow">贴吧</a></li>
+        <li class="m66"><a href="http://e.weibo.com/2205040202/profile" rel="nofollow">微博</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+        
+<div style="background-color: #fff;">
+    <div class="header">
+        <div class="hd_logo">
+            <a class="logo" href="/"></a>
+            <a class="ad" href="http://www.gjw.com/product/item-id-4228.htm" style="background-image:url(/Images/Advertise/LP/2014/38/e22df084-360e-4d73-ad9e-da26029dfc08.jpg);"></a>
+        </div>
+        <div class="searchArea fl">
+            <div class="searchInput">
+                <ul>
+                    <li class="search_input">
+                        <input id="sch" name="key" type="text" class="text_input" value="" />
+                        <div class="search_suggest">
+                        </div>
+                    </li>
+                    <li class="search_btn">
+                        <input type="button" class="sch_btn" value="搜索" id="btnsch" /></li>
+                </ul>
+            </div>
+            <div class="search_list_box" id="search_list_box">
+            </div>
+            <div class="keyword">
+                <strong>热门搜索：</strong> 
+                <a href="/Home/Search?Brand=baijiu-maotai" title="茅台">茅台</a>
+                <a href="/Home/Search?Brand=baijiu-fenjiu" title="汾酒">汾酒</a> 
+                <a href="/Home/Search?Brand=baijiu-yanghe"title="洋河">洋河</a> 
+                <a href="/Home/Search?Brand=baijiu-langjiu" title="郎酒">郎酒</a>
+                <a href="/Home/Search?Brand=baijiu-wuliangye" title="五粮液">五粮液</a> 
+                <a href="/Home/Search?Brand=baijiu-jiannanchun"title="剑南春">剑南春</a> 
+                <a href="/Home/Search?Brand=baijiu-maotai" title="泸州老窖">泸州老窖</a>
+            </div>
+        </div>
+        <div class="tubiao">
+            <span>
+                <img src="/images/hdxb1.jpg" alt="" /></span> <span>
+                    <img src="/images/hdxb2.jpg" alt="" /></span> <span>
+                        <img src="/images/hdxb3.jpg" alt="" /></span>
+        </div>
+    </div>
+</div>
+
+        <div class="headNav" id="headNav">
+    <div class="navCon">
+        <!-- 全部商品分类 -->
+        <div class="navCon-cate fl navCon_on">
+            <div class="navCon-cate-title">
+                <a href="#">全部商品分类</a>
+            </div>
+            <div class="cateMenu">
+                <ul>
+                    <li style="border-top: none;">
+                        <div class="cate-tag">
+                            <strong><a href="/baijiu.htm" target="_blank">白酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/baijiu-maotai.htm" target="_blank">茅台</a> <a href="/baijiu-yanghe.htm"
+                                        target="_blank">洋河</a> <a href="/baijiu-langjiu.htm" target="_blank">郎酒</a>
+                                    <a href="/baijiu-gujinggongjiu.htm" target="_blank">古井贡酒</a></p>
+                                <p>
+                                    <a href="/baijiu-xijiu.htm" target="_blank">习酒</a> <a href="/baijiu-zhenjiu.htm"
+                                        target="_blank">珍酒</a> <a href="/baijiu-hongxing.htm" target="_blank">
+                                            红星</a> <a href="/baijiu-luzhoulaojiao.htm" target="_blank">泸州老窖</a></p>
+                                <p>
+                                    <a href="/baijiu-tuopai.htm" target="_blank">沱牌</a> <a href="/baijiu-guotai.htm"
+                                        target="_blank">国台</a> <a href="/baijiu-wuliangye.htm" target="_blank">
+                                            五粮液</a> <a href="/baijiu-jiannanchun.htm" target="_blank">剑南春</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/baijiu-maotai.htm" target="_blank">茅台</a> <a href="/baijiu-wuliangye.htm"
+                                            target="_blank">五粮液</a> <a href="/baijiu-jiannanchun.htm" target="_blank">
+                                                剑南春</a> <a href="/baijiu-shuijingfang.htm" target="_blank">水井坊</a>
+                                        <a href="/baijiu-fenjiu.htm" target="_blank">汾酒</a> <a href="/baijiu-yanghe.htm"
+                                            target="_blank">洋河</a> <a href="/baijiu-luzhoulaojiao.htm" target="_blank">
+                                                泸州老窖</a> <a href="/baijiu-zhenjiu.htm" target="_blank">珍酒</a>
+                                        <a href="/baijiu-langjiu.htm" target="_blank">郎酒</a> <a href="/baijiu-gujinggongjiu.htm"
+                                            target="_blank">古井贡酒</a> <a href="/baijiu-xifengjiu.htm" target="_blank">
+                                                西凤酒</a> <a href="/baijiu-dongjiu.htm" target="_blank">董酒</a>
+                                        <a href="/baijiu-jiuguijiu.htm" target="_blank">酒鬼酒</a> <a href="/baijiu-hongxing.htm"
+                                            target="_blank">红星</a> <a href="/baijiu-wenjunjiu.htm" target="_blank">
+                                                文君酒</a> <a href="/baijiu-niulanshan.htm" target="_blank">牛栏山</a>
+                                        <a href="/baijiu-sitejiu.htm" target="_blank">四特酒</a> <a href="/baijiu-kouzijiu.htm"
+                                            target="_blank">口子酒</a> <a href="/baijiu-zuopai.htm" target="_blank">沱牌</a>
+                                        <a href="/baijiu-xijiu.htm" target="_blank">习酒</a> <a href="/baijiu-guotai.htm"
+                                            target="_blank">国台</a> <a href="/baijiu-hengshuilaobaigan.htm" target="_blank">
+                                                衡水老白干</a> <a href="/baijiu-shedejiu.htm" target="_blank">舍得酒</a>
+                                        <a href="/baijiu-zhongzijiu.htm" target="_blank">种子酒</a> <a href="/baijiu-yilite.htm"
+                                            target="_blank">伊力特</a> <a href="/baijiu-dukang.htm" target="_blank">杜康酒</a>
+                                        <a href="/baijiu-zhijiang.htm" target="_blank">枝江酒</a> <a href="/baijiu-baiyunbian.htm"
+                                            target="_blank">白云边</a> <a href="/baijiu-kongfujia.htm" target="_blank">
+                                                孔府家</a> <a href="/baijiu-bandaojing.htm" target="_blank">扳倒井</a>
+                                        <a href="/baijiu-laimaojiu.htm" target="_blank">赖茅酒</a> <a href="/baijiu-jinshiyuan.htm"
+                                            target="_blank">今世缘</a> <a href="/baijiu-yaxijiao.htm" target="_blank">
+                                                鸭溪窖</a> <a href="/baijiu-jinliufu.htm" target="_blank">金六福</a>
+                                        <a href="/baijiu-xiaohutuxian.htm" target="_blank">小糊涂仙</a> <a href="/baijiu-yingjiajiu.htm"
+                                            target="_blank">迎驾酒</a> <a href="/baijiu-daohuaxiang.htm" target="_blank">
+                                                稻花香</a> <a href="/baijiu-wanjiu.htm" target="_blank">皖酒</a>
+                                        <a href="/baijiu-taiwangaoliangjiu.htm" target="_blank">台湾高粱酒</a>
+                                        <a href="/baijiu-fenggu.htm" target="_blank">丰谷酒</a> <a href="/baijiu-qiantaipai.htm"
+                                            target="_blank">黔台牌</a> <a href="/baijiu-shuanggoujiu.htm" target="_blank">
+                                                双沟酒</a> <a href="/baijiu-huanghelou.htm" target="_blank">黄鹤楼</a>
+                                        <a href="/baijiu-jintanyuye.htm" target="_blank">金潭玉液</a> <a href="/baijiu-taibaijiu.htm"
+                                            target="_blank">太白酒</a> <a href="/baijiu-zuoyanghe.htm" target="_blank">
+                                                浏阳河</a> <a href="/baijiu-gaolujia.htm" target="_blank">高炉家</a>
+                                        <a href="/baijiu-maotaizhenwuxing.htm" target="_blank">茅台镇五星</a> <a
+                                            href="/baijiu-sujiu.htm" target="_blank">苏酒</a> <a href="/baijiu-guizhouqingjiu.htm"
+                                                target="_blank">贵州青酒</a> <a href="/baijiu-hetao.htm" target="_blank">河套酒</a>
+                                        <a href="/baijiu-hongloumeng.htm" target="_blank">红楼梦</a> <a href="/baijiu-dongbeifang.htm"
+                                            target="_blank">东北坊</a> <a href="/baijiu-sichuanquanxing.htm" target="_blank">
+                                                四川全兴</a> <a href="/baijiu-gaocan.htm" target="_blank">高参</a>
+                                        <a href="/baijiu-jingzhi.htm" target="_blank">景芝</a> <a href="/baijiu-junjiu.htm"
+                                            target="_blank">军酒</a> <a href="/baijiu-laozhanshi.htm" target="_blank">
+                                                老战士</a> <a href="/baijiu-xiaojiurensheng.htm" target="_blank">小酒人生</a>
+                                        <a href="/baijiu-jiangjinjiu.htm" target="_blank">江津酒</a> <a href="/baijiu-dijiaojiu.htm"
+                                            target="_blank">地窖酒</a> <a href="/baijiu-yongdingheerguotou.htm" target="_blank">
+                                                永定河二锅头</a> <a href="/baijiu-qixingerguotou.htm" target="_blank">七星二锅头</a>
+                                        <a href="/baijiu-zhanggongjiu.htm" target="_blank">张弓酒</a> <a href="/baijiu-fuchengerguotou.htm"
+                                            target="_blank">福城二锅头</a> <a href="/baijiu-zunyijiu.htm" target="_blank">
+                                                遵义酒</a> <a href="/baijiu-xiaohulu.htm" target="_blank">小葫芦</a>
+                                        <a href="/baijiu-xiaofangzi.htm" target="_blank">小房子</a> <a href="/baijiu-laojiaojiu.htm"
+                                            target="_blank">老窖酒</a> <a href="/baijiu-jinzuolaojiao.htm" target="_blank">
+                                                金泸老窖</a> <a href="/baijiu-huozhiniang.htm" target="_blank">活之酿</a>
+                                        <a href="/baijiu-jiuzhongjiu.htm" target="_blank">酒中酒</a> <a href="/baijiu-taishan.htm"
+                                            target="_blank">泰山</a> <a href="/baijiu-liulingzui.htm" target="_blank">
+                                                刘伶醉</a> <a href="/baijiu-qinghuaci.htm" target="_blank">青花瓷</a>
+                                        <a href="/baijiu-xinghewan.htm" target="_blank">星河湾</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>香型</dt>
+                                    <dd>
+                                        <a href="/baijiu-search-t-110.htm" target="_blank">酱香型</a> <a href="/baijiu-search-t-116.htm"
+                                            target="_blank">浓香型</a> <a href="/baijiu-search-t-117.htm" target="_blank">
+                                                清香型</a> <a href="/baijiu-search-t-107.htm" target="_blank">凤香型</a>
+                                        <a href="/baijiu-search-t-108.htm" target="_blank">馥郁香</a> <a href="/baijiu-search-t-104.htm"
+                                            target="_blank">董香型</a> <a href="/baijiu-search-t-121.htm" target="_blank">
+                                                特香型</a> <a href="/baijiu-search-t-122.htm" target="_blank">芝麻香</a>
+                                        <a href="/baijiu-search-t-109.htm" target="_blank">兼香型</a> <a href="/baijiu-search-t-111.htm"
+                                            target="_blank">金门香型</a> <a href="/baijiu-search-t-112.htm" target="_blank">
+                                                老干白</a> <a href="/baijiu-search-t-113.htm" target="_blank">绵柔型</a>
+                                        <a href="/baijiu-search-t-118.htm" target="_blank">柔和型</a> <a href="/baijiu-search-t-728.htm"
+                                            target="_blank">小曲型</a> <a href="/baijiu-search-t-869.htm" target="_blank">
+                                                生态竹香型</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/putaojiu.htm" target="_blank">葡萄酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/putaojiu-zhongguo.htm" target="_blank">中国</a> <a href="/putaojiu-faguo.htm"
+                                        target="_blank">法国</a> <a href="/putaojiu-zhili.htm" target="_blank">智利</a>
+                                    <a href="/putaojiu-putaoya.htm" target="_blank">葡萄牙</a></p>
+                                <p>
+                                    <a href="/putaojiu-yidali.htm" target="_blank">意大利</a> <a href="/putaojiu-aodaliya.htm"
+                                        target="_blank">澳大利亚</a> <a href="/putaojiu-deguo.htm" target="_blank">
+                                            德国</a> <a href="/putaojiu-nanfei.htm" target="_blank">南非</a></p>
+                                <p>
+                                    <a href="/putaojiu-meiguo.htm" target="_blank">美国</a> <a href="/putaojiu-agenting.htm"
+                                        target="_blank">阿根廷</a> <a href="/putaojiu-xibanya.htm" target="_blank">
+                                            西班牙</a></p>
+                            </div>
+                        </div>
+                        <div class="list-item hide">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>产区</dt>
+                                    <dd>
+                                        <a href="/putaojiu-aodaliya.htm" target="_blank">澳大利亚</a> <a href="/putaojiu-deguo.htm"
+                                            target="_blank">德国</a> <a href="/putaojiu-faguo.htm" target="_blank">法国</a>
+                                        <a href="/putaojiu-jianada.htm" target="_blank">加拿大</a> <a href="/putaojiu-meiguo.htm"
+                                            target="_blank">美国</a> <a href="/putaojiu-xibanya.htm" target="_blank">
+                                                西班牙</a> <a href="/putaojiu-zhili.htm" target="_blank">智利</a>
+                                        <a href="/putaojiu-putaoya.htm" target="_blank">葡萄牙</a> <a href="/putaojiu-eluosi.htm"
+                                            target="_blank">俄罗斯</a> <a href="/putaojiu-agenting.htm" target="_blank">
+                                                阿根廷</a> <a href="/putaojiu-xinxilan.htm" target="_blank">新西兰</a>
+                                        <a href="/putaojiu-nanfei.htm" target="_blank">南非</a> <a href="/putaojiu-yidali.htm"
+                                            target="_blank">意大利</a> <a href="/putaojiu-zhongguo.htm" target="_blank">
+                                                中国</a> <a href="/putaojiu-xila.htm" target="_blank">希腊</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>类型</dt>
+                                    <dd>
+                                        <a href="/putaojiu-search-t-211.htm" target="_blank">红葡萄酒</a>
+                                        <a href="/putaojiu-search-t-212.htm" target="_blank">白葡萄酒</a>
+                                        <a href="/putaojiu-search-t-213.htm" target="_blank">桃红葡萄酒</a>
+                                        <a href="/putaojiu-search-t-214.htm" target="_blank">起泡酒/香槟</a>
+                                        <a href="/putaojiu-search-t-215.htm" target="_blank">冰酒/贵腐/甜酒</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>品种</dt>
+                                    <dd>
+                                        <a href="/putaojiu-search-g-168.htm" target="_blank">芭贝拉</a> <a
+                                            href="/putaojiu-search-g-170.htm" target="_blank">长相思</a>
+                                        <a href="/putaojiu-search-g-173.htm" target="_blank">解百纳</a> <a
+                                            href="/putaojiu-search-g-176.htm" target="_blank">玛尔维萨</a>
+                                        <a href="/putaojiu-search-g-177.htm" target="_blank">梅洛</a> <a
+                                            href="/putaojiu-search-g-182.htm" target="_blank">西拉子</a>
+                                        <a href="/putaojiu-search-g-184.htm" target="_blank">综合佳酿</a>
+                                        <a href="/putaojiu-search-g-749.htm" target="_blank">美乐</a> <a
+                                            href="/putaojiu-search-g-872.htm" target="_blank">莫斯卡托</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                       <li>
+                        <div class="cate-tag">
+                          <strong><a href="/yangjiu.htm" target="_blank">洋酒</a></strong>
+                          <div class="listModel">
+                            <p><a href="/yangjiu-bailandi-huangjialuyi.htm" target="_blank">皇家路易</a><a href="/yangjiu-bailandi-xuannishi.htm" target="_blank">轩尼诗</a><a href="/yangjiu-weishiji-bailingtan.htm" target="_blank">百龄坛</a></p>
+                            <p><a href="/yangjiu-weishiji-gelanweite.htm" target="_blank">格兰威特</a><a href="/yangjiu-weishiji-jiekedanni.htm" target="_blank">杰克丹尼</a><a href="/yangjiu-weishiji-zunnihuojia.htm" target="_blank">尊尼获加</a></p>
+                          </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px; display: none;">
+                          <div style="margin-left: 2em" class="itemleft">
+                            <dl>
+                              <dt>品牌</dt>
+                              <dd>
+				                <a href="/yangjiu-bailandi-huangjialuyi.htm" target="_blank">皇家路易</a> <a href="/yangjiu-bailandi-madieli.htm" target="_blank">马爹利</a> <a href="/yangjiu-bailandi-mengtebojue.htm" target="_blank">蒙特伯爵</a> <a href="/yangjiu-bailandi-pafulijisi.htm" target="_blank">帕夫利季斯</a> <a href="/yangjiu-bailandi-rentouma.htm" target="_blank">人头马</a> <a href="/yangjiu-bailandi-salonggongjue.htm" target="_blank">萨隆公爵</a> <a href="/yangjiu-bailandi-xuannishi.htm" target="_blank">轩尼诗</a> <a href="/yangjiu-futejia-fenlan.htm" target="_blank">芬兰</a> <a href="/yangjiu-futejia-ruidianjuedui.htm" target="_blank">瑞典绝对</a> <a href="/yangjiu-futejia-shenlan.htm" target="_blank">深蓝</a> <a href="/yangjiu-futejia-siminuo.htm" target="_blank">斯米诺</a> <a href="/yangjiu-futejia-sulian.htm" target="_blank">苏连</a> <a href="/yangjiu-futejia-weiboluowa.htm" target="_blank">维波罗瓦</a> <a href="/yangjiu-futejia-xueshu.htm" target="_blank">雪树</a> <a href="/yangjiu-jin  jiu-bifuda.htm" target="_blank">必富达</a> <a href="/yangjiu-jin  jiu-hana.htm" target="_blank">哈拿</a> <a href="/yangjiu-jin  jiu-jueshi.htm" target="_blank">爵士</a> <a href="/yangjiu-jin  jiu-mengmailanbaoshi.htm" target="_blank">孟买蓝宝石</a> <a href="/yangjiu-jin  jiu-shigelan.htm" target="_blank">施格兰</a> <a href="/yangjiu-jin  jiu-tianjiali.htm" target="_blank">添加利</a> <a href="/yangjiu-jin  jiu-zuanshi.htm" target="_blank">钻石</a> <a href="/yangjiu-langmujiu-baijiade.htm" target="_blank">百加得</a> <a href="/yangjiu-langmujiu-hawana.htm" target="_blank">哈瓦那</a> <a href="/yangjiu-langmujiu-malibao.htm" target="_blank">马利宝</a> <a href="/yangjiu-langmujiu-meiyashi.htm" target="_blank">美雅士</a> <a href="/yangjiu-lijiaojiu-aokai.htm" target="_blank">奥凯</a> <a href="/yangjiu-lijiaojiu-bailitian.htm" target="_blank">百利甜</a> <a href="/yangjiu-lijiaojiu-bideli.htm" target="_blank">必得利</a> <a href="/yangjiu-lijiaojiu-dikaibao.htm" target="_blank">迪凯堡</a> <a href="/yangjiu-lijiaojiu-disanuo.htm" target="_blank">帝萨诺</a> <a href="/yangjiu-lijiaojiu-ganlukafei.htm" target="_blank">甘露咖啡</a> <a href="/yangjiu-lijiaojiu-huluzun.htm" target="_blank">葫芦樽</a> <a href="/yangjiu-lijiaojiu-jundu.htm" target="_blank">君度</a> <a href="/yangjiu-lijiaojiu-lijia.htm" target="_blank">力加</a> <a href="/yangjiu-lijiaojiu-matianni.htm" target="_blank">马天尼</a> <a href="/yangjiu-lijiaojiu-peiteleichengbao.htm" target="_blank">佩特雷城堡</a> <a href="/yangjiu-lijiaojiu-senbojia.htm" target="_blank">森伯加</a> <a href="/yangjiu-lijiaojiu-xianshanlu.htm" target="_blank">仙山露</a> <a href="/yangjiu-longshelan-aomeijia.htm" target="_blank">奥美加</a> <a href="/yangjiu-longshelan-baijinwushi.htm" target="_blank">白金武士</a> <a href="/yangjiu-longshelan-haoshuai.htm" target="_blank">豪帅</a> <a href="/yangjiu-longshelan-lanchong.htm" target="_blank">懒虫</a> <a href="/yangjiu-longshelan-leiboshi.htm" target="_blank">雷博士</a> <a href="/yangjiu-weishiji-aidehua.htm" target="_blank">爱德华</a> <a href="/yangjiu-weishiji-bailingtan.htm" target="_blank">百龄坛</a> <a href="/yangjiu-weishiji-benniweisi.htm" target="_blank">本尼维斯</a> <a href="/yangjiu-weishiji-bulangchuanchang.htm" target="_blank">布朗船长</a> <a href="/yangjiu-weishiji-dilinke.htm" target="_blank">第林可</a> <a href="/yangjiu-weishiji-diwang.htm" target="_blank">帝王</a> <a href="/yangjiu-weishiji-gelanfeidi.htm" target="_blank">格兰菲迪</a> <a href="/yangjiu-weishiji-gelanjie.htm" target="_blank">格兰杰</a> <a href="/yangjiu-weishiji-gelanweite.htm" target="_blank">格兰威特</a> <a href="/yangjiu-weishiji-gelanyulu.htm" target="_blank">格兰御鹿</a> <a href="/yangjiu-weishiji-heizun.htm" target="_blank">黑樽</a> <a href="/yangjiu-weishiji-huangjialipao.htm" target="_blank">皇家礼炮</a> <a href="/yangjiu-weishiji-jianadacc.htm" target="_blank">加拿大cc</a> <a href="/yangjiu-weishiji-jianwei.htm" target="_blank">剑威</a> <a href="/yangjiu-weishiji-jiekedanni.htm" target="_blank">杰克丹尼</a> <a href="/yangjiu-weishiji-laobowei.htm" target="_blank">老伯威</a> <a href="/yangjiu-weishiji-madishi.htm" target="_blank">马谛氏</a> <a href="/yangjiu-weishiji-maikalun.htm" target="_blank">麦卡伦</a> <a href="/yangjiu-weishiji-qishi.htm" target="_blank">骑士</a> <a href="/yangjiu-weishiji-sandeli.htm" target="_blank">三得利</a> <a href="/yangjiu-weishiji-shunfeng.htm" target="_blank">顺风</a> <a href="/yangjiu-weishiji-tianbao.htm" target="_blank">添宝</a> <a href="/yangjiu-weishiji-weique.htm" target="_blank">威雀</a> <a href="/yangjiu-weishiji-wensha.htm" target="_blank">温莎</a> <a href="/yangjiu-weishiji-zhanbian.htm" target="_blank">占边</a> <a href="/yangjiu-weishiji-zhenbaowei.htm" target="_blank">珍宝威</a> <a href="/yangjiu-weishiji-zhihuashi.htm" target="_blank">芝华士</a> <a href="/yangjiu-weishiji-zunmeichun.htm" target="_blank">尊美醇</a> <a href="/yangjiu-weishiji-zunnihuojia.htm" target="_blank">尊尼获加</a> <a href="/yangjiu-wuliangye-diwang.htm" target="_blank">帝王</a>
+			                  </dd>
+			                </dl>
+                            <div class="fn-clear"></div>
+                            <dl>
+                              <dt>酒种</dt>
+                              <dd>
+			                  <a href="/yangjiu-bailandi.htm" target="_blank">白兰地</a><a href="/yangjiu-futejia.htm" target="_blank">伏特加</a><a href="/yangjiu-jinjiu.htm" target="_blank">金酒</a><a href="/yangjiu-langmujiu.htm" target="_blank">朗姆酒</a><a href="/yangjiu-lijiaojiu.htm" target="_blank">力娇酒</a><a href="/yangjiu-weishiji.htm" target="_blank">威士忌</a>
+			                  </dd>
+			                </dl>
+                            <div class="fn-clear"></div>
+                          </div>
+                        </div>
+                      </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/huangjiu.htm" target="_blank">黄酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/huangjiu-shikumen.htm" target="_blank">石库门</a> <a href="/huangjiu-nverhong.htm"
+                                        target="_blank">女儿红</a> <a href="/huangjiu-guyuelongshan.htm" target="_blank">
+                                            古越龙山</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px; display: none;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/huangjiu-shikumen.htm" target="_blank">石库门</a> <a href="/huangjiu-hejiu.htm"
+                                            target="_blank">和酒</a> <a href="/huangjiu-guyuelongshan.htm" target="_blank">
+                                                古越龙山</a> <a href="/huangjiu-nverhong.htm" target="_blank">女儿红</a>
+                                        <a href="/huangjiu-shazhouyouhuang.htm" target="_blank">沙洲优黄</a> <a
+                                            href="/huangjiu-huijishan.htm" target="_blank">会稽山</a> <a href="/huangjiu-tapai.htm"
+                                                target="_blank">塔牌</a> <a href="/huangjiu-wuzhanmao.htm" target="_blank">
+                                                    乌毡帽</a> <a href="/huangjiu-tangsonghuangjiu.htm" target="_blank">唐宋黄酒</a>
+                                        <a href="/huangjiu-qiantangrenjia.htm" target="_blank">钱塘人家</a> <a
+                                            href="/huangjiu-xianhenghuangjiu.htm" target="_blank">咸亨黄酒</a>
+                                        <a href="/huangjiu-jiashanhuangjiu.htm" target="_blank">嘉善黄酒</a> <a
+                                            href="/huangjiu-shaoxingshiye.htm" target="_blank">绍兴师爷</a> <a href="/huangjiu-liangzhu.htm"
+                                                target="_blank">梁祝</a> <a href="/huangjiu-zuhezhuang.htm" target="_blank">
+                                                    组合装</a>
+                                    </dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                                <dl>
+                                    <dt>年份</dt>
+                                    <dd>
+                                        <a href="/huangjiu-search-y-407.htm" target="_blank">100年</a>
+                                        <a href="/huangjiu-search-y-408.htm" target="_blank">10年</a> <a
+                                            href="/huangjiu-search-y-409.htm" target="_blank">12年</a>
+                                        <a href="/huangjiu-search-y-410.htm" target="_blank">15年</a> <a
+                                            href="/huangjiu-search-y-411.htm" target="_blank">18年</a>
+                                        <a href="/huangjiu-search-y-412.htm" target="_blank">20年</a> <a
+                                            href="/huangjiu-search-y-413.htm" target="_blank">25年</a>
+                                        <a href="/huangjiu-search-y-414.htm" target="_blank">30年</a> <a
+                                            href="/huangjiu-search-y-415.htm" target="_blank">3年</a> <a href="/huangjiu-search-y-418.htm"
+                                                target="_blank">5年</a> <a href="/huangjiu-search-y-419.htm" target="_blank">
+                                                    6年</a> <a href="/huangjiu-search-y-420.htm" target="_blank">8年</a>
+                                        <a href="/huangjiu-search-y-421.htm" target="_blank">9年</a> <a
+                                            href="/huangjiu-search-y-422.htm" target="_blank">常规年份</a>
+                                    </dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cate-tag">
+                            <strong><a href="/baojianjiuyupijiu.htm" target="_blank">保健酒与啤酒</a></strong>
+                            <div class="listModel">
+                                <p>
+                                    <a href="/baojianjiuyupijiu-baiwei.htm" target="_blank">百威</a> <a href="/baojianjiuyupijiu-qingdao.htm"
+                                        target="_blank">青岛</a> <a href="/baojianjiuyupijiu-xili.htm" target="_blank">
+                                            喜力</a> <a href="/baojianjiuyupijiu-jinjiu.htm" target="_blank">劲酒</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item hide" style="top: 0px;">
+                            <div style="margin-left: 2em" class="itemleft">
+                                <dl>
+                                    <dt>品牌</dt>
+                                    <dd>
+                                        <a href="/baojianjiuyupijiu-baiwei.htm" target="_blank">百威</a> <a href="/baojianjiuyupijiu-xili.htm"
+                                            target="_blank">喜力</a> <a href="/baojianjiuyupijiu-qingdao.htm" target="_blank">
+                                                青岛</a> <a href="/baojianjiuyupijiu-jinjiu.htm" target="_blank">劲酒</a>
+                                        <a href="/baojianjiuyupijiu-huangjinjiu.htm" target="_blank">黄金酒</a>
+                                        <a href="/baojianjiuyupijiu-lanzuojiu.htm" target="_blank">蓝莓酒</a>
+                                        <a href="/baojianjiuyupijiu-yinxing.htm" target="_blank">银杏</a> <a
+                                            href="/baojianjiuyupijiu-chunshengtang.htm" target="_blank">春生堂</a>
+                                        <a href="/baojianjiuyupijiu-zhangyujiu.htm" target="_blank">张裕酒</a>
+                                        <a href="/baojianjiuyupijiu-danli.htm" target="_blank">丹力</a> <a href="/baojianjiuyupijiu-guihuajiu.htm"
+                                            target="_blank">桂花酒</a> <a href="/baojianjiuyupijiu-senlindamao.htm"
+                                                target="_blank">森林大猫</a> <a href="/baojianjiuyupijiu-kalite.htm" target="_blank">
+                                                    卡力特</a> <a href="/baojianjiuyupijiu-qilin.htm" target="_blank">麒麟</a>
+                                        <a href="/baojianjiuyupijiu-kaisa.htm" target="_blank">凯撒</a> <a href="/baojianjiuyupijiu-xiushi.htm"
+                                            target="_blank">修士</a> <a href="/baojianjiuyupijiu-heisenmati.htm"
+                                                target="_blank">黑森马蹄</a> <a href="/baojianjiuyupijiu-weilanshi.htm"
+                                                    target="_blank">威兰仕</a> <a href="/baojianjiuyupijiu-keluona.htm" target="_blank">
+                                                        科罗娜</a> <a href="/baojianjiuyupijiu-landai.htm" target="_blank">蓝带</a>
+                                        <a href="/baojianjiuyupijiu-bugefusi.htm" target="_blank">布格福斯</a>
+                                        <a href="/baojianjiuyupijiu-boruike.htm" target="_blank">博瑞克</a> <a
+                                            href="/baojianjiuyupijiu-lizibao.htm" target="_blank">力兹堡</a>
+                                        <a href="/baojianjiuyupijiu-jiashibo.htm" target="_blank">嘉士伯</a>
+                                        <a href="/baojianjiuyupijiu-meimingge.htm" target="_blank">美名格</a>
+                                        <a href="/baojianjiuyupijiu-adengbao.htm" target="_blank">阿登堡</a>
+                                        <a href="/baojianjiuyupijiu-bode.htm" target="_blank">博德</a> <a href="/baojianjiuyupijiu-defubao.htm"
+                                            target="_blank">德福堡</a> <a href="/baojianjiuyupijiu-delishi.htm" target="_blank">
+                                                德力士</a> <a href="/baojianjiuyupijiu-langke.htm" target="_blank">朗克</a>
+                                        <a href="/baojianjiuyupijiu-maideaohei.htm" target="_blank">麦德奥黑</a>
+                                        <a href="/baojianjiuyupijiu-weiou.htm" target="_blank">威欧</a> <a href="/baojianjiuyupijiu-weisima.htm"
+                                            target="_blank">威斯玛</a> <a href="/baojianjiuyupijiu-zhaori.htm" target="_blank">
+                                                朝日</a> <a href="/baojianjiuyupijiu-bile.htm" target="_blank">彼乐</a>
+                                        <a href="/baojianjiuyupijiu-baiguan.htm" target="_blank">白鹳</a> <a
+                                            href="/baojianjiuyupijiu-debo.htm" target="_blank">德博</a> <a href="/baojianjiuyupijiu-zhuangyuanzhu.htm"
+                                                target="_blank">庄园主</a> <a href="/baojianjiuyupijiu-delake.htm" target="_blank">
+                                                    德拉克</a> <a href="/baojianjiuyupijiu-xicangqingzuo.htm" target="_blank">
+                                                        西藏青稞</a></dd>
+                                </dl>
+                                <div class="fn-clear">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="float-list-dnav">
+                            <a href="##" onclick=" AlertDiv()">新品</a> <a href="##" onclick=" AlertDiv()">清仓</a>
+                            <a href="##" onclick=" AlertDiv()">多买优惠</a>
+                        </div>
+                    </li>
+                    <li class="ppg"><a href="##" onclick=" AlertDiv()">
+                        <img src="/images/pinpaiguan.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 系统菜单 -->
+        <div class="navCon-menu fl">
+            <ul>
+                <li><a class="curMenu" href="/">首页</a></li>
+                <li><a href="/Home/Tuan">购酒团</a></li>
+                <li><a href="/Home/Search?w=%u5C0F%u9152%u7248">我爱小酒版</a></li>
+                <li><a href="/Home/Search?w=&brand=baijiu&price=p6">名家鉴赏</a></li>
+                <!--
+                <li><a href="##" onclick=" AlertDiv()">名庄酒窖</a></li>
+                <li><a href="##" onclick=" AlertDiv()">VIP专场</a></li>
+                -->
+            </ul>
+        </div>
+        <!-- 我的购物车 -->
+        <div class="cart fr">
+            <a href="/Cart/Index">我的购物车</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function AlertDiv() {
+
+        $("#errorDiv").css({ "display": "block" });
+        setTimeout(function () {
+            NoneDIv();
+            window.location.href = "/index.htm";
+        }, 2000);
+    }
+
+    function NoneDIv() {
+        $("#errorDiv").css({ "display": "none" });
+    }
+</script>
+
+        <div class="error" id="errorDiv" style="display: none;">
+            <img src="../Content/images/error-img.jpg" />
+            <h2>
+                对不起，页面正在建设中，请查看其他页面！</h2>
+            <p>
+                系统将自动为您跳转到<a href="">首页</a></p>
+        </div>
+        <div id="body">
+            
+            <link href="/Content/index.css" rel="stylesheet"/>
+
+<script src="/Scripts/index.js"></script>
+
+<script src="/Scripts/Xslider.js"></script>
+
+
+<script>
+    //首页标识
+    window.website_default = true;
+</script>
+<!------- S 图片banner -------->
+<div class="banner_bg">
+    <div class="banner-img">
+        <ul class="banner-box" id="banner-box">
+            <li url="http://www.gjw.com/Home/LandingPage/19.html" style="background-color: #F1E4B7; background-image:url(/Images/Advertise/LP/2014/35/060556c8-1002-47ab-ab6a-b3779b5eae9b.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/8.html" style="background-color: #6A0C0C; background-image:url(/Images/Advertise/LP/2014/34/ba21b719-fed6-47a3-996d-6ef9bc3e7417.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/20.html" style="background-color: #810201; background-image:url(/Images/Advertise/LP/2014/36/b4e0d41e-e17e-4269-9712-c5ff5d72fca7.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/17.html" style="background-color: #050000; background-image:url(/Images/Advertise/LP/2014/35/e7ba06cc-09d3-4ebd-b655-9e8c20adaba7.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/24.html" style="background-color: #EEE7E4; background-image:url(/Images/Advertise/LP/2014/37/6c67f898-8e08-40f1-b0b7-0be4e38e9215.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/25.html" style="background-color: #EEA6E7; background-image:url(/Images/Advertise/LP/2014/39/28474ff4-45ba-4572-8b36-1e95fcc506fe.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/7.html" style="background-color: #0A0A08; background-image:url(/Images/Advertise/LP/2014/227/b85a3313-3452-4735-a23f-ff7ffd29aaf7.jpg) ; opacity: 0;"></li><li url="http://www.gjw.com/Home/LandingPage/22.html" style="background-color: #BB3106; background-image:url(/Images/Advertise/LP/2014/36/9b41ff69-0071-403e-bdb0-87db77969c35.jpg) ; opacity: 0;"></li>
+        </ul>
+        <div class="banner-btn-box">
+            <div class="banner-btn" id="banner-btn">
+            </div>
+        </div>
+        <!-------三个广告图片 s-------->
+        <div class="star" id="star">
+            <b id="pre"></b><i id="next"></i>
+            <div id="imglist" style="position: absolute;">
+                <a href="http://www.gjw.com/product/item-id-4150.htm" title="50度 金六福 超级绵柔 500ml" target="_blank"><img src="/Images/Advertise/LP/2014/33/c4796c0d-c455-4a4c-9ddb-21f7ed3c4665.jpg" class='imgs' alt="50度 金六福 超级绵柔 500ml" /></a><a href="http://www.gjw.com/product/item-id-1944.htm" title="女儿红 八年陈酿（牡丹瓶） 500ml" target="_blank"><img src="/Images/Advertise/LP/2014/35/53a2494b-f1ab-4b99-a075-e30e4fdc4a4a.jpg" class='imgs' alt="女儿红 八年陈酿（牡丹瓶） 500ml" /></a><a href="http://www.gjw.com/product/item-id-2237.htm" title="52° 泸州老窖 年份系列 老窖名酿6年 500ml" target="_blank"><img src="/Images/Advertise/LP/2014/33/59fbb411-a252-4139-9e7f-7dfd7a0ee3e7.jpg" class='imgs' alt="52° 泸州老窖 年份系列 老窖名酿6年 500ml" /></a><a href="http://192.168.2.200:8081/product/item-id-4212.htm" title="伏特加 特惠组合装*4瓶" target="_blank"><img src="/Images/Advertise/LP/2014/35/ccc2f638-1ec9-49c0-aeb6-e97d83d02bf6.jpg" class='imgs' alt="伏特加 特惠组合装*4瓶" /></a><a href="http://www.gjw.com/product/item-id-86.htm" title="35° 中国 劲酒 500ml" target="_blank"><img src="/Images/Advertise/LP/2014/35/b492e8d4-2c6d-48ce-afd6-3526653f6fe3.jpg" class='imgs' alt="35° 中国 劲酒 500ml" /></a><a href="http://www.gjw.com/product/item-id-3692.htm" title="法国 神鹿 奥德干红葡萄酒（礼盒装） 750ml" target="_blank"><img src="/Images/Advertise/LP/2014/33/7fdda526-f2ef-4066-8778-684e33b75067.jpg" class='imgs' alt="法国 神鹿 奥德干红葡萄酒（礼盒装） 750ml" /></a><a href="http://www.gjw.com/product/item-id-2881.htm" title="智利 爱禧汽泡酒（红色） 750ml" target="_blank"><img src="/Images/Advertise/LP/2014/33/f8d06a2d-b2b9-43f0-bcef-cb179e2db942.jpg" class='imgs' alt="智利 爱禧汽泡酒（红色） 750ml" /></a><a href="http://www.gjw.com/product/item-id-2137.htm" title="皇家路易 XO 红色天地盖 700ml+50ml" target="_blank"><img src="/Images/Advertise/LP/2014/227/7b3c7c61-161c-4af9-b073-00cf5ac150b4.jpg" class='imgs' alt="皇家路易 XO 红色天地盖 700ml+50ml" /></a><a href="http://www.gjw.com/product/item-id-4087.htm" title="46度 刘伶醉 原曲 500ml" target="_blank"><img src="/Images/Advertise/LP/2014/227/b1d0dab7-cf9c-43a9-9753-b4a168a11c48.jpg" class='imgs' alt="46度 刘伶醉 原曲 500ml" /></a>
+            </div>
+        </div>
+        <!-------三个广告图片 e-------->
+    </div>
+</div>
+<!------- E 图片banner -------->
+<!------- S 活动专题 、公告-------->
+<div class="huodong ">
+    <!-- 活动专题 -->
+    <div class="hd_scroll">
+        <div class="adv">
+            <ul>
+                <li><a href="http://www.gjw.com/product/item-id-4130.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/33/951586d0-9b92-4b3a-9a42-85a3fbd76a10.jpg" alt="42度 天下福 富裕福 450ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-4051.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/227/b13d3afb-8205-4458-8d2f-60fe0830ef88.jpg" alt="52度 贵州茅台镇 百年传奇 浓香珍典 500ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-3152.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/35/1156fae6-4493-41f6-a97f-bd36eee60eba.jpg" alt="添宝 15年 苏格兰威士忌 700ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-524.htm" title="【茅台镇，10年沉醉！】" target="_blank"><img src="/Images/Advertise/LP/2014/33/b10cfc78-8a9c-451f-be47-5e5095fc68aa.jpg" alt="53° 赖茅 赖世家 10年 陈酿 500ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-823.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/227/7f77cc97-b9c4-4a1d-ac5b-f9bea028db9f.jpg" alt="澳大利亚 奔富 洛神山庄 西拉赤霞珠干红葡萄酒 750ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-52.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/35/3412706e-f010-40b8-acbf-f7ef1000b51c.jpg" alt="长城 华夏92 木盒珍藏级葡萄酒 750ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-1093.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/227/900c2ea3-9b48-404b-8668-9f992d16df87.jpg" alt="帝王 12年 威士忌 700ml" /></a></li><li><a href="http://www.gjw.com/product/item-id-1539.htm" title="" target="_blank"><img src="/Images/Advertise/LP/2014/227/23b089c6-b59a-41b1-a607-1ed3554233d1.jpg" alt="50° 四特酒（青花 窖藏）500ml" /></a></li>
+            </ul>
+        </div>
+        <a class="abtn aleft" href="#left">左移</a><a class="abtn aright" href="#right">右移</a>
+    </div>
+    <!-- 公告与促销信息 -->
+    <div class="ant fr" id="gonggao">
+        <ul class="ant_title">
+            <li class="cur">最新公告</li>
+            <li>促销信息</li>
+        </ul>
+        <div class="ant_content">
+            <ul>
+                <li><i></i><a href="/Home/Article/128.html" target="_blank">网站升级公告</a></li><li><i></i><a href="/Home/Article/129.html" target="_blank">购酒网2013年销售指标 超去年四倍</a></li><li><i></i><a href="/Home/Article/130.html" target="_blank">购酒网官网双十二销量超双十一，再创销售奇迹！</a></li><li><i></i><a href="/Home/Article/131.html" target="_blank">购酒网2周年店庆，10000瓶美酒免费送</a></li>
+            </ul>
+        </div>
+        <div class="ant_content none">
+            <ul>
+                <li><i></i><a href="/Home/Article/134.html" target="_blank">五粮液春夏秋冬一级代理，特价仅售99</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!------- E 活动专题 、公告-------->
+<!------- S 猜您喜欢 、团购-------->
+<div class="w1200">
+    <!-- 新品上市、本月热销 -->
+    <div class="limitbuy" id="newpro">
+        <ul class="limit_tab">
+            <li class="limit_tab_cur">新品上市</li>
+            <li>本月热销</li>
+        </ul>
+        <!---新品上市内容--->
+        <div class="content_box">
+            <div class="limit_content">
+                <ul>
+                    <li style='background-image:url(/Images/Advertise/LP/2014/33/0bd8eb9a-bcf0-4680-966c-381300f77efc.jpg)' url='http://www.gjw.com/product/item-id-2526.htm' ><p><a title="苏格兰 温莎12年 调配威士忌 700ml" target="_blank">苏格兰 温莎12年 调配威士忌 700ml</a></p><p class="font_gray">已有34人评论</p><p class="font_price">￥98</p><p class="font_line">￥267</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/2b107a3e-83f1-4654-bfc2-1b5a32121446.jpg)' url='http://www.gjw.com/product/item-id-4182.htm' ><p><a title="53度 五星 钓鱼岛醒世坊 小酒版 125ml" target="_blank">53度 五星 钓鱼岛醒世坊 小酒版 125ml</a></p><p class="font_gray">已有0人评论</p><p class="font_price">￥29</p><p class="font_line">￥52</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/237feceb-8c9e-48f7-8027-0c7150d81530.jpg)' url='http://www.gjw.com/product/item-id-4111.htm' ><p><a title="53度 茅台镇 传奇黔酱 品鉴版 500ml" target="_blank">53度 茅台镇 传奇黔酱 品鉴版 500ml</a></p><p class="font_gray">已有0人评论</p><p class="font_price">￥109</p><p class="font_line">￥128</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/f19468bb-f8fa-4f54-aba5-b893f3c7fbad.jpg)' url='http://www.gjw.com/product/item-id-4077.htm' ><p><a title="云南红 滇云干红葡萄酒 750ml*6瓶" target="_blank">云南红 滇云干红葡萄酒 750ml*6瓶</a></p><p class="font_gray">已有14人评论</p><p class="font_price">￥189</p><p class="font_line">￥238</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/db563f36-f6fa-432a-9eca-5363cefa3265.jpg)' url='http://www.gjw.com/product/item-id-2503.htm' ><p><a title="轩尼诗Hennessy 新点 干邑白兰地 700ml" target="_blank">轩尼诗Hennessy 新点 干邑白兰地 700ml</a></p><p class="font_gray">已有7人评论</p><p class="font_price">￥329</p><p class="font_line">￥399</p></li><li style='background-image:url(/Images/Advertise/LP/2014/31/5bfb2cee-cd63-449a-9352-3b2237943f5e.jpg)' url='http://www.gjw.com/product/item-id-4177.htm' ><p><a title="52度 五粮液 五粮国宾礼盒装125ml*2" target="_blank">52度 五粮液 五粮国宾礼盒装125ml*2</a></p><p class="font_gray">已有3人评论</p><p class="font_price">￥129</p><p class="font_line">￥198</p></li><li style='background-image:url(/Images/Advertise/LP/2014/31/3d3bd6ae-f362-4844-8595-d7d31e3c110b.jpg)' url='http://www.gjw.com/product/item-id-4065.htm' ><p><a title="39度 茅台 大庆接待专用酒（2007） 500ml" target="_blank">39度 茅台 大庆接待专用酒（2007） 500ml</a></p><p class="font_gray">已有5人评论</p><p class="font_price">￥269</p><p class="font_line">￥309</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/4d42e150-fa44-4c4e-9719-47eda8c231e2.jpg)' url='http://www.gjw.com/product/item-id-594.htm' ><p><a title="张裕 爱斐堡 蛇龙珠干红葡萄酒 750ml" target="_blank">张裕 爱斐堡 蛇龙珠干红葡萄酒 750ml</a></p><p class="font_gray">已有9人评论</p><p class="font_price">￥468</p><p class="font_line">￥720</p></li>
+                </ul>
+            </div>
+        </div>
+        <!---本月热销内容--->
+        <div class="content_box none">
+            <div class="limit_content">
+                <ul>
+                    <li style='background-image:url(/Images/Advertise/LP/2014/33/8225b24e-7f32-418b-a444-85dfd3e17605.jpg)' url='http://www.gjw.com/product/item-id-79.htm' ><p><a title="芝华士 12年威士忌 700ml" target="_blank">芝华士 12年威士忌 700ml</a></p><p class="font_gray">已有106人评论</p><p class="font_price">￥218</p><p class="font_line">￥279</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/aa8fe40d-f8b0-4507-b895-bd9e75b54bbf.jpg)' url='http://www.gjw.com/product/item-id-651.htm' ><p><a title="52度 酒鬼 内品优级酒 500ml" target="_blank">52度 酒鬼 内品优级酒 500ml</a></p><p class="font_gray">已有17人评论</p><p class="font_price">￥234</p><p class="font_line">￥244</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/60778868-5b0d-4be7-b303-e9fe0c837eb5.jpg)' url='http://www.gjw.com/product/item-id-841.htm' ><p><a title="法国 许愿树 红葡萄酒 750ml" target="_blank">法国 许愿树 红葡萄酒 750ml</a></p><p class="font_gray">已有185人评论</p><p class="font_price">￥99</p><p class="font_line">￥133</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/15b7e311-c81d-4254-bd92-44e32eb24eb5.jpg)' url='http://www.gjw.com/product/item-id-2362.htm' ><p><a title="52° 金六福 特曲（红铁盒） 500ml" target="_blank">52° 金六福 特曲（红铁盒） 500ml</a></p><p class="font_gray">已有19人评论</p><p class="font_price">￥118</p><p class="font_line">￥149</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/e01f851a-07e9-4de8-b3c3-85a84ccada60.jpg)' url='http://www.gjw.com/product/item-id-2817.htm' ><p><a title="52° 茅台 富贵万年 红钻 500ml" target="_blank">52° 茅台 富贵万年 红钻 500ml</a></p><p class="font_gray">已有15人评论</p><p class="font_price">￥159</p><p class="font_line">￥199</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/66ac74b8-02a4-448b-bc82-6671ac81177f.jpg)' url='http://www.gjw.com/product/item-id-349.htm' ><p><a title="52° 五粮液 六和液 盛典装 500ml" target="_blank">52° 五粮液 六和液 盛典装 500ml</a></p><p class="font_gray">已有175人评论</p><p class="font_price">￥165</p><p class="font_line">￥498</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/b4f3db13-595d-4649-a5ca-be32a0714bdc.jpg)' url='http://www.gjw.com/product/item-id-210.htm' ><p><a title="百龄坛 特醇威士忌 750ml" target="_blank">百龄坛 特醇威士忌 750ml</a></p><p class="font_gray">已有36人评论</p><p class="font_price">￥118</p><p class="font_line">￥153</p></li><li style='background-image:url(/Images/Advertise/LP/2014/33/e52c0a09-630a-4019-adc4-098251cbd4b1.jpg)' url='http://www.gjw.com/product/item-id-1992.htm' ><p><a title="法国 卡斯莫尼 优轩干红葡萄酒（2009） 750ml" target="_blank">法国 卡斯莫尼 优轩干红葡萄酒（2009） 750ml</a></p><p class="font_gray">已有2人评论</p><p class="font_price">￥79</p><p class="font_line">￥156</p></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 团购 -->
+    <div class="groupbuy">
+        <div class="group_title">
+            <span>今日团购</span>
+            <ul class="slidbox_cent">
+                <li class="cur"><a class="png" href="javascript:;"></a></li>
+                <li><a class="png" href="javascript:;"></a></li>
+                <li><a class="png" href="javascript:;"></a></li>
+            </ul>
+        </div>
+        <div class="group_content">
+            <ul style="display:none">    <li class="group_img"><a href="http://www.gjw.com/product/item-id-4228.htm" title="53° 习酒 窖藏1998 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/36/5f58dc84-d6e3-4d38-b387-0b92f3aa78a5.jpg" alt="53° 习酒 窖藏1998 500ml" /></a></li>    <li class="group_txt"><a href="http://www.gjw.com/product/item-id-4228.htm" title="53° 习酒 窖藏1998 500ml" target="_blank">53° 习酒 窖藏1988 500ml  一脉国香,远离世俗和矫揉的狐媚，自赤水河谷悠然飘然，幽香袭人而不失雅致，口</a></li>    <li class="group_btn">	    <span class="group_price">￥490</span>       <span class="group_tg"><a href="">立即参团</a></span>    </li></ul><ul style="display:none">    <li class="group_img"><a href="http://www.gjw.com/product/item-id-4158.htm" title="52度 景芝 景阳春（老虎王）酒 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/38/a7d97236-f25f-4a14-8f03-2e0c6e99b924.jpg" alt="52度 景芝 景阳春（老虎王）酒 500ml" /></a></li>    <li class="group_txt"><a href="http://www.gjw.com/product/item-id-4158.htm" title="52度 景芝 景阳春（老虎王）酒 500ml" target="_blank">52度 景芝 景阳春（老虎王）酒 500ml  景阳芳酌透瓶香，壮士豪饮十八觞，酒助神威降猛虎，谁道三碗不过岗。</a></li>    <li class="group_btn">	    <span class="group_price">￥92</span>       <span class="group_tg"><a href="">立即参团</a></span>    </li></ul><ul style="display:none">    <li class="group_img"><a href="http://www.gjw.com/product/item-id-3972.htm" title="53度 茅台 王子酒 特制珍品 1000ml ( 2007年产 ）" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/38/a571f751-af6b-40b7-9053-fe53ec7fe634.jpg" alt="53度 茅台 王子酒 特制珍品 1000ml ( 2007年产 ）" /></a></li>    <li class="group_txt"><a href="http://www.gjw.com/product/item-id-3972.htm" title="53度 茅台 王子酒 特制珍品 1000ml ( 2007年产 ）" target="_blank">52度 贵州茅台镇 百年传奇 浓香佳韵 500ml 窖香浓郁 、醇厚绵甜、 空杯留香。</a></li>    <li class="group_btn">	    <span class="group_price">￥799</span>       <span class="group_tg"><a href="">立即参团</a></span>    </li></ul>
+        </div>
+    </div>
+</div>
+<!------- E 猜您喜欢 、团购-------->
+<!------- S 品牌活动-------->
+<div class="brand w1200" id="pinpai">
+    <div class="brand_title">
+        <span class=" font_title">品牌活动</span>
+        <a id="brand_change" class="change"><i class="ulike_change_ico">&nbsp;</i>换一批</a>
+    </div>
+    <div class="brand_content">
+        <ul id="brand_content_inner">
+            <li><a href="http://gjw.com/Home/Search?w=&brand=putaojiu-zhongguo-yunnanhong&price=" title="云南红 滇云干红葡萄酒 750ml*6瓶 " target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/82e38933-b61d-4fd1-880c-b7e0cdb9e4e4.jpg" alt="云南红 滇云干红葡萄酒 750ml*6瓶 " /></a></li><li><a href="http://192.168.2.200:8081/product/item-id-4200.htm" title="52° 洋河 梦之蓝（M3）裸瓶装 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0224/665d900a1a9b4f39af5ec1fbdf023a26_1.jpg" alt="52° 洋河 梦之蓝（M3）裸瓶装 500ml" /></a></li><li><a href="http://gjw.com/Home/Search?Brand=baijiu-jinliufu" title="50度 金六福 超级绵柔 500ml " target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/045011d9-12b4-4380-9535-e26b87c9f3f0.jpg" alt="50度 金六福 超级绵柔 500ml " /></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u666F%u829D" title="38度 景芝 景阳春蓝瓷 500ml " target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/0645c2e5-ee1e-42c5-b455-31e0ff54d449.jpg" alt="38度 景芝 景阳春蓝瓷 500ml " /></a></li><li><a href="http://gjw.com/Home/Search?Brand=baijiu-xinghewan" title="53度 星河湾 老酱香25年 500ml " target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/7a25a46c-560c-4ac6-8344-721d996448bd.jpg" alt="53度 星河湾 老酱香25年 500ml " /></a></li><li><a href="http://gjw.com/Home/Search?Brand=baijiu-fenjiu" title="53° 汾酒 紫砂瓶 475ml " target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/1a432485-1726-423a-93ea-b399e587fad5.jpg" alt="53° 汾酒 紫砂瓶 475ml " /></a></li>
+        </ul>
+    </div>
+</div>
+<!------- E 品牌活动-------->
+<!-------S 三版块-------->
+<div class="three_bk w1200">
+    <span><a href="http://www.gjw.com/Home/Search?w=xiaojiuban" title="小酒版" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/c30c0cce-2e73-416d-bd23-9668f71a4034.jpg" alt="小酒版" /></a></span><span><a href="http://www.gjw.com/Home/Search?w=&brand=baijiu&price=p6" title="名家鉴赏" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/996d1419-a5fa-4a2e-aa1b-2bbb5fc620d9.jpg" alt="名家鉴赏" /></a></span><span><a href="http://www.gjw.com/Home/Search?w=&brand=putaojiu&price=p6" title="名庄酒窖" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/aec1ad28-e516-4b30-bcfa-b583c7a21243.jpg" alt="名庄酒窖" /></a></span>
+</div>
+<!-------S 白酒版块-------->
+<div class="baijiu">
+    <div class="baijiu_up">
+        <div class="baijiu_up_l">
+            <h2 class="h2">1F白酒馆</h2>
+            <p><a href="http://www.gjw.com/product/item-id-4176.htm"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/d388595a-7f8b-482d-b215-4c0f5e57b440.jpg" alt="50度 泸州老窖 特曲 中国名酒  480ml" /></a></p>
+        </div>
+        <div class="baijiu_up_m" id="baijiu">
+            <div class="baijiu_tab">
+                <ul>
+                    <li class="cur">热门抢购</li>
+                    <li>猜你喜欢</li>
+                    <li>新品上架</li>
+                    <li>清仓特卖</li>
+                </ul>
+            </div>
+            <div class="baijiu_content">
+                <ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3647.htm" title="45度 四特酒 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0608/ad0bbdc2e32e40c9ab54ea0c1651d21b_1.jpg" alt="45度 四特酒 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3647.htm" title="45度 四特酒 500ml" target="_blank">45度 四特酒 500ml</a></p>    <p class="font_price">￥32 </p>    <p class="font_y">已售1168件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4203.htm" title="53度 茅台 神舟酒 中国梦版 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0225/be8507731427463489eda39a1a7cb25d_1.jpg" alt="53度 茅台 神舟酒 中国梦版 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4203.htm" title="53度 茅台 神舟酒 中国梦版 500ml" target="_blank">53度 茅台 神舟酒 中国梦版 500ml </a></P>        <p class="font_price">￥699</p>        <p class="font_y">已售75件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-4196.htm" title="52度 老窖真藏 蓝色5 500ml*6瓶装" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0218/339c8df058c4490084764a1ad03752df_1.jpg" alt="52度 老窖真藏 蓝色5 500ml*6瓶装" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-4196.htm" title="52度 老窖真藏 蓝色5 500ml*6瓶装" target="_blank">52度 老窖真藏 蓝色5 500ml*6瓶装</a></p>    <p class="font_price">￥399 </p>    <p class="font_y">已售781件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4123.htm" title="52度 五粮液 华宴酒 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1218/6735c02925614217b6872bd02b0903bf_1.jpg" alt="52度 五粮液 华宴酒 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4123.htm" title="52度 五粮液 华宴酒 500ml" target="_blank">52度 五粮液 华宴酒 500ml </a></P>        <p class="font_price">￥289</p>        <p class="font_y">已售3件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3183.htm" title="42度 金六福 绵柔宝石红 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1030/6fed2b322d404d44961cae812fe87f93_1.jpg" alt="42度 金六福 绵柔宝石红 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3183.htm" title="42度 金六福 绵柔宝石红 500ml" target="_blank">42度 金六福 绵柔宝石红 500ml</a></p>    <p class="font_price">￥119 </p>    <p class="font_y">已售848件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4202.htm" title="53度 茅台 成龙酒 金典版 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0225/86eca87740fa4fddb9dcf30bdca0da4d_1.jpg" alt="53度 茅台 成龙酒 金典版 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4202.htm" title="53度 茅台 成龙酒 金典版 500ml" target="_blank">53度 茅台 成龙酒 金典版 500ml </a></P>        <p class="font_price">￥799</p>        <p class="font_y">已售446件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-2966.htm" title="46° 口子窖 老口子 450ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/1206/afa95271498340879c77404015511ab9_1.jpg" alt="46° 口子窖 老口子 450ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-2966.htm" title="46° 口子窖 老口子 450ml" target="_blank">46° 口子窖 老口子 450ml</a></p>    <p class="font_price">￥98 </p>    <p class="font_y">已售331件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4100.htm" title="52度 五粮液 500ml*2瓶" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1209/1e2769e1516344eba8f5ee15691c8b88_1.jpg" alt="52度 五粮液 500ml*2瓶" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4100.htm" title="52度 五粮液 500ml*2瓶" target="_blank">52度 五粮液 500ml*2瓶 </a></P>        <p class="font_price">￥1599</p>        <p class="font_y">已售3059件</p>    </span></li></ul>
+            </div>
+            <div class="baijiu_content none">
+                <ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-2767.htm" title="52° 五粮液 万事如意 佳酿 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0920/9a1d75dacbe9431e98b43602c29c70b5_1.jpg" alt="52° 五粮液 万事如意 佳酿 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-2767.htm" title="52° 五粮液 万事如意 佳酿 500ml" target="_blank">52° 五粮液 万事如意 佳酿 500ml</a></p>    <p class="font_price">￥146 </p>    <p class="font_y">已售3503件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-1843.htm" title="50° 郎牌 特曲 T3 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1206/61177e49a2c145f4be662df76d67db19_1.jpg" alt="50° 郎牌 特曲 T3 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-1843.htm" title="50° 郎牌 特曲 T3 500ml" target="_blank">50° 郎牌 特曲 T3 500ml </a></P>        <p class="font_price">￥138</p>        <p class="font_y">已售63962件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3767.htm" title="38度 茅台 仙家酒 龙凤呈祥 2007年产 500ml*2瓶装" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0220/ee93b23dfc6b413797ed62290ee97d53_1.jpg" alt="38度 茅台 仙家酒 龙凤呈祥 2007年产 500ml*2瓶装" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3767.htm" title="38度 茅台 仙家酒 龙凤呈祥 2007年产 500ml*2瓶装" target="_blank">38度 茅台 仙家酒 龙凤呈祥 2007年产 500ml*2瓶装</a></p>    <p class="font_price">￥278 </p>    <p class="font_y">已售774件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-3157.htm" title="52° 洋河 洋河大曲 青瓷 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0121/af69f0bed3104f7e91f488330149b2b1_1.jpg" alt="52° 洋河 洋河大曲 青瓷 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-3157.htm" title="52° 洋河 洋河大曲 青瓷 500ml" target="_blank">52° 洋河 洋河大曲 青瓷 500ml </a></P>        <p class="font_price">￥129</p>        <p class="font_y">已售3578件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-4171.htm" title="52度 郎酒 1912 500ml*2瓶" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0109/8f622e53b0a049d8845cbb0aed43f1a5_1.jpg" alt="52度 郎酒 1912 500ml*2瓶" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-4171.htm" title="52度 郎酒 1912 500ml*2瓶" target="_blank">52度 郎酒 1912 500ml*2瓶</a></p>    <p class="font_price">￥68 </p>    <p class="font_y">已售5258件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-2152.htm" title="52° 剑南春 天益老号 珍藏级 小酒版  100ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0112/940f54a584954fbdab5dc27ad2ec1ba2_1.jpg" alt="52° 剑南春 天益老号 珍藏级 小酒版  100ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-2152.htm" title="52° 剑南春 天益老号 珍藏级 小酒版  100ml" target="_blank">52° 剑南春 天益老号 珍藏级 小酒版  100ml </a></P>        <p class="font_price">￥150</p>        <p class="font_y">已售9160件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-1824.htm" title="50° 沱牌 特曲 20年窖藏 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0424/bd8a714aa7da4bdcb19d9b484240cd0c_1.jpg" alt="50° 沱牌 特曲 20年窖藏 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-1824.htm" title="50° 沱牌 特曲 20年窖藏 500ml" target="_blank">50° 沱牌 特曲 20年窖藏 500ml</a></p>    <p class="font_price">￥99 </p>    <p class="font_y">已售46307件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-3469.htm" title="38° 五粮液 五湖液（红铁盒装）（2010年产） 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0926/ff2e5e324a1143b28f41d5ea2433d0f8_1.jpg" alt="38° 五粮液 五湖液（红铁盒装）（2010年产） 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-3469.htm" title="38° 五粮液 五湖液（红铁盒装）（2010年产） 500ml" target="_blank">38° 五粮液 五湖液（红铁盒装）（2010年产） 500ml </a></P>        <p class="font_price">￥39</p>        <p class="font_y">已售31749件</p>    </span></li></ul>
+            </div>
+            <div class="baijiu_content none">
+                <ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-4182.htm" title="53度 五星 钓鱼岛醒世坊 小酒版 125ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0122/851bb7487afb4260a0495b0ce15d4bba_1.jpg" alt="53度 五星 钓鱼岛醒世坊 小酒版 125ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-4182.htm" title="53度 五星 钓鱼岛醒世坊 小酒版 125ml" target="_blank">53度 五星 钓鱼岛醒世坊 小酒版 125ml</a></p>    <p class="font_price">￥29 </p>    <p class="font_y">已售1283件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4202.htm" title="53度 茅台 成龙酒 金典版 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0225/86eca87740fa4fddb9dcf30bdca0da4d_1.jpg" alt="53度 茅台 成龙酒 金典版 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4202.htm" title="53度 茅台 成龙酒 金典版 500ml" target="_blank">53度 茅台 成龙酒 金典版 500ml </a></P>        <p class="font_price">￥799</p>        <p class="font_y">已售446件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-4111.htm" title="53度 茅台镇 传奇黔酱 品鉴版 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1212/1357353b63bc4e59ae6bcc4199d0cf44_1.jpg" alt="53度 茅台镇 传奇黔酱 品鉴版 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-4111.htm" title="53度 茅台镇 传奇黔酱 品鉴版 500ml" target="_blank">53度 茅台镇 传奇黔酱 品鉴版 500ml</a></p>    <p class="font_price">￥109 </p>    <p class="font_y">已售1948件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4199.htm" title="53度 茅台 迎宾酒（盱眙国际龙虾节专供) 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0221/6a2cf3022c73465fb094f2f224c29127_1.jpg" alt="53度 茅台 迎宾酒（盱眙国际龙虾节专供) 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4199.htm" title="53度 茅台 迎宾酒（盱眙国际龙虾节专供) 500ml" target="_blank">53度 茅台 迎宾酒（盱眙国际龙虾节专供) 500ml </a></P>        <p class="font_price">￥79</p>        <p class="font_y">已售43件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-4065.htm" title="39度 茅台 大庆接待专用酒（2007） 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1126/5fff9a4bc0b74c6ba4346bfd1c08f7e0_1.jpg" alt="39度 茅台 大庆接待专用酒（2007） 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-4065.htm" title="39度 茅台 大庆接待专用酒（2007） 500ml" target="_blank">39度 茅台 大庆接待专用酒（2007） 500ml</a></p>    <p class="font_price">￥269 </p>    <p class="font_y">已售765件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4208.htm" title="52度 泸州老窖 特曲 老字号五年 小酒版 100ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0303/a2a945d229a743bb91567ffb52bbe3db_1.jpg" alt="52度 泸州老窖 特曲 老字号五年 小酒版 100ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4208.htm" title="52度 泸州老窖 特曲 老字号五年 小酒版 100ml" target="_blank">52度 泸州老窖 特曲 老字号五年 小酒版 100ml </a></P>        <p class="font_price">￥100</p>        <p class="font_y">已售6件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-4177.htm" title="52度 五粮液 五粮国宾礼盒装125ml*2" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0110/a0c5443b17064504862d63e1858a6608_1.jpg" alt="52度 五粮液 五粮国宾礼盒装125ml*2" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-4177.htm" title="52度 五粮液 五粮国宾礼盒装125ml*2" target="_blank">52度 五粮液 五粮国宾礼盒装125ml*2</a></p>    <p class="font_price">￥129 </p>    <p class="font_y">已售2955件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4203.htm" title="53度 茅台 神舟酒 中国梦版 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0225/be8507731427463489eda39a1a7cb25d_1.jpg" alt="53度 茅台 神舟酒 中国梦版 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4203.htm" title="53度 茅台 神舟酒 中国梦版 500ml" target="_blank">53度 茅台 神舟酒 中国梦版 500ml </a></P>        <p class="font_price">￥699</p>        <p class="font_y">已售75件</p>    </span></li></ul>
+            </div>
+            <div class="baijiu_content none">
+                <ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3883.htm" title="46度 种子窖 青花古韵（2008年产） 450ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0822/1709fb71407b405bac0b937c198cf0c7_1.jpg" alt="46度 种子窖 青花古韵（2008年产） 450ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3883.htm" title="46度 种子窖 青花古韵（2008年产） 450ml" target="_blank">46度 种子窖 青花古韵（2008年产） 450ml</a></p>    <p class="font_price">￥42 </p>    <p class="font_y">已售20444件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-262.htm" title="35度 五粮醇 新第III代 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0625/cd45c1638106479c9b03aa608b6da483_1.jpg" alt="35度 五粮醇 新第III代 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-262.htm" title="35度 五粮醇 新第III代 500ml" target="_blank">35度 五粮醇 新第III代 500ml </a></P>        <p class="font_price">￥49</p>        <p class="font_y">已售5560件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-2908.htm" title="39° 双沟 参展酒（一旗） 480ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/1212/e379a255730a43e1b6659dc17965b04d_1.jpg" alt="39° 双沟 参展酒（一旗） 480ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-2908.htm" title="39° 双沟 参展酒（一旗） 480ml" target="_blank">39° 双沟 参展酒（一旗） 480ml</a></p>    <p class="font_price">￥198 </p>    <p class="font_y">已售1847件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-3603.htm" title="38度 习酒 银国浆酒 八年陈酿（2005年） 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0603/28352bfc3d944eebb6b71de7ab62ef3f_1.jpg" alt="38度 习酒 银国浆酒 八年陈酿（2005年） 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-3603.htm" title="38度 习酒 银国浆酒 八年陈酿（2005年） 500ml" target="_blank">38度 习酒 银国浆酒 八年陈酿（2005年） 500ml </a></P>        <p class="font_price">￥88</p>        <p class="font_y">已售2151件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-989.htm" title="42° 稻花香 金珍品二号 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2010/1227/abce347e06d74b9ab0bc47e451b01855_1.jpg" alt="42° 稻花香 金珍品二号 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-989.htm" title="42° 稻花香 金珍品二号 500ml" target="_blank">42° 稻花香 金珍品二号 500ml</a></p>    <p class="font_price">￥108 </p>    <p class="font_y">已售1606件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-3649.htm" title="42度 扳倒井 福樽 480ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0609/25e6886e790046b290019eb05acb1089_1.jpg" alt="42度 扳倒井 福樽 480ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-3649.htm" title="42度 扳倒井 福樽 480ml" target="_blank">42度 扳倒井 福樽 480ml </a></P>        <p class="font_price">￥78</p>        <p class="font_y">已售1163件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3239.htm" title="53° 习酒 金品 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0130/d7bd033368654f2cad89eac8a83c11e8_1.jpg" alt="53° 习酒 金品 500ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3239.htm" title="53° 习酒 金品 500ml" target="_blank">53° 习酒 金品 500ml</a></p>    <p class="font_price">￥127 </p>    <p class="font_y">已售2665件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-1825.htm" title="50° 沱牌 特曲 30年柔和 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2011/1021/a932972ee1c249cda519dcf75361c70a_1.jpg" alt="50° 沱牌 特曲 30年柔和 500ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-1825.htm" title="50° 沱牌 特曲 30年柔和 500ml" target="_blank">50° 沱牌 特曲 30年柔和 500ml </a></P>        <p class="font_price">￥199</p>        <p class="font_y">已售14359件</p>    </span></li></ul>
+            </div>
+        </div>
+        <div class="baijiu_brand">
+            <ul>
+                <li><a href="http://www.gjw.com/Home/Search?Brand=baijiu-fenjiu" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/3fb01fb4-92ab-459b-9312-8576a7aff145.jpg" alt="汾酒" /></div>    <div class="toll_info">汾酒</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u767E%u5E74%u4F20%u5947" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/47e29116-ec68-4fe4-ae44-6c3d605b02d1.jpg" alt="百年传奇" /></div>    <div class="toll_info">百年传奇</div></a></li><li><a href="http://www.gjw.com/Home/Search?Brand=baijiu-maotai" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/3fd9d4af-1aa6-403c-b580-073b6173da13.jpg" alt="茅台" /></div>    <div class="toll_info">茅台</div></a></li><li><a href="http://www.gjw.com/Home/Search?Brand=baijiu-wuliangye" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/9329514e-6a84-4f9f-806d-82b1881925fb.jpg" alt="五粮液" /></div>    <div class="toll_info">五粮液</div></a></li><li><a href="http://www.gjw.com/Home/Search?Brand=baijiu-langjiu" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/cb067e78-82a6-4009-baf3-addc9b91a087.jpg" alt="郎酒" /></div>    <div class="toll_info">郎酒</div></a></li><li><a href="http://www.gjw.com/Home/Search?Brand=baijiu-xijiu" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/92c78c30-e8b3-4f15-b057-7ea9cb9614da.jpg" alt="习酒" /></div>    <div class="toll_info">习酒</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u4F20%u5947%u9ED4%u9171" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/587cac8f-cd6a-4151-892a-cf1812fe7254.jpg" alt="传奇黔酱" /></div>    <div class="toll_info">传奇黔酱</div></a></li><li><a href="http://www.gjw.com/Home/Search?Brand=baijiu-luzhoulaojiao" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/31/0c70f7cd-1ff2-464a-873c-6374bbaaa0ec.jpg" alt="泸州老窖" /></div>    <div class="toll_info">泸州老窖</div></a></li>
+            </ul>
+            <p><a href="http://www.gjw.com/product/item-id-1665.htm" title="53° 茅台 王子（酱门经典） 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/4e166f9a-08e9-4d1c-bf79-1b238b4091af.jpg" alt="53° 茅台 王子（酱门经典） 500ml" /></p>
+        </div>
+    </div>
+    <div class="baijiu_down">
+        <div class="baijiu_down_l"><a href="http://192.168.2.200:8081/product/item-id-4228.htm" title="53度 习酒 1998（光瓶品鉴） 500ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0305/94fcd220942e44709d987b2f92b2518b_1.jpg" alt="53度 习酒 1998（光瓶品鉴） 500ml" /></a></div>
+        <div class="baijiu_down_r" id="paihang">
+            <div class="rank_hd">
+                <div class="rank_hd_tit">热销排行版</div>
+                <ul class="rank_hd_tab">
+                    <li class="cur">浓香型</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>酱香型</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>清香型</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>特香型</li>
+                    <li class="rank_hd_tab_gap">|</li>
+                    <li>绵柔型</li>
+                </ul>
+            </div>
+            <div class="rank_cont">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-4142.htm" title=""><img src="http://img0.gjw.com/product/2013/1224/c4d4095fddbf46e0bc2cd45dc7031540_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售281件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-4142.htm" title="#">38度 景芝 景阳春蓝花 480ml</a></p>        <p class="font_price">￥78</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-4005.htm" title=""><img src="http://img0.gjw.com/product/2013/1029/91305013564c49cf81527acdb086e5af_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售44件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-4005.htm" title="#">40.6度 青花瓷江南赋 425ml</a></p>        <p class="font_price">￥109</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1846.htm" title=""><img src="http://img0.gjw.com/product/2011/1028/1ed0422126e44f359c2db7b89443b9da_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售52773件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1846.htm" title="#">50° 郎牌 特曲 T6 500ml</a></p>        <p class="font_price">￥218</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-2821.htm" title=""><img src="http://img0.gjw.com/product/2012/1009/3f36d585fe8b4b518d2de16b8b6422b1_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售1607件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-2821.htm" title="#">52° 五粮液 天赋鸿运 金柔顺 30年 500ml</a></p>        <p class="font_price">￥128</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-3202.htm" title=""><img src="http://img0.gjw.com/product/2013/0121/3aae00971cc944989eb5ee1ab46f00a0_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售1871件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-3202.htm" title="#">52° 五粮液 尊酒 喜庆 500ml</a></p>        <p class="font_price">￥119</p>    </div></div></li>
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-525.htm" title=""><img src="http://img0.gjw.com/product/2012/0711/62ca0555a399418c9fc3f5eb491dbb6d_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售81488件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-525.htm" title="#">53° 赖茅 赖世家 86款 500ml</a></p>        <p class="font_price">￥68</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-4190.htm" title=""><img src="http://img0.gjw.com/product/2014/0213/682fe1c934e04eccb7e59d650084d6c2_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售231件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-4190.htm" title="#">53度 茅台迎宾酒（2013年新款）500ml</a></p>        <p class="font_price">￥89</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-806.htm" title=""><img src="http://img0.gjw.com/product/2013/0918/4ceb93088ffd41b6a2bbee7aed07345b_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售34226件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-806.htm" title="#">53° 茅台 迎宾酒（嘉宾级） 500ml</a></p>        <p class="font_price">￥99</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1362.htm" title=""><img src="http://img0.gjw.com/product/2012/1220/043a07f8018a4db0aba87548132b4c9a_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售4575件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1362.htm" title="#">52° 茅台醇 福满缘 450ml</a></p>        <p class="font_price">￥59</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-2217.htm" title=""><img src="http://img0.gjw.com/product/2014/0213/808097c9c1ce46539fb488705f3388c5_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售13914件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-2217.htm" title="#">53° 茅台 王子酒 龙虾节纪念酒 500ml</a></p>        <p class="font_price">￥168</p>    </div></div></li>
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-586.htm" title=""><img src="http://img0.gjw.com/product/2011/0403/4f15f3bffabe4242ab09582f43c2dedf_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售8360件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-586.htm" title="#">52° 牛栏山 珍品20年 二锅头 450ml</a></p>        <p class="font_price">￥96</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-2200.htm" title=""><img src="http://img0.gjw.com/product/2012/0217/be54427dbc8e4d0dbea0a8a2d73dbc3b_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售12240件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-2200.htm" title="#">53° 汾酒 老白汾酒醇柔 475ml</a></p>        <p class="font_price">￥99</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-3646.htm" title=""><img src="http://img0.gjw.com/product/2013/0608/01d9487881e64273b6f5d3146cc08e62_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售4888件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-3646.htm" title="#">45度 竹叶青 牧童 475ml</a></p>        <p class="font_price">￥99</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-2258.htm" title=""><img src="http://img0.gjw.com/product/2012/0322/fa39c7fa2a9a44929d943cbd08a46e4e_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售811件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-2258.htm" title="#">42° 黄鹤楼 12年原浆 500ml</a></p>        <p class="font_price">￥168</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-3947.htm" title=""><img src="http://img0.gjw.com/product/2013/0924/e75a0e8b474448048182aa8ddced44b8_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售3755件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-3947.htm" title="#">59度 汾酒 原浆酒 1500ml</a></p>        <p class="font_price">￥289</p>    </div></div></li>
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-457.htm" title=""><img src="http://img0.gjw.com/product/2011/1230/ba99274634b048ebad36b4d72673cf46_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售3235件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-457.htm" title="#">52° 四特 精品 500ml</a></p>        <p class="font_price">￥49</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-466.htm" title=""><img src="http://img0.gjw.com/product/2014/0103/aff8a35ed1b74e0f82fe113042670b3c_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售36896件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-466.htm" title="#">52° 四特 古钟瓷 460ml</a></p>        <p class="font_price">￥39</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-2838.htm" title=""><img src="http://img0.gjw.com/product/2012/1009/ab3c6fbd09ad4d9cb66b57d3c2b0ca13_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售2764件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-2838.htm" title="#">52° 四特 东方韵 国韵（建厂60周年纪念版） 500ml</a></p>        <p class="font_price">￥689</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1983.htm" title=""><img src="http://img0.gjw.com/product/2012/0411/6bf574280a8049ad97ec6ff9a7ad718e_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售1294件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1983.htm" title="#">52° 四特酒（扁圆桶） 500ml</a></p>        <p class="font_price">￥128</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-453.htm" title=""><img src="http://img0.gjw.com/product/2011/1022/4f72e0e889c147928faee32a13371d80_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售7884件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-453.htm" title="#">52° 四特 东方雅韵 500ml</a></p>        <p class="font_price">￥298</p>    </div></div></li>
+                </ul>
+            </div>
+            <div class="rank_cont none">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-3110.htm" title=""><img src="http://img0.gjw.com/product/2012/1219/f9419cffb1a541879e47d7aad1737f02_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售11674件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-3110.htm" title="#">52° 洋河 金龙汉酒（2004年产） 500ml</a></p>        <p class="font_price">￥159</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-703.htm" title=""><img src="http://img0.gjw.com/product/2013/1231/5b6ea9df165445ff8786c227938b8c76_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售7524件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-703.htm" title="#">52° 洋河 梦之蓝（M6）500ml</a></p>        <p class="font_price">￥699</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-3552.htm" title=""><img src="http://img0.gjw.com/product/2013/0525/0f65ae362eed4162a1ab1b9723efd722_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售896件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-3552.htm" title="#">52° 洋河 美人泉酒（三美人） 500ml</a></p>        <p class="font_price">￥69</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-30.htm" title=""><img src="http://img0.gjw.com/product/2013/0903/19c94a75b9df4eb981eec85d5b4d87c3_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售55620件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-30.htm" title="#">52° 洋河 天之蓝 480ml</a></p>        <p class="font_price">￥450</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1645.htm" title=""><img src="http://img0.gjw.com/product/2012/0412/d2c973345c1a4925953cf84a26a40310_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售27950件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1645.htm" title="#">52° 洋河 梦之蓝（M3）500ml</a></p>        <p class="font_price">￥599</p>    </div></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 白酒版块-------->
+<!-------S 红酒版块-------->
+<div class="baijiu f2">
+    <div class="baijiu_up">
+        <div class="baijiu_up_l">
+            <h2 class="h2">2F红酒馆</h2>
+            <p><a href="http://www.gjw.com/product/item-id-3577.htm" title="法国 卡斯特 沙仑 波尔多珍藏干红葡萄酒（2010年） 750ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/283e548d-a377-4e4e-9f62-391af5243006.jpg" alt="法国 卡斯特 沙仑 波尔多珍藏干红葡萄酒（2010年） 750ml" /></a></p>
+        </div>
+        <div class="baijiu_up_m">
+            <div class="baijiu_tab">
+            </div>
+            <div class="baijiu_content">
+                <ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3570.htm" title="意大利 魅力露 红标 红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0528/1b5c7add9360449ebe6f6bac822c7834_1.jpg" alt="意大利 魅力露 红标 红葡萄酒 750ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3570.htm" title="意大利 魅力露 红标 红葡萄酒 750ml" target="_blank">意大利 魅力露 红标 红葡萄酒 750ml</a></p>    <p class="font_price">￥196 </p>    <p class="font_y">已售1008件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-974.htm" title="皇轩 至尊珍藏赤霞珠干红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1104/88c715d0889141d084720fe834bfe5af_1.jpg" alt="皇轩 至尊珍藏赤霞珠干红葡萄酒 750ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-974.htm" title="皇轩 至尊珍藏赤霞珠干红葡萄酒 750ml" target="_blank">皇轩 至尊珍藏赤霞珠干红葡萄酒 750ml </a></P>        <p class="font_price">￥88</p>        <p class="font_y">已售92件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-2326.htm" title="大藏秘 9°铂金青稞干白酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0412/6fd3307484b54bc8a6aaaa513246ca93_1.jpg" alt="大藏秘 9°铂金青稞干白酒 750ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-2326.htm" title="大藏秘 9°铂金青稞干白酒 750ml" target="_blank">大藏秘 9°铂金青稞干白酒 750ml</a></p>    <p class="font_price">￥169 </p>    <p class="font_y">已售358件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-3365.htm" title="长城 特选级 解百纳干红葡萄酒套装 （750ml*2）" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0426/8e27ea4eee48433f84f50fd425f16937_1.jpg" alt="长城 特选级 解百纳干红葡萄酒套装 （750ml*2）" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-3365.htm" title="长城 特选级 解百纳干红葡萄酒套装 （750ml*2）" target="_blank">长城 特选级 解百纳干红葡萄酒套装 （750ml*2） </a></P>        <p class="font_price">￥159</p>        <p class="font_y">已售132件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-1988.htm" title="智利 马标 梅洛红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0424/09df5301a69b411897ab8e7cc1ac6af1_1.jpg" alt="智利 马标 梅洛红葡萄酒 750ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-1988.htm" title="智利 马标 梅洛红葡萄酒 750ml" target="_blank">智利 马标 梅洛红葡萄酒 750ml</a></p>    <p class="font_price">￥146 </p>    <p class="font_y">已售173件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-62.htm" title="王朝 1994干红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0906/ea957c80fc0a44b7b09f3acf273158fc_1.jpg" alt="王朝 1994干红葡萄酒 750ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-62.htm" title="王朝 1994干红葡萄酒 750ml" target="_blank">王朝 1994干红葡萄酒 750ml </a></P>        <p class="font_price">￥95</p>        <p class="font_y">已售688件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-61.htm" title="张裕 优选级 解百纳干红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2011/1024/65b11d4611b548b0b7f29ab9a277c097_1.jpg" alt="张裕 优选级 解百纳干红葡萄酒 750ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-61.htm" title="张裕 优选级 解百纳干红葡萄酒 750ml" target="_blank">张裕 优选级 解百纳干红葡萄酒 750ml</a></p>    <p class="font_price">￥95 </p>    <p class="font_y">已售241件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4013.htm" title="法国 卡斯特 邦赛精选干红葡萄酒 2012 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1031/bb5b7a0bb69d4c70b9870389232cf8e4_1.jpg" alt="法国 卡斯特 邦赛精选干红葡萄酒 2012 750ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4013.htm" title="法国 卡斯特 邦赛精选干红葡萄酒 2012 750ml" target="_blank">法国 卡斯特 邦赛精选干红葡萄酒 2012 750ml </a></P>        <p class="font_price">￥169</p>        <p class="font_y">已售764件</p>    </span></li></ul>
+            </div>
+        </div>
+        <div class="baijiu_brand">
+            <ul>
+                <li><a href="http://www.gjw.com/Home/Search?w=%u5361%u65AF%u7279" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/c9b37796-50d0-4bc3-bbfa-90d6f405b823.jpg" alt="卡斯特" /></div>    <div class="toll_info">卡斯特</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u5F20%u88D5" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/e553cc1f-0b90-4182-94b2-b2fda82f9ddb.jpg" alt="张裕" /></div>    <div class="toll_info">张裕</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u957F%u57CE" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/faff911d-2f8f-42d7-b71a-a8a8b1ebc388.jpg" alt="长城" /></div>    <div class="toll_info">长城</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u52A0%u5DDE%u4E50%u4E8B" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/af9aea14-7886-4c2a-9834-91f2730b7ed2.jpg" alt="加州乐事" /></div>    <div class="toll_info">加州乐事</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u62C9%u83F2" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/259de954-be4b-4082-ba06-a8b7b9596a87.jpg" alt="拉菲" /></div>    <div class="toll_info">拉菲</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u7687%u8F69" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/84c2951a-518d-4c96-b79a-49ff50492da9.jpg" alt="皇轩" /></div>    <div class="toll_info">皇轩</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u738B%u671D" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/f7ed68af-4387-4762-b1bb-2365fa3c8d60.jpg" alt="王朝" /></div>    <div class="toll_info">王朝</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u5954%u5BCC" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/67e85e72-c953-429c-9739-390a5b51a010.jpg" alt="奔富" /></div>    <div class="toll_info">奔富</div></a></li>
+            </ul>
+            <p><a href="http://www.gjw.com/product/item-id-3692.htm" title="法国 神鹿 奥德干红葡萄酒（礼盒装） 750ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/53b65e9e-ae1c-4902-a8ac-e3f26587dc22.jpg" alt="法国 神鹿 奥德干红葡萄酒（礼盒装） 750ml" /></a></p>
+        </div>
+    </div>
+    <div class="baijiu_down">
+        <div class="baijiu_down_l"><a href="http://www.gjw.com/product/item-id-909.htm" title="智利 红蔓庄园 赤霞珠干红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/b2f3e686-167c-4064-bf84-ba1147aeef70.jpg" alt="智利 红蔓庄园 赤霞珠干红葡萄酒 750ml" /></a></div>
+        <div class="baijiu_down_r">
+            <div class="rank_hd">
+                <div class="rank_hd_tit">热销排行榜</div>
+            </div>
+            <div class="rank_cont">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-3497.htm" title=""><img src="http://img0.gjw.com/product/2013/0912/fc5da4f644bc4b1a87e7395ba6c5ef77_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售9428件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-3497.htm" title="#">法国 神鹿干白葡萄酒 750ml</a></p>        <p class="font_price">￥69</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1239.htm" title=""><img src="http://img0.gjw.com/product/2013/0628/dfad128ee1c3498d842d05b06a0c55c0_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售1801件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1239.htm" title="#">Lafite法国拉菲 传奇波尔多干红葡萄酒 正品行货 进口干红</a></p>        <p class="font_price">￥198</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1029.htm" title=""><img src="http://img0.gjw.com/product/2012/0424/ab611a27cc8e4f388b4d1a79754ddbbc_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售586件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1029.htm" title="#">澳洲 卡尔德庄园 珍藏赤霞珠干红葡萄酒 750ml</a></p>        <p class="font_price">￥399</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1280.htm" title=""><img src="http://img0.gjw.com/product/2011/0225/09df5ca2787c4cb2bfd4c00d11ff1bf9_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售324件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1280.htm" title="#">王朝 2003干红葡萄酒 750ml</a></p>        <p class="font_price">￥30</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-873.htm" title=""><img src="http://img0.gjw.com/product/2012/0509/511176867658411aa183fb84e54ec470_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售1060件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-873.htm" title="#">美国 加州乐事 干红葡萄酒 750ml</a></p>        <p class="font_price">￥68</p>    </div></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 红酒版块-------->
+<!-------S 洋酒版块-------->
+<div class="baijiu f3">
+    <div class="baijiu_up">
+        <div class="baijiu_up_l">
+            <h2 class="h2">3F洋酒馆</h2>
+            
+        </div>
+        <div class="baijiu_up_m">
+            <div class="baijiu_tab">
+            </div>
+            <div class="baijiu_content">
+                <ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-1158.htm" title="波士 蓝橙 力娇酒 700ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2011/0111/44d1bcacefbb4227b5fb4e9bc8901a2d_1.jpg" alt="波士 蓝橙 力娇酒 700ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-1158.htm" title="波士 蓝橙 力娇酒 700ml" target="_blank">波士 蓝橙 力娇酒 700ml</a></p>    <p class="font_price">￥95 </p>    <p class="font_y">已售230件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-1073.htm" title="麦卡伦 12年单一纯麦威士忌 700ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0425/f0a987a3250a458c8d2ae12d00acb5aa_1.jpg" alt="麦卡伦 12年单一纯麦威士忌 700ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-1073.htm" title="麦卡伦 12年单一纯麦威士忌 700ml" target="_blank">麦卡伦 12年单一纯麦威士忌 700ml </a></P>        <p class="font_price">￥379</p>        <p class="font_y">已售979件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-219.htm" title="人头马 XO 干邑白兰地 700ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0303/645808f6cf1d4fbab985b28123d7ceb8_1.jpg" alt="人头马 XO 干邑白兰地 700ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-219.htm" title="人头马 XO 干邑白兰地 700ml" target="_blank">人头马 XO 干邑白兰地 700ml</a></p>    <p class="font_price">￥899 </p>    <p class="font_y">已售3010件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-1124.htm" title="豪帅 金快活 墨西哥烈酒 750ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0425/e5e9b9887d03467db87a63b476a7ee2e_1.jpg" alt="豪帅 金快活 墨西哥烈酒 750ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-1124.htm" title="豪帅 金快活 墨西哥烈酒 750ml" target="_blank">豪帅 金快活 墨西哥烈酒 750ml </a></P>        <p class="font_price">￥159</p>        <p class="font_y">已售143件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-3946.htm" title="意大利 仙山露 白味美思 配制酒 1000ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0922/f4ef81562f234673a4e9320a4b1f926e_1.jpg" alt="意大利 仙山露 白味美思 配制酒 1000ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-3946.htm" title="意大利 仙山露 白味美思 配制酒 1000ml" target="_blank">意大利 仙山露 白味美思 配制酒 1000ml</a></p>    <p class="font_price">￥98 </p>    <p class="font_y">已售227件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-1081.htm" title="格兰菲迪 15年 单一纯麦威士忌 700ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/1018/4d3c858ea5394f259a669cef8d4e83a9_1.jpg" alt="格兰菲迪 15年 单一纯麦威士忌 700ml" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-1081.htm" title="格兰菲迪 15年 单一纯麦威士忌 700ml" target="_blank">格兰菲迪 15年 单一纯麦威士忌 700ml </a></P>        <p class="font_price">￥399</p>        <p class="font_y">已售2690件</p>    </span></li></ul><ul><li class="li_b">    <p class="product-img-b"><a href="http://www.gjw.com/product/item-id-1190.htm" title="必得利 石榴汁 力娇酒 700ml" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0425/6bb8f8979488411e86906df21df4e2ab_1.jpg" alt="必得利 石榴汁 力娇酒 700ml" /></a></p>    <p class="product-txt"><a href="http://www.gjw.com/product/item-id-1190.htm" title="必得利 石榴汁 力娇酒 700ml" target="_blank">必得利 石榴汁 力娇酒 700ml</a></p>    <p class="font_price">￥72 </p>    <p class="font_y">已售443件</p></li><li class="li_s">    <span class="li_s_img"><a href="http://www.gjw.com/product/item-id-4186.htm" title="百加得冰锐朗姆酒六瓶组合装" target="_blank"><img class="lazy" data-original="http://img0.gjw.com/product/2014/0207/9c16d32110be43f5bcc8fb1d94320143_1.jpg" alt="百加得冰锐朗姆酒六瓶组合装" /></a></span>    <span class="li_s_txt">	    <P class="btline3"><a href="http://www.gjw.com/product/item-id-4186.htm" title="百加得冰锐朗姆酒六瓶组合装" target="_blank">百加得冰锐朗姆酒六瓶组合装 </a></P>        <p class="font_price">￥66</p>        <p class="font_y">已售2649件</p>    </span></li></ul>
+            </div>
+        </div>
+        <div class="baijiu_brand">
+            <ul>
+                <li><a href="http://www.gjw.com/Home/Search?w=%u7687%u5BB6%u8DEF%u6613" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/51a3b97f-5757-45c9-a3e9-4e54ea15c6b6.jpg" alt="皇家路易" /></div>    <div class="toll_info">皇家路易</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u5C0A%u5C3C%u83B7%u52A0" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/677d165b-e5fc-4248-854d-89acce680fa0.jpg" alt="尊尼获加" /></div>    <div class="toll_info">尊尼获加</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u8F69%u5C3C%u8BD7" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/b5371dcc-329a-46ae-80e1-49544ec9445b.jpg" alt="轩尼诗" /></div>    <div class="toll_info">轩尼诗</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u6DF1%u84DD" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/2863ef18-26c6-46ee-913b-42c2c7ed0f93.jpg" alt="深蓝" /></div>    <div class="toll_info">深蓝</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u767E%u52A0%u5F97" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/bb480f05-bc1b-48f9-ad6b-9c3f83028130.jpg" alt="百加得" /></div>    <div class="toll_info">百加得</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u767E%u9F84%u575B" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/3877eb5d-7818-4ea8-bec5-c8cbcb743311.jpg" alt="百龄坛" /></div>    <div class="toll_info">百龄坛</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u7EDD%u5BF9" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/20272a39-b3de-44cc-b218-1504b4b97115.jpg" alt="绝对" /></div>    <div class="toll_info">绝对</div></a></li><li><a href="http://www.gjw.com/Home/Search?w=%u829D%u534E%u58EB" target="_blank">    <div class="toll_img"><img class="lazy" data-original="/Images/Advertise/LP/2014/33/bd9af490-5304-45f4-bf7e-9e645e509f0d.jpg" alt="芝华士" /></div>    <div class="toll_info">芝华士</div></a></li>
+            </ul>
+            <p><a href="http://192.168.2.103:81/product/item-id-2139.htm" title="皇家路易 XO 蓝色天地盖 700ml+50ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/315/4d5968d8-2718-4b20-aab3-0b3054fe3f88.jpg" alt="皇家路易 XO 蓝色天地盖 700ml+50ml" /></a></p>
+        </div>
+    </div>
+    <div class="baijiu_down">
+        <div class="baijiu_down_l"></div>
+        <div class="baijiu_down_r">
+            <div class="rank_hd">
+                <div class="rank_hd_tit">热销排行榜</div>
+            </div>
+            <div class="rank_cont">
+                <ul>
+                    <li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1110.htm" title=""><img src="http://img0.gjw.com/product/2012/0906/fd1a1540698c439bb0f2f81e514a76ae_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售115件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1110.htm" title="#">古巴 哈瓦那俱乐部 3年朗姆酒 750ml</a></p>        <p class="font_price">￥138</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-1141.htm" title=""><img src="http://img0.gjw.com/product/2012/0509/755acc90a28d4df1856c9f026858a4f9_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售2976件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-1141.htm" title="#">斯米诺（红牌）皇冠 伏特加 750ml</a></p>        <p class="font_price">￥99</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-211.htm" title=""><img src="http://img0.gjw.com/product/2012/0320/1e9c4928aa4847d7af5d0880cd965d72_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售322件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-211.htm" title="#">百龄坛 12年威士忌 700ml</a></p>        <p class="font_price">￥228</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-574.htm" title=""><img src="http://img0.gjw.com/product/2012/0410/d3ddaaa85fbb4909b1f389ff447c3d4a_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售222件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-574.htm" title="#">绝对 柑橘味 伏特加 750ml</a></p>        <p class="font_price">￥158</p>    </div></div></li><li><i class="rank_cont_rank_order"></i><div class="rank_goods" >	<div class="rank_goods_img">    	<a target="_blank" href="http://www.gjw.com/product/item-id-220.htm" title=""><img src="http://img0.gjw.com/product/2014/0114/634182839dfd48b9878b7a7f89a789b6_1.jpg" alt=""></a>    </div>    <div class="rank_goods_info">        <p class="font_y" style="display:block">已售658件</a></p>        <p class="btline3"><a target="_blank" href="http://www.gjw.com/product/item-id-220.htm" title="#">轩尼诗Hennessy VSOP 干邑白兰地 700ml</a></p>        <p class="font_price">￥428</p>    </div></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 洋酒版块-------->
+<!-------S 啤酒、保健酒-------->
+<div class="f4 w1200">
+    <div class="pijiu">
+        <div class="pijiu_left">
+            <h2 class="h2">4F黄酒馆</h2>
+            <p><a href="http://www.gjw.com/product/item-id-978.htm" title="会稽山 八年青瓷花雕 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/dbe18e86-6e49-4a23-828d-44f1f9ff22fc.jpg" alt="会稽山 八年青瓷花雕 500ml" /></a></p>
+        </div>
+        <div class="pijiu_right" id="pijiu">
+            <div class="pijiu_right_tab">
+                <ul>
+                    <li class="cur">人气热销</li>
+                    <li>陈年原浆</li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont">
+                <ul>
+                    <li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0905/4de72b16e27d4e0e874fe97762adf1eb_1.jpg" alt="和酒 8年陈金色年华 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-552.htm" title="和酒 8年陈金色年华 500ml" target="_blank">和酒 8年陈金色年华 500ml</a></p>    <p class="font_price">￥26.5</p>    <p class="font_y">已售1522件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1204/6e5076a52a3f4484a1af5fc03e8743d6_1.jpg" alt="乌毡帽 冻藏冰雕 480ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-4086.htm" title="乌毡帽 冻藏冰雕 480ml" target="_blank">乌毡帽 冻藏冰雕 480ml</a></p>    <p class="font_price">￥35</p>    <p class="font_y">已售2157件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0826/83c41e2cf2014bd3a79787f7c4686df1_1.jpg" alt="古越龙山 金五年花雕酒 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-90.htm" title="古越龙山 金五年花雕酒 500ml" target="_blank">古越龙山 金五年花雕酒 500ml</a></p>    <p class="font_price">￥18</p>    <p class="font_y">已售2143件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0905/5ee2d8c0ae594fb9a318dc457ca22707_1.jpg" alt="石库门 黑标 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-59.htm" title="石库门 黑标 500ml" target="_blank">石库门 黑标 500ml</a></p>    <p class="font_price">￥24.5</p>    <p class="font_y">已售3002件</p></span></li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont none">
+                <ul>
+                    <li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/1013/92971cfaaae64d1d956c593259de1145_1.jpg" alt="钱塘人家 六年花雕 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-3983.htm" title="钱塘人家 六年花雕 500ml" target="_blank">钱塘人家 六年花雕 500ml</a></p>    <p class="font_price">￥19</p>    <p class="font_y">已售581件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0925/6abad41dd2a14beda71f7fdd9e9c7e14_1.jpg" alt="石库门 锦绣12年 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-76.htm" title="石库门 锦绣12年 500ml" target="_blank">石库门 锦绣12年 500ml</a></p>    <p class="font_price">￥95</p>    <p class="font_y">已售304件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0603/9e383d06713043e4a34e26562c8a88ce_1.jpg" alt="古越龙山 八年陈花雕 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-91.htm" title="古越龙山 八年陈花雕 500ml" target="_blank">古越龙山 八年陈花雕 500ml</a></p>    <p class="font_price">￥48</p>    <p class="font_y">已售798件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0905/644a7fbfa8014905bd20130a4391f4ec_1.jpg" alt="塔牌 十年陈特醇绍兴酒 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-1138.htm" title="塔牌 十年陈特醇绍兴酒 500ml" target="_blank">塔牌 十年陈特醇绍兴酒 500ml</a></p>    <p class="font_price">￥99</p>    <p class="font_y">已售572件</p></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="pijiu baojianjiu">
+        <div class="pijiu_left">
+            <h2 class="h2">4F啤酒保健酒</h2>
+            <p><a href="http://www.gjw.com/product/item-id-3448.htm" title="35° 中国 劲酒 125ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/34/a84a1d5d-3ea9-45e7-b74a-05b916f3261c.jpg" alt="35° 中国 劲酒 125ml" /></a></p>
+        </div>
+        <div class="pijiu_right" id="baojianjiu">
+            <div class="pijiu_right_tab">
+                <ul>
+                    <li class="cur">人气热销</li>
+                    <li>陈年原浆</li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont">
+                <ul>
+                    <li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0420/99fdcd33821a462e8f4bfc2f1588f087_1.jpg" alt="哈尔滨 冰爽 啤酒 听装330ml（仅限江浙沪）" /></span><span class="f4-txt">	 <p class="btline3"><a href="http://www.gjw.com/product/item-id-3399.htm" title="哈尔滨 冰爽 啤酒 听装330ml（仅限江浙沪）" target="_blank">哈尔滨 冰爽 啤酒 听装330ml（仅限江浙沪）</a></p>    <p class="font_price">￥4</p>    <p class="font_y">已售2823件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0420/4970deaacedc4855a6df4b340e109f99_1.jpg" alt="德国原装进口啤酒 卡力特黑啤酒 听装500ml" /></span><span class="f4-txt">	 <p class="btline3"><a href="http://www.gjw.com/product/item-id-3412.htm" title="德国原装进口啤酒 卡力特黑啤酒 听装500ml" target="_blank">德国原装进口啤酒 卡力特黑啤酒 听装500ml</a></p>    <p class="font_price">￥16</p>    <p class="font_y">已售5338件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0523/6c1139d7950d426283cfc8e17c38403d_1.jpg" alt="蓝带 黑啤 听装 500ml" /></span><span class="f4-txt">	 <p class="btline3"><a href="http://www.gjw.com/product/item-id-3536.htm" title="蓝带 黑啤 听装 500ml" target="_blank">蓝带 黑啤 听装 500ml</a></p>    <p class="font_price">￥6.6</p>    <p class="font_y">已售2237件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0131/e4ae0c45a2764785b1e519df2d9d892d_1.jpg" alt="张裕 特质三鞭酒 750ml" /></span><span class="f4-txt">	 <p class="btline3"><a href="http://www.gjw.com/product/item-id-3251.htm" title="张裕 特质三鞭酒 750ml" target="_blank">张裕 特质三鞭酒 750ml</a></p>    <p class="font_price">￥196</p>    <p class="font_y">已售111件</p></span></li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont none">
+                <ul>
+                    <li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0924/3dbabe706cfe41098c2f5b26b9a41670_1.jpg" alt="西藏 青稞啤酒 355ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-3949.htm" title="西藏 青稞啤酒 355ml" target="_blank">西藏 青稞啤酒 355ml</a></p>    <p class="font_price">￥6.6</p>    <p class="font_y">已售898件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0625/9c1dd057255740f99a27957ed0a81b37_1.jpg" alt="22° 丹力 露酒 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-2193.htm" title="22° 丹力 露酒 500ml" target="_blank">22° 丹力 露酒 500ml</a></p>    <p class="font_price">￥660</p>    <p class="font_y">已售168件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2012/0625/0ecf9202b41842d3b5fc21cd0112551b_1.jpg" alt="35° 中国 劲酒 500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-86.htm" title="35° 中国 劲酒 500ml" target="_blank">35° 中国 劲酒 500ml</a></p>    <p class="font_price">￥58</p>    <p class="font_y">已售2625件</p></span></li><li><span class="f4-img"><img class="lazy" data-original="http://img0.gjw.com/product/2013/0514/e240c24a261848f1b0932e534535c70e_1.jpg" alt="德国原装进口啤酒 布格福斯 优质黑啤 听装500ml" /></span><span class="f4-txt">	<p class="btline3"><a href="http://www.gjw.com/product/item-id-3479.htm" title="德国原装进口啤酒 布格福斯 优质黑啤 听装500ml" target="_blank">德国原装进口啤酒 布格福斯 优质黑啤 听装500ml</a></p>    <p class="font_price">￥12.5</p>    <p class="font_y">已售2384件</p></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------E 啤酒、保健酒-------->
+<div class="tonglan_ad w1200">
+    <a href="http://www.gjw.com/Home/LandingPage/20.html" title="底部通栏广告位" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/36/1b6a51a2-4d16-4684-94fb-c58364295b3c.jpg" alt="底部通栏广告位" /></a>
+</div>
+<!-------S 大师推荐-------->
+<div class="dashi w1200">
+    <h3 class="font_title">
+        大师推荐</h3>
+    <div class="dashi_cont">
+        <div class="dashi_img1">
+            <span class="dashi_photo"><a href="##" title="民星
+" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/96eac5d2-cd32-4ee2-8ff3-195bc0ac458f.jpg" alt="民星
+" /></a></span>
+            <span class="dashi_txt">
+                <h5><b>陈强</b><br>购酒网金牌会员<br></h5><p>从事环保在线监测、站在环保第一线，闲暇之余爱品酒，最爱
+            </span>
+        </div>
+        <div class="dashi_img2">
+            <a href="http://www.gjw.com/product/item-id-3704.htm" title="52度 全兴大曲 青花瓷 8年 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/35/a76cfd6a-4189-44a8-9306-04c676591fe5.jpg" alt="52度 全兴大曲 青花瓷 8年 500ml" /></a>
+        </div>
+        <div class="dashi_img3">
+            <a href="http://www.gjw.com/product/item-id-2321.htm" title="42° 稻花香 珍品一号 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/37/c6dbde3b-79bb-47d8-939c-aa77d920c916.jpg" alt="42° 稻花香 珍品一号 500ml" /></a>
+        </div>
+        <div class="dashi_img4">
+            <a href="http://www.gjw.com/product/item-id-3260.htm" title="张裕 窖藏 特选级 解百纳干红葡萄酒 750ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/36/cdb2782d-5f04-412f-8ba2-53567104b4bd.jpg" alt="张裕 窖藏 特选级 解百纳干红葡萄酒 750ml" /></a>
+        </div>
+        <div class="dashi_img5">
+            <a href="http://www.gjw.com/product/item-id-3183.htm" title="42度 金六福 绵柔宝石红 500ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/36/ed3e9bf1-4236-4d52-9129-88cd94126444.jpg" alt="42度 金六福 绵柔宝石红 500ml" /></a>
+        </div>
+        <div class="dashi_img6">
+            <a href="http://www.gjw.com/product/item-id-3885.htm" title="希腊 爱森纳思蒂干白葡萄酒 750ml" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/36/316f8cca-c220-4f07-9454-5571e93d131a.jpg" alt="希腊 爱森纳思蒂干白葡萄酒 750ml" /></a>
+        </div>
+        <div class="dashi_img7">
+            <a href="http://www.gjw.com/Home/LandingPage/24.html" title="龙酿专辑" target="_blank"><img class="lazy" data-original="/Images/Advertise/LP/2014/37/386d6a8a-fff3-4aba-a0a2-828a81f98b26.jpg" alt="龙酿专辑" /></a>
+        </div>
+    </div>
+</div>
+<!-------E 大师推荐-------->
+        </div>
+        <div class="footer">
+    <div class="foot_up w1200">
+        <div class="phone">
+            10000平方米仓储体验店<br />
+            上海松江区茂盛路202弄18号<br />
+            客服邮箱：KF@goujiuwang.com</div>
+        <div class="help">
+            <dl>
+                <dt>新手指南</dt>
+                <dd>
+                    <a href="/Home/Help/6.html">用户协议</a></dd>
+                <dd>
+                    <a href="/Home/Help/7.html">常见问题</a></dd>
+                <dd>
+                    <a href="/Home/Help/8.html">网站购物流程</a></dd>
+                <dd>
+                    <a href="/Home/Help/9.html">会员制度</a></dd>
+                <dd>
+                    <a href="/Home/Help/10.html">VIP客户与合作</a></dd>
+            </dl>
+            <dl>
+                <dt>如何付款</dt>
+                <dd>
+                    <a href="/Home/Help/11.html">如何付款</a></dd>
+                <dd>
+                    <a href="/Home/Help/12.html">发票制度说明</a></dd>
+                <dd>
+                    <a href="/Home/Help/13.html">电子券说明</a></dd>
+                <dd>
+                    <a href="/Home/Help/14.html">虚拟账户支付</a></dd>
+                <dd>
+                    <a href="/Home/Help/15.html">商品优惠代码说明</a></dd>
+            </dl>
+            <dl>
+                <dt>配送方式</dt>
+                <dd>
+                    <a href="/Home/Help/20.html">配送收费标准</a></dd>
+                <dd>
+                    <a href="/Home/Help/19.html">配送时间</a></dd>
+                <dd>
+                    <a href="/Home/Help/21.html">货到付款支持城市</a></dd>
+            </dl>
+            <dl>
+                <dt>售后服务</dt>
+                <dd>
+                    <a href="/Home/Help/16.html">如何办理退换货</a></dd>
+                <dd>
+                    <a href="/Home/Help/17.html">如何退款</a></dd>
+                <dd>
+                    <a href="/Home/Help/18.html">联系客服</a></dd>
+            </dl>
+            <dl>
+                <dt>关于我们</dt>
+                <dd>
+                    <a href="/Home/Help/22.html">了解购酒网</a></dd>
+                <dd>
+                    <a href="/Home/Help/23.html">招兵买马</a></dd>
+                <dd>
+                    <a href="/Home/Help/24.html">联系我们</a></dd>
+                <dd>
+                    <a href="/Home/Help/25.html">隐私声明</a></dd>
+                <dd>
+                    <a href="/Home/Help/26.html">友情链接</a></dd>
+            </dl>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="guarantee">
+            <span>
+                <img class="lazy" data-original="/images/foot-zhibao1.jpg" alt="" /></span>
+            <span>
+                <img class="lazy" data-original="/images/foot-zhibao2.jpg" alt="" /></span>
+            <span>
+                <img class="lazy" data-original="/images/foot-zhibao3.jpg" alt="" /></span>
+            <span>
+                <img class="lazy" data-original="/images/foot-zhibao4.jpg" alt="" /></span>
+            <span>
+                <img class="lazy" data-original="/images/foot-zhibao5.jpg" alt="" /></span>
+        </div>
+    </div>
+    <div class="foot_down w1200">
+        <div class="scrollDiv">
+            <p class="youlian">
+                友情链接：</p>
+            <ul>
+                <li><a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店</a>
+                    <a href="#">酒水招商</a> <a href="#">58特产网</a><a href="#">名酒品牌</a> <a href="#">品茶汇</a>
+                    <a href="#">58特产网</a> <a href="#">外语人才网</a> <a href="#">糖酒商</a> <a href="#">58北京婚宴酒店</a>
+                    <a href="#">酒水招商</a> <a href="#">58特产网</a><a href="#">名酒品牌</a> <a href="#">品茶汇</a></li>
+            </ul>
+        </div>
+        <p class="copy">
+            Copyright? 2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有
+            <script src="http://js.users.51.la/16826658.js" type="text/javascript" language="javascript"></script>
+        </p>
+        <div class="authentication">
+            <a class="beian" href="http://www.miibeian.gov.cn"></a><a class="depart" href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=20120216155829987"
+                rel="nofollow"></a>
+        </div>
+    </div>
+</div>
+
+    </body>
+<style type="text/css">
+    /**弹出错误层***/
+    .error
+    {
+        position: absolute;
+        left: 30%;
+        height: 50%;
+        position: fixed;
+        width: 450px;
+        height: 160px;
+        padding: 20px;
+        border: #ddd solid 1px;
+        background: #fff;
+        z-index: 9999;
+        -webkit-box-shadow: 1px 1px 3px 1px #ccc;
+    }
+    .error img
+    {
+        display: block;
+    }
+    .error h2
+    {
+        font-size: 16px;
+        line-height: 25px;
+        font-weight: bold;
+        padding-left: 120px;
+    }
+    .error p
+    {
+        padding-left: 120px;
+        color: #666666;
+    }
+</style>
+</html>

@@ -1,0 +1,45 @@
+﻿@using V5.Portal.Common
+@model IList<V5.DataContract.Transact.Order.UserCommentProduct>
+@{
+    ViewBag.Title = "商品评价";
+}
+
+<link href="../../Content/user.css" rel="stylesheet" type="text/css" />
+<link href="../../Content/pingjia.css" rel="stylesheet" type="text/css" />
+<div class="uc_container">
+    <div class="uc">
+    @Html.Partial("UserMenu")
+        <div class="uc_right">
+            <div class="title">商品评价</div>
+            <div class="fc_sppj">
+                <div class="pro">
+                    <a href="" target="_blank">Estee Lauder雅诗兰黛鲜亮焕采精粹水（滋润型） 30ml（中样）</a>
+                    <a href="" target="_blank"><img src="../../Content/images/baijiu_b.jpg"></a>
+                </div>
+                <div class="wdpj">
+                    <div class="star_wm">
+                        <div class="star_big ClearFix">
+                            <div><i>商品评分：</i>
+                                <ul class="star_list">
+                                    <li><label><input checked="checked" name="point" value="5" class="radio" type="radio"><strong class="star sa5">五颗星</strong></label></li><li><label><input  name="point" value="4" class="radio" type="radio"><strong class="star sa4">四颗星</strong></label></li><li><label><input name="point" value="3" class="radio" type="radio"><strong class="star sa3">三颗星</strong></label>	</li><li><label><input name="point" value="2" class="radio" type="radio"><strong class="star sa2">二颗星</strong></label> </li><li><label><input name="point" value="1" class="radio" type="radio"><strong class="star sa1">一颗星</strong></label> </li>
+                                    @*<span class="stars"><img src="../../Images/star.gif" alt="1" title="">&nbsp;<img src="../../images/star.gif" alt="2" title="">&nbsp;<img src="../../images/star.gif" alt="3" title="">&nbsp;<img src="../../images/star.gif" alt="4" title="">&nbsp;<img src="../../images/star.gif" alt="5" title=""></span>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="ganshou">
+                        <textarea id="comment_content_0" name="comment_content" cols="" rows="" class="gs" onkeyup="textLimitCheck(this, 500, 'sp0');">分享购物心得，帮助蜂友找到心仪商品</textarea>
+                        <p id="sp0">10-500字</p>
+                    </div>
+                    <div class="tijiao">
+                        <a href="###" class="tj_button">提交</a>
+                    </div>   
+                      
+                </div>
+            </div>
+        </div>
+    <div class="clear"></div>
+</div>
+</div>
+

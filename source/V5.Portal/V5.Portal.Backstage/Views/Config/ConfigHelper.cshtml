@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "ConfigPage";
+}
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.all-3.5.min.js")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.core-3.5.min.js")
+@Styles.Render("~/Content/zTree/css/zTreeStyle/zTreeStyle.css")
+@Scripts.Render("~/Scripts/Backstage/Configuration/Configuration.Page.js")
+@Scripts.Render("~/Content/ckeditor/ckeditor.js")
+<script type="text/javascript">
+    $(document).ready(function () {
+        ConfigPage.Init();
+    });
+    CKEDITOR.replace("CkeditContent");
+</script>
+<div>
+    <div style="width: 200px; float: left;">
+        <ul id="helperTree" class="ztree">
+        </ul>
+    </div>
+    <div style="margin-left: 200px; float: inherit">
+        <input type="hidden" id="hdChildId" value="" />
+        <input type="hidden" id="hdParentId" />
+        <span class="km-text">标题：</span>
+        <input type="text" class="k-textbox" style="width: 200px; margin-bottom: 5px;" id="changtext" />
+        <input type="button" value="添加目录" id="btnAddHelper" class="k-button" style="width: 100px;
+            margin-left: 500px;" />
+        <input id="CkeditContent" type="text" value="" />
+        <div style="text-align: center; margin-top: 5px;">
+            <input id="btnSureEdit" type="button" class="k-button" value="确　定" />
+            <input type="button" class="k-button" value="取　消" />
+        </div>
+    </div>
+</div>

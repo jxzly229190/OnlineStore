@@ -1,0 +1,110 @@
+﻿@using V5.Portal.Backstage.Controllers.Home
+@using V5.Portal.Backstage.Models.Transact
+@using V5.Portal.Backstage.Utils
+@model V5.Portal.Backstage.Models.Transact.ProductConsultSearchModel
+@{
+    ViewBag.Title = "商品咨询";
+}
+<style type="text/css">
+    .searchbar tr
+    {
+        line-height:32px;
+    }
+    .searchbar td
+    {
+        padding-left:5px;
+    }
+</style>
+<div class="search-box">
+    <form>
+        <table border="0" cellspacing="0" cellpadding="0" class="searchbar">
+            <tr>
+                <td>商品类别：</td>
+                <td>
+                    @(Html.Kendo().DropDownListFor(model => model.ParentCategoryID).Name("ParentCategoryID").OptionLabel(" 全部 ").DataSource(ds => ds.Read("GetParentProductCategories", "Transact")).DataTextField("CategoryName").DataValueField("ID"))
+                    @(Html.Kendo().DropDownListFor(model => model.CategoryID).Name("CategoryID").OptionLabel(" 全部 ").DataSource(ds => ds.Read(action => action.Action("GetProductCategoriesByParentId", "Transact").Data("filterParentCategoryId")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategoryID"))
+                    @(Html.Kendo().DropDownListFor(model => model.BrandId).OptionLabel(" 全部 ").Name("BrandId").DataSource(ds => ds.Read(action => action.Action("GetProductBrandByCategoryId", "Transact").Data("filterCategoryId")).ServerFiltering(true)).Enable(false).AutoBind(false).DataTextField("Text").DataValueField("Value").CascadeFrom("CategoryID"))
+                </td>
+                <td>商品名称：</td>
+                <td>@Html.EditorFor(model => model.ProductName)</td>
+                <td>
+                    <input class="k-button" type="button" value="查 询" onclick="SearchProductConsult()"/>
+                </td>
+            </tr>
+            <tr>
+                <td>咨询时间：</td>
+                <td>@(Html.Kendo().DateTimePickerFor(model => model.FromDateTime).Name("FromDateTime"))<span style="padding:0 3px;">至</span>@(Html.Kendo().DateTimePickerFor(model => model.ToDateTime).Name("ToDateTime"))</td>
+                <td>咨询人：</td>
+                <td>@Html.EditorFor(model => model.UserName)</td>
+                <td>
+                    <input class="k-button" type="reset" value="重 置" id="clean" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionRepliedObj = new PermissionUtility(Context.Session.SessionID);
+    var siteUrl = new HomeController().GetSiteUrl(); 
+}
+@(Html.Kendo().TabStrip()
+    .Name("tabStrip")
+    .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+    .Items(items =>
+        {
+            items.Add().Selected(true).Text("未回复咨询").Content(@<text>
+@(Html.Kendo().Grid<ProductConsultModel>().Name("productConsultGrid").Columns(columns =>
+                                {
+                                    columns.Bound(c => c.UserName).Title("咨询人").Width(60).ClientTemplate("#if(UserName){#<a target='_blank' href='/user/detail/#=UserID#'>#= UserName #</a>#}else{#<a target='_blank' href='/user/detail/#=UserID#'>未知</a>#}#");
+                                    columns.Bound(c => c.ProductName).Title("咨询商品").Width(200).ClientTemplate("<a href=\"" + siteUrl + "/Product/Item-id-#=ProductID#.htm\" target=\"_blank\" title=#=ProductName# target=\"_blank\" >#=ProductName#</a>");
+                                    columns.Bound(c => c.ConsultContent).Title("咨询内容").Width(300);
+                                    columns.Bound(c => c.ConsultTime).Title("咨询时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(150);
+                                    columns.Command(command =>
+                                        {
+                                            command.Edit().Text("回复").HtmlAttributes(permissionObj.GetDisplayAttribute("ReplyProductConsult", "Config", "Post", true));
+                                            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveProductConsult", "Config", "Post", true));
+                                        }).Title("操作").Width(160).Hidden(permissionObj.Hidden);
+                                }).Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Product_Consult_Reply_Template").Window(edit => edit.Title("回复咨询").Width(600)))
+                                .Scrollable()
+                                .Pageable()
+                                .Selectable()
+                                .Events(e => e.Edit("onEdit"))
+                                //.Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
+                                .HtmlAttributes(new { style = "height:450px;" })
+                                .DataSource(dataSource => dataSource.Ajax().PageSize(20)
+                                        .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+                                    .Model(model => model.Id(c => c.ID))
+                                    .Read(read => read.Action("QueryConsultWithoutReply", "Transact").Data("GetConsultSearchData"))
+                                    .Update(update => update.Action("ReplyProductConsult", "Transact"))
+                                    .Destroy(destory => destory.Action("RemoveProductConsult", "Transact"))))
+</text>);
+            items.Add().Text("已回复咨询").Content(@<text>
+@(Html.Kendo().Grid<ProductConsultModel>().Name("productConsultRepliedGrid").Columns(columns =>
+                            {
+                                columns.Bound(c => c.UserName).Title("咨询人").Width(60).ClientTemplate("#if(UserName){#<a target='_blank' href='/user/detail/#=UserID#'>#= UserName #</a>#}else{#<a target='_blank' href='/user/detail/#=UserID#'>未知</a>#}#"); ;
+                                columns.Bound(c => c.ProductName).Title("咨询商品").Width(150);
+                                columns.Bound(c => c.ConsultContent).Title("咨询内容").Width(150);
+                                columns.Bound(c => c.ConsultTime).Title("咨询时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(100);
+                                columns.Bound(c => c.Content).Title("回复内容").Width(150);
+                                columns.Bound(c => c.EmployeeName).Title("回复人").Width(60);
+                                columns.Bound(c => c.CreateTime).Title("回复时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(100);
+                                columns.Command(command =>
+                                    {
+                                        command.Edit().Text("修改回复").HtmlAttributes(permissionRepliedObj.GetDisplayAttribute("ModifyConsultReply", "Config", "Post", true));
+                                        command.Destroy().Text("删除").HtmlAttributes(permissionRepliedObj.GetDisplayAttribute("RemoveProductConsultReply", "Config", "Post", true));
+                                    }).Title("操作").Width(200).Hidden(permissionRepliedObj.Hidden);
+                            }).Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Product_Consult_Reply_Template").Window(edit => edit.Title("修改回复").Width(600)))
+                                .Scrollable().Pageable()
+                            .Events(e => e.Edit("onEdit"))
+                                .Selectable()
+                            //.Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
+                            .HtmlAttributes(new { style = "height:450px;" })
+                            .DataSource(dataSource => dataSource.Ajax().PageSize(20)
+                                    .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+                                .Model(model => model.Id(c => c.ID))
+                                .Read(read => read.Action("QueryConsultReplies", "Transact").Data("GetConsultSearchData"))
+                                .Update(update => update.Action("ModifyConsultReply", "Transact"))
+                                .Destroy(destory => destory.Action("RemoveProductConsultReply", "Transact"))))
+</text>);
+        }))

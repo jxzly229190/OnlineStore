@@ -1,0 +1,304 @@
+﻿@using V5.Library
+@model V5.Portal.Backstage.Models.Transact.Order.OrderDetailModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<head>
+    <link rel="stylesheet" href="../../../Content/Order/Cloud.base.css" type="text/css" />
+    <link rel="stylesheet" href="../../../Content/Order/Cloud.comm.css" type="text/css" />
+    <link rel="stylesheet" href="../../../Content/Order/struct.ddgl.css" type="text/css" />
+    <script src="../../../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="../../../Content/OrderState/orderState.css" rel="stylesheet" type="text/css" />
+    <script src="../../../Content/OrderState/orderState.js" type="text/javascript"></script>
+    <script src="../../../Scripts/AjaxOverride.js" type="text/javascript"></script>
+    <title>订单详情</title>
+
+</head>
+<body>
+<script type="text/javascript" >
+    $(function() {
+        var PaymentMethod = $("#CurrentOrderState_PaymentMethod").val();
+        var Status = $("#CurrentOrderState_Status").val();
+        if (Status > 3 && Status < 100) {
+            return false;
+        }
+        var ProcessDatetimeFormat = $("#CurrentOrderState_ProcessDatetimeFormat").val();
+        var myformat = ProcessDatetimeFormat.split(',');
+        var objParamter = progress.create_paramter({ type: PaymentMethod, status: Status, time: myformat });
+        var option = {
+            objContainer: document.getElementById("process"),
+            objParamter: objParamter
+        };
+        progress.init(option);
+    });
+</script>
+<div style="text-align:center">
+<div class="orderPage" style="text-align:left">
+    @Html.HiddenFor(model => model.CurrentOrderState.PaymentMethod)
+    @Html.HiddenFor(model => model.CurrentOrderState.Status)
+    @Html.HiddenFor(model => model.CurrentOrderState.ProcessDatetimeFormat)
+    <div class="orderState">
+        <h2 class="lineHeight30" style="border-bottom-color: rgb(238, 217, 124);border-bottom-width: 1px;border-bottom-style: solid; ">
+            订单编号:@Model.OrderInfo.OrderCode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态:@Model.OrderInfo.StatusName
+        </h2>
+        <div id="process" class="process">
+        </div>
+    </div>
+    <div class="orderTrack top15">
+        <div class="tabcon">
+            <h2 class="lineHeight30">
+                订单跟踪</h2>
+                
+            <table class="tbExtend bgcw txt5">
+                <tbody>
+                    <tr class="trExtend">
+                        <th width="12%">
+                            <strong>处理时间</strong>
+                        </th>
+                        <th width="60%">
+                            <strong>处理信息</strong>
+                        </th>
+                        <th width="9%">
+                            <strong>操作人</strong>
+                        </th>
+                        <th width="3%">
+                            <strong>&nbsp;</strong>
+                        </th>
+                    </tr>
+                    @{
+                        if (Model.OrderTrackDetails!=null&&Model.OrderTrackDetails.Count < 1)
+                        {
+                            <tr class="trExtend" ><td colspan="4">没有获取到订单跟踪数据</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.OrderTrackDetails)
+                            {
+                                <tr class="trExtend">
+                                    <td>
+                                        @item.OperateTime.ToString("yyyy-MM-dd hh:mm:ss")
+                                    </td>
+                                    <td>
+                                        @item.OperateSummary
+                                    </td>
+                                    <td>
+                                        @item.Operator
+                                    </td>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                    
+                                
+                </tbody></table>
+                    
+        </div>
+        <div class="tabcon top15">
+            <h2 class="lineHeight30">
+                付款信息</h2>
+
+            <table class="tbExtend bgcw txt5">
+                <tbody><tr class="trExtend">
+                           <td colspan="2">付款方式：@Model.PaymentInfo.PaymentMethodName </td>
+                       </tr>
+                    <tr class="trExtend">
+                        <td width="20%">商品金额：￥@Model.PaymentInfo.TotalMoney</td>
+                        <td width="22%">运费金额：￥@Model.PaymentInfo.DeliveryCost</td>
+                    </tr>
+                    <tr class="trExtend">
+                        <td>优惠金额：￥@Model.PaymentInfo.DiscountAmount </td>
+                        <td>应支付金额：￥@Model.PaymentInfo.ActualMoney</td>
+                    </tr>
+                </tbody></table>
+        </div>
+    </div>
+    <div class="orderInfo top15 bottom15">
+        <div class="lineHeight30">
+            <strong class="fs14 fwb">订单信息</strong>
+        </div>
+        <div class="mc">
+            <dl class="fore">
+                <dt>收货人信息</dt>
+                <dd>
+                    <ul>
+                        <li>收&nbsp;货&nbsp;人：@Model.ReceiverInfo.Consignee</li>
+                        <li>地&nbsp;&nbsp;&nbsp;&nbsp;址：@Model.ReceiverInfo.CountyName , @Model.ReceiverInfo.Address</li>
+                        <li>联系电话：@Model.ReceiverInfo.Mobile</li>
+                    </ul>
+                </dd>
+            </dl>
+                
+            <!-- 备注 -->
+            <dl>
+                <dt>附加说明</dt>
+                <dd>
+                    <ul>
+                        <li>用户留言：@Model.OrderInfo.Remark</li>
+                        <li>客服备注：@Model.OrderInfo.Description</li>
+                    </ul>
+                </dd>
+            </dl>
+            <!--发票信息-->
+            <dl>
+                <dt>发票信息</dt>
+                <dd>
+                    @{
+                        if (Model.OrderInfo.IsRequireInvoice && Model.InvoiceInfo != null)
+                        {
+                            <ul>
+                                <li>发票抬头：@Model.InvoiceInfo.InvoiceTitle</li>
+                                <li>发票内容：@Model.InvoiceInfo.InvoiceContent； 种类：@Model.InvoiceInfo.InvoiceTypeName；金额：@Model.InvoiceInfo.InvoiceCost</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>不开发票</p>
+                        }
+                    }
+                       
+                </dd>
+            </dl>
+            <!-- 商品清单 -->
+            <dl>
+                <dt>商品清单</dt>
+                <dd class="p-list">
+                    <table class="tbExtend bgcw txt5">
+                        <tbody>
+                            <tr>
+                                <th width="10%">
+                                    商品编号
+                                </th>
+                                <th width="37%">
+                                    商品名称
+                                </th>
+                                <th width="10%">
+                                    商品价格
+                                </th>
+                                <th width="8%">
+                                    成交价
+                                </th>
+                                <th width="7%">
+                                    商品数量
+                                </th>
+                                <th width="8%">
+                                    库存状态
+                                </th>
+                            </tr>
+                            @if (Model.OrderProducts != null)
+                            {
+                                foreach (var product in Model.OrderProducts)
+                                {
+                                    <tr>
+                                        <td>
+                                            @product.Barcode
+                                        </td>
+                                        <td>
+                                            <div class="al fl">
+                                                <a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))" class="flk13" target="_blank">@product.ProductName</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="ftx04">￥@product.GoujiuPrice</span>
+                                        </td>
+                                        <td>
+                                            <span class="ftx04">￥@product.TransactPrice</span>
+                                        </td>
+                                        <td>
+                                            @product.Quantity
+                                        </td>
+                                        <td>
+                                            现货
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            
+                        </tbody>
+                    </table>
+                            
+                </dd>
+            </dl>
+        </div>
+        <div class="total clearfix">
+            <ul>
+                <li><span>商品总金额：</span>￥@Model.OrderInfo.TotalMoney </li>
+                <li><span>  运费：</span>￥@Model.OrderInfo.DeliveryCost</li>
+                <li><span>  已优惠：</span>￥@Model.OrderInfo.Discount</li>
+                <li><span>  合计：</span>￥@(Model.PaymentInfo.TotalMoney + Model.OrderInfo.DeliveryCost)</li>
+            </ul>
+        </div>
+            
+        @if (Model.OrderReturnProducts != null && Model.OrderReturnProducts.Count > 0)
+        {
+            <div id="orderReturnInfo">
+                <dl>
+                    <dt>退货商品清单</dt>
+                    <dd class="p-list">
+                        <table class="tbExtend bgcw txt5">
+                            <tbody>
+                                <tr>
+                                    <th width="37%">
+                                        商品名称
+                                    </th>
+                                    <th width="10%">
+                                        商品价格
+                                    </th>
+                                    <th width="10%">
+                                        成交单价
+                                    </th>
+                                    <th width="7%">
+                                        退货数量
+                                    </th>
+                                </tr>
+                                @foreach (var returnProduct in Model.OrderReturnProducts)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="al fl" style="text-align: left">
+                                                <a href="#" class="flk13" target="_blank">@{
+                                                                                              if (returnProduct.TransactPrice == 0)
+                                                                                              {
+                                                                                                  <span class="red">[赠品]</span>
+                                                                                              }
+                                                                                          }
+                                                                                          @returnProduct.ProductName</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="ftx04">￥@returnProduct.GoujiuPrice</span>
+                                        </td>
+                                        <td>
+                                            <span class="ftx04">￥@returnProduct.TransactPrice</span>
+                                        </td>
+                                        <td>
+                                            @returnProduct.Quantity
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </dd>
+                </dl>
+                <div class="total clearfix">
+                    <ul>
+                        <li class="end"><span class="fwb fs16">订单金额：</span><em class=" fwb red fs24">￥@(Model.PaymentInfo.TotalMoney - @Model.PaymentInfo.DiscountAmount)</em>
+                        </li>
+                        <li class="end"><span class="fwb fs16">已支付金额：</span><em class=" fwb red fs24">￥@Model.PaymentInfo.ActualPaid</em>
+                        </li>
+                        <li class="end"><span class="fwb fs16">应退款金额：</span><em class=" fwb red fs24">￥@Model.PaymentInfo.ActualPaid</em>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                
+        }
+    </div>
+         
+</div>
+</div>
+</body>
+

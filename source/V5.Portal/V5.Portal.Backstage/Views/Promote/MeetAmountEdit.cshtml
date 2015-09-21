@@ -1,0 +1,96 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@Scripts.Render("~/Scripts/Promote/MeetAmount.js")
+@Styles.Render("~/Content/Promote/MeetMoney.css?t=3")
+@Styles.Render("~/Content/zTree/css/zTreeStyle/zTreeStyle.css")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.all-3.5.min.js")
+@Styles.Render("~/Content/Promote/choose.css")
+@Scripts.Render("~/Scripts/Promote/Choose.js")
+<script src="../../Scripts/Promote/Choose.js"type="text/javascript"></script>
+<style>
+    .img {
+        width: 60px;
+        height: 60px;
+    }
+</style>
+<div>
+    <div class="right">
+        <table class="baseinfo">
+            <tr>
+                <td>活动名称：</td>
+                <td>
+                    <input type="hidden" id="promoteMeetAmountID"/>
+                    <input type="text" class="k-textbox" id="promoteMeetAmountName" style="width:180px;" />
+                </td>
+                <td>活动备注：</td>
+                <td><input type="text" class="k-textbox" id="promoteAmountDescription" style="width:180px;" /></td>
+            </tr>
+            <tr>                
+                <td>开始时间：</td>
+                <td>@Html.Kendo().DateTimePicker().Name("promoteMeetAmountStartTime")</td>                
+                <td>截止时间：</td>
+                <td>@Html.Kendo().DateTimePicker().Name("promoteMeetAmountEndTime")</td>
+            </tr>
+            <tr>
+                <td>活动规则：</td>
+                <td>
+                    <input type="checkbox" id="mobileVerify"/><label for="mobileVerify">是否手机验证</label>&nbsp;
+                    <input type="checkbox" id="newUser"/><label for="newUser">是否新会员活动</label>&nbsp;
+                    <input type="checkbox" id="useCoupon" checked="checked"/><label for="useCoupon">能否使用优惠券</label>
+                </td> 
+            </tr>
+        </table>
+        <div id="container"></div>
+        <div id="page">
+            <div id="content">
+                <div class="promocenter">
+                    <div class="present present-setting">
+                        <div class="promo-grade" id="J_MultiGrade">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-bottom:5px;"><input type="button" class="k-button" value="继续添加层级" onclick="AddMeetAmountTier()" id="addPromoteTier"/></div>        
+        <div id="AddBtn">
+            <input type="button" class="k-button" value="确认" onclick="meetAmount.AddMeetAmount()"/>
+            <input type="submit" class="k-button" value="取消" onclick="meetAmount.Close()"/>
+        </div>
+        <div id="UpdateBtn" style="display: none">
+            <input type="button" class="k-button" value="修改" onclick="meetAmount.ModifyMeetAmount()"/>
+            <input type="submit" class="k-button" value="取消" onclick="meetAmount.Close()"/>
+        </div>
+    </div>
+</div>
+<div style="display: none">
+    @(Html.Kendo().Window()
+          .Name("choiceProductWindow")
+          .Title("选择商品")
+          .Content(@<text>
+                        <input type="hidden" id="productContentDivId"/>
+                        商品名称：<input id="ProductName" type="text" class="k-textbox" style="width: 100px"/>
+                        商品编码：<input id="ProductBarcode" type="text"class="k-textbox" style="width: 100px"/>
+                        <input type="button" class="k-button" value="查询" onclick="SearchProduct()" />
+                        <input type="button" class="k-button" value="确定" id="ConfirmProduct" />
+                        @(Html.Kendo().Grid<ProductModel>().Name("ProductGrid").Columns(columns =>
+                    {
+                        columns.Template(e => { }).ClientTemplate("<input type='radio' onchange='CheckProduct()' name='selectproduct' value='#: ID#'/>").Width(10);
+                        columns.Template(p => { }).ClientTemplate("<img src='#= ThumbnailPath #'class='img'").Width(80);
+                        columns.Bound(p => p.Name).Title("商品名称");
+                        columns.Bound(p => p.GoujiuPrice).Width(80).Title("价格");
+                        columns.Bound(p => p.InventoryNumber).Width(80).Title("库存");
+                    }).Pageable(pageable => pageable.ButtonCount(5))
+                              .Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple))
+                              .Navigatable()
+                              .DataSource(dataSource => dataSource
+                                                            .Ajax()
+                                                            .PageSize(5)
+                                                            .Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData")))
+                              )
+                  
+                    </text>)
+          .Draggable()
+          .Resizable()
+          .Width(600)
+          .Actions(actions => actions.Close())
+          )
+</div>

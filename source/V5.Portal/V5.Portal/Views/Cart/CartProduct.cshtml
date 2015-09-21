@@ -1,0 +1,191 @@
+﻿@using V5.Library
+@using V5.Portal.Common
+@model V5.DataContract.Transact.ShoppingCart.Order_Bill
+@{
+    Layout = null;
+}
+            
+@{
+    if (Model != null)
+    {
+        if (Model.Products != null)
+        {
+            <div class="item">
+                @*// 单件/非促销 商品信息*@
+                @foreach (var product in Model.Products)
+                {
+                     if (product.PromotePrice > 0)
+                     {
+                         <div class="item_form" id="@Html.Raw("product_" + product.ProductID)">
+                             <div class="cell p-checkbox"><input class="checkbox" type="checkbox" checked="" name="proIds" value="@Html.Raw(product.ProductID)"></div>
+                             <div class="cell p-goods">
+                                 <div class="p-img"><a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))" target="_blank"><img src="@Html.Raw(Utils.GetProductImage(product.Path, "0"))" alt="@Html.Raw(product.ProductName)"></a></div>    
+                                 <div class="p-name"><a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))"  target="_blank">@product.ProductName</a><span class="promise411" id="promise411_188078"></span></div>    
+                             </div>
+                             <div class="cell p-price">￥<span class="price" id="@Html.Raw("price_" + product.ProductID)">@product.GoujiuPrice</span></div>
+                             <div class="cell p-promotion"><span class="yh_icon">￥@product.FavorablePrice</span></div>
+                             <div class="cell p-quantity">
+                                 <div class="quantity-form">
+                                     <a href="javascript:void(0);" class="decrement" index="@Html.Raw(product.ProductID)" >-</a>
+                                     <input type="text" class="quantity-text" autocomplete="off" value="@Html.Raw(product.Quantity)" id="@Html.Raw("quantity_" + product.ProductID)" index="@Html.Raw(product.ProductID)">
+                                     <a href="javascript:void(0);" class="increment" index="@Html.Raw(product.ProductID)">+</a>
+                                 </div>
+                             </div>
+                             <div class="cell p-inventory red14" >￥<span name="money" id="@Html.Raw("money_" + product.ProductID)">@Html.Raw(product.Subtotal)</span></div>
+                             <div class="cell p-remove"><a href="javascript:Del(@Html.Raw(product.ProductID))">删除</a><br /><a href="javascript:AddCollect(@Html.Raw(product.ProductID))">收藏</a></div>
+                             
+                         </div>
+                     }
+                     else
+                     {
+                         <div class="item_form" id="@Html.Raw("product_" + product.ProductID)">
+                             <div class="cell p-checkbox"><input style="display: none" class="checkbox" type="checkbox" checked="" name="proIds" value="@Html.Raw(product.ProductID)"></div>
+                             <div class="cell p-goods">
+                                 <div class="p-name"><a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))"  target="_blank"> @product.ProductName</a><span class="promise411" id="promise411_188078"></span></div>    
+                             </div>
+                             <div class="cell p-price">￥<span class="price" id="@Html.Raw("price_" + product.ProductID)">0</span></div>
+                             <div class="cell p-promotion"></div>
+                    
+                             <div class="cell p-quantity">
+                                 <span class="price" >1</span>
+                                 <input type="hidden" value="@Html.Raw(product.Quantity)" id="@Html.Raw("quantity_" + product.ProductID)" index="@Html.Raw(product.ProductID)">
+                             </div>
+                             <div class="cell p-inventory red14" >￥<span name="money">0</span></div>
+                             <!-- modi   fy-pre end  -->
+                         </div>
+                     }
+                    <!-- modi   fy-pre end  -->
+                }
+            </div>
+        }
+
+            @*// 组合促销*@
+        if (Model.SuitPromoteInfos != null)
+        {
+            foreach (var suitPromoteInfo in Model.SuitPromoteInfos)
+            {
+                <div class="item-meet">
+                    <div class="item-header">
+                        <div class="cell f-text">
+                            @if ((suitPromoteInfo.GiftCoupons != null && suitPromoteInfo.GiftCoupons.Count > 0) || (suitPromoteInfo.GiftProducts != null && suitPromoteInfo.GiftProducts.Count > 0))
+                            {
+                                <b> 满赠 </b>
+                            }
+                            else
+                            {
+                                <b> 满减 </b>
+                            }
+                            <span>@suitPromoteInfo.PromoteInfo</span>
+                        </div>
+                        <div class="cell t-price"></div>
+                        <div class="cell t-promotion"></div>
+            
+                        <div class="cell t-quantity"></div>
+                        <div class="cell f-text t-subtotal"><span class="red14">￥@(suitPromoteInfo.TotalPrice - suitPromoteInfo.PromoteDiscount)</span>@Html.Raw(suitPromoteInfo.PromoteDiscount > 0 ? "<i class='icon_bg'>已减" + suitPromoteInfo.PromoteDiscount + "元</i>" : "")</div> 
+                    </div>
+
+                    @if (suitPromoteInfo.Products != null)
+                    {
+                        foreach (var product in suitPromoteInfo.Products)
+                        {
+                            <div class="item_form" id="@Html.Raw("product_" + product.ProductID)">
+                                <div class="cell p-checkbox"><input class="checkbox" type="checkbox" checked="" name="proIds" value="@Html.Raw(product.ProductID)"></div>
+                                <div class="cell p-goods">
+                                    <div class="p-img"><a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))" target="_blank"><img src="@Html.Raw(Utils.GetProductImage(product.Path, "0"))" alt="@Html.Raw(product.ProductName)"></a></div>    
+                                    <div class="p-name"><a href="@Html.Raw(Utils.GetProductUrl(product.ProductID))"  target="_blank">@product.ProductName</a><span class="promise411" id="promise411_188078"></span></div>    
+                                </div>
+                                <div class="cell p-price">￥<span class="price" id="@Html.Raw("price_" + product.ProductID)">@product.GoujiuPrice</span></div>
+                                <div class="cell p-promotion"><span class="yh_icon">￥@product.FavorablePrice</span></div>
+                    
+                                <div class="cell p-quantity">
+                                    <div class="quantity-form">
+                                        <a href="javascript:void(0);" class="decrement" index="@Html.Raw(product.ProductID)" >-</a>
+                                        <input type="text" class="quantity-text" autocomplete="off" value="@Html.Raw(product.Quantity)" id="@Html.Raw("quantity_" + product.ProductID)" index="@Html.Raw(product.ProductID)">
+                                        <a href="javascript:void(0);" class="increment" index="@Html.Raw(product.ProductID)">+</a>
+                                    </div>
+                                </div>
+                                <div class="cell p-inventory red14" >￥<span name="money" id="@Html.Raw("money_" + product.ProductID)">@Html.Raw(product.Subtotal)</span></div>
+                                <div class="cell p-remove"><a href="javascript:Del(@Html.Raw(product.ProductID))">删除</a><br /><a href="javascript:AddCollect(@Html.Raw(product.ProductID))">收藏</a></div>
+                                <!-- modi   fy-pre end  -->
+                            </div>
+                        }
+
+                        if (suitPromoteInfo.GiftProducts != null)
+                        {
+                            foreach (var gift in suitPromoteInfo.GiftProducts)
+                            {
+                                <div class="item_form" id="@Html.Raw("product_" + gift.ProductID)">
+                                    <div class="cell p-checkbox"></div>
+                                    <div class="cell p-goods">
+                                        <div class="p-img"><a href="@Html.Raw(Utils.GetProductUrl(gift.ProductID))" target="_blank"><img src="@Html.Raw(Utils.GetProductImage(gift.Path, "0"))" alt="@Html.Raw(gift.ProductName)"></a></div>  
+                                        <div class="p-name"><a href="@Html.Raw(Utils.GetProductUrl(gift.ProductID))"  target="_blank">【赠品】@gift.ProductName</a><span class="promise411" id="promise411_188078"></span></div>    
+                                    </div>
+                                    <div class="cell p-price">￥<span class="price" id="@Html.Raw("price_" + gift.ProductID)">0</span></div>
+                                    <div class="cell p-promotion"></div>
+                    
+                                    <div class="cell p-quantity">
+                                        <span class="price" >@gift.Quantity</span>
+                                    </div>
+                                    <div class="cell p-inventory red14" >￥<span name="money">0</span></div>
+                                    <div class="cell p-remove"><a href="javascript:AddCollect(@Html.Raw(gift.ProductID))">收藏</a></div>
+                                    <!-- modi   fy-pre end  -->
+                                </div>
+                            }
+                        }
+
+                        if (suitPromoteInfo.GiftCoupons != null)
+                        {
+                            foreach (var gift in suitPromoteInfo.GiftCoupons)
+                            {
+                                <div class="item_form" id="@Html.Raw("product_" + gift.CouponID)">
+                                    <div class="cell p-checkbox"></div>
+                                    <div class="cell p-goods">
+                                        <div class="p-name">【赠券】@gift.CouponFaceValue 元购酒券（订单完成后自动发放）</div>    
+                                    </div>
+                                    <div class="cell p-price"></div>
+                                    <div class="cell p-promotion"><span class="yh_icon"></span></div>
+                    
+                                    <div class="cell p-quantity">
+                                        <span class="price" >@gift.CouponCount</span>
+                                    </div>
+                                    <div class="cell p-inventory red14" >￥<span name="money">0</span></div>
+                                    <div class="cell p-remove"></div>
+                                    <!-- modi   fy-pre end  -->
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            }
+        }
+
+    }
+
+
+    if (Model == null || ((Model.Products == null || Model.Products.Count < 1) && (Model.SuitPromoteInfos == null || Model.SuitPromoteInfos.Count < 1)))
+    {
+        <div id="cartEmpty" class="cart-empty">
+            <div align="center">您的购物车里什么也没有，赶紧去<a class="red14" href="@Html.Raw(ConstantParams.IndexUrl)">首页</a>挑几件吧~~</div>
+        </div>
+
+        <div class="cart-total clearfix">
+            <div class="cart-fl"><input autocomplete="off" disabled="disabled" class="toggle-checkboxes checkbox"  type="checkbox" checked="" value=""> <label>全选</label>  <a class="batchRemove" href="#">批量删除</a> <a href="#">继续购物</a></div>
+            <div class="cart-fr">
+                <span>已选商品<font id="proCount" class="red14">0</font>件</span>
+                <span><strong>总计（不含运费）：</strong></span>
+                <span class="red20">￥<span id="totalMoney">0</span></span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="cart-total clearfix">
+            <div class="cart-fl"><input autocomplete="off" class="toggle-checkboxes checkbox"  type="checkbox" checked="" value=""> <label>全选</label>  <a class="batchRemove" href="#">批量删除</a> <a href="#">继续购物</a></div>
+            <div class="cart-fr">
+                <span>已选商品<font id="proCount" class="red14">@Model.ProductCount</font>件</span>
+                <span><strong>总计（不含运费）：</strong></span>
+                <span class="red20">￥<span id="totalMoney">@(Model.TotalPrice - Model.TotalDiscount)</span></span>
+            </div>
+        </div>
+    }
+}

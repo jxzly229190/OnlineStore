@@ -1,0 +1,34 @@
+﻿@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.System
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID); 
+}
+@(Html.Kendo().Grid<LogModel>()
+    .Name("logGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(u => u.SessionID).Title("会话编码");
+        columns.Bound(u => u.UserName).Title("用户");
+        columns.Bound(u => u.Message).Title("日志消息");
+        columns.Bound(u => u.Action).Title("动作");
+        columns.Bound(u => u.Location).Title("位置");
+        columns.Bound(u => u.Level).Title("等级").ClientTemplate("#switch(Level){ case 1: #一般性信息# break; case 2: #调试# break; case 3: #警告# break; case 4: #一般错误# break; case 5: #严重错误# break; default: #未知# break; }#");
+        columns.Bound(u => u.CreateTime).Title("时间").Format("{0: yyyy-MM-dd hh:mm:ss}");
+        columns.Command(command => {
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("System.RemoveLog.Post"));
+        }).Width(100).Hidden(permissionObj.Hidden);
+    })
+    .Pageable()
+    .Scrollable()
+    .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+    .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(d => d.ID))
+    .Destroy(update => update.Action("RemoveLog", "System"))
+    .Read(read => read.Action("QueryLog", "System"))
+    )
+)

@@ -1,0 +1,114 @@
+﻿@using V5.Portal.Common
+@model V5.Portal.Models.UserCartModel
+@{
+    Layout = null;
+    var total = 0.00;
+    var count = 0;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的购物车</title>
+<link href="../../Content/base.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/Order/pub.css" rel="stylesheet" type="text/css" />
+    <script src="../../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="../../Scripts/Order/cmValidator.js" type="text/javascript"></script>
+    <script src="../../Scripts/Order/cart.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="header">
+	<div class="topbar">
+    	<ul>
+        	<li>欢迎twwkjh@126.com <a href="#">退出登录</a></li>
+            <li>用户中心 |</li>
+            <li>帮助中心</li>
+        </ul>
+    </div>
+    <div class="logo-cont">
+    	<span class="logo"><img src="../../Content/images/hd_logo.jpg" /></span>
+        <span class="flow bz1 "></span>
+    </div>
+</div>
+    <div class="cart">
+        <h2><b>我的购物车</b> <span>单笔订单满100元免运费（香港、澳门、台湾、钓鱼岛地区和拆分订单除外）</span></h2>
+        <div class="cart-inner">
+            <div class="cart-thead clearfix">
+                <div class="column t-checkbox form"><input autocomplete="off" id="toggle-checkboxes" type="checkbox" class="toggle-checkboxes checkbox" checked="" value=""><label for="toggle-checkboxes">全选</label></div>
+                <div class="column t-goods">商品</div>
+                <div class="column t-price">单价</div>
+                <div class="column t-promotion">优惠</div>
+            
+                <div class="column t-quantity">数量</div>
+                <div class="column t-subtotal">小计</div>
+                <div class="column t-action">操作</div>
+            </div>
+            <div class="cart-tbody">
+                <div class="item">
+                    @{
+                        if (Model != null && Model.ProductItems != null)
+                        {
+                            foreach (var item in Model.ProductItems)
+                            {
+                                <div class="item_form" id="@Html.Raw("product_"+item.ProductID)">
+                                    <div class="cell p-checkbox"><input autocomplete="off" class="checkbox" type="checkbox" checked="" name="proIds" value="@Html.Raw(item.ProductID)"></div>
+                                    <div class="cell p-goods">
+                                        <div class="p-img"><a href="@Html.Raw(ConstantParams.ProductUrl+"?ID="+ item.ProductID)" target="_blank"><img src="@Html.Raw(item.ProductPic)" alt="@Html.Raw(item.ProductName)"></a></div>    
+                                        <div class="p-name"><a href="@Html.Raw(ConstantParams.ProductUrl+"?ID="+ item.ProductID)"  target="_blank">@item.ProductName</a><span class="promise411" id="promise411_188078"></span></div>    
+                                    </div>
+                                    <div class="cell p-price">￥<span class="price" id="@Html.Raw("price_" + item.ProductID)">@item.GoujiuPrice</span></div>
+                                    <div class="cell p-promotion"><span class="yh_icon">￥@item.Discount</span></div>
+                    
+                                    <div class="cell p-quantity">
+                                        <div class="quantity-form">
+                                            <a href="javascript:void(0);" class="decrement" index="@Html.Raw(item.ProductID)" >-</a>
+                                            <input type="text" class="quantity-text" autocomplete="off" value="@Html.Raw(item.Quantity)" id="@Html.Raw("quantity_" + item.ProductID)" index="@Html.Raw(item.ProductID)">
+                                            <a href="javascript:void(0);" class="increment" index="@Html.Raw(item.ProductID)">+</a>
+                                        </div>
+                                    </div>
+                                    <div class="cell p-inventory red14" >￥<span name="money" id="@Html.Raw("money_"+item.ProductID)">@Html.Raw(item.TotalMoney)</span></div>
+                                    <div class="cell p-remove"><a href="javascript:Del(@Html.Raw(item.ProductID))">删除</a><br /><a href="javascript:Collect(@Html.Raw(item.ProductID))">收藏</a></div>
+                                    <!-- modify-pre end  -->
+                                </div>
+                                total += (item.Quantity * item.GoujiuPrice - item.Discount);
+                                count += item.Quantity;
+                            }
+                        }
+                    }
+                </div>
+                <div id="cartEmpty" class="cart-empty">
+                    <div align="center">您的购物车里什么也没有，赶紧去<a class="red14" href="@Html.Raw(ConstantParams.IndexUrl)">首页</a>挑几件吧~~</div>
+                </div>
+
+                <div class="cart-total clearfix">
+                    <div class="cart-fl"><input autocomplete="off" class="toggle-checkboxes checkbox"  type="checkbox" checked="" value=""> <label>全选</label>  <a class="batchRemove" href="#">批量删除</a> <a href="#">继续购物</a></div>
+                    <div class="cart-fr">
+                        <span>已选商品<font id="proCount" class="red14">@count</font>件</span>
+                        <span><strong>总计（不含运费）：</strong></span>
+                        <span class="red20">￥<span id="totalMoney">@total</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cart-button clearfix">
+            <a class="btn continue" href="javascript:Back();"><span class="btn-text">继续购物</span></a>
+            <a class="checkout" href="javascript:;" id="toSettlement"><b></b></a>
+        </div>
+    </div>
+<div class="clear"></div>
+<div class="jiagou">
+	<h4><b class="on" name="jiagou">加价购</b></h4>
+    <div class="jg-cont">
+    	@Html.Action("Trinket","Cart",new{count=5})
+    </div>
+</div>
+<div class="jiagou">
+	<h4><b class="on" name="jiagou">猜您喜欢</b></h4>
+    <div class="jg-cont">
+    	@Html.Action("Trinket","Cart",new{count=5})
+    </div>
+</div>
+</body>
+</html>

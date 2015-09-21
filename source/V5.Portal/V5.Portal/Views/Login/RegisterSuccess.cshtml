@@ -1,0 +1,79 @@
+﻿@using V5.Portal.Common
+@using V5.Portal.Controllers
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">       
+    <head>    
+        <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+        <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        @Styles.Render("~/Content/base.css")
+        @Styles.Render("~/Content/register.css")
+        @Styles.Render("~/Content/register_success.css")
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo"><a href="@V5.Portal.Common.ConstantParams.IndexUrl" title="购酒网"></a></div>
+            <div class="main shadow">
+                <label class="info">恭喜，@Html.Raw(ViewBag.LoginName)已注册成功<a href="/Index.htm" class="button">立即购物</a></label>
+                <label class="back"><em id="second">5</em>秒后前往首页</label>
+                <a href="http://www.gjw.com/Home/LandingPage/65.html" title="" class="adv_link"><img src="../../Content/images/banner.jpg" alt="" /></a>
+            </div>
+            <div class="foot">
+                <div>
+                    <a href="/Home/Help/24.html" title="关于我们">关于我们</a>|<a href="/Home/Help/26.html" title="联系我们">联系我们</a>|<a href="/Home/Help/25.html" title="人才招聘">人才招聘</a>|<a href="/Home/Help/27.html" title="隐私声明">隐私声明</a>|<a href="@Html.Raw(ConstantParams.HelpUrl)" title="帮助中心">帮助中心</a>|<a href="/Home/Help/28.html" title="友情链接">友情链接</a>
+                </div>
+                <div>Copyright&copy;2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</div>
+            </div>
+        </div>
+         @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+        <!-- GA跟踪代码 -->
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42350784-1']);
+    _gaq.push(['_setDomainName', '.gjw.com']);
+    _gaq.push(['_setAllowHash', false]);
+    _gaq.push(['_addOrganic', 'baidu', 'word']);
+    _gaq.push(['_addOrganic', 'sogou', 'query']);
+    _gaq.push(['_addOrganic', 'm.sogou.com', 'keyword']);
+    _gaq.push(['_addOrganic', 'glb.uc.cn', 'keyword']);
+    _gaq.push(['_addOrganic', 'wap.soso.com', 'key']);
+    _gaq.push(['_addOrganic', 'm.yisou.com', 'q']);
+    _gaq.push(['_addOrganic', 'm.baidu.com', 'word']);
+    _gaq.push(['_addOrganic', 'soso', 'w']);
+    _gaq.push(['_addOrganic', 'yodao', 'q']);
+    _gaq.push(['_addOrganic', 'so.com', 'q']);
+    _gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+    _gaq.push(['_addOrganic', 'image.baidu.com', 'word']);
+    _gaq.push(['_addIgnoredOrganic', 'gjw.com']);
+    _gaq.push(['_addIgnoredOrganic', 'www.gjw.com']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_trackPageLoadTime']);
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+<!-- 百度跟踪代码 -->
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff45b9c2a3772066fdf84b38506d4920f' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+        <script>
+            $(function () {
+                var i = 0;
+                setInterval(function () {
+                    if (i == 5) {
+                        window.location = "/";
+                    } else {
+                        $("#second").html(5 - i);
+                        i++;
+                    }
+                }, 1000);
+            });
+        </script>
+    </body>
+</html>

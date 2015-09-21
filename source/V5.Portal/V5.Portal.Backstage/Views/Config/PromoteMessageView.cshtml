@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "PromoteMessage";
+}
+<script type="text/javascript" src="../../Content/ckeditor/ckeditor.js"></script>
+<script src="../../Scripts/Backstage/Configuration/Configuration.Page.js" type="text/javascript"></script>
+@using V5.DataContract.Configuration
+@(Html.Kendo().Grid<Config_Page>()
+        .Name("newannouncementGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("标题");
+        columns.Bound(p => p.CreateTime).Title("创建时间").Format("{0:yyyy-MM-dd}");
+        columns.Template(e => { }).ClientTemplate("<input type='button' class='k-button' value='编辑' onclick='ShowWindow(#=ID#)'/><input type='button' class='k-button' value='删除' onclick='deleteRow(#=ID#)'/>").Title("操作").HtmlAttributes(new { Style = "algin:center" }).Width(170);
+    })
+    .ToolBar(tool => tool.Template("<input type='button' class='k-button' value='添加' onclick='ShowWindow(-2)'/>"))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .HtmlAttributes(new { style = "height:450px;" })
+    .Pageable()
+    .Scrollable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Read(read => read.Action("PromoteMessage", "Config"))
+            .Update(update => update.Action("ModifyContent", "Config"))
+                .Create(create => create.Action("InsertPromoteMessage", "Config"))
+        .Destroy(update => update.Action("DeleteRow", "Config"))
+    )
+      )
+<input type="hidden" id="hdIAnnId" value="" />
+<input type="hidden" id="hdType" value="2" />
+<input type="hidden" id="hdPid" value="31" />
+<div id="AnnounceWindow" style="display: none;">
+    <div id="newContent" style="width: 780px; height: 50px;">
+        <div style="margin-left: 20px; float: left">
+            标题:
+            <input type="text" class="k-textbox" style="width: 320px; margin-top: 5px;" value=""
+                id="annName" />
+        </div>
+        <div style="margin-left: 20px; float: right">
+            位置：
+            <input type="text" class="k-textbox" style="width: 320px; margin-top: 5px;" value="最新公告" />
+        </div>
+    </div>
+    <div style="width: 780px; margin-bottom: 10px;">
+        <input type="text" id="Ckeditannouncement" />
+    </div>
+    <div style="padding-top: 10px;">
+        <hr />
+        <input type="button" value="确定" class="k-button" onclick="onClose()" style="margin-left: 330px;" />
+        <input type="button" value="取消" class="k-button" onclick="onCancel()" style="margin-left: 10px;" />
+    </div>
+</div>

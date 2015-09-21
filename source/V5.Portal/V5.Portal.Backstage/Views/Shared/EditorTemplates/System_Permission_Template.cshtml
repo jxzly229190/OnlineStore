@@ -1,0 +1,9 @@
+﻿@model V5.Portal.Backstage.Models.System.PermissionModel
+@Html.ValidationSummary(true)
+<div class="editor-label">
+    权限名称：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>

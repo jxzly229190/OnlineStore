@@ -1,0 +1,551 @@
+﻿@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Models.Promote
+@(Html.Kendo().TabStrip()
+    .Name("tabStrip")
+    .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+    .Items(items =>
+        {
+            items.Add().Selected(true).Text("多瓶装促销列表").Content(@<text>
+<div>
+    <form action="">
+    <div>
+        <span>活动开始时间: </span><span>@Html.Kendo().DateTimePicker().Name("promoteStartStartTime").HtmlAttributes(new { @style = "width: 180px" })
+            至 @Html.Kendo().DateTimePicker().Name("promoteStartEndTime").HtmlAttributes(new { @style = "width: 180px" })</span>
+        <span>活动名称:</span> <span>
+            <input type="text" class="k-textbox" id="promoteName" style="width: 180px" /></span>
+    </div>
+    <div style="margin-top: 3px;margin-bottom: 5px;">
+        <span>活动结束时间:</span> <span>@Html.Kendo().DateTimePicker().Name("promoteEndStartTime").HtmlAttributes(new { @style = "width: 180px" })
+            至 @Html.Kendo().DateTimePicker().Name("promoteEndEndTime").HtmlAttributes(new { @style = "width: 180px" })</span>
+        <span style="margin-left: 55px;">
+            <input type="button" class="k-button" value="搜索" onclick="searchMuchBottled()"style="width: 80px; height: 30px" /></span>
+        <span>
+            <input type="reset" class="k-button" style="width: 80px; height: 30px" /></span>
+    </div>
+    </form>
+</div>
+@(Html.Kendo().Grid<PromoteMuchBottledModel>().Name("promoteMuchBottleGrid").Columns(columns =>
+                                                                          {
+                                                                              columns.Bound(p => p.Name).Title("活动名称").Width(150);
+                                                                              columns.Bound(p => p.ProductName).Title("商品名称").Width(160);
+                                                                              columns.Bound(p => p.GoujiuPrice).Title("商品单价").Width(160);
+                                                                              columns.Bound(p => p.StartTime).Title("开始日期").Width(100).Format("{0:yyyy-MM-dd}");
+                                                                              columns.Bound(p => p.EndTime).Title("结束日期").Width(100).Format("{0:yyyy-MM-dd}");
+                                                                              columns.Bound(p => p.CreateTime).Title("创建时间").Width(100).Format("{0:yyyy-MM-dd}");
+                                                                              columns.Bound(p => p.ID).ClientTemplate("<input type='button' class='k-button' name='#= ID#' value='修改' onclick='ModifyMuchBottled(this)' id='detail_#= ID #'/>").Width(150).Title("操作");
+                                                                          }).Scrollable().Pageable().ClientDetailTemplateId("SubTemplate1").HtmlAttributes(new { style = "height:460px;" }).DataSource(dataSource => dataSource.Ajax().PageSize(10).Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Read(read => read.Action("QueryMuchBottled", "Promote").Data("MuchBottledSearchData"))))
+</text>);
+            items.Add().Text("设置多瓶装促销").Content(@<text>
+<div>
+    <h3>
+        选择宝贝</h3>
+    <div id="select_Product">
+        <div id="SerchProduct">
+            商品名称：<input id="ProductName" type="text" class="k-textbox" />
+            商品编码：<input id="ProductBarcode" type="text" class="k-textbox" />
+            <input type="button" class="k-button" value="查询" onclick=" SearchProduct() " />
+        </div>
+        @(Html.Kendo().Grid<ProductModel>().Name("ProductGrid").Columns(columns =>
+                                                                   {
+                                                                       columns.Template(e => { }).ClientTemplate("<input type='radio' onchange='CheckProduct()' name='selectproduct' value='#: ID#'/>").Width(10);
+                                                                       columns.Bound(p => p.Name).Width(100).Title("商品名称");
+                                                                       columns.Bound(p => p.GoujiuPrice).Width(100).Title("价格");
+                                                                       columns.Bound(p => p.InventoryNumber).Width(100).Title("库存");
+                                                                       columns.Bound(p => p.Status).Width(100).Title("状态");
+                                                                       columns.Bound(p => p.CreateTime).Width(100).Format("{0:yyyy-MM-dd}").Title("最新上架时间");
+                                                                   }).Pageable(pageable => pageable.ButtonCount(5)).Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple)).Navigatable().DataSource(dataSource => dataSource.Ajax().PageSize(10).Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData")))
+                                                                   )
+    </div>
+    <div>
+        <input type="hidden" id="gjwprice" name="gjwprice" />
+    </div>
+    <div id="divProperty">
+        <h3>
+            设置多瓶装促销</h3>
+        <div>
+            <table style="width: 860px;">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">
+                            套装属性
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            数量
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            促销价
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            总价
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            优惠金额
+                        </th>
+                        <th width="20%" style="text-align: center">
+                            上传缩略图
+                        </th>
+                        <th width="15%" style="text-align: center; height: 30px">
+                            是否默认显示
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="property1" name="property" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("num1").Min(0).HtmlAttributes(new { style = "width:100px;", name = "num", onblur = "BottledTotalPrice(1)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("price1").Min(0).HtmlAttributes(new { style = "width:100px;", name = "price", onblur = "BottledTotalPrice(1)" })
+                        </td>
+                        <td>
+                            ￥<span id="totalPrice1">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="favorablePrice1">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("Picture1").HtmlAttributes(new { name = "Picture", style = "width:50px;" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("onSuccess1")).Multiple(false))
+                            <input type="hidden" id="hifPic1" name="hifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" checked="checked" id="isDefault1" name="isDefault" value="1" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" CleanerMuchButtled(1) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="property2" name="property" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("num2").Min(0).HtmlAttributes(new { style = "width:100px;", name = "num", onblur = "BottledTotalPrice(2)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("price2").Min(0).HtmlAttributes(new { style = "width:100px;", name = "price", onblur = "BottledTotalPrice(2)" })
+                        </td>
+                        <td>
+                            ￥<span id="totalPrice2">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="favorablePrice2">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("Picture2").HtmlAttributes(new { name = "Picture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("onSuccess2")).Multiple(false))
+                            <input type="hidden" id="hifPic2" name="hifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="isDefault2" name="isDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" CleanerMuchButtled(2) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="property3" name="property" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("num3").Min(0).HtmlAttributes(new { style = "width:100px;", name = "num", onblur = "BottledTotalPrice(3)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("price3").Min(0).HtmlAttributes(new { style = "width:100px;", name = "price", onblur = "BottledTotalPrice(3)" })
+                        </td>
+                        <td>
+                            ￥<span id="totalPrice3">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="favorablePrice3">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("Picture3").HtmlAttributes(new { name = "Picture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("onSuccess3")).Multiple(false))
+                            <input type="hidden" id="hifPic3" name="hifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="isDefault3" name="isDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" CleanerMuchButtled(3) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="property4" name="property" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("num4").Min(0).HtmlAttributes(new { style = "width:100px;", name = "num", onblur = "BottledTotalPrice(4)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("price4").Min(0).HtmlAttributes(new { style = "width:100px;", name = "price", onblur = "BottledTotalPrice(4)" })
+                        </td>
+                        <td>
+                            ￥<span id="totalPrice4">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="favorablePrice4">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("Picture4").HtmlAttributes(new { name = "Picture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("onSuccess4")).Multiple(false))
+                            <input type="hidden" id="hifPic4" name="hifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="isDefault4" name="isDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" CleanerMuchButtled(4) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="property5" name="property" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("num5").Min(0).HtmlAttributes(new { style = "width:100px;", name = "num", onblur = "BottledTotalPrice(5)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("price5").Min(0).HtmlAttributes(new { style = "width:100px;", name = "price", onblur = "BottledTotalPrice(5)" })
+                        </td>
+                        <td>
+                            ￥<span id="totalPrice5">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="favorablePrice5">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("Picture5").HtmlAttributes(new { name = "Picture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("onSuccess5")).Multiple(false))
+                            <input type="hidden" id="hifPic5" name="hifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="isDefault5" name="isDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" CleanerMuchButtled(5) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="property6" name="property" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("num6").Min(0).HtmlAttributes(new { style = "width:100px;", name = "num", onblur = "BottledTotalPrice(6)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("price6").Min(0).HtmlAttributes(new { style = "width:100px;", name = "price", onblur = "BottledTotalPrice(6)" })
+                        </td>
+                        <td>
+                            ￥<span id="totalPrice6">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="favorablePrice6">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("Picture6").HtmlAttributes(new { name = "Picture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("onSuccess6")).Multiple(false))
+                            <input type="hidden" id="hifPic6" name="hifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="isDefault6" name="isDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" CleanerMuchButtled(6) ">清除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            设置促销内容</h3>
+        <table>
+            <tr>
+                <td>
+                    活动名称：
+                </td>
+                <td>
+                    <input id="muchBottledName" type="text" class="k-textbox" />
+                </td>
+                <td>
+                    <input type="checkbox" id="chk_PayOnline" />仅限在线支付
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    活动有效时间：
+                </td>
+                <td>
+                    @Html.Kendo().DatePicker().Name("StartTime")
+                    至
+                    @Html.Kendo().DatePicker().Name("EndTime")
+                </td>
+                <td>
+                    <input type="checkbox" id="chk_ShowTime" />是否显示时间
+                </td>
+            </tr>
+        </table>
+        <input type="button" class="k-button" value="确认添加" onclick=" AddMuchBottled() " />
+    </div>
+</div>
+</text>);
+        })
+)
+<script id="SubTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<PromoteMuchBottledRuleModel>().Name("muchBottledRuleGird_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.Name).Width(120).Title("属性名称");
+                  columns.Bound(p => p.Quantity).Width(50).Title("数量");
+                  columns.Bound(p => p.UnitPrice).Width(100).Title("多瓶装单价");
+                  columns.Bound(p => p.DiscountAmount).Width(100).Title("优惠总金额").HtmlAttributes(new { @style = "color: red" });
+                  columns.Bound(p => p.TotalMoney).Width(100).Title("多瓶装总价");
+              })
+          .Scrollable()
+          .Pageable()
+          .HtmlAttributes(new { style = "height:220px;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(5)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Model(model => model.Id(p => p.ID))
+                                        .Read(read => read.Action("QueryMuchBottledRule", "Promote", new { muchBottledID = "#=ID#" }))
+          ).ToClientTemplate()
+          )
+</script>
+<div id="UpdateMuchBottled" style="display: none">
+    <h3>
+        选择宝贝</h3>
+    <div id="info_Product">
+        <div>
+            <h3>
+                设置促销内容</h3>
+            <table>
+                <tr>
+                    <td>
+                        活动名称：
+                    </td>
+                    <td>
+                        <input type="hidden" id="UpdatePromoteID" />
+                        <span id="UpdatePromoteName"></span>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="Updatechk_PayOnline" />仅限在线支付
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        商品名称：
+                    </td>
+                    <td>
+                        <input type="hidden" id="UpdateProductID" />
+                        <span id="UpdateProductName"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        活动有效时间：
+                    </td>
+                    <td>
+                        @Html.Kendo().DatePicker().Name("UpdateStartTime").HtmlAttributes(new { @style = "width: 100px" })
+                    </td>
+                    <td style="text-align: center">
+                        至
+                    </td>
+                    <td>
+                        @Html.Kendo().DatePicker().Name("UpdateEndTime").HtmlAttributes(new { @style = "width: 100px" })
+                    </td>
+                    <td style="text-align: right">
+                        <input type="checkbox" id="Updatechk_ShowTime" />是否显示时间
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <input type="hidden" id="Updategjwprice" name="Updategjwprice" />
+    </div>
+    <div id="UpdateProperty">
+        <h3>
+            设置多瓶装促销</h3>
+        <div>
+            <table style="width: 1000px;">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">
+                            套装属性
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            数量
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            促销价
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            总价
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            优惠金额
+                        </th>
+                        <th width="30%" style="text-align: center">
+                            上传缩略图
+                        </th>
+                        <th width="15%" style="text-align: center">
+                            是否默认显示
+                        </th>
+                        <th width="10%" style="text-align: center">
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="Updateproperty1" name="Updateproperty" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("Updatenum1").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updatenum", onblur = "UpdateBottledTotalPrice(1)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("Updateprice1").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updateprice", onblur = "UpdateBottledTotalPrice(1)" })
+                        </td>
+                        <td>
+                            ￥<span id="UpdatetotalPrice1">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="UpdatefavorablePrice1">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("UpdatePicture1").HtmlAttributes(new { name = "UpdatePicture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("UpdateonSuccess1")).Multiple(false))
+                            <input type="hidden" id="UpdatehifPic1" name="UpdatehifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" checked="checked" id="UpdateisDefault1" name="UpdateisDefault"
+                                value="1" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" UpdateCleanerMuchButtled(1) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="Updateproperty2" name="Updateproperty" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("Updatenum2").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updatenum", onblur = "UpdateBottledTotalPrice(2)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("Updateprice2").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updateprice", onblur = "UpdateBottledTotalPrice(2)" })
+                        </td>
+                        <td>
+                            ￥<span id="UpdatetotalPrice2">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="UpdatefavorablePrice2">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("UpdatePicture2").HtmlAttributes(new { name = "UpdatePicture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("UpdateonSuccess2")).Multiple(false))
+                            <input type="hidden" id="UpdatehifPic2" name="UpdatehifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="UpdateisDefault2" name="UpdateisDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" UpdateCleanerMuchButtled(2) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="Updateproperty3" name="Updateproperty" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("Updatenum3").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updatenum", onblur = "UpdateBottledTotalPrice(3)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("Updateprice3").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updateprice", onblur = "UpdateBottledTotalPrice(3)" })
+                        </td>
+                        <td>
+                            ￥<span id="UpdatetotalPrice3">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="UpdatefavorablePrice3">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("UpdatePicture3").HtmlAttributes(new { name = "UpdatePicture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("UpdateonSuccess3")).Multiple(false))
+                            <input type="hidden" id="UpdatehifPic3" name="UpdatehifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="UpdateisDefault3" name="UpdateisDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" UpdateCleanerMuchButtled(3) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="Updateproperty4" name="Updateproperty" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("Updatenum4").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updatenum", onblur = "UpdateBottledTotalPrice(4)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("Updateprice4").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updateprice", onblur = "UpdateBottledTotalPrice(4)" })
+                        </td>
+                        <td>
+                            ￥<span id="UpdatetotalPrice4">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="UpdatefavorablePrice4">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("UpdatePicture4").HtmlAttributes(new { name = "UpdatePicture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("UpdateonSuccess4")).Multiple(false))
+                            <input type="hidden" id="UpdatehifPic4" name="UpdatehifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="UpdateisDefault4" name="UpdateisDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" UpdateCleanerMuchButtled(4) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="Updateproperty5" name="Updateproperty" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("Updatenum5").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updatenum", onblur = "UpdateBottledTotalPrice(5)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("Updateprice5").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updateprice", onblur = "UpdateBottledTotalPrice(5)" })
+                        </td>
+                        <td>
+                            ￥<span id="UpdatetotalPrice5">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="UpdatefavorablePrice5">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("UpdatePicture5").HtmlAttributes(new { name = "UpdatePicture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("UpdateonSuccess5")).Multiple(false))
+                            <input type="hidden" id="UpdatehifPic5" name="UpdatehifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="UpdateisDefault5" name="UpdateisDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" UpdateCleanerMuchButtled(5) ">清除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="k-textbox" id="Updateproperty6" name="Updateproperty" style="margin: 5px 0;" />
+                        </td>
+                        <td>@Html.Kendo().IntegerTextBox().Name("Updatenum6").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updatenum", onblur = "UpdateBottledTotalPrice(6)" })
+                        </td>
+                        <td>@Html.Kendo().NumericTextBox().Name("Updateprice6").Min(0).HtmlAttributes(new { style = "width:100px;", name = "Updateprice", onblur = "UpdateBottledTotalPrice(6)" })
+                        </td>
+                        <td>
+                            ￥<span id="UpdatetotalPrice6">0.00</span>
+                        </td>
+                        <td style="color: red">
+                            ￥<span id="UpdatefavorablePrice6">0.00</span>
+                        </td>
+                        <td>
+                            @(Html.Kendo().Upload().Name("UpdatePicture6").HtmlAttributes(new { name = "UpdatePicture" }).Async(a => a.Save("SavePicture", "Promote").Remove("RemovePicture", "Promote").AutoUpload(true)).Events(e => e.Success("UpdateonSuccess6")).Multiple(false))
+                            <input type="hidden" id="UpdatehifPic6" name="UpdatehifPic" />
+                        </td>
+                        <td>
+                            <input type="radio" id="UpdateisDefault6" name="UpdateisDefault" value="0" />
+                        </td>
+                        <td style="text-align: left">
+                            <a href="javascript:void(0)" onclick=" UpdateCleanerMuchButtled(6) ">清除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="button" class="k-button" value="确认添加" onclick=" UpdateMuchBottled() " />
+    <input type="button" class="k-button" parent="promote" name="muchBottled" value="关闭"
+        onclick="ShowPartialView(this)" />
+</div>

@@ -1,0 +1,79 @@
+﻿@using V5.Portal.Common
+@using V5.Portal.Controllers
+@{
+    ViewBag.Title = "购酒网-登录";
+    Layout = null;
+    var adv = new HomeController().GetAdvertiseHtml("background-image:url('$ImagePath$')", "id=818");
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">       
+    <head>    
+        <title>购酒网-最好最专业的买酒网,白酒、进口红酒、葡萄酒、洋酒、黄酒、啤酒等正品特价官方商城</title>
+        <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="dns-prefetch" href="//img0.gjw.com" />
+        <link rel="dns-prefetch" href="//v.behe.com" />
+        <link rel="dns-prefetch" href="//rtb.behe.com" />
+        <link rel="dns-prefetch" href="//stats.g.doubleclick.net" />
+        <link rel="dns-prefetch" href="//hm.baidu.com" />
+        <link rel="dns-prefetch" href="//g.tbcdn.cn" />
+        @Styles.Render("~/Content/base.css")
+        @Styles.Render("~/Content/login.css")
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo"><a href="@V5.Portal.Common.ConstantParams.IndexUrl" title="购酒网"></a></div>
+            <div class="main shadow" style="@adv">
+                <div class="login">
+                    <form id="loginForm" method="post" onsubmit="return false;">
+                        <ul>
+                            <li class="uname"><label>邮箱/用户名/已验证手机:</label><input type="text" class="txt" id="uname" name="n"/></li>
+                            <li class="upwd"><label>密码:</label><input type="password" class="txt" id="upwd" name="p" /></li>
+                            <li class="validate"><input type="text" class="txt" id="authcode" name="v"/><img id="SecurityCodeImg" src="" alt=""><span>看不清?<a id="replace_img" href="javascript:void(0);">换一张</a></span></li>
+                            <li class="auto"><input type="checkbox" id="auto_chk" name="a"/><label>两周内自动登录</label><a href="/Login/FindPassword">忘记密码?</a></li>
+                            <li class="button"><input type="button" id="loginsubmit"/></li>
+                            <li class="other" style="display: none"><label>使用合作网站登录</label>
+                                @Html.ActionLink("支付宝", "OAuthLogin", new { type = "taobao" }, new { @class = "a_taobao" })
+                                @Html.ActionLink("新浪微博", "OAuthLogin", new { type = "sina" }, new { @class = "a_sina" })
+                                @Html.ActionLink("人人网", "OAuthLogin", new { type = "renren" }, new { @class = "a_renren" })                                
+                                @Html.ActionLink("腾讯QQ", "OAuthLogin", new { type = "qq" }, new { @class = "a_qq" })
+                                @Html.ActionLink("开心网", "OAuthLogin", new { type = "kaixin" }, new { @class = "a_kaixin" })
+                                @Html.ActionLink("网易微博", "OAuthLogin", new { type = "163" }, new { @class = "a_163" })
+                                @Html.ActionLink("搜狐网", "OAuthLogin", new { type = "sohu" }, new { @class = "a_sohu" })
+                                @Html.ActionLink("豆瓣网", "OAuthLogin", new { type = "douban" }, new { @class = "a_douban" })
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            <div class="register"><a href="/Login/Register"></a></div>
+            <div class="foot">
+                <div>
+                    <a href="/Home/Help/24.html" title="关于我们">关于我们</a>|<a href="/Home/Help/26.html" title="联系我们">联系我们</a>|<a href="/Home/Help/25.html" title="人才招聘">人才招聘</a>|<a href="/Home/Help/27.html" title="隐私声明">隐私声明</a>|<a href="@Html.Raw(ConstantParams.HelpUrl)" title="帮助中心">帮助中心</a>|<a href="/Home/Help/28.html" title="友情链接">友情链接</a>
+                </div>
+                <div>Copyright&copy;2009-2013 gjw.com, All Rights Reserved 上海购酒网电子商务有限公司 版权所有</div>
+            </div>
+        </div>
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/jquery.cookie.js")
+    @Scripts.Render("~/Scripts/Login/Barrett.js")
+    @Scripts.Render("~/Scripts/Login/BigInt.js")
+    @Scripts.Render("~/Scripts/Login/jQuery.md5.js")
+    @Scripts.Render("~/Scripts/Login/RSA.js")
+    @Scripts.Render("~/Scripts/Login/login.js")
+    <script type="text/javascript">
+        $(function () {
+            loginIn.init();
+        });
+
+        $(function () {
+            $(".txt").each(function () {
+                $(this).focus(function () {
+                    $(this).addClass("cur");
+                }).blur(function () {
+                    $(this).removeClass("cur");
+                });
+            });
+        });
+    </script>
+    </body>
+</html>

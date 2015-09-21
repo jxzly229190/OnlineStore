@@ -1,0 +1,62 @@
+﻿@using V5.Portal.Backstage.Controllers.Home
+@using V5.Portal.Backstage.Models.Transact.Order
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var siteUrl = new HomeController().GetSiteUrl(); 
+}
+
+@(Html.Kendo().Grid<OrderModel>().Name("invalidOrderGird")
+                        .Columns(columns =>
+                            {
+                                columns.Bound(c => c.OrderCode).Title("订单编号").Width(120).ClientTemplate("<a target='_blank' href='/Transact/QueryOrderDetails?orderID=#=ID#'>#=OrderCode#</a>");
+                                columns.Bound(c => c.CreateTime).Title("下单时间").Format("{0:yyyy/MM/dd HH:mm:ss}").Width(150);
+                                columns.Bound(c => c.TotalAmount).Format("{0:c}").Title("总金额(含运费)").Format("{0:c}").Width(100);
+                                columns.Bound(c => c.PaymentMethodName).Title("支付方式").Width(65);
+                                columns.Bound(c => c.PaymentStatusName).Title("支付状态").Width(70);
+                                columns.Bound(c => c.UserName).Title("会员").Width(80).ClientTemplate("#if(UserName){#<a target='_blank' href='/user/detail/#=UserID#'>#= UserName #</a>#}else{#<a target='_blank' href='/user/detail/#=UserID#'>未知</a>#}#");
+                                columns.Bound(c => c.Consignee).Title("收货人").Width(60);
+                                columns.Bound(c => c.CpsName).Title("来源").Width(40);
+                                columns.Bound(c => c.OrderNumber).Title("原单号").Width(145);
+                                columns.Command(command =>
+                                {
+                                    command.Custom("ViewDetails").Text("详情").Click("showDetails").HtmlAttributes(permissionObj.GetDisplayAttribute("QueryOrderDetails", "Transact", "Get",true)); ;
+                                }).Title("操作").Width(80).Title("操作").Hidden(permissionObj.Hidden);
+                            })
+                        .Scrollable()
+                        .Selectable().Resizable(re=>re.Columns(true))
+                            .Pageable()
+                                .ClientDetailTemplateId("invalid")
+                            .HtmlAttributes(new { style = "height:450px;" })
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(10)
+                                .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+                                .Model(model => model.Id(c => c.ID))
+                                .Read(read => read.Action("QueryInvalidOrders", "Transact").Data("GetOrderData"))
+                                    )
+          )
+      
+       <script id="invalid" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<OrderProductModel>().Name("orderInvalidProductGrid_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.ID).Width(50).Title("商品编码");
+                  columns.Bound(p => p.Barcode).Width(80).Title("商品条形码");
+                  columns.Bound(p => p.ProductName).Width(150).Title("商品名称").ClientTemplate("<a href=\"" + siteUrl + "/Product/Item-id-\\#=ProductID\\#.htm\" target=\"_blank\" title=\\#=ProductName \\# target=\"_blank\" >\\#=ProductName \\#</a>");
+                  columns.Bound(p => p.Quantity).Width(150).Title("数量");
+                  columns.Bound(p => p.TransactPrice).Format("{0:c}").Width(80).Title("成交单价");
+                  columns.Bound(p => p.TotalPrice).Format("{0:c}").Width(50).Title("金额");
+              })
+          .Selectable()
+          .Scrollable()
+          .HtmlAttributes(new { style = "height:250px;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Model(model => model.Id(d => d.ID))
+                                        .Read(read => read.Action("QueryOrderProductByOrderId", "transact", new { orderId = "#=ID#",abc="123" }))
+          ).ToClientTemplate()
+    )
+</script>

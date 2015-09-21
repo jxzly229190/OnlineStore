@@ -1,0 +1,35 @@
+﻿@using V5.Portal.Backstage.Models.Configuration;
+@using V5.Portal.Backstage.Utils
+@{
+    ViewBag.Title = "发票管理";
+    var permissionObj = new PermissionUtility(this.Context.Session.SessionID);
+}
+@(Html.Kendo().Grid<ConfigInvoiceContentModel>().Name("configInvoiceContentGird")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("名称").Width(80);
+        columns.Bound(p => p.Description).Width(200).Title("描述");
+        columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(160).Title("创建时间");
+        columns.Command(command =>
+        {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyInvoiceContent", "Config", "Post", true));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("RemoveInvoiceContent", "Config", "Post", true));
+        }).Width(160).Hidden(permissionObj.Hidden);
+    })
+                .ToolBar(toolbar => toolbar.Create().Text("添加发票").HtmlAttributes(permissionObj.GetDisplayAttribute("AddInvoiceContent", "Config", "Post", false))).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Invoice_Content_Template").Window(edit => edit.Title("编辑")))
+    .Scrollable()
+    .Selectable()
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:450px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(p => p.ID))
+        .Read(read => read.Action("QueryInvoiceContent", "Config"))
+            .Create(create => create.Action("AddInvoiceContent", "Config").Data("createData"))
+            .Update(update => update.Action("ModifyInvoiceContent", "Config").Data("EditData"))
+        .Destroy(destory => destory.Action("RemoveInvoiceContent", "Config"))
+    )
+
+)

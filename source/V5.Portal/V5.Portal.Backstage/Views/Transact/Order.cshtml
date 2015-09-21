@@ -1,0 +1,63 @@
+﻿@using NPOI.HSSF.Util
+@using V5.Portal.Backstage.Models.Transact.Order
+@model V5.Portal.Backstage.Models.Transact.Order.OrderSearchModel
+@{
+    ViewBag.Title = "订单管理";
+}
+<style type="text/css">
+    input
+    {
+        margin-left: 10px;
+    }
+</style>
+<div id="divEditOrder" style="display: none">
+</div>
+<div id="divOrderInfo" style="display: block">
+    <div class="search-box">
+        <form>
+        <div>
+            <span>订单编号：</span><span> @Html.EditorFor(model => model.OrderCode)</span> <span>下单时间：</span><span>
+                @(Html.Kendo().DateTimePickerFor(model => model.StartDateTime).Name("StartDateTime").HtmlAttributes(new { @style = "width:170px" }))</span><span>至</span>
+            <span style="margin-left: 5px;">@(Html.Kendo().DateTimePickerFor(model => model.EndDateTime).Name("EndDateTime").HtmlAttributes(new { @style = "width:170px" }))</span>
+            <span>订单状态：</span><span> @Html.Kendo().DropDownListFor(model => model.Status).Name("Status").OptionLabel(" 全部 ").DataSource(ds => ds.Read(reader => reader.Action("GetOrderStatusList", "transact"))).DataTextField("Text").DataValueField("Value")</span>
+        </div>
+        <div style="margin-top: 3px;">
+            <span>会员名称：</span><span> @Html.EditorFor(model => model.UserName)</span> <span>订单金额：</span>
+            <span>@(Html.Kendo().NumericTextBoxFor(model => model.MinTotalMoney).Name("MinTotalMoney").Min(0).HtmlAttributes(new { @style = "width:170px" }))</span>
+            <span>至 </span><span>@(Html.Kendo().NumericTextBoxFor(model => model.MaxTotalMoney).Name("MaxTotalMoney").Min(0).HtmlAttributes(new { @style = "width:170px" }))</span>
+            <span>支付方式：</span><span> @Html.Kendo().DropDownListFor(model => model.PaymentMethodID).Name("PaymentMethodID").OptionLabel(" 全部 ").DataSource(ds => ds.Read(reader => reader.Action("QueryMethodList", "config"))).DataTextField("PaymentMethodName").DataValueField("PaymentMethodId")</span>
+        </div>
+        <div style="margin-top: 3px; margin-bottom: 5px;">
+            <span>收货人：</span> <span style="margin-left: 10px;">@Html.EditorFor(model => model.Consignee)</span>
+            <span>收货手机：</span> <span style="margin-left: 10px;">@Html.EditorFor(model => model.ReceiveMoblie)</span>
+            <span>订单来源：</span> <span>@Html.Kendo().DropDownListFor(model => model.CpsID).Name("CpsID").OptionLabel(" 全部 ").DataSource(ds => ds.Read(reader => reader.Action("QueryAllCps", "Transact"))).DataTextField("Name").DataValueField("ID").HtmlAttributes(new { @style = "width:170px" })</span>
+            <input class="k-button" style="cursor: pointer; height: 30px; width: 50px; margin-left: 20px;"
+                onclick="SearchOrder()" type="button" value="查 询" />
+            <input type="reset" id="clean" value="重 置" class="k-button" style="cursor: pointer;
+                height: 30px; width: 50px" />
+        </div>
+        </form>
+    </div>
+    @(Html.Kendo().TabStrip()
+          .Name("tabStrip")
+          .Events(e => e.Activate("OnOrderTabSelect"))
+          .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+          .Items(tabstrip =>
+          {
+              tabstrip.Add().Text("待支付").LoadContentFrom("Unpaid", "Transact");
+
+              tabstrip.Add().Text("待确认").Selected(true).LoadContentFrom("Unconfirmed", "Transact").LinkHtmlAttributes(new{style="color:red;"});
+
+              tabstrip.Add().Text("已确认").LoadContentFrom("Confirmed", "Transact");
+
+              tabstrip.Add().Text("已发货").LoadContentFrom("Posted", "Transact");
+
+              tabstrip.Add().Text("已签收").LoadContentFrom("Received", "Transact");
+
+              tabstrip.Add().Text("已作废").LoadContentFrom("Invalid", "Transact");
+
+              tabstrip.Add().Text("已取消").LoadContentFrom("Cancelled", "Transact");
+              
+              tabstrip.Add().Text("全部").LoadContentFrom("All", "Transact");
+          }))
+</div>

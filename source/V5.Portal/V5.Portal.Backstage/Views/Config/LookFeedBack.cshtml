@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "LookFeedBack";
+}
+@model V5.Portal.Backstage.Models.User.FeedBackModel
+<script type="text/javascript">
+    $(function () {
+        $("#comeBack").click(function () {
+            $("#feedlist").css("display", "block");
+            $("#information").css("display", "none");
+            $("#feedcontent").remove();
+        });
+
+    })
+</script>
+<style type="text/css">
+    #feedcontent div
+    {
+        margin-top: 10px;
+        width: 300px;
+    }
+</style>
+<div id="feedcontent">
+    <div>
+        <h4>
+            用户反馈信息详情</h4>
+    </div>
+    <div>
+        <span>反馈内容:</span> <span>@Model.Content</span>
+    </div>
+    <div>
+        <span>联系电话:</span> <span>@Model.TelPhone</span>
+    </div>
+    <div>
+        <span>用户名:</span> <span>@Model.Name</span>
+    </div>
+    <div>
+        <span>性别:</span> <span>@Model.GenderDisplay</span>
+    </div>
+    <div>
+        <span>购酒网账号:</span> <span>@Model.GjwNumber</span>
+    </div>
+    <div>
+        <span>反馈类型:</span> <span>@Model.TypeDisplay</span>
+    </div>
+</div>

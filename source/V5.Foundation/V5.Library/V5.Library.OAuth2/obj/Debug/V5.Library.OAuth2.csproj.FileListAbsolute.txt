@@ -1,0 +1,5 @@
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.OAuth2\bin\Debug\V5.Library.OAuth2.dll
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.OAuth2\bin\Debug\V5.Library.OAuth2.pdb
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.OAuth2\obj\Debug\ResolveAssemblyReference.cache
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.OAuth2\obj\Debug\V5.Library.OAuth2.dll
+F:\GJW_V5\source\V5.Foundation\V5.Library\V5.Library.OAuth2\obj\Debug\V5.Library.OAuth2.pdb

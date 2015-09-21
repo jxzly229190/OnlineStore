@@ -1,0 +1,82 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@Styles.Render("~/Content/g.tbcdn.cn.css")
+@{
+    var home = new HomeController();
+    var html = home.GetHtml("<div class=\"product\">" +
+        "<div class=\"product-iWrap\">" +
+        "<div class=\"productImg-wrap\">" +
+        "<a target=\"_blank\" class=\"productImg\" href=\"/product/item-id-$ProductID$.htm\" >" +
+        "<img class=\"lazy\" data-original=\"$ThumbnailPath2$\" alt=\"$ProductName$\" /></a></div>" +
+        "<p class=\"productTitle\"><a title=\"$ProductName$$Advertisement$\" target=\"_blank\" href=\"/product/item-id-$ProductID$.htm\" >$ProductName$$Advertisement$</a></p>" +
+        "<p class=\"productPrice\"><em title=\"$MarketPrice$\"><b>￥</b>$GoujiuPrice$</em></p>" +
+        "<p class=\"productPromotions\"></p>" +
+        "<p style=\"clear:both;\"></p>" +
+        "<p class=\"productStatus\"><span>近期销量 <em>$Sold$笔</em></span><span class=\"end\">评价数 <a target=\"_blank\" href=\"###\" >$CommentNumber$</a></span></p>" +
+        "</div></div>", 30, ProductType.Rand, Request.Params);
+}
+<style type="text/css">
+    .attrExtra-border{ border-color:#EBE4DE !important; }
+    .ui-page-prev, .ui-page-next, .ui-page a, .ui-page-cur { border-color: #E5E5E5 !important; }
+    .attrExtra { height:auto; }
+    .relKeyRec { padding: 5px 100px 6px 10px; }
+    .product { margin-left:0 !important; }    
+    .productStatus span { width: 60% !important; }
+    .productStatus .end { width: 30% !important; }
+    .recommend .productImg img{ width:160px; height:160px; }
+    .main .view, .main .miniView { width: 106%; }
+    .product .productStatus { border-color: #eee !important; }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $(".j_More").toggle(function () {
+            $(this).parent().parent().find(".av-collapse").removeClass("av-collapse").addClass("av-expand av-scroll");
+            $(this).removeClass("ui-more-drop-l").addClass("ui-more-expand-l");
+            $(this).html("收起<i class=\"ui-more-expand-l-arrow\"></i>");
+        },
+        function () {
+            $(this).parent().parent().find(".av-expand").removeClass("av-expand av-scroll").addClass("av-collapse");
+            $(this).removeClass("ui-more-expand-l").addClass("ui-more-drop-l");
+            $(this).html("更多<i class=\"ui-more-drop-l-arrow\"></i>");
+        }).html("更多<i class=\"ui-more-drop-l-arrow\"></i>");
+    });
+</script>
+<div id="content">
+    <div class="main bts-39">
+      <!-- 产品属性 -->
+      @Html.Raw(home.GetProductBrandSuggestTip(Request.Params))
+
+      <!-- 过滤条件 -->
+      @Html.Raw(home.GetProductFilter(Request.Params, Request.Url.Query))
+      <div style="clear:both;"></div>
+
+      <!-- 商品列表 -->
+      <div id="J_ItemList" class="view grid-34 bts-30 clearfix" >
+        @Html.Raw(html)
+      </div>
+      <div style="clear:both;"></div>
+
+      <!-- 分页 -->
+      <div class="ui-page">
+       <div class="ui-page-wrap">
+         <b class="ui-page-num">
+            @Html.Raw(home.GetPageNavHtml(Request.Params))
+         </b>
+       </div>
+      </div>
+      
+      <!-- 热卖单品 -->
+      <div id="J_Recommend">
+        <div class="recommend">
+          <h3 class="recommend-hd">热卖单品：</h3>
+          <div class="recommend-con clearfix recommend-con-7">
+            @Html.Raw(home.GetHtml("<div class=\"product\">" +
+            "<a class=\"productImg\" target=\"_blank\" href=\"/product/item-id-$ProductID$.htm\"><img class=\"lazy\" data-original=$ThumbnailPath$ alt=\"$ProductName$\" /></a>" +
+            "<p class=\"productPrice ui-price\">￥$GoujiuPrice$</p>" +
+            "<p class=\"productTitle\"><a target=\"_blank\"  href=\"/product/item-id-$ProductID$.htm\">$ProductName$$Advertisement$</a></p>" +
+            "</div>", 7, ProductType.Rand))
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,166 @@
+﻿@using V5.Portal.Backstage.Controllers.Home
+@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Models.Promote
+@using V5.Portal.Backstage.Utils
+@Scripts.Render("~/Scripts/Promote/LimitedDiscount.js")
+@Styles.Render("~/Content/Promote/choose.css")
+@Scripts.Render("~/Scripts/Promote/Choose.js")
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var siteUrl = new HomeController().GetSiteUrl();
+}
+@(Html.Kendo().TabStrip()
+    .Name("tabStrip")
+    .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+    .Items(items =>
+    {
+        items.Add().Text("限时打折列表").Content(@<text>
+<div>
+   <form>
+        <div>
+            <span>活动开始时间:</span> 
+            <span>@Html.Kendo().DateTimePicker().Name("promoteStartStartTime").HtmlAttributes(new { @style = "width: 180px" })
+                至 @Html.Kendo().DateTimePicker().Name("promoteStartEndTime").HtmlAttributes(new { @style = "width: 180px" })</span>
+            <span style="margin-left: 15px;">活动名称：</span> 
+            <span><input type="text" class="k-textbox" id="promoteName" style="width: 180px" /></span>
+            <span style="margin-left: 15px;">活动状态：</span> 
+            <span>@Html.Kendo().DropDownList().Name("SearchStatus").BindTo(new List<SelectListItem> { new SelectListItem() { Text = "全部", Value = "0" }, new SelectListItem() { Text = "未开始", Value = "1" }, new SelectListItem() { Text = "进行中", Value = "2" }, new SelectListItem() { Text = "已结束", Value = "3" } })
+            </span>
+        </div>
+        <div style="margin: 3px 0; margin-bottom: 5px;">
+            <span>活动结束时间: </span>
+            <span>
+                @Html.Kendo().DateTimePicker().Name("promoteEndStartTime").HtmlAttributes(new { @style = "width: 180px" })
+                至 @Html.Kendo().DateTimePicker().Name("promoteEndEndTime").HtmlAttributes(new { @style = "width: 180px" })
+            </span>
+            <span style="margin-left: 15px;">商品名称：</span> 
+            <span><input type="text" class="k-textbox" id="pro_Name" style="width: 180px" /></span>
+            <span style="margin-left: 30px;">
+                <input type="button" class="k-button" id="searchMuchBottled" value="搜索" onclick=" searchLimitedDiscount() "style="width: 80px; height: 30px" />
+                <input type="reset" class="k-button" style="width: 80px; height: 30px" />
+            </span>
+        </div>
+    </form>
+
+</div>
+@(Html.Kendo().Grid<PromoteLimitedDiscountModel>().Name("promoteLimitedDiscountGrid").Columns(columns =>
+{
+    columns.Bound(p => p.Name).Title("活动名称").Width(100);
+    columns.Template(e => { }).ClientTemplate("<a href=\"" + siteUrl + "/Product/Item-id-#:ProductID#.htm\" title=\"#:ProductName#\" target=\"_blank\" >#:ProductName#</a>").Width(100).Title("商品名称");
+    columns.Bound(p => p.GoujiuPrice).Title("商品单价").Width(50);
+    columns.Bound(p => p.Discount).Title("折扣").Width(30);
+    columns.Bound(p => p.DiscountPrice).Title("折后价").Width(50);
+    columns.Bound(p => p.StartTime).Title("开始日期").Width(130).Format("{0:yyyy-MM-dd HH:mm:ss}");
+    columns.Bound(p => p.EndTime).Title("结束日期").Width(130).Format("{0:yyyy-MM-dd HH:mm:ss}");
+    columns.Command(command => command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("modifylimiteddiscount", "Promote", "POST"))).Title("操作").Width(80).Hidden(permissionObj.Hidden);
+}).ToolBar(toolbar => toolbar.Template("<a class='k-button' onclick='AddLimiteDiscountTab()' style='" + permissionObj.GetDisplayAttribute("addlimiteddiscount", "Promote", "Post")["style"] + "'>添加限时打折</a>")).Events(e => e.Edit("onEditLimited")).Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Promote_Limited_Discount_Template")).Scrollable().Pageable().HtmlAttributes(new { style = "height:460px;" }).DataSource(dataSource => dataSource.Ajax().PageSize(10).Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Update(update => update.Action("ModifyLimitedDiscount", "promote")).Read(read => read.Action("QueryLimitedDiscount", "Promote").Data("LimitedDiscountSearchData"))))
+</text>).Selected(true);
+    })
+      )
+<div id="editorLimitedDiscount" style="display: none">
+    <div>
+        <a class="k-button" onclick="CancelAddLimited()">取消添加 </a>
+        <h3 style="font-size: 14px; color: black">
+            设置促销活动</h3>
+        <table>
+            <tr>
+                <td>
+                    设置促销名称:
+                </td>
+                <td>
+                    <input type="text" class="k-textbox" id="limitedDiscountName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    设置促销开始时间:
+                </td>
+                <td>@Html.Kendo().DateTimePicker().Name("LimitedStartTime").HtmlAttributes(new { style = "width:160px" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    设置促销结束时间:
+                </td>
+                <td>
+                    @Html.Kendo().DateTimePicker().Name("LimitedEndTime").HtmlAttributes(new { style = "width:160px" })
+                </td>
+            </tr>
+        </table>
+    </div>
+    <h3 style="font-size: 14px; color: black">
+        选择宝贝</h3>
+    <div id="select_Product">
+        <div id="SerchProduct">
+            商品名称：<input id="ProductName" type="text" class="k-textbox" />
+            商品编码：<input id="ProductBarcode" type="text" class="k-textbox" />
+            <input type="button" class="k-button" value="查询" onclick=" SearchProduct() " />
+        </div>
+        @(Html.Kendo().Grid<ProductModel>().Name("ProductGrid").Columns(columns =>
+              {
+                  columns.Template(e => { }).ClientTemplate("<input type='checkbox'  name='selectproduct' value='#: ID#'/>").Width(1).Title("<input type='checkbox' id='SelectAllProduct' onclick='SelectAllProduct()'/>全选");
+                  columns.Template(e => { }).ClientTemplate("<a href=\"" + siteUrl + "/Product/Item-id-#:ID#.htm\" title=\"#:Name#\" target=\"_blank\" >#:Name#</a>").Width(300).Title("商品名称");
+                  columns.Bound(p => p.GoujiuPrice).Width(100).Title("价格");
+                  columns.Bound(p => p.InventoryNumber).Width(100).Title("库存");
+              }).Pageable(pageable => pageable.ButtonCount(10)).DataSource(dataSource => dataSource.Ajax().PageSize(10).Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData")))
+              )
+    </div>
+    <div>
+        <input type="button" class="k-button" value="完成选择" onclick=" finishChoice() " />
+    </div>
+    <div id="showChoiceResult">
+    </div>
+    <div id="submitButton" style="display: none">
+        <input type="button" class="k-button" value="设置完成" onclick=" AddLimitedDiscount() " />
+    </div>
+</div>
+<div id="choiceResult" style="display: none">
+    <div id="example" class="k-content">
+        <table id="choiceResultGrid" style="width: 98%">
+            <colgroup>
+                <col style="width: 20%" />
+                <col style="width: 5%" />
+                <col style="width: 7%" />
+                <col style="width: 7%" />
+                <col style="width: 7%" />
+                <col style="width: 7%" />
+                <col style="width: 6%" />
+                <col style="width: 5%"/>
+                <col style="width: 4%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th data-field="productName">
+                        宝贝描述
+                    </th>
+                    <th data-field="gjwPrice">
+                        一口价
+                    </th>
+                    <th data-field="discount">
+                        限时折扣
+                    </th>
+                    <th data-field="discounted">
+                        折后价
+                    </th>
+                    <th data-field="buyCount">
+                        每人限购数
+                    </th>
+                    <th data-field="totalNumber">
+                        总数量
+                    </th>
+                    <th data-field="isOnlinePay">
+                        在线支付
+                    </th>
+                    <th data-field="useCoupon">
+                        使用券
+                    </th>
+                    <th data-field="operate">
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableResult">
+            </tbody>
+        </table>
+    </div>
+</div>

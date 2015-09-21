@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "PageView";
+}
+@using System.Web.UI.WebControls
+@using Kendo.Mvc.UI
+@Scripts.Render("~/Scripts/Utility/ichart.1.2.min.js")
+@Scripts.Render("~/Scripts/Utility/ichart.helper.js")
+@Styles.Render("~/Content/zTree/css/zTreeStyle/zTreeStyle.css")
+@Scripts.Render("~/Content/zTree/js/jquery.ztree.all-3.5.min.js")
+@Scripts.Render("~/Scripts/Backstage/Backstage.Home.js")
+
+<script type="text/javascript">
+    $(function () {
+        SystemVisitor.Init();
+    });
+</script>
+
+<div style="margin:10px 0px;">
+    <select id="time" style="width:120px;">    
+        <option value="day3" selected="selected">近3日</option>
+        <option value="day5">近5日</option>
+    </select>
+    <select id="year" style="width:120px;">
+        <option value="2011">2011年</option>
+        <option value="2012">2012年</option>
+        <option value="2013">2013年</option>
+        <option value="2014">2014年</option>
+        <option value="2015">2015年</option>
+        <option value="2016">2016年</option>
+        <option value="2017">2017年</option>
+        <option value="2018">2018年</option>
+        <option value="2019">2019年</option>
+        <option value="2020">2020年</option>
+    </select>
+    <select id="season" style="width:120px;">
+        <option value="1">第一季度</option>
+        <option value="2">第二季度</option>
+        <option value="3">第三季度</option>
+        <option value="4">第四季度</option>
+    </select>
+    <select id="month" style="width:120px;">
+        <option value="1">1月份</option>
+        <option value="2">2月份</option>
+        <option value="3">3月份</option>
+        <option value="4">4月份</option>
+        <option value="5">5月份</option>
+        <option value="6">6月份</option>
+        <option value="7">7月份</option>
+        <option value="8">8月份</option>
+        <option value="9">9月份</option>
+        <option value="10">10月份</option>
+        <option value="11">11月份</option>
+        <option value="12">12月份</option>
+    </select>
+    <select id="day" style="width:120px;">        
+    </select>
+    <label>截止到<span id="record_dt"></span>,系统PV：<span id="record_pv">2199430</span>.</label>
+</div>
+<div id="canvasDiv"></div>
+

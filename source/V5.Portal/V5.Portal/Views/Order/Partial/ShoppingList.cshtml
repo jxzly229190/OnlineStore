@@ -1,0 +1,249 @@
+﻿@using V5.Library
+@using V5.Portal.Common
+@model V5.DataContract.Transact.ShoppingCart.Order_Bill
+@{
+    Layout = null;
+    var count = 0;
+    var amount = 0.00;
+}
+
+ <div class="shopping-list">
+    	<h3 class="inventory-tit">商品清单<span style=" font-size:12px; font-weight:normal "> <a href="/Cart/Index" onclick="">[返回购物车修改]</a></span></h3>
+        <div class="inventory">
+        	<table cellspacing="0" cellpadding="0" border="0" name="productList">
+	            <thead>
+	                <tr style="background: #f3f3f3; height:30px; ">
+	                    <td width="410">商品名称</td>
+	                    <td width="130">单价</td>
+	                    <td width="140">优惠</td>
+	                    <td width="120">商品数量</td>
+	                    <td width="150">小计</td>
+	                </tr>
+	            </thead>
+	            @{
+	                if (Model != null)
+	                {
+	                    if (Model.Products != null)
+	                    {
+	                        foreach (var cartProduct in Model.Products)
+	                        {
+	                            <tbody index="@Html.Raw(cartProduct.ProductID)" class="productList">
+	                                <tr>
+	                                    <td class="name" align="left">
+	                                        <div class="p-img">
+	                                            <a href="@Html.Raw(Utils.GetProductUrl(cartProduct.ProductID))" target="_blank">
+	                                                <img src="@Html.Raw(Utils.GetProductImage(cartProduct.Path, "1"))" alt="@Html.Raw(cartProduct.ProductName)">
+	                                            </a>
+	                                        </div>    
+	                                        <div class="p-name"><a href="@Html.Raw(Utils.GetProductUrl(cartProduct.ProductID))"  target="_blank">@cartProduct.ProductName</a></div>   
+	                                    </td>
+	                                    <td>￥<span>@cartProduct.GoujiuPrice</span></td>
+	                                    <td>立减￥<span>@Math.Round((cartProduct.GoujiuPrice - cartProduct.PromotePrice) * cartProduct.Quantity, 2)</span></td>
+	                                    <td>@cartProduct.Quantity </td>
+	                                    <td><span class="red14">￥<span>@Math.Round(cartProduct.Subtotal, 2)</span></span></td>
+	                                </tr>
+	                            </tbody>
+	                            count += cartProduct.Quantity;
+	                            amount += cartProduct.Subtotal;
+	                        }
+	                    }
+
+
+
+	                    if (Model.SuitPromoteInfos != null && Model.SuitPromoteInfos.Count > 0)
+	                    {
+	                        foreach (var suitPromoteInfo in Model.SuitPromoteInfos)
+	                        {
+	                            <tbody class="item-meet">
+	                                <tr class="item-header">
+	                                    <td class="cell f-text" style="padding-left: 5px">
+	                                        @if ((suitPromoteInfo.GiftCoupons != null && suitPromoteInfo.GiftCoupons.Count > 0) || (suitPromoteInfo.GiftProducts != null && suitPromoteInfo.GiftProducts.Count > 0))
+	                                        {
+	                                            <b> 满赠 </b>
+	                                        }
+	                                        else
+	                                        {
+	                                            <b> 满减 </b>
+	                                        }
+	                                        <span style="float: left">@suitPromoteInfo.PromoteInfo</span>
+	                                    </td>
+	                                    <td class="cell t-price"></td>
+	                                    <td class="cell t-promotion"></td>
+            
+	                                    <td class="cell t-quantity"></td>
+	                                    <td class="cell f-text t-subtotal"><span class="red14">￥@(suitPromoteInfo.TotalPrice - suitPromoteInfo.PromoteDiscount)</span>@Html.Raw(suitPromoteInfo.PromoteDiscount > 0 ? "<i class='icon_bg'>已减" + suitPromoteInfo.PromoteDiscount + "元</i>" : "")</td> 
+	                                    <!--  凑单活动入口   -->
+	                                    <!-- 
+	                                        <div class="cell" style="float:left;margin-right:7px;padding-top:7px">
+	                                            <span>
+	                                                <a style="color:#005EA7" target="_blank" href="http://coudan.jd.com/coudan.html?148539140">凑单活动商品</a>
+	                                            </span>
+	                                        </div> 
+	                                        -->
+	                                </tr>
+                                    
+	                            </tbody>
+	                            if (suitPromoteInfo.Products != null)
+	                            {
+	                                foreach (var cartProduct in suitPromoteInfo.Products)
+	                                {
+	                                    <tbody index="@Html.Raw(cartProduct.ProductID)" class="productList">
+	                                        <tr>
+	                                            <td class="name" align="left">
+	                                                <div class="p-img">
+	                                                    <a href="@Html.Raw(Utils.GetProductUrl(cartProduct.ProductID))" target="_blank">
+	                                                        <img src="@Html.Raw(Utils.GetProductImage(cartProduct.Path, "1"))" alt="@Html.Raw(cartProduct.ProductName)">
+	                                                    </a>
+	                                                </div>    
+	                                                <div class="p-name"><a href="@Html.Raw(Utils.GetProductUrl(cartProduct.ProductID))"  target="_blank">@cartProduct.ProductName</a></div>   
+	                                            </td>
+	                                            <td>￥<span>@cartProduct.GoujiuPrice</span></td>
+	                                            <td>立减￥<span>@Math.Round((cartProduct.GoujiuPrice - cartProduct.PromotePrice) * cartProduct.Quantity, 2)</span></td>
+	                                            <td>@cartProduct.Quantity </td>
+	                                            <td><span class="red14">￥<span>@Math.Round(cartProduct.Subtotal, 2)</span></span></td>
+	                                        </tr>
+	                                    </tbody>
+	                                    count += cartProduct.Quantity;
+	                                    amount += cartProduct.Subtotal;
+	                                }
+	                            }
+
+	                                @*//赠品*@
+	                            if (suitPromoteInfo.GiftProducts != null)
+	                            {
+	                                foreach (var gift in suitPromoteInfo.GiftProducts)
+	                                {
+	                                    <tbody index="@Html.Raw(gift.ProductID)">
+	                                        <tr>
+	                                            <td class="name" align="left" colspan="5">
+	                                                <div class="p-img">
+	                                                    <a href="@Html.Raw(Utils.GetProductUrl(gift.ProductID))" target="_blank">
+	                                                        <img src="@Html.Raw(gift.Path)" alt="@Html.Raw(gift.ProductName)">
+	                                                    </a>
+	                                                </div>    
+	                                                <div class="p-name"><span class="red">[赠品]</span><a href="@Html.Raw(Utils.GetProductUrl(gift.ProductID))"  target="_blank">@gift.ProductName</a><span class="red"> X @gift.Quantity</span></div>   
+	                                            </td>
+	                                        </tr>
+	                                    </tbody>
+	                                }
+	                            }
+
+	                                @*//赠券*@
+	                            if (suitPromoteInfo.GiftCoupons != null)
+	                            {
+	                                foreach (var gift in suitPromoteInfo.GiftCoupons)
+	                                {
+	                                    <tbody index="@Html.Raw(gift.CouponID)">
+	                                        <tr>
+	                                            <td class="name" align="left" colspan="5">
+	                                                <div class="p-name">【赠券】@gift.CouponFaceValue 元购酒券（订单完成后自动发放）</div> 
+	                                                @*<div class="p-name"><span class="red">[赠券]</span><a href="@Html.Raw(ConstantParams.ProductUrl + "/" + gift.ProductID + ".html")"  target="_blank">@gift.ProductName</a><span class="red"> X @gift.Quantity</span></div>*@   
+	                                            </td>
+	                                        </tr>
+	                                    </tbody>
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+            </table>
+            <dl>
+                <dd><b>@count 件商品，总商品金额：</b> <span>￥@Math.Round(Model.TotalPrice,2)</span></dd>
+                <dd><b>配送费：</b> <span>+￥10.00</span></dd>
+                <dd><b>配送费优惠：</b> <span>-￥@(10 - Model.Freight)</span></dd>
+                <dd><b>订单优惠金额：</b> <span>-￥@Math.Round(Model.TotalDiscount,2)</span></dd>
+                <dd><b>需支付总额：</b> <span class="red14">￥@Math.Round(Model.TotalPrice + Model.Freight - Model.TotalDiscount,2)</span></dd>
+            </dl>
+            
+        </div>
+        <!-- 使用代金券 s modify by caiyiping 2014.01.23 暂时屏蔽代金券功能 -->
+        @*<div class="vipcoupon moneycoupon" id="vipcoupon" >
+				<h3 class="pink"><a href="javascript:;" class=""></a>使用代金券/兑换券</h3>
+				<div class="coupon-cont" style="display: none;">
+					<em class="coupon-close"></em>
+					<dl>
+						<dt><label for="radiodj"><input type="radio" name="usecoupon" id="radiodj" checked="">代金券</label>　　<label for="radiodh"><input type="radio" name="usecoupon" id="radiodh">兑换券</label></dt>
+						<dd id="dj" style="display: block;">
+						    <!-- case 1.有可用代金券 -->	
+						    <div id="dj_have" style="display: none;">
+							    <p id="myVouchersP"><b class="coupon-tit">此单可用的代金券：</b>
+								<span id="djList_dom" class="selectDom" value="undefined" pwd="undefined"><i></i></span> 
+								<a href="###" class="yzbtn sybtn" onclick="cart_confirm.useVouchersByHave();">使用</a>
+								<span id="voucherHaveMsg"></span>
+								</p>
+						    </div>
+						    <!-- case 2.无可用金券 -->					
+							<div id="dj_not">
+								<p class="ntip">此订单无可用的代金券，您可以<span onclick="javascript:;"><i>查看账户内所有代金券</i></span></p>
+							</div>
+							<!-- case 3.其他代金券 -->
+							<p>有其他代金券？<span id="dj_other_ck"><i>点此填写券号和密码</i></span></p>
+								<p id="djEditP" style="display: none;">
+								<b class="coupon-tit">请输入代金券卡号：</b>
+								<input type="text" class="text inp3" id="voucherNo_other"> <b>代金券密码：</b> 
+								<input type="text" class="text inp3" id="voucherpasswd_other">
+								<a href="###" class="yzbtn" onclick="cart_confirm.useVouchersByOther();">使用</a>
+								<span id="voucherOtherMsg"></span> 
+							</p>
+							<!-- case 4.隐藏域携带代金券参数 -->
+							<input type="hidden" value="" name="voucherNo" id="voucherNo">
+							<input type="hidden" value="" name="voucherpasswd" id="voucherpasswd">
+							<p class="red">温馨提示：1.代金券和兑换券不能同时使用；2.使用代金券后如果不满足免运费的标准，将收取您的运费。生成订单号后代金券失效。</p>				
+						</dd>
+						<dd id="dh" style="display: none;">
+						    <!-- case 1.有可用兑换券 -->
+						    <div id="dh_have" style="display: none;">
+							    <p id="myCouponsP"><b class="coupon-tit">此订单可用的兑换券：</b>
+									<span id="dhList_dom" class="selectDom" value="undefined" pwd="undefined"><i></i></span>
+									<a href="###" onclick="cart_confirm.useCouponsByHave();" class="yzbtn">使用</a>
+									<span id="couponProductHaveMsg"></span>
+								</p>
+								<p id="couponInfoHave" style="display: none;"></p>
+						    </div>
+						    <!-- case 2.无可用兑换券 -->
+						    <div id="dh_not">
+						    	<p class="ntip">此订单无可用的兑换券。</p>
+						    </div>
+						    <!-- case 3.其他兑换券 -->
+						     <p>有其他兑换券？<span id="dh_other_ck"><i>点此填写券号</i></span></p>
+							<p id="dhEditP" style="display: none;"><b class="coupon-tit">请输入兑换券号码：</b>
+								<input type="text" class="text inp2" id="couponProductCode_other"> 
+								<a href="###" class="yzbtn" id="validcouponbtn" onclick="cart_confirm.useCouponsByOther();">使用</a>
+								<span id="couponProductOtherMsg"></span>
+							</p>
+							<p id="couponInfoOther" style="display: none;"></p>
+							<!-- case 4.隐藏域携带兑换券参数 -->
+							<input type="hidden" id="couponProductCode" name="couponProductCode"> 
+							<p class="red">温馨提示：1.代金券和兑换券不能同时使用；2.无需加入兑换原品，购买任何商品均可使用此券，生成订单号后兑换券失效。</p>
+						</dd>
+					</dl>
+				</div>
+			</div>*@
+            <!-- 使用代金券e-->
+            <!-- 账户余额支付 s modify by caiyiping 2014.01.23 暂时屏蔽账户余额支付功能 -->
+            <div class="vipcoupon" style="display:none;" >
+                <h3 class="pink"><a href="javascript:;" class=""></a>账户余额支付</h3>
+				<div class="coupon-cont" style="display: block;">
+					<em class="coupon-close"></em>
+				    <p>您的账户余额<span class="red14" id="txtVipBalance">￥0</span>，
+				        本次支付<input type="text" class="text inp1" id="txtAccount"  name=""> 
+				        <a href="javascript:;" id="btnUseAccount" class="yzbtn">确定使用</a> 
+                    </p>
+				</div>
+			</div>
+            <!-- 账户余额支付e -->
+            <!-- 附加说明 s -->
+            <div class="vipcoupon" >
+				<h3 class="pink"><a href="javascript:;" class="up"></a>附加说明</h3>
+				<div class="coupon-cont">
+					<em class="coupon-close"></em>
+					<textarea aria-autocomplete="off" onclick="if(this.value=='请勿再次输入有关配送地址、支付方式、发票信息等信息。谢谢！'){this.value='';}" onblur="if(this.value=='') this.value='请勿再次输入有关配送地址、支付方式、发票信息等信息。谢谢！';" class="pct90 textarea c6 fs12" id="txtIntro">请勿再次输入有关配送地址、支付方式、发票信息等信息。谢谢！</textarea> 
+				</div>
+			</div>
+            <!-- 附加说明e -->
+            <div class="totle">
+                <span class="totle-btn" id="postOrder"><a href="javascript:;">确认订单</a></span>
+                <span class="totle-pay">应付总额:<span class="red18">￥@(Model.TotalPrice + Model.Freight-Model.TotalDiscount)</span></span>
+            </div>
+    </div>

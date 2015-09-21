@@ -1,0 +1,78 @@
+﻿@using V5.Portal.Backstage.Models.Configuration
+@using V5.Portal.Backstage.Utils
+@{
+    ViewBag.Title = "支付管理";
+    var permissionObj = new PermissionUtility(this.Context.Session.SessionID);
+    var permissionOrgObj = new PermissionUtility(this.Context.Session.SessionID);
+}
+@(Html.Kendo().Grid<ConfigPaymentTypeModel>().Name("configPaymentTypeGird")
+    .Columns(columns =>
+    {
+         columns.Bound(p => p.ID).Hidden(true);
+         columns.Bound(p => p.Name).Title("支付类别").Width(80);
+         columns.Bound(p => p.PaymentMethodName).Title("支付方式").Width(80);
+         columns.Bound(p => p.CreateTime).Title("创建时间").Format("{0: yyyy-MM-dd hh:mm:ss}").Width(200);
+         columns.Command(command =>
+         {
+             command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("ModifyPaymentType", "Config", "Post",true));
+             command.Custom("删除").Click("showDeleteConfirm").HtmlAttributes(permissionObj.GetDisplayAttribute("RemovePaymentType", "Config", "Post",true));
+         }).Hidden(permissionObj.Hidden);
+     })
+        .ToolBar(toolbar => toolbar.Create().Text("添加支付类别").HtmlAttributes(permissionObj.GetDisplayAttribute("AddPaymentType", "Config", "Post",false))).Pageable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Payment_Type_Template").Window(edit => edit.Title("编辑")))
+    .Scrollable()
+    .Selectable()
+    .ClientDetailTemplateId("SubTemplate1")
+    .Events(e =>
+        {
+            e.Edit("onEdit");
+            e.DetailExpand("onDetailPaymentExpand");
+        })
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+            .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+        .Model(model => model.Id(p => p.ID))
+            .Read(read => read.Action("QueryPaymentType", "Config"))
+            .Create(create => create.Action("AddPaymentType", "Config"))
+            .Update(update => update.Action("ModifyPaymentType", "Config"))
+    )
+
+      )
+<input type="hidden" id="paymentTypeIDHidden" />
+<script id="SubTemplate1" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ConfigPaymentOrganizationModel>().Name("configPaymentOrganizationGird_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.Name).Width(200).Title("机构名称");
+                  columns.Bound(p => p.ImageURL).Width(200).Title("标示图片");
+                  columns.Bound(p => p.URL).Width(200).Title("网址");
+                  columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd hh:mm:ss}").Width(160).Title("创建时间");
+                  columns.Command(command => {
+                      command.Edit().Text("编辑").HtmlAttributes(permissionOrgObj.GetDisplayAttribute("ModifyPaymentOrganization", "Config", "Post",true));
+                      command.Destroy().Text("删除").HtmlAttributes(permissionOrgObj.GetDisplayAttribute("RemovePaymentOrganization", "Config", "Post",true));
+                  }).Width(160).Hidden(permissionOrgObj.Hidden);
+              })
+          .ToolBar(toolbar => toolbar.Create().Text("添加支付机构").HtmlAttributes(permissionOrgObj.GetDisplayAttribute("AddPaymentOrganization", "Config", "Post",false))).Pageable()
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Config_Payment_Organization_Template").Window(edit => edit.Title("编辑")))
+          .Scrollable()
+          .Selectable()
+          .Events(e =>
+              {
+                  e.Edit("onEditOrg");
+              })
+          .HtmlAttributes(new { style = "height:450px;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                                .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+                                        .Model(model => model.Id(d => d.ID))
+                                                .Create(create => create.Action("AddPaymentOrganization", "Config", new { typeID = "#=ID#" }))
+                                        .Destroy(destory => destory.Action("RemovePaymentOrganization", "Config"))
+                                        .Update(update => update.Action("ModifyPaymentOrganization", "Config"))
+                                        .Read(read => read.Action("QueryByPaymentTypeId", "Config", new { typeID = "#=ID#" }))
+          ).ToClientTemplate()
+
+          )
+</script>

@@ -1,0 +1,44 @@
+﻿@using V5.Portal.Backstage.Models.Promote
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+}
+@Scripts.Render("~/Scripts/Promote/Vip.js")
+<div>
+   <form>
+        <div>
+            <span>活动开始时间:</span> 
+            <span>@Html.Kendo().DateTimePicker().Name("promoteStartStartTime").HtmlAttributes(new { @style = "width: 180px" })
+                至 @Html.Kendo().DateTimePicker().Name("promoteStartEndTime").HtmlAttributes(new { @style = "width: 180px" })</span>
+            <span style="margin-left: 15px;">活动名称：</span> 
+            <span><input type="text" class="k-textbox" id="promoteName" style="width: 180px" /></span>
+            <span style="margin-left: 15px;">活动状态：</span> 
+            <span>@Html.Kendo().DropDownList().Name("promoteStatus").BindTo(new List<SelectListItem> { new SelectListItem() { Text = "全部", Value = "0" }, new SelectListItem() { Text = "未开始", Value = "1" }, new SelectListItem() { Text = "进行中", Value = "2" }, new SelectListItem() { Text = "已结束", Value = "3" } }).SelectedIndex(2)
+            </span>
+        </div>
+        <div style="margin: 3px 0; margin-bottom: 5px;">
+            <span>活动结束时间: </span>
+            <span>
+                @Html.Kendo().DateTimePicker().Name("promoteEndStartTime").HtmlAttributes(new { @style = "width: 180px" })
+                至 @Html.Kendo().DateTimePicker().Name("promoteEndEndTime").HtmlAttributes(new { @style = "width: 180px" })
+            </span>
+            <span style="margin-left: 15px;">商品名称：</span> 
+            <span><input type="text" class="k-textbox" id="pro_Name" style="width: 180px" /></span>
+            <span style="margin-left: 30px;">
+                <input type="button" class="k-button" id="searchMuchBottled" value="搜索" onclick=" searchVip() "style="width: 80px; height: 30px" />
+                <input type="reset" class="k-button" style="width: 80px; height: 30px" />
+            </span>
+        </div>
+    </form>
+</div>
+@(Html.Kendo().Grid<PromoteVipModel>().Name("VipGrid").Columns(columns =>
+{
+    columns.Bound(p => p.Name).Title("活动名称").Width(100);
+    columns.Bound(p => p.StartTime).Title("开始日期").Width(80).Format("{0:yyyy-MM-dd HH:mm:ss}");
+    columns.Bound(p => p.EndTime).Title("结束日期").Width(80).Format("{0:yyyy-MM-dd HH:mm:ss}");
+    columns.Bound(p => p.StatusName).Title("状态").Width(80);
+    columns.Bound(u => u.Status).Title("操作").ClientTemplate("#= OperateText # ").Width(240);
+}).ToolBar(toolbar => toolbar.Template("<a class='k-button' onclick='promotevip.Edit()' style='" + permissionObj.GetDisplayAttribute("addvip", "Promote", "Post")["style"] + "'>添加会员促销</a>"))
+.Resizable(re => re.Columns(true)).Scrollable().Pageable().HtmlAttributes(new { style = "height:460px;" })
+.DataSource(dataSource => dataSource.Ajax().PageSize(10).Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Read(read => read.Action("QueryVip", "Promote").Data("SearchData"))))
+

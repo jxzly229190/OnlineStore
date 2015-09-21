@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "groupBuy_Edit_Template";
+}
+@model V5.Portal.Backstage.Models.Channel.ViewGroupBuyProductModel
+@{
+    if (Model.Status == 1)
+    {
+    <span style="color: red">@Html.DisplayFor(model => model.Status)</span>
+    }
+    else
+    {
+    <span>@Html.DisplayFor(model => model.Status)</span>
+    }
+}

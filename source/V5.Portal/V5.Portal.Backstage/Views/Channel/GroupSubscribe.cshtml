@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "GroupSubscribe";
+}
+<div class="configuration k-widget k-header" style="float: none; max-width: none;
+    margin: 0 0 2em;">
+    <span class="infoHead">标题</span> 标题：
+    <input type="text" value="" width="600px;" />
+    收件人：<input type="text" width="600px;" />
+</div>
+@(Html.Kendo().Editor()
+      .Name("editor")
+      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .Tools(tools => tools
+        .Clear()
+        .FontName(items => items
+            .Add("Verdana", "Verdana,Geneva,sans-serif")
+            .Add("Garamond", "Garamond, serif")
+        )
+        .FontSize(items => items
+            .Add("1 (8pt)", "xx-small")
+            .Add("16px", "16px")
+        )
+        .Formatting(items => items
+            .Add("Paragraph", "p")
+            .Add("Fieldset", "fieldset")
+        )
+        .CustomTemplate(ct => ct.Template("<label for='templateTool' style='vertical-align:middle;'>Background:</label> <select id='templateTool'><option value=''>none</option><option value='\\#ff9'>yellow</option><option value='\\#dfd'>green</option></select>"))
+        .CustomButton(cb => cb.Name("custom").ToolTip("Insert a horizontal rule").Exec(@<text>
+function(e) { var editor = $(this).data("kendoEditor"); editor.exec("inserthtml",
+{ value: "<hr />
+" }); }
+</text>))
+      )
+      )
+<input type="button" value="发送" />
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#templateTool").kendoDropDownList({
+            change: function (e) {
+                $("#editor").data("kendoEditor").body.style.backgroundColor = e.sender.value();
+            }
+        });
+    });
+
+</script>

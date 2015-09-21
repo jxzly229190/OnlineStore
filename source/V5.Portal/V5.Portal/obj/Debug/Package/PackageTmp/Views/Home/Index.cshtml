@@ -1,0 +1,802 @@
+﻿@using V5.Portal.Controllers;
+@using V5.Library;
+@Styles.Render("~/Content/index.css")
+@Scripts.Render("~/Scripts/index.js")
+@Scripts.Render("~/Scripts/Xslider.js")
+@{ 
+    var home = new HomeController();
+ }
+ 
+ <script type="text/javascript">
+    //首页标识
+    window.website_default = true;
+ </script>
+
+<!------- S 图片banner -------->
+<div class="banner_bg">
+    <div class="banner-img">
+        <ul class="banner-box" id="banner-box">
+            <li url="#" style="background-color: rgb(242, 242, 242); background-image:url(images/ban1.jpg) ; opacity: 0;"> </li>
+            <li url="#" style="background-color: rgb(242, 242, 242); background-image:url(images/ban2.jpg); opacity: 0;"> </li>                            
+        </ul>
+        <div class="banner-btn-box">
+                <div class="banner-btn" id="banner-btn">
+                    <span class="" index="0">1 </span>
+                    <span class="" index="1">2 </span>                                               
+                </div>
+                <!-------三个广告图片 s-------->
+                <div class="banner-adimg">
+                    <ul>
+                        <li><img src="../../images/ban_ad1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></li>
+                        <li><img src="../../images/ban_ad2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></li>
+                        <li><img src="../../images/ban_ad3.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></li>
+                    </ul>
+                </div>
+                <!-------三个广告图片 e-------->
+        </div>                
+    </div>
+</div>
+<!------- E 图片banner -------->
+<!------- S 活动专题 、公告-------->
+<div class="huodong ">
+	<div class="hd_scroll">
+        <div class="adv" >
+            <ul>
+                @Html.Raw(home.GetHtml("<li><a href=\"/Home/Item?ID=$ID$\" title=\"$Advertisement$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></li>", 8, ProductType.Rand))
+            </ul>    
+        </div>
+        <a class="abtn aleft" href="#left">左移</a>
+		<a class="abtn aright" href="#right">右移</a>
+    </div>    
+    <div class="ant fr" id="gonggao">
+    	<ul class="ant_title" >
+    		<li class="cur">最新公告</li>
+            <li>促销信息</li>
+    	</ul>
+        <div class="ant_content" >        	
+            <ul>
+                <li><i></i><a href="#">玩游戏中大奖--“天降美酒”游戏</a></li>
+                <li><i></i><a href="#"><font color="#FF6600">玩游戏中大奖--“天降美酒”游戏</font></a></li>
+                <li><i></i><a href="#">玩游戏中大奖--“天降美酒”游戏</a></li>
+                <li><i></i><a href="#">玩游戏中大奖--“天降美酒”游戏</a></li>
+            </ul>
+        </div>
+        <div class="ant_content none">
+            <ul>
+                <li><i></i><a href="#">到减肥咖啡姐抵抗力是减肥卡</a></li>
+                <li><i></i><a href="#"><font color="#FF6600">玩游戏中大奖--“天降美酒”游戏</font></a></li>
+                <li><i></i><a href="#">玩游戏中大奖--“天降美酒”游戏</a></li>
+                <li><i></i><a href="#">玩游戏中大奖--“天降美酒”游戏</a></li>
+            </ul>           
+        </div>
+  </div>
+</div>
+<!------- E 活动专题 、公告-------->
+<!------- S 猜您喜欢 、团购-------->
+<div class="w1200">
+	<div class="limitbuy" id="newpro">
+		<ul class="limit_tab">
+    		<li class="limit_tab_cur">新品上市</li>
+            <li>本月热销</li>
+    	</ul>
+        <!---新品上市内容--->
+        <div class="content_box">
+        	<div class="limit_content">
+            	<ul>                    
+                    @Html.Raw(home.GetHtml("<li><p><a href=\"/Home/Item?ID=$ID$\">$Name$</a></p><p class=\"font_gray\">已有$CommentNumber$人评论</p><p class=\"font_price\">￥$GoujiuPrice$</p><p class=\"font_line\">￥$MarketPrice$</p></li>", 8, ProductType.Rand))
+                </ul>
+            </div>
+        </div>
+         <!---本月热销内容--->
+        <div class="content_box none">
+        	<div class="limit_content">
+            	<ul>
+                    @Html.Raw(home.GetHtml("<li><p><a href=\"/Home/Item?ID=$ID$\">$Name$</a></p><p class=\"font_gray\">已有$CommentNumber$人评论</p><p class=\"font_price\">￥$GoujiuPrice$</p><p class=\"font_line\">￥$MarketPrice$</p></li>", 8, ProductType.Rand))                    
+                </ul>
+            </div>
+        </div>
+	</div>
+    <div class="groupbuy">
+		<div class="group_title">
+        	<span>今日团购</span>
+            <ul class="slidbox_cent">
+            	<li class="cur"><a class="png" href="javascript:;"></a></li>
+				<li><a class="png" href="javascript:;"></a></li>
+				<li><a class="png" href="javascript:;"></a></li>
+            </ul>
+        </div>
+        <div class="group_content">
+            @Html.Raw(home.GetHtml("<ul style=\"display:none\">"+
+                "    <li class=\"group_img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></li>" +
+                "    <li class=\"group_txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$</a></li>" +
+                "    <li class=\"group_btn\">"+
+                "	    <span class=\"group_price\">￥$GoujiuPrice$</span>" +
+                "       <span class=\"group_tg\"><a href=\"\">立即参团</a></span>"+
+                "    </li>"+
+                "</ul>", 3, ProductType.BrandActivity))
+        </div>
+	</div>
+</div>
+<!------- E 猜您喜欢 、团购-------->
+<!------- S 品牌活动-------->
+<div class="brand w1200" id="pinpai">
+	<div class="brand_title"><span class=" font_title">品牌活动</span><a href="javascript:;" class="change"><i class="ulike_change_ico"> &nbsp;</i>换一批</a></div>
+    <div class="brand_content">
+        <ul >
+            <!--
+            @Html.Raw(home.GetHtml("<li><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></li>", 5, ProductType.BrandActivity))
+            -->
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li style=" width:198px; border-right:none"><a href=""><img class="lazy" data-original="../../images/pinpaihuodong3.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+        </ul>        
+    </div>
+    <div class="brand_content none">
+        <ul class="cur">
+            <!--
+            @Html.Raw(home.GetHtml("<li><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></li>", 5, ProductType.BrandActivity))
+            -->
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li><a href=""><img class="lazy" data-original="../../images/pinpaihuodong1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+            <li style=" width:198px; border-right:none"><a href=""><img class="lazy" data-original="../../images/pinpaihuodong3.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a></li>
+        </ul>        
+    </div>
+</div>
+<!------- E 品牌活动-------->
+<!-------S 三版块-------->
+<div class="three_bk w1200">
+	<span><img class="lazy" data-original="../../images/xiaojiuban.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></span>
+    <span><img class="lazy" data-original="../../images/mingjiajianshang.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></span>
+    <span><img class="lazy" data-original="../../images/jiujiao.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></span>
+</div>
+<!-------S 白酒版块-------->
+<div class="baijiu">
+	<div class="baijiu_up">
+    	<div class="baijiu_up_l">
+			<h2 class="h2">1F 白酒管</h2>
+            <p><img class="lazy" data-original="../../images/img53.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></p>
+        </div>
+        <div class="baijiu_up_m" id="baijiu">
+			<div class="baijiu_tab">
+            	<ul>
+                	<li class="cur">热门抢购</li>
+                    <li>猜您喜欢</li>
+                    <li>新品上架</li>
+                    <li>清仓特卖</li>
+                </ul>
+            </div>
+            <div class="baijiu_content">
+                @Html.Raw(home.GetHtml("<ul>"+
+                	    "<li class=\"li_b\">"+
+                        "    <p class=\"product-img-b\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$<span class=\"font_red\">$Advertisement$</span></a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$ </p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</li>"+
+                        "<li class=\"li_s\">"+
+                        "    <span class=\"li_s_img\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">"+
+                        "	    <P><a href=\"/Home/Item?ID=$ID$\">$Name$ </a></P>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "        <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "    </span>"+
+                        "</li>"+
+                        "</ul>", 4, ProductType.Rand, "2"))
+            </div>
+            <div class="baijiu_content none" >
+            @Html.Raw(home.GetHtml("<ul>" +
+                	    "<li class=\"li_b\">"+
+                        "    <p class=\"product-img-b\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$<span class=\"font_red\">$Advertisement$</span></a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$ </p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</li>"+
+                        "<li class=\"li_s\">"+
+                        "    <span class=\"li_s_img\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">"+
+                        "	    <P><a href=\"/Home/Item?ID=$ID$\">$Name$ </a></P>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "        <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "    </span>"+
+                        "</li>"+
+                        "</ul>", 4, ProductType.Rand, "2"))                
+            </div>
+            <div class="baijiu_content none" >
+            @Html.Raw(home.GetHtml("<ul>"+
+                	    "<li class=\"li_b\">"+
+                        "    <p class=\"product-img-b\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$<span class=\"font_red\">$Advertisement$</span></a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$ </p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</li>"+
+                        "<li class=\"li_s\">"+
+                        "    <span class=\"li_s_img\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">"+
+                        "	    <P><a href=\"/Home/Item?ID=$ID$\">$Name$ </a></P>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "        <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "    </span>"+
+                        "</li>"+
+                        "</ul>", 4, ProductType.Rand, "2"))                
+            </div>
+            <div class="baijiu_content none" >
+            @Html.Raw(home.GetHtml("<ul>"+
+                	    "<li class=\"li_b\">"+
+                        "    <p class=\"product-img-b\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$<span class=\"font_red\">$Advertisement$</span></a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$ </p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</li>"+
+                        "<li class=\"li_s\">"+
+                        "    <span class=\"li_s_img\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">"+
+                        "	    <P><a href=\"/Home/Item?ID=$ID$\">$Name$ </a></P>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "        <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "    </span>"+
+                        "</li>"+
+                        "</ul>", 4, ProductType.Rand, "2"))                
+            </div>
+        </div>
+        <div class="baijiu_brand">
+        	<ul >
+                <!--@Html.Raw(home.GetHtml("<li>"+
+                    "<a href=\"/Home/Item?ID=$ID$\" target=\"_blank\">" +
+                    "    <div class=\"toll_img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></div>"+
+                    "    <div class=\"toll_info\">$Name$</div>"+
+                    "</a>"+
+                    "</li>", 8, ProductType.BrandActivity, "2"))
+                -->
+            	<li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>	
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+            </ul>
+            <p><img class="lazy" data-original="../../images/baijiua_ad.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></p>
+        </div>
+	</div>
+    <div class="baijiu_down">
+		<div class="baijiu_down_l"><img class="lazy" data-original="../../images/baijiu_ad2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+        <div class="baijiu_down_r" id="paihang">
+        	<div class="rank_hd" >
+            	<div class="rank_hd_tit">本周热销排行榜</div>
+                <ul class="rank_hd_tab">
+                  <li class="cur">浓香型</li>
+                  <li class="rank_hd_tab_gap">|</li>
+                  <li>酱香型</li>
+                  <li class="rank_hd_tab_gap">|</li>
+                  <li>清香型</li>
+                  <li class="rank_hd_tab_gap">|</li>
+                  <li>特香型</li>
+                  <li class="rank_hd_tab_gap">|</li>
+                  <li>棉柔型</li>
+              </ul>
+            </div>
+            <div class="rank_cont">
+            	 <ul>
+                    @Html.Raw(home.GetHtml("<li>"+                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "2"))                    
+                </ul>                
+            </div>
+            <div class="rank_cont none">
+            	 <ul>
+                 @Html.Raw(home.GetHtml("<li>"+                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" ytag=\"32822\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "2"))
+                </ul>                
+            </div>
+            <div class="rank_cont none">
+            	 <ul>
+                    @Html.Raw(home.GetHtml("<li>" +                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"$Name$\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "2"))
+                </ul>                
+            </div>
+            <div class="rank_cont none">
+            	    <ul>
+                    @Html.Raw(home.GetHtml("<li>" +                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"$Name$\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "2"))
+                </ul>                
+            </div>
+            <div class="rank_cont none">
+            	    <ul>
+                    @Html.Raw(home.GetHtml("<li>" +                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"$Name$\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "2"))
+                </ul>                
+            </div>
+            <div class="rank_cont none">
+            	    <ul>
+                    @Html.Raw(home.GetHtml("<li>" +                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"$Name$\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "2"))
+                </ul>                
+            </div>
+        </div>
+	</div>
+</div>
+<!-------E 白酒版块-------->
+<!-------S 红酒版块-------->
+<div class="baijiu f2">
+	<div class="baijiu_up">
+    	<div class="baijiu_up_l">
+			<h2 class="h2">2F 红酒版块</h2>
+            <p><img src="images/hongjiu_ad.jpg"/></p>
+        </div>
+        <div class="baijiu_up_m">
+			<div class="baijiu_tab">
+            	
+            </div>
+            <div class="baijiu_content">
+            @Html.Raw(home.GetHtml("<ul>"+
+                	    "<li class=\"li_b\">"+
+                        "    <p class=\"product-img-b\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$<span class=\"font_red\">$Advertisement$</span></a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$ </p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</li>"+
+                        "<li class=\"li_s\">"+
+                        "    <span class=\"li_s_img\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">"+
+                        "	    <P><a href=\"/Home/Item?ID=$ID$\">$Name$ </a></P>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "        <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "    </span>"+
+                        "</li>"+
+                        "</ul>", 4, ProductType.Rand, "3"))
+            </div>
+        </div>
+        <div class="baijiu_brand">
+        	<ul >
+                <!--
+                @Html.Raw(home.GetHtml("<li>"+
+                    "<a href=\"/Home/Item?ID=$ID$\" target=\"_blank\">" +
+                    "    <div class=\"toll_img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></div>"+
+                    "    <div class=\"toll_info\">$Name$</div>"+
+                    "</a>"+
+                    "</li>", 8, ProductType.BrandActivity, "2"))
+                -->
+            	<li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>	
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+            </ul>
+            <p><img class="lazy" data-original="../../images/hongjiu_ad1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></p>
+        </div>
+	</div>
+    <div class="baijiu_down">
+		<div class="baijiu_down_l"><img class="lazy" data-original="../../images/baijiu_ad2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+        <div class="baijiu_down_r">
+        	<div class="rank_hd">
+            	<div class="rank_hd_tit">本周热销排行榜</div>
+                
+            </div>
+            <div class="rank_cont">
+            	 <ul>
+                 @Html.Raw(home.GetHtml("<li>"+                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "3"))
+                </ul>                
+            </div>
+        </div>
+	</div>
+</div>
+<!-------E 红酒版块-------->
+<!-------S 洋酒版块-------->
+<div class="baijiu f3">
+	<div class="baijiu_up">
+    	<div class="baijiu_up_l">
+			<h2 class="h2">3F 洋酒版块</h2>
+            <p><img src="images/yangjiu-ad.jpg"/></p>
+        </div>
+        <div class="baijiu_up_m">
+			<div class="baijiu_tab">
+            	
+            </div>
+            <div class="baijiu_content">
+                @Html.Raw(home.GetHtml("<ul>"+
+                	    "<li class=\"li_b\">"+
+                        "    <p class=\"product-img-b\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></p>" +
+                        "    <p class=\"product-txt\"><a href=\"/Home/Item?ID=$ID$\">$Name$<span class=\"font_red\">$Advertisement$</span></a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$ </p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</li>"+
+                        "<li class=\"li_s\">"+
+                        "    <span class=\"li_s_img\"><a href=\"/Home/Item?ID=$ID$\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></a></span>" +
+                        "    <span class=\"li_s_txt\">"+
+                        "	    <P><a href=\"/Home/Item?ID=$ID$\">$Name$ </a></P>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "        <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "    </span>"+
+                        "</li>"+
+                        "</ul>", 4, ProductType.Rand, "5"))
+            </div>
+        </div>
+        <div class="baijiu_brand">
+        	<ul >
+                <!--
+                @Html.Raw(home.GetHtml("<li>"+
+                    "<a href=\"/Home/Item?ID=$ID$\" target=\"_blank\">" +
+                    "    <div class=\"toll_img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></div>"+
+                    "    <div class=\"toll_info\">$Name$</div>"+
+                    "</a>"+
+                    "</li>", 8, ProductType.BrandActivity, "2"))
+                -->
+            	<li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>	
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="br-bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+                <li class="bb">
+                	<a href="#" target="_blank">
+                        <div class="toll_img"><img class="lazy" data-original="../../images/baijiu_logo.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+                        <div class="toll_info">茅台</div>
+                    </a>
+                </li>
+            </ul>
+            <p><img class="lazy" data-original="../../images/hongjiu_ad1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></p>
+        </div>
+	</div>
+    <div class="baijiu_down">
+		<div class="baijiu_down_l"><img class="lazy" data-original="../../images/baijiu_ad2.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></div>
+         <div class="baijiu_down_r">
+        	<div class="rank_hd">
+            	<div class="rank_hd_tit">本周热销排行榜</div>
+                
+            </div>
+            <div class="rank_cont">
+            	 <ul>
+                 @Html.Raw(home.GetHtml("<li>"+                 	
+                    	"<i class=\"rank_cont_rank_order\"></i>"+
+                        "<div class=\"rank_goods\" >"+
+                        "	<div class=\"rank_goods_img\">"+
+                        "    	<a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"\"><img src=\"$ThumbnailPath$\" alt=\"\"></a>" +
+                        "    </div>"+
+                        "    <div class=\"rank_goods_info\">"+
+                        "        <p class=\"font_y\" style=\"display:block\">已售$SoldOfVirtual$件</a></p>"+
+                        "        <p class=\"\"><a target=\"_blank\" href=\"/Home/Item?ID=$ID$\" title=\"#\">$Name$</a></p>" +
+                        "        <p class=\"font_price\">￥$GoujiuPrice$</p>"+
+                        "    </div>"+
+                        "</div>"+
+                        "</li>", 5, ProductType.Rand, "5"))
+                </ul>                
+            </div>
+        </div>
+	</div>
+</div>
+<!-------E 洋酒版块-------->
+<!-------S 啤酒、保健酒-------->
+<div class="f4 w1200">
+	<div class="pijiu">
+		<div class="pijiu_left">
+			<h2 class="h2">4F 啤酒管</h2>
+            <p><img src="images/pijiu_ad.jpg"/></p>
+		</div>
+        <div class="pijiu_right" id="pijiu">
+			<div class="pijiu_right_tab">
+            	<ul>
+                	<li class="cur">人气热销</li>
+                    <li>陈年原浆</li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont">
+            	<ul>
+                @Html.Raw(home.GetHtml("<li>"+ 
+                        "<span class=\"f4-img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></span>"+
+                        "<span class=\"f4-txt\">"+
+                        "	<p class=\"\"><a href=\"/Home/Item?ID=$ID$\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</span>"+
+                        "</li>", 4, ProductType.Rand, "8"))
+                </ul>
+            </div>
+            <div class="pijiu_right_cont none">
+            	<ul>
+                @Html.Raw(home.GetHtml("<li>"+ 
+                        "<span class=\"f4-img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></span>"+
+                        "<span class=\"f4-txt\">"+
+                        "	<p class=\"\"><a href=\"/Home/Item?ID=$ID$\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</span>"+
+                        "</li>", 4, ProductType.Rand, "8"))
+                </ul>
+            </div>
+		</div>
+	</div>
+    <div class="pijiu baojianjiu">
+		<div class="pijiu_left">
+			<h2 class="h2">4F 保健酒</h2>
+            <p><img src="images/pijiu_ad.jpg"/></p>
+		</div>
+        <div class="pijiu_right" id="baojianjiu">
+			<div class="pijiu_right_tab">
+            	<ul>
+                	<li class="cur">人气热销</li>
+                    <li>陈年原浆</li>
+                </ul>
+            </div>
+            <div class="pijiu_right_cont">
+            	<ul>
+                @Html.Raw(home.GetHtml("<li>"+ 
+                        "<span class=\"f4-img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></span>"+
+                        "<span class=\"f4-txt\">"+
+                        "	<p class=\"\"><a href=\"/Home/Item?ID=$ID$\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</span>"+
+                        "</li>", 4, ProductType.Rand, "8"))
+                </ul>
+            </div>
+            <div class="pijiu_right_cont none">
+            	<ul>
+                @Html.Raw(home.GetHtml("<li>"+ 
+                        "<span class=\"f4-img\"><img class=\"lazy\" data-original=\"$ThumbnailPath$\" alt=\"$Name$\" /></span>"+
+                        "<span class=\"f4-txt\">"+
+                        "	<p class=\"\"><a href=\"/Home/Item?ID=$ID$\">$Name$</a></p>" +
+                        "    <p class=\"font_price\">￥$GoujiuPrice$</p>" +
+                        "    <p class=\"font_y\">已售$SoldOfVirtual$件</p>" +
+                        "</span>"+
+                        "</li>", 4, ProductType.Rand, "8"))
+                </ul>
+            </div>
+		</div>
+	</div>
+</div>
+<!-------E 啤酒、保健酒-------->
+<div class="tonglan_ad w1200">
+	<a href=""><img class="lazy" data-original="../../images/tonglan_ad.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></a>
+</div>
+<!-------S 大师推荐-------->
+<div class="dashi w1200">
+	<h3 class="font_title">大师推荐</h3>
+    <div class="dashi_cont">
+    	<div class="dashi_img1">
+        	<span class="dashi_photo"><img class="lazy" data-original="../../images/dashi1.jpg" alt="{白酒}{茅台}-{飞天茅台}" /></span>
+            <span class="dashi_txt">
+                <h5><b>赵峰</b> <br />著名演员</h5>
+                <P>积分卡积分肯德基啊快放假啊快减肥房间卡死叫饭暗示啊积分卡是</P>
+            </span>
+       	</div>
+        <div class="dashi_img2">
+        	<img class="lazy" data-original="../../images/dashi5.jpg" alt="{白酒}{茅台}-{飞天茅台}" />
+       	</div>
+        <div class="dashi_img3">
+        	<img class="lazy" data-original="../../images/dashi2.jpg" alt="{白酒}{茅台}-{飞天茅台}" />
+       	</div>
+        <div class="dashi_img4">
+        	<img class="lazy" data-original="../../images/dashi6.jpg" alt="{白酒}{茅台}-{飞天茅台}" />
+       	</div>
+         <div class="dashi_img5">
+        	<img class="lazy" data-original="../../images/dashi3.jpg" alt="{白酒}{茅台}-{飞天茅台}" />
+       	</div>
+         <div class="dashi_img6">
+        	<img class="lazy" data-original="../../images/dashi7.jpg" alt="{白酒}{茅台}-{飞天茅台}" />
+       	</div>
+        <div class="dashi_img7">
+        	<img class="lazy" data-original="../../images/dashi4.jpg" alt="{白酒}{茅台}-{飞天茅台}" />
+       	</div>
+    </div>
+</div>
+<!-------E 大师推荐-------->
+<script type="text/javascript">
+    $(function () {
+        var i = 0;
+        $(".rank_cont_rank_order").each(function () {
+            i = i + 1;
+            if (i == 6) i = 1;
+            $(this).addClass("rank_cont_rank_order_" + i);
+        });
+        $('.baijiu_content ul').last().css('border', 'none');
+        $('.group_content ul').last().css('display', 'block');
+        i = 0;
+        $(".limit_content li").each(function () {
+            $(this).addClass("li" + (i % 2 + 1));
+            i++;
+        })
+    })
+</script>

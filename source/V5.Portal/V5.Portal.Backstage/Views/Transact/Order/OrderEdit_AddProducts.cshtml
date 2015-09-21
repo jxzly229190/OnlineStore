@@ -1,0 +1,152 @@
+﻿@using NPOI.HPSF
+@using V5.Library
+@using V5.Portal.Backstage.Models.Transact.Order
+@model V5.Portal.Backstage.Models.Transact.Order.OrderProductSearchModel
+<div class="search">
+    <form style="padding-bottom: 10px; padding-top: 10px">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <td  height="36" align="right">
+            商品类别：
+        </td>
+        <td colspan="2">
+            @(Html.Kendo().DropDownListFor(model=>model.ProductCategoryID).Name("ParentCategoryID").OptionLabel(" 全部 ").DataSource(ds => ds.Read("GetParentProductCategories", "Transact")).DataTextField("CategoryName").DataValueField("ID").HtmlAttributes(new {@style="width:100px"}))
+                
+            @(Html.Kendo().DropDownListFor(model => model.SubProductCategoryID).Name("CategoryID").OptionLabel(" 全部 ").DataSource(ds => ds.Read(action => action.Action("GetProductCategoriesByParentId", "Transact").Data("filterParentCategoryId")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("ParentCategoryID").HtmlAttributes(new { @style = "width:100px" }))
+                
+            @(Html.Kendo().DropDownListFor(model => model.ProductBrandID).OptionLabel(" 全部 ").Name("BrandId").DataSource(ds => ds.Read(action => action.Action("GetProductBrandByCategoryId", "Transact").Data("filterCategoryId")).ServerFiltering(true)).Enable(false).AutoBind(false).DataTextField("Text").DataValueField("Value").CascadeFrom("CategoryID").HtmlAttributes(new { @style = "width:100px" }))
+
+            @(Html.Kendo().DropDownListFor(model => model.SubProductBrandID).Name("SubProductBrandID").OptionLabel(" 全部 ").DataSource(source => source.Read(read => read.Action("QuerySubProductBrandByParentId", "Transact").Data("getParentBrandID")).ServerFiltering(true)).DataTextField("Text").DataValueField("Value").Enable(false).AutoBind(false).CascadeFrom("BrandId").HtmlAttributes(new { @style = "width:100px" }))
+
+        </td>
+        <td align="right">
+            商品名称：@Html.TextBoxFor(model=>model.ProductName, new {@class="k-textbox"})
+        </td>
+        <td>
+            商品条形码：@Html.TextBoxFor(model => model.Barcode, new { @class = "k-textbox", @style="width: 120px" })
+        </td>
+        <td>
+            <input class="k-button" style="cursor: pointer; height: 30px; width: 50px" onclick="searchOrderEditProductData()"
+                   type="button" value="查 询" />
+            <input type="reset" id="clean" value="重 置" class="k-button" style="cursor: pointer;
+                                                                                                                                     height: 30px; width: 50px" />
+        </td>
+    </table>
+    </form>
+</div>
+
+@(Html.Kendo().Grid<OrderProductModel>()
+    .Name("OrderEditProductGrid")
+    .Columns(columns =>
+        {
+            //columns.Command(command => command.Custom("selectProduct")).HeaderTemplate("<input type='checkbox' name='selectAll' id='selectAll' /><label for='selectAll'>全选</label>").Width(30).Title("全选");
+            columns.Template(e => { }).ClientTemplate(" ").Width(10).Hidden(true).Title("商品图片");
+            columns.Bound(e => e.ProductName).Width(180).Title("商品名称");
+            columns.Bound(p => p.TransactPrice).Width(50).Title("价格（元）");
+            columns.Bound(p => p.InventoryNumber).Width(50).Title("库存");
+    })
+    .ClientRowTemplate(
+            "<tr>" +
+                "<td >" +
+                        "<input type='checkbox' name='selectWare' value='#: ProductID#'/>" +
+                "</td>" +
+                "<td class='details'>" +
+                            "<span class='title'><a target='_blank' href='#: ProductURL #'>#: ProductName #<a/></span>" +
+                "</td>" +
+                "<td class='price'>" +
+                        "#: TransactPrice #" +
+                "</td>" +
+                "<td class='price'>" +
+                        "#: InventoryNumber #" +
+                "</td>" +
+            "</tr>"
+        )
+        .ClientAltRowTemplate(
+                    "<tr class='k-alt'>" +
+                        "<td >" +
+                                "<input type='checkbox' name='selectWare' value='#: ProductID#'/>" +
+                        "</td>" +
+                        "<td class='details'>" +
+                                        "<span class='title'><a target='_blank' href='#: ProductURL #'>#: ProductName #<a/></span>" +
+                        "</td>" +
+                        "<td class='price'>" +
+                                "#: TransactPrice #" +
+                        "</td>" +
+                        "<td class='price'>" +
+                                "#: InventoryNumber #" +
+                        "</td>" +
+                    "</tr>"
+            )
+        .Pageable()
+        .Scrollable()
+        .HtmlAttributes(new { style = "height:320px;" })
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Model(model => model.Id(p => p.ID))
+        .Read(read => read.Action("OrderEditQueryOrderProduct", "Transact").Data("getProductSearchParams"))
+      ))
+<script type="text/javascript">
+    //页面载入
+
+    $(function () {
+        $("#selectAll").click(
+            function () {
+                if (this.checked) {
+                    $("#selectAll").attr("checked", "checked");
+                    $("input[name='selectWare']").each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $("#selectAll").attr("checked", null);
+                    $("input[name='selectWare']").each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+    });
+
+    //end页面载入
+</script>
+
+@section HeadContent {
+    <style>
+        .search{ width:95%;background:#f4f6f9;overflow:hidden;padding:10px;}
+         .title {
+             display: block;
+             font-size: 1.6em;
+         }
+        .description {
+            display: block;
+            padding-top: 1.6em;
+        }
+        .price {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-size: 50px;
+            font-weight: bold;
+            color: #898989;
+        }
+        td.photo, .price {
+            text-align: center;
+        }
+        .k-grid-header .k-header {
+            padding: 10px 20px;
+        }
+        .k-grid td {
+            background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.05)), color-stop(100%, rgba(0, 0, 0, 0.15)));
+            background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: -o-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            padding: 20px;
+        }
+        .k-grid .k-alt td {
+            background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.2)), color-stop(100%, rgba(0, 0, 0, 0.1)));
+            background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: -o-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+        }
+    </style>}

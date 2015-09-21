@@ -1,0 +1,25 @@
+﻿@model V5.Portal.Backstage.Models.Configuration.ConfigDeliveryCorporationModel
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    公司名称：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.Name, new { @class = "k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Name)
+</div>
+<div class="editor-label">
+    网址（URL）：
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.URL, new { @class="k-textbox" })
+    @Html.ValidationMessageFor(model=>model.URL)
+</div>
+
+<div class="editor-label">
+    描   述：
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.Description, new { @class="k-textbox" })
+    @Html.ValidationMessageFor(model=>model.Description)
+</div>

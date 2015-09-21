@@ -1,0 +1,129 @@
+﻿@using V5.Portal.Backstage.Controllers.Home
+@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var siteUrl = new HomeController().GetSiteUrl();
+}
+@Styles.Render("~/Content/Promote/choose.css")
+@Scripts.Render("~/Scripts/Promote/Choose.js")
+<div id="editorLimitedDiscount">
+    <div>
+        <a class="k-button" onclick="CancelAddLimited()">取消添加 </a>
+        <h3 style="font-size: 14px; color: black">
+            设置促销活动</h3>
+        <table>
+            <tr>
+                <td>
+                    设置促销名称:
+                </td>
+                <td>
+                    <input type="text" class="k-textbox" id="limitedDiscountName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    设置促销开始时间:
+                </td>
+                <td>@Html.Kendo().DateTimePicker().Name("LimitedStartTime").HtmlAttributes(new { style = "width:160px" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    设置促销结束时间:
+                </td>
+                <td>
+                    @Html.Kendo().DateTimePicker().Name("LimitedEndTime").HtmlAttributes(new { style = "width:160px" })
+                </td>
+            </tr>
+        </table>
+    </div>
+    <h3 style="font-size: 14px; color: black">选择宝贝</h3>
+    <div id="select_Product">
+        <div id="SerchProduct">
+            商品名称：<input id="ProductName" type="text" class="k-textbox" />
+            商品编码：<input id="ProductBarcode" type="text" class="k-textbox" />
+            <input type="button" class="k-button" value="查询" onclick=" SearchProduct() " />
+        </div>
+        @(Html.Kendo().Grid<ProductModel>().Name("ProductGrid").Columns(columns =>
+              {
+                  columns.Template(e => { }).ClientTemplate("<input type='checkbox'  name='selectproduct' value='#: ID#'/>").Width(1).Title("<input type='checkbox' id='SelectAllProduct' onclick='SelectAllProduct()'/>全选");
+                  columns.Template(e => { }).ClientTemplate("<a href=\"" + siteUrl + "/Product/Item-id-#:ID#.htm\" title=\"#:Name#\" target=\"_blank\" >#:Name#</a>").Width(300).Title("商品名称");
+                  columns.Bound(p => p.GoujiuPrice).Width(100).Title("价格");
+                  columns.Bound(p => p.InventoryNumber).Width(100).Title("库存");
+              }).Pageable(pageable => pageable.ButtonCount(10)).DataSource(dataSource => dataSource.Ajax().PageSize(10).Read(read => read.Action("QueryProductOnSale", "Product").Data("SearchProductData")))
+              )
+    </div>
+    <div>
+        <input type="button" class="k-button" value="完成选择" onclick=" finishChoice() " />
+    </div>
+    <div id="showChoiceResult">
+    </div>
+    <div id="submitButton" style="display: none"><div id="AddBtn">
+            <input type="button" class="k-button" value="确认" onclick="limitedDiscount.Add()"/>
+            <input type="reset" class="k-button" value="返回" onclick="limitedDiscount.Close()"/>
+        </div>
+        <div id="UpdateBtn" style="display: none">
+            <input type="button" class="k-button" value="修改" onclick="limitedDiscount.Modify()"/>
+            <input type="submit" class="k-button" value="取消" onclick="limitedDiscount.Close()"/>
+        </div>
+    </div>
+</div>
+<div id="choiceResult" style="display: none">
+    <div id="example" class="k-content">
+        <table id="choiceResultGrid" style="width: 98%">
+            <colgroup>
+                <col style="width: 20%" />
+                <col style="width: 5%" />
+                <col style="width: 7%" />
+                <col style="width: 7%" />
+                <col style="width: 7%" />
+                <col style="width: 7%" />
+                <col style="width: 6%" />
+                @*<col style="width: 0%;display: none" />
+                <col style="width: 0%;display: none" />*@
+                <col style="width: 5%"/>
+                <col style="width: 4%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th data-field="productName">
+                        宝贝描述
+                    </th>
+                    <th data-field="gjwPrice">
+                        一口价
+                    </th>
+                    <th data-field="discount">
+                        限时折扣
+                    </th>
+                    <th data-field="discounted">
+                        折后价
+                    </th>
+                    <th data-field="buyCount">
+                        每人限购数
+                    </th>
+                    <th data-field="totalNumber">
+                        总数量
+                    </th>
+                    <th data-field="isOnlinePay">
+                        在线支付
+                    </th>
+                   @* <th data-field="newUser" style="display: none">
+                        新会员
+                    </th>
+                    <th data-field="mobileverify" style="display: none">
+                        手机验证
+                    </th>*@
+                    <th data-field="useCoupon">
+                        使用券
+                    </th>
+                    <th data-field="operate">
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableResult">
+            </tbody>
+        </table>
+    </div>
+</div>

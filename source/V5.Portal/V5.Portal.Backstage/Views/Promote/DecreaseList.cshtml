@@ -1,0 +1,53 @@
+﻿@using V5.Portal.Backstage.Models.Promote
+名称：<input id="SearchDecreaseName" class="k-textbox" type="text" />
+状态：@Html.Kendo().DropDownList().Name("SearchDecreaseStatus").BindTo(new List<SelectListItem>() { new SelectListItem() { Text = "全部", Value = "0" }, new SelectListItem() { Text = "正常", Value = "1" }, new SelectListItem() { Text = "作废", Value = "2" }, new SelectListItem() { Text = "过期", Value = "3" } }).HtmlAttributes(new { style = "width:55px" })
+<input type="button" class="k-button" value="查 询" onclick="SearchDecrease()" />
+@(Html.Kendo().Grid<CouponDecreaseModel>().Name("CouponDecreaseGrid").Columns(columns =>
+        {
+            columns.Bound(v => v.Name).Title("优惠券名称").Width(160);
+            columns.Bound(v => v.FaceValue).Title("面额").Width(60);
+            columns.Bound(v => v.MeetAmount).Title(" 满足消费金额").Width(90);
+            columns.Bound(v => v.InitialNumber).Title("初始数量").Width(60);
+            columns.Bound(v => v.Remain).Title("剩余数量").Width(60);
+            columns.Bound(v => v.Bind).Title("绑定数量").Width(60);
+            columns.Bound(v => v.Cost).Title("消费数量").Width(60);
+            columns.Bound(v => v.StartTime).Title("生效日期").Width(100).Format("{0:yyyy-MM-dd}");
+            columns.Bound(v => v.EndTime).Title("作废日期").Width(100).Format("{0:yyyy-MM-dd}");
+            columns.Command(command => command.Custom("查看").Click("ShowCounponDecreaseDetails")).Title("操作").Width(100);
+        })
+                            .ToolBar(toolbar => toolbar.Template("<a class='k-button' onclick='AddCouponDecreaseDiv()'>添加满减券</a>"))
+            .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Promote_Coupon_Decrease_Template").Window(edit => edit.Title("编辑")))
+            .Scrollable()
+            .Pageable()
+            .ClientDetailTemplateId("SubTemplate2")
+            .Events(e => e.Edit("onEdit"))
+            .Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
+            .HtmlAttributes(new { style = "height:480px;" })
+            .DataSource(dataSource => dataSource.Ajax()
+                .PageSize(10)
+                .Events(events => events.Error("error_handler"))
+                .Model(model => model.Id(c => c.ID))
+                     .Read(read => read.Action("QueryCouponDecrease", "Promote").Data("SearchDecreaseData"))))
+<script id="SubTemplate2" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<CouponDecreaseBindingModel>().Name("couponDecreaseGird_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(c => c.Number).Width(70).Title("卡号");
+                  columns.Bound(c => c.Password).Width(110).Title("密码");
+                  columns.Bound(c => c.BindingTime).Width(100).Format("{0:yyyy/MM/dd HH:mm:ss}").Title("绑定日期");
+                  columns.Bound(c => c.UseTime).Width(100).Format("{0:yyyy/MM/dd HH:mm:ss}").Title("消费时间");
+                  columns.Bound(c => c.OrderID).Width(100).Title("订单号");
+                  columns.Bound(c => c.StatusName).Width(50).Title("状态");
+              })
+          .Scrollable()
+          .Pageable()
+          .HtmlAttributes(new { style = "height:220px;" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(5)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Model(model => model.Id(c => c.ID))
+                                        .Read(read => read.Action("QueryCouponDecreaseBinding", "Promote", new { couponDecreaseID = "#=ID#" }))
+          ).ToClientTemplate()
+          )
+</script>

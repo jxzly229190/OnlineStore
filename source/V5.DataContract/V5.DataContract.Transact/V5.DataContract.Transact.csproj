@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7A795796-E69B-4780-987B-EF026F0AA136}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V5.DataContract.Transact</RootNamespace>
+    <AssemblyName>V5.DataContract.Transact</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\V5.Portal\V5.Portal.Backstage\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cps.cs" />
+    <Compile Include="Cps_CommissionRatio.cs" />
+    <Compile Include="Cps_LinkRecord.cs" />
+    <Compile Include="Cps_OrderPushRecord.cs" />
+    <Compile Include="Hw_Log.cs" />
+    <Compile Include="Order\Aftersale_Refund.cs" />
+    <Compile Include="Order\Order.cs" />
+    <Compile Include="Order\Order_Cancel.cs" />
+    <Compile Include="Order\Order_Cancel_Cause.cs" />
+    <Compile Include="Order\Order_Erp_Log.cs" />
+    <Compile Include="Order\Order_Invoice.cs" />
+    <Compile Include="Order\Order_Payment.cs" />
+    <Compile Include="Order\Order_Product.cs" />
+    <Compile Include="Order\Order_Product_Promote.cs" />
+    <Compile Include="Order\Order_Status_Log.cs" />
+    <Compile Include="Order\Order_Delivery_Tracking.cs" />
+    <Compile Include="Order\Order_Status_Tracking.cs" />
+    <Compile Include="Order\UserCommentProduct.cs" />
+    <Compile Include="Product_Comment.cs" />
+    <Compile Include="Product_Comment_Reply.cs" />
+    <Compile Include="Product_Consult.cs" />
+    <Compile Include="Product_Consult_Reply.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoppingCart\Cart_Product.cs" />
+    <Compile Include="ShoppingCart\Gift_Coupon.cs" />
+    <Compile Include="ShoppingCart\Gift_Product.cs" />
+    <Compile Include="ShoppingCart\Order_Bill.cs" />
+    <Compile Include="ShoppingCart\Product_Promote.cs" />
+    <Compile Include="ShoppingCart\Promote_Info.cs" />
+    <Compile Include="ShoppingCart\Promote_Rule.cs" />
+    <Compile Include="ShoppingCart\Suit_Promote.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\V5.DataContract.Promote\V5.DataContract.Promote.csproj">
+      <Project>{3CEAB9B8-873B-4215-AF37-8DDAB50DC3C9}</Project>
+      <Name>V5.DataContract.Promote</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

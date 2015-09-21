@@ -1,0 +1,22 @@
+﻿.login-bg{background: #76c3eb url(../images/bg-login.jpg) repeat-x;}
+.login-box{width: 765px; margin: auto; display:block;  height:469px;margin-top: 10%;background:url(../images/bg-login-box.jpg) no-repeat;}
+.login-logo{ width:285px; float:left; padding-top:70px; }
+.logo-contain{ text-align:right;}
+.logo-contain2{ text-align:right; margin-top:10px;}
+.logo-contain img ,.logo-contain2 img{ width:194px; height:50px;}
+.left-btn{width:285px; float:left ; margin-top:50px; text-align:right}
+.content{ width:400px; height:370px; float:right; position:relative;}
+
+.area-bg{ width:100px; height:117px; position:absolute; top:70px; left:240px; background:url(../images/ico-lock.jpg) no-repeat}
+.inputArea{width:400px;  margin-top:40px; height:150px; background:url(../images/ico-key.jpg) no-repeat top left; }
+.inputArea ul{ overflow: hidden; padding-top:40px;}
+.inputArea ul li{height:35px; line-height:25px;}
+.inputArea ul li label{ width:60px; display:block;  float:left;  vertical-align: central; }
+.loginInput{ border:#6699cc solid 1px; width:150px; height:23px; line-height:23px; background:#ffffff; outline:none;}
+.Security{position:absolute;left:118px;top:148px;width:80px;height:20px;display:block;}
+.textArea span{ display:block; color:#333333; margin-top:10px; _margin-top:6px; margin-left:65px;_margin-left:60px;}
+.textArea input{ vertical-align:text-bottom;_margin-left:5px;vertical-align: central;  }
+.loginButton{ width:58px; height:22px; background: url(../images/btn-login.jpg); border:none; cursor:pointer; }
+.textArea dt{ float:left; width:50px; height:80px; display:block; text-align:left;}
+.textArea dd{ float:left; width:280px;margin-left: 10px; display: inline; text-align:left;}
+.textArea .note{ margin-top:20px;  color:#666666; line-height:20px;}

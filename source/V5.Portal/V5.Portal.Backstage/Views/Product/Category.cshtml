@@ -1,0 +1,70 @@
+﻿@using Kendo.Mvc.UI
+@using V5.Portal.Backstage.Models.Product
+@using V5.Portal.Backstage.Utils
+@{
+    var permissionObj = new PermissionUtility(Context.Session.SessionID);
+    var permissionObj2 = new PermissionUtility(Context.Session.SessionID);
+}
+@(Html.Kendo().Grid<ProductCategoryModel>()
+    .Name("categoryGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.CategoryName).Title("一级类别");
+        columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd}").Title("创建时间");
+        columns.Command(command =>
+        {
+            command.Edit().Text("编辑").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.ModifyCategory.Post"));
+            command.Destroy().Text("删除").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.RemoveCategory.Post"));
+        }).Width(160).Hidden(permissionObj.Hidden);
+    })
+    .ToolBar(tool => tool.Create().Text("添加一级类别").HtmlAttributes(permissionObj.GetDisplayAttribute("Product.AddSubCategory.Post", false)))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Product_Category_Template"))
+    .Pageable()
+    .Scrollable()
+    .Selectable(selectable => selectable.Type(GridSelectionType.Row))
+    .ClientDetailTemplateId("categoryTemplate")
+    .Events(e => e.Edit("onEdit"))
+    .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(p => p.ID))
+    .Create(update => update.Action("AddCategory", "Product"))
+    .Read(read => read.Action("QueryCategory", "Product"))
+    .Update(update => update.Action("ModifyCategory", "Product"))
+    .Destroy(update => update.Action("RemoveCategory", "Product"))
+    )
+)
+<script id="categoryTemplate" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ProductCategoryModel>()
+          .Name("categoryGrid_#=ID#")
+          .Columns(columns =>
+              {
+                  columns.Bound(p => p.CategoryName).Title("类别名称");
+                  columns.Bound(p => p.CreateTime).Format("{0: yyyy-MM-dd}").Title("创建时间");
+                  columns.Command(command =>
+                  {
+                      command.Edit().Text("编辑").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.ModifyCategory.Post")); 
+                      command.Destroy().Text("删除").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.RemoveCategory.Post"));
+                  }).Width(160).Hidden(permissionObj2.Hidden);
+              })
+          .ToolBar(tool => tool.Create().Text("添加二级类别").HtmlAttributes(permissionObj2.GetDisplayAttribute("Product.AddSubCategory.Post", false)))
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Product_Category_Template").Window(edit => edit.Title("编辑")))
+          .Pageable()
+          .Scrollable()
+          .Selectable(seleted => seleted.Type(GridSelectionType.Row))
+          .Events(e => e.Edit("onEdit"))
+          .HtmlAttributes(new { style = "height:457px; text-align:left;" })
+          .DataSource(dataSource => dataSource
+          .Ajax()
+          .PageSize(10)
+          .Events(events => events.Error("error_handler"))
+          .Model(model => model.Id(m => m.ID))
+          .Create(update => update.Action("AddSubCategory", "Product", new { categoryID = "#=ID#" }))
+          .Read(read => read.Action("QuerySubCategory", "Product", new { categoryID = "#=ID#" }))
+          .Update(update => update.Action("ModifyCategory", "Product"))
+          .Destroy(update => update.Action("RemoveCategory", "Product"))
+          )
+          .ToClientTemplate())
+</script>

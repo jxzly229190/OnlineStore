@@ -1,0 +1,34 @@
+﻿@model V5.Portal.Backstage.Models.User.UserLevelPriceModel
+@Html.ValidationSummary(true)
+
+@Html.HiddenFor(model => model.ID)
+
+<div class="editor-label">
+    会员等级：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.UserLevelID).DataSource(ds => ds.Read("QueryLevelSelectListItems", "User")).DataTextField("Name").DataValueField("ID").OptionLabel("请选择 ").Name("UserLevelID"))
+</div>
+
+<div class="editor-label">
+    商品条形码：
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model=>model.ProductBarcode)
+    @Html.ValidationMessageFor(model => model.ProductBarcode)
+</div>
+
+<div class="editor-label">
+    价格：
+</div>
+<div class="editor-field">
+    @Html.Kendo().NumericTextBoxFor(model=>model.Price).Min(0)
+    @Html.ValidationMessageFor(model => model.Price)
+</div>
+
+<div class="editor-label">
+    状态：
+</div>
+<div class="editor-field">
+    @(Html.Kendo().DropDownListFor(model => model.Status).DataSource(ds => ds.Read("QueryStatus", "User")).DataTextField("Text").DataValueField("Value"))
+</div>

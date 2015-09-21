@@ -1,0 +1,89 @@
+﻿@using V5.Library;
+@{
+    var path = Utils.ToString(Request.Url.AbsolutePath);
+    if(path.Length>0){
+        path = path.EndsWith("/") ? path.Remove(path.Length - 1) : path;
+    }
+    var canonical = "<link rel=\"canonical\" href=\"http://www.gjw.com" + path + "\" />";
+    var robots = "";
+    if (Request.RawUrl.StartsWith("/Home/Help/"))
+    {
+        robots = "<meat name=\"robots\" content=\"noindex\">";
+    }
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@V5.Library.Utils.ToString(ViewBag.Title, "购酒网GJW.COM-白酒|红酒|葡萄酒|洋酒|黄酒|啤酒|保健酒-正品特价官方商城")</title>
+    <link rel="dns-prefetch" href="//img0.gjw.com" />
+    <link rel="dns-prefetch" href="//v.behe.com" />
+    <link rel="dns-prefetch" href="//rtb.behe.com" />
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net" />
+    <link rel="dns-prefetch" href="//hm.baidu.com" />
+    <link rel="dns-prefetch" href="//js.users.51.la" />
+    <link rel="dns-prefetch" href="//g.tbcdn.cn">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="@V5.Library.Utils.ToString(ViewBag.Keywords, "购酒网,网上买酒,购酒网站,买酒网")" />
+    <meta name="description" content="@V5.Library.Utils.ToString(ViewBag.Description, "购酒网GJW.COM是综合的网上购酒商城,提供白酒,红酒,葡萄酒,洋酒,黄酒,啤酒,保健酒各类酒的最新价格,评价等信息,真品保障,货到付款,支持全国8000个城市和地区(可POS机刷卡)")" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @Html.Raw(robots)
+    @Html.Raw(canonical)
+    <meta name="viewport" content="width=device-width" />
+    <!-- GA跟踪代码 -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-42350784-1']);
+        _gaq.push(['_setDomainName', '.gjw.com']);
+        _gaq.push(['_setAllowHash', false]);
+        _gaq.push(['_addOrganic', 'baidu', 'word']);
+        _gaq.push(['_addOrganic', 'sogou', 'query']);
+        _gaq.push(['_addOrganic', 'm.sogou.com', 'keyword']);
+        _gaq.push(['_addOrganic', 'glb.uc.cn', 'keyword']);
+        _gaq.push(['_addOrganic', 'wap.soso.com', 'key']);
+        _gaq.push(['_addOrganic', 'm.yisou.com', 'q']);
+        _gaq.push(['_addOrganic', 'm.baidu.com', 'word']);
+        _gaq.push(['_addOrganic', 'soso', 'w']);
+        _gaq.push(['_addOrganic', 'yodao', 'q']);
+        _gaq.push(['_addOrganic', 'so.com', 'q']);
+        _gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+        _gaq.push(['_addOrganic', 'image.baidu.com', 'word']);
+        _gaq.push(['_addIgnoredOrganic', 'gjw.com']);
+        _gaq.push(['_addIgnoredOrganic', 'www.gjw.com']);
+        _gaq.push(['_trackPageview']);
+        _gaq.push(['_trackPageLoadTime']);
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- 百度跟踪代码 -->
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff45b9c2a3772066fdf84b38506d4920f' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    @Styles.Render("~/Content/base.css")
+    @Styles.Render("~/Content/head.css")
+    @Styles.Render("~/Content/public.css")
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/jquery.cookie.js")
+    @Scripts.Render("~/Scripts/jquery.lazyload.min.js")
+    @Scripts.Render("~/Scripts/global.js")
+    @Scripts.Render("~/Scripts/public.js")
+</head>
+    <body>
+        @Html.Partial("_NavigationPartial")
+        @Html.Partial("_HeaderPartial")
+        @Html.Partial("_MenuPartial")
+        <div class="error" id="errorDiv" style="display: none;">
+            <img src="@Url.Content("~/Content/images/error-img.jpg")" />
+            <h2>对不起，页面正在建设中，请查看其他页面！</h2>
+            <p>系统将自动为您跳转到<a href="">首页</a></p>
+        </div>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            @RenderBody()
+        </div>
+        @Html.Partial("_FooterPartial")
+    </body>
+</html>

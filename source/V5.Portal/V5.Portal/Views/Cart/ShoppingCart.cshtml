@@ -1,0 +1,57 @@
+﻿@using V5.Library
+@using V5.Portal.Common
+@model V5.Portal.Models.UserCartModel
+ 
+@{
+    Layout = null;
+    var amount = 0;
+}
+
+@{
+    if (Model != null && Model.ProductItems != null)
+    {
+        foreach (var item in Model.ProductItems)
+        {
+            <dl>
+                @*<dt><a href="@Html.Raw(Utils.GetProductUrl(item.ProductID))" target="_blank">
+                        <img width="40" height="40" src="@Html.Raw(V5.Library.Utils.GetProductImage(item.ProductPic, "1"))" />
+                        </a></dt>*@
+                <dd class="name">
+                    <a href='@Html.Raw(Utils.GetProductUrl(item.ProductID))' target="_blank">@item.ProductName</a></dd>
+                <dd class="number">
+                    ×@item.Quantity</dd>
+                <dd class="price">
+                    ¥@item.GoujiuPrice</dd>
+                <dd class="delete">
+                    <a class="del_cat" href="javaScript:DelPro(@Html.Raw(item.ProductID))">[删除]</a></dd>
+            </dl>
+            amount += item.Quantity;
+        }
+        
+        <p>
+            共<strong> @amount </strong>件商品</p>
+        <p>
+            <a href="/Cart" class="cart-button"></a>
+        </p>
+    }
+    else
+    {
+        <dl>您购物车中什么也没有~~</dl>
+    }
+    
+}
+
+
+<script type="text/javascript">
+    function DelPro(ID) {
+        $.post("/Cart/Delete", { "proId": ID }, function (data) {
+            var d = new Date();
+            $("#head_cart").load("/Cart/ShoppingCart?d=" + escape(d));
+            //读取购物车数量
+            //$("#head_cart_no").load("/Cart/GetCartInfo?d=" + escape(new Date().toString()), null, function () {
+            //    $.cookie("C", $("#head_cart_no").html(), { path: "/" });
+            //});
+            Cat.LoadServer();
+        });
+    }
+</script>
